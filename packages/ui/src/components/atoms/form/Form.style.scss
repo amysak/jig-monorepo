@@ -1,0 +1,20 @@
+.custom-errorList {
+  color: #ff4d4f;
+  & > .-item-explain-error {
+    transition: all 0.4s ease-out;
+  }
+}
+
+.custom-errorList-motion {
+  position: relative;
+}
+
+.custom-errorList-motion-item {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.custom-formItem {
+  margin-bottom: 10px !important;
+}

@@ -1,0 +1,35 @@
+{
+  "name": "jigbid",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jigbid/web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jigbid/web/issues"
+  },
+  "homepage": "https://github.com/jigbid/web#readme",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "preview": "turbo run preview",
+    "lint": "turbo run lint",
+    "typegen": "turbo run typegen",
+    "deploy": "turbo run deploy",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx,md}\"",
+    "lint:fix": "eslint . --fix && prettier --write \"**/*.{tsx,ts,js,json,css,md}\"",
+    "migrate:run": "pnpm --filter server migrate:run",
+    "docker:start": "docker-compose --env-file ./apps/server/.env up -d && pnpm migrate:run",
+    "docker:restart": "docker-compose down && docker-compose up -d && pnpm migrate:run"
+  },
+  "devDependencies": {
+    "tsc": "^2.0.4",
+    "typescript": "^4.9.4"
+  },
+  "license": "MIT"
+}

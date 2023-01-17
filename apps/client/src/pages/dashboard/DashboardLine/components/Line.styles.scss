@@ -1,0 +1,51 @@
+.line-count {
+  display: inline;
+  &:first-of-type {
+    margin-right: 0.5rem;
+  }
+}
+.line-counters {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  > * {
+    margin-top: 0 !important;
+  }
+}
+
+.line-main-title {
+  & h5 {
+    margin-bottom: 0;
+  }
+}
+
+.activityCard {
+  padding: 20px !important;
+  box-shadow: $content-boxshadow-minimal;
+
+  &__activity {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 5px 0;
+
+    &-row {
+      display: flex;
+      justify-content: space-between;
+
+      &-title {
+      }
+
+      &-meta {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+.LastPoint {
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  background-color: red;
+}

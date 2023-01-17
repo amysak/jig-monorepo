@@ -1,0 +1,121 @@
+[
+  {
+    "name": "Base-Filler",
+    "type": "Filler",
+    "width": "0",
+    "isFinished": false,
+    "height": "34.5"
+  },
+  {
+    "name": "Base-Filler-1 1/2”",
+    "type": "Filler",
+    "width": "30.25",
+    "isFinished": false,
+    "height": "34.5"
+  },
+  {
+    "name": "Base-Filler-2”",
+    "type": "Filler",
+    "width": "2",
+    "isFinished": false,
+    "height": "34.5"
+  },
+  {
+    "name": "Base-Filler-3”",
+    "type": "Filler",
+    "width": "3",
+    "isFinished": false,
+    "height": "34.5"
+  },
+  {
+    "name": "Base-Filler-4”",
+    "type": "Filler",
+    "width": "4",
+    "isFinished": false,
+    "height": "34.5"
+  },
+  {
+    "name": "Tall-Filler",
+    "type": "Filler",
+    "width": "0",
+    "isFinished": false,
+    "height": "95"
+  },
+  {
+    "name": "Tall-Filler-1 1/2”",
+    "type": "Filler",
+    "width": "1.5",
+    "isFinished": false,
+    "height": "95"
+  },
+  {
+    "name": "Tall-Filler-2”",
+    "type": "Filler",
+    "width": "2",
+    "isFinished": false,
+    "height": "95"
+  },
+  {
+    "name": "Tall-Filler-3”",
+    "type": "Filler",
+    "width": "3",
+    "isFinished": false,
+    "height": "95"
+  },
+  {
+    "name": "Upper-Filler",
+    "type": "Filler",
+    "width": "0",
+    "isFinished": false,
+    "height": "41"
+  },
+  {
+    "name": "Upper-Filler-1 1/2”",
+    "type": "Filler",
+    "width": "1.5",
+    "isFinished": false,
+    "height": "41"
+  },
+  {
+    "name": "Upper-Filler-2”",
+    "type": "Filler",
+    "width": "2",
+    "isFinished": false,
+    "height": "41"
+  },
+  {
+    "name": "Upper-Filler-3”",
+    "type": "Filler",
+    "width": "3",
+    "isFinished": false,
+    "height": "41"
+  },
+  {
+    "name": "Vanity-Filler",
+    "type": "Filler",
+    "width": "0",
+    "isFinished": false,
+    "height": "30.75"
+  },
+  {
+    "name": "Vanity-Filler-1 1/2”",
+    "type": "Filler",
+    "width": "1.5",
+    "isFinished": false,
+    "height": "30.75"
+  },
+  {
+    "name": "Vanity-Filler-2”",
+    "type": "Filler",
+    "width": "2",
+    "isFinished": false,
+    "height": "30.75"
+  },
+  {
+    "name": "Vanity-Filler-3”",
+    "type": "Filler",
+    "width": "3",
+    "isFinished": false,
+    "height": "30.75"
+  }
+]

@@ -1,0 +1,218 @@
+[
+  {
+    "amount": "0.78",
+    "category": "shop labor",
+    "type": "filler",
+    "name": "Filler Shop Labor",
+    "unitOfMeasurement": "per  filler",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Filler taking 1 minute to produce."
+  },
+  {
+    "amount": "35.10",
+    "category": "shop labor",
+    "type": "Base",
+    "name": "Base Cabinet Shop Labor",
+    "unitOfMeasurement": "Per cabinet",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Base Cabinet taking 45 minutes to produce."
+  },
+  {
+    "amount": "6.24",
+    "category": "delivery",
+    "type": "Box",
+    "name": "Delivery Charge (per box)",
+    "unitOfMeasurement": "Per box",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and Cabinets taking 8 minutes per cabinet to load and unload."
+  },
+  {
+    "amount": "2.34",
+    "category": "Delivery",
+    "type": "Mile",
+    "name": "Delivery Charge (per mile)",
+    "unitOfMeasurement": "Per mile",
+    "description": "Costs associated with fuel, labor and wear and tear to deliver your products."
+  },
+  {
+    "amount": "98.55",
+    "category": "delivery",
+    "type": "Job",
+    "name": "Delivery Charge (per trip)",
+    "unitOfMeasurement": "Per job",
+    "description": "Cost associated with owning and insuring a vehicle to deliver your products."
+  },
+  {
+    "amount": "0.10",
+    "category": "Shop labor",
+    "type": "edgebanding per foot",
+    "name": "Edgebanding per Foot Shop Labor",
+    "unitOfMeasurement": "Per ft",
+    "description": ""
+  },
+  {
+    "amount": "0.23",
+    "category": "Shop labor",
+    "type": "edgebanding per foot",
+    "name": "Edgebanding per Part Shop Labor",
+    "unitOfMeasurement": "Per part",
+    "description": ""
+  },
+  {
+    "amount": "5.88",
+    "category": "Shop labor",
+    "type": "Face frame",
+    "name": "Face Frame Shop Labor",
+    "unitOfMeasurement": "per Opening",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Face Frame taking on average 7.5 minutes per opening to produce."
+  },
+  {
+    "amount": "0.78",
+    "category": "shop labor",
+    "type": "filler",
+    "name": "Filler Shop Labor",
+    "unitOfMeasurement": "Per filler",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Filler taking 1 minute to produce."
+  },
+  {
+    "amount": "17.16",
+    "category": "Installation",
+    "type": "Toe board",
+    "name": "Installation Labor (per 8’ piece)",
+    "unitOfMeasurement": "per Toe Board",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Toe Board taking 22 minutes per 8’ piece to install."
+  },
+  {
+    "amount": "23.40",
+    "category": "Installation",
+    "type": "Base",
+    "name": "Installation Labor (per cabinet)",
+    "unitOfMeasurement": "per cabinet",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Base Cabinet taking 30 minutes to install."
+  },
+  {
+    "amount": "23.40",
+    "category": "Installation",
+    "type": "Tall",
+    "name": "Installation Labor (per cabinet)",
+    "unitOfMeasurement": "per Cabinet",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Tall Cabinet taking 30 minutes to install."
+  },
+  {
+    "amount": "23.40",
+    "category": "Installation",
+    "type": "Upper",
+    "name": "Installation Labor (per cabinet)",
+    "unitOfMeasurement": "per cabinet",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Upper Cabinet taking 30 minutes to install."
+  },
+  {
+    "amount": "23.40",
+    "category": "Installation",
+    "type": "Vanity",
+    "name": "Installation Labor (per cabinet)",
+    "unitOfMeasurement": "per Cabinet",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Vanity Cabinet taking 30 minutes to install."
+  },
+  {
+    "amount": "3.90",
+    "category": "Installation",
+    "type": "filler",
+    "name": "Installation Labor (per filler)",
+    "unitOfMeasurement": "per Filler",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Filler taking 5 minutes to install."
+  },
+  {
+    "amount": "2.34",
+    "category": "Installation",
+    "type": "moldings",
+    "name": "Installation Labor (per foot)",
+    "unitOfMeasurement": "per ft",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and Moldings taking an average of 3 minutes per foot to install."
+  },
+  {
+    "amount": "5.45",
+    "category": "Installation",
+    "type": "Face frame",
+    "name": "Installation Labor (per opening)",
+    "unitOfMeasurement": "per Opening",
+    "description": ""
+  },
+  {
+    "amount": "23.40",
+    "category": "Installation",
+    "type": "Appliance panel",
+    "name": "Installation Labor (per panel)",
+    "unitOfMeasurement": "per Panel",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Appliance taking 30 minutes to install."
+  },
+  {
+    "amount": "2.34",
+    "category": "Installation",
+    "type": "Applied end panel",
+    "name": "Installation Labor (per panel)",
+    "unitOfMeasurement": "per Panel",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Applied End taking 3 minutes to install."
+  },
+  {
+    "amount": "9.36",
+    "category": "Installation",
+    "type": "",
+    "name": "Installation Labor (per panel)",
+    "unitOfMeasurement": "per Panel",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Wainscot Panel taking 12 minutes to install."
+  },
+  {
+    "amount": "7.80",
+    "category": "Installation",
+    "type": "Toe platform",
+    "name": "Installation Labor (per platform)",
+    "unitOfMeasurement": "per Toe Platform",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Toe Platform taking 10 minutes per 8’ assembly to install."
+  },
+  {
+    "amount": "5.00",
+    "category": "Installation",
+    "type": "Wainscot panel",
+    "name": "Installation Labor (per Square Foot)",
+    "unitOfMeasurement": "Per Sq Ft",
+    "description": ""
+  },
+  {
+    "amount": "70.39",
+    "category": "shop labor",
+    "type": "tall",
+    "name": "Tall Cabinet Shop Labor",
+    "unitOfMeasurement": "per Cabinet",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Tall Cabinet taking 90 minutes to produce."
+  },
+  {
+    "amount": "1.56",
+    "category": "shop labor",
+    "type": "Toe board",
+    "name": "Toe Board Shop Labor",
+    "unitOfMeasurement": "per Toe Board",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Toe Board taking 2 minutes to produce."
+  },
+  {
+    "amount": "7.80",
+    "category": "shop labor",
+    "type": "Toe platform",
+    "name": "Toe Platform",
+    "unitOfMeasurement": "per Toe Platform",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Toe Board taking 10 minutes to produce."
+  },
+  {
+    "amount": "32.76",
+    "category": "shop labor",
+    "type": "Upper",
+    "name": "Upper Cabinet Shop Labor",
+    "unitOfMeasurement": "per Cabinet",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Upper Cabinet taking 42 minutes to produce."
+  },
+  {
+    "amount": "35.10",
+    "category": "shop labor",
+    "type": "vanity",
+    "name": "Vanity Cabinet Shop Labor",
+    "unitOfMeasurement": "per Cabinet",
+    "description": "Based on a loaded labor rate of $46.93 ($0.78 per minute), and a Vanity Cabinet taking 45 minutes to produce."
+  }
+]

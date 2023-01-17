@@ -1,0 +1,7 @@
+{
+  "extends": "tsconfig/react.json",
+  "compilerOptions": {
+    "baseUrl": "src"
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+}

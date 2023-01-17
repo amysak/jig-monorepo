@@ -1,0 +1,173 @@
+[
+  {
+    "name": "2% discount during 10 days, net due in 30 days",
+    "type": "net",
+    "discountPercent": 2,
+    "discountDue": 10,
+    "paymentDue": 30,
+    "delivered": true,
+    "installed": true
+  },
+  {
+    "name": "2% discount during 5 days, net due in 30 days",
+    "type": "net",
+    "discountPercent": 2,
+    "discountDue": 5,
+    "paymentDue": 30
+  },
+  {
+    "name": "5% discount during 10 days, net due in 30 days",
+    "type": "net",
+    "discountPercent": 5,
+    "discountDue": 10,
+    "paymentDue": 30
+  },
+  {
+    "name": "5% discount during 5 days, net due in 30 days",
+    "type": "net",
+    "discountPercent": 5,
+    "discountDue": 5,
+    "paymentDue": 30
+  },
+  {
+    "name": "50-40-10 (Prior)",
+    "type": "multi",
+    "payments": [
+      {
+        "percentage": 50,
+        "explanationText": "deposit required to place job into production"
+      },
+      {
+        "percentage": 40,
+        "explanationText": "due prior to delivery"
+      },
+      {
+        "percentage": 10,
+        "explanationText": "upon completion"
+      }
+    ]
+  },
+  {
+    "name": "50-40-10 (upon)",
+    "type": "multi",
+    "payments": [
+      {
+        "percentage": 50,
+        "explanationText": "deposit required to place job into production"
+      },
+      {
+        "percentage": 40,
+        "explanationText": "due upon delivery"
+      },
+      {
+        "percentage": 10,
+        "explanationText": "upon completion"
+      }
+    ]
+  },
+  {
+    "name": "50-50 Pick-up",
+    "type": "multi",
+    "payments": [
+      {
+        "percentage": 50,
+        "explanationText": "deposit required to place job into production"
+      },
+      {
+        "percentage": 50,
+        "explanationText": "due at pick-up"
+      }
+    ],
+    "delivered": false,
+    "installed": false
+  },
+  {
+    "name": "50-50 (upon completion)",
+    "type": "multi",
+    "payments": [
+      {
+        "percentage": 50,
+        "explanationText": "deposit required to place job into production"
+      },
+      {
+        "percentage": 50,
+        "explanationText": "due upon completion"
+      }
+    ]
+  },
+  {
+    "name": "50-50 (upon delivery)",
+    "type": "multi",
+    "payments": [
+      {
+        "percentage": 50,
+        "explanationText": "deposit required to place job into production"
+      },
+      {
+        "percentage": 50,
+        "explanationText": "due upon delivery"
+      }
+    ]
+  },
+  {
+    "name": "Due upon completion",
+    "type": "net"
+  },
+  {
+    "name": "Net 30 days",
+    "type": "net",
+    "paymentDue": 30
+  },
+  {
+    "name": "50-25-25 (at time of storage)",
+    "type": "multi",
+    "payments": [
+      {
+        "percentage": 50,
+        "explanationText": "deposit required to place job into production"
+      },
+      {
+        "percentage": 25,
+        "explanationText": "due at storage"
+      },
+      {
+        "percentage": 25,
+        "explanationText": "due upon completion"
+      }
+    ]
+  },
+  {
+    "name": "50-50 (prior delivery)",
+    "type": "multi",
+    "payments": [
+      {
+        "percentage": 50,
+        "explanationText": "deposit required to place job into production"
+      },
+      {
+        "percentage": 50,
+        "explanationText": "due prior to delivery"
+      }
+    ],
+    "installed": false
+  },
+  {
+    "name": "34-33-33 (upon) delivered and installed",
+    "type": "multi",
+    "payments": [
+      {
+        "percentage": 34,
+        "explanationText": "deposit required to place job into production"
+      },
+      {
+        "percentage": 33,
+        "explanationText": "due upon delivery"
+      },
+      {
+        "percentage": 33,
+        "explanationText": "due upon completion"
+      }
+    ],
+    "installed": false
+  }
+]

@@ -1,0 +1,9 @@
+.jiglogo {
+  display: flex;
+  transition: transform 0.7s ease-in-out;
+  padding: 3px;
+
+  &:hover {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Typical Builder Markup (multi-payment terms)",
+    "fees": {
+      "design": 5,
+      "profit": 30,
+      "overhead": 19,
+      "salesCommission": 5
+    },
+    "taxes": {
+      "salesTax": 9.75
+    }
+  },
+  {
+    "name": "Typical Builder Markup (net)",
+    "fees": {
+      "design": 5,
+      "profit": 30,
+      "overhead": 19,
+      "salesCommission": 5
+    },
+    "taxes": {
+      "salesTax": 9.75
+    }
+  },
+  {
+    "name": "Typical Individual Markup (multi-payment terms)",
+    "fees": {
+      "design": 5,
+      "profit": 30,
+      "overhead": 19,
+      "salesCommission": 5
+    },
+    "taxes": {
+      "salesTax": 9.75
+    }
+  },
+  {
+    "name": "Typical Design Showroom Markup (multi-payment terms)",
+    "fees": {
+      "design": 5,
+      "profit": 30,
+      "overhead": 19,
+      "salesCommission": 5
+    },
+    "taxes": {
+      "salesTax": 9.75
+    }
+  }
+]

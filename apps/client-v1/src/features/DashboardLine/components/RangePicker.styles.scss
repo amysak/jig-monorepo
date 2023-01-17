@@ -1,0 +1,22 @@
+.line-range-picker {
+  & .ant-select-selector {
+    padding: 0 5px 0 10px !important;
+  }
+
+  &.ant-select.ant-select-open {
+    & > .ant-select-selector {
+      background-color: inherit !important;
+      color: inherit !important;
+    }
+    & .ant-select-arrow {
+      color: inherit !important;
+    }
+  }
+  & > .ant-select-selector {
+    background-color: #1890ff !important;
+    color: $white;
+  }
+  & .ant-select-arrow {
+    color: $white;
+  }
+}

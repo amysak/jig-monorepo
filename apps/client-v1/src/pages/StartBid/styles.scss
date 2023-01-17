@@ -1,0 +1,32 @@
+.setupnewbid {
+  overflow: auto;
+
+  & form {
+    width: 100%;
+  }
+
+  & .bordered-row {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .pickorselect-client-wrapper {
+    margin: 0 0 0 0;
+    min-width: 100%;
+
+    .pickorselect-client-tabs {
+      width: 100%;
+    }
+  }
+}
+
+.next-prev-btns {
+  margin-top: 20px;
+}
+
+.setup-bid-steps {
+  & .ant-steps-icon {
+    line-height: 32px;
+    font-size: 16px;
+  }
+}

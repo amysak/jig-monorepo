@@ -1,0 +1,338 @@
+[
+  {
+    "description": "Edge Profile",
+    "name": "B-2 (1/8\" Round Over)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "L-149 (1/8\" Radius)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "LC-2 (3/8\" OG)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile ($14.00 upcharge)",
+    "name": "LC-Inset (Pecil Mold)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "Machine (Square)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "None-Edge",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "PRS-2 (1/4\" Bead)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile ($14.00 upcharge)",
+    "name": "Sophisticate (Pecil Mold)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "Standard",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "PVC edgeband",
+    "vendor": "In House",
+    "type": "Edge"
+  },
+  {
+    "description": "Frame Profile",
+    "name": "Elite",
+    "vendor": "Conestoga",
+    "type": "Frame"
+  },
+  {
+    "description": "Frame Profile",
+    "name": "None (Con Frame)",
+    "vendor": "Conestoga",
+    "type": "Frame"
+  },
+  {
+    "description": "Frame Profile",
+    "name": "Ogee",
+    "vendor": "Conestoga",
+    "type": "Frame"
+  },
+  {
+    "description": "Frame Profile",
+    "name": "Regular",
+    "vendor": "Conestoga",
+    "type": "Frame"
+  },
+  {
+    "description": "Frame Profile",
+    "name": "Square",
+    "vendor": "Conestoga",
+    "type": "Frame"
+  },
+  {
+    "description": "Frame Profile",
+    "name": "Standard",
+    "vendor": "Conestoga",
+    "type": "Frame"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "Chamfer Raise",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "G-Cove",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "Louis XIII Raise",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "M-Bead",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "None (Con Panel)",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "P-Raise",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "P008",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "Presidential",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "Reverse G-Cove",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "RM-Raise",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "Slant",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "Standard",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "U-Cove",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "Veneer edgeband",
+    "vendor": "In House",
+    "type": "Edge"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "P-057",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "Need Selection (Con edge)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Frame Profile",
+    "name": "Need Selection (frame)",
+    "vendor": "Conestoga",
+    "type": "Frame"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "Need Selection (panel)",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "L-061 (1/4\" Cove)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "L-034 (1/16\" Radius-front and back)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "CFP-2 (elongated OG)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "Paintable PVC-.5mm (Square)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "Design Specific (edge)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "Design Specific (panel)",
+    "vendor": "Conestoga",
+    "type": "Panel"
+  },
+  {
+    "description": "Frame Profile",
+    "name": "Design Specific (frame)",
+    "vendor": "Conestoga",
+    "type": "Frame"
+  },
+  {
+    "description": "Panel Profile",
+    "name": "None-Panel",
+    "vendor": "None",
+    "type": "Panel"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "None (Con edge)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Frame Profile",
+    "name": "None-Frame",
+    "vendor": "None",
+    "type": "Frame"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "E-2 (Dbl. OG)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "Edge Profile",
+    "name": "H-2 (Dbl. OG)",
+    "vendor": "Conestoga",
+    "type": "Edge"
+  },
+  {
+    "description": "No Panel Profile",
+    "name": "None (DS Panel)",
+    "vendor": "Decorative Specialties",
+    "type": "Panel"
+  },
+  {
+    "description": "No Edge Profile",
+    "name": "None (DS Edge)",
+    "vendor": "Decorative Specialties",
+    "type": "Edge"
+  },
+  {
+    "description": "No Frame Profile",
+    "name": "None (DS Frame)",
+    "vendor": "Decorative Specialties",
+    "type": "Frame"
+  },
+  {
+    "description": "Standard Panel Profile",
+    "name": "Standard (DS Panel)",
+    "vendor": "Decorative Specialties",
+    "type": "Panel"
+  },
+  {
+    "description": "Standard Edge Profile",
+    "name": "Standard (DS Edge)",
+    "vendor": "Decorative Specialties",
+    "type": "Edge"
+  },
+  {
+    "description": "Standard Frame Profile",
+    "name": "Standard (DS Frame)",
+    "vendor": "Decorative Specialties",
+    "type": "Frame"
+  },
+  {
+    "description": "",
+    "name": "Standard",
+    "vendor": "St. Cloud",
+    "type": "Edge"
+  },
+  {
+    "description": "",
+    "name": "None (StCloud Panel)",
+    "vendor": "St. Cloud",
+    "type": "Panel"
+  },
+  {
+    "description": "",
+    "name": "None (StCloud Frame)",
+    "vendor": "St. Cloud",
+    "type": "Frame"
+  },
+  {
+    "description": "",
+    "name": "None (StCloud Edge)",
+    "vendor": "St. Cloud",
+    "type": "Edge"
+  }
+]

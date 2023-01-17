@@ -1,0 +1,39 @@
+.pagelayout {
+  height: 100%;
+  position: relative;
+  background-color: $jig-background;
+  background-image: url("assets/images/banner/banner-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  max-width: 2000px;
+  margin: 0 auto;
+
+  &__content,
+  &__contentwrapper,
+  &__contenttoolbar {
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__contentwrapper {
+    padding: 10px;
+  }
+
+  &__contenttoolbar {
+    padding: 20px 20px 0 40px;
+  }
+
+  &__content {
+    padding: 10px;
+  }
+
+  .cabinets-filter-row {
+    padding: 13px 0;
+  }
+}

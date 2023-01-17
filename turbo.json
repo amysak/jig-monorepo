@@ -1,0 +1,31 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "outputs": ["dist/**"],
+      "dependsOn": ["^build"]
+    },
+    "type-defs#build": {
+      "outputs": ["dist/**"],
+      "dependsOn": ["clean"]
+    },
+    "server#typegen": {
+      "dependsOn": ["type-defs#build"],
+      "outputs": ["packages/type-defs/src/dts/**"]
+    },
+    "lint": {
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "deploy": {
+      "dependsOn": ["^build"]
+    }
+  }
+}

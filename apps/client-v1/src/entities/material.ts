@@ -1,0 +1,70 @@
+import { Cabinet, ICabinetBaseStyle } from "./cabinet";
+import { Door } from "./door";
+import { Finishes } from "./finishes";
+import { Account, IActiveInActiveStatuses } from "./index";
+import { MaterialSetup } from "./material-setup";
+import { Profile } from "./profile";
+import { Room } from "./room";
+import { Trim } from "./trim";
+export interface Material {
+  id: string;
+  is_default: boolean;
+  material_name: MaterialName;
+  source: string;
+  type: string;
+  description: string;
+  status: IActiveInActiveStatuses;
+  base_style: ICabinetBaseStyle;
+  door_base: MaterialPart;
+  door_upper: MaterialPart;
+  drawer_front: MaterialPart;
+  appliance_panel: MaterialPart;
+  panelized_end: MaterialPart;
+  wainscot_panel: MaterialPart;
+  slab_end: MaterialPart;
+  fillers: MaterialPart;
+  toe_skin: MaterialPart;
+  face_frame: MaterialPart;
+  edge_banding: MaterialPart;
+  crown: MaterialPart;
+  light_rail: MaterialPart;
+  unfinished_interior: MaterialPart;
+  unfinished_exterior: MaterialPart;
+  finished_interior: MaterialPart;
+  finished_exterior: MaterialPart;
+  drawer_box: MaterialPart;
+  tray: MaterialPart;
+  base_platform: MaterialPart;
+  interior_thickness: number;
+  back_thickness: number;
+  created_at: Date;
+  updated_at: Date;
+  cabinet: Cabinet;
+  room: Room;
+  account: Account;
+}
+export interface MaterialPart {
+  id: string;
+  door: Door;
+  trim: Trim;
+  material_source: string;
+  material: MaterialSetup;
+  panel_profile: Profile;
+  edge_profile: Profile;
+  frame_profile: Profile;
+  finish_process_source: string;
+  finish_process: Finishes;
+  paint_stain_color: string;
+  glaze_color: string;
+  back_material: MaterialSetup;
+  shelf_material: MaterialSetup;
+  end_material: MaterialSetup;
+  bottom_material: MaterialSetup;
+  type: string;
+  default_material: Material;
+}
+export interface MaterialName {
+  id: string;
+  name: string;
+  account: Account;
+}

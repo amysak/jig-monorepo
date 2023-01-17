@@ -1,0 +1,16 @@
+.success-icon {
+  color: $primary-jig;
+  & > svg {
+    font-size: 4rem;
+  }
+}
+
+.password-reset-modal {
+  & .ant-modal-confirm-btns {
+    display: none;
+  }
+}
+
+.success-body-button-col {
+  margin-top: $content-padding;
+}

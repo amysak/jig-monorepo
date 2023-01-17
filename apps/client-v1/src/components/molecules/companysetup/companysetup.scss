@@ -1,0 +1,31 @@
+.companySetupWrapper {
+  &__top {
+    &-right {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  &__bottom {
+    &-left {
+      .ant-input-group-compact {
+        input:disabled {
+          background: #ffffff;
+          cursor: inherit;
+          color: rgba(0, 0, 0, 0.85);
+        }
+      }
+    }
+  }
+}
+
+.company-logo-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 1px dashed rgba(51, 135, 162, 0.1);
+  height: 160px;
+  width: 160px;
+  cursor: pointer;
+}

@@ -1,0 +1,534 @@
+[
+  {
+    "height": 30,
+    "name": "Appliance (Bar REF) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Appliance (Bar REF) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 80,
+    "name": "Appliance (Built-In FRZ door-24) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-In FRZ door-36) install by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-In FRZ door-36) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-In FRZ door-42) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-In FRZ door-42) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-In FRZ door-48) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-In FRZ door-48) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 35,
+    "name": "Appliance (Built-In FRZ door-bot-36) installed by Others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 35,
+    "name": "Appliance (Built-In FRZ door-bot-36) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 35,
+    "name": "Appliance (Built-In FRZ door-bot-42) installed by Others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 35,
+    "name": "Appliance (Built-In FRZ door-bot-42) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 35,
+    "name": "Appliance (Built-In FRZ door-bot-48) installed by Others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 35,
+    "name": "Appliance (Built-In FRZ door-bot-48) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 24,
+    "name": "Appliance (Built-In FRZ door-top-36) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 24,
+    "name": "Appliance (Built-In FRZ door-top-36) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 24,
+    "name": "Appliance (Built-In FRZ door-top-42) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 24,
+    "name": "Appliance (Built-In FRZ door-top-42) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 24,
+    "name": "Appliance (Built-In FRZ door-top-48) installed by Others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 24,
+    "name": "Appliance (Built-In FRZ door-top-48) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 19,
+    "name": "Appliance (Built-In FRZ drawer-30) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 19,
+    "name": "Appliance (Built-In FRZ drawer-30) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 18,
+    "name": "Appliance (Built-In FRZ drawer-36) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 8,
+    "name": "Appliance (Built-In GRILLE-36) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 8,
+    "name": "Appliance (Built-In GRILLE-36) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 8,
+    "name": "Appliance (Built-In GRILLE-42) installed by Others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 8,
+    "name": "Appliance (Built-In GRILLE-42) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 8,
+    "name": "Appliance (Built-In GRILLE-48) installed by Others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 8,
+    "name": "Appliance (Built-In GRILLE-48) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 10,
+    "name": "Appliance (Built-In GRILLE-60) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 80,
+    "name": "Appliance (Built-in REF Door-30) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-in REF Door-36) installed by Others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-in REF Door-36) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-in REF Door-42) installed by Others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-in REF Door-42) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-in REF Door-48) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 71,
+    "name": "Appliance (Built-in REF Door-48) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Appliance (Dryer) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Appliance (DW) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Appliance (DW) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 15,
+    "name": "Appliance (Fisher-Paykel-DW) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 15,
+    "name": "Appliance (Fisher-Paykel-DW) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Appliance (IM) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Appliance (IM) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 65,
+    "name": "Appliance (REF 1-Std) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 65,
+    "name": "Appliance (REF 1-Std) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 65,
+    "name": "Appliance (REF 2-Std) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 65,
+    "name": "Appliance (REF 2-Std) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Appliance (TC) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Appliance (TC) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 9,
+    "name": "Appliance (Warming Drawer) installed by others",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 9,
+    "name": "Appliance (Warming Drawer) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Appliance (Washer) installed by True32",
+    "type": "appliance",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Base-End Panel-Blind",
+    "type": "end",
+    "style": "Slab",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Base-End Panel-Panelized",
+    "type": "end",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 30,
+    "name": "Base-End Panel-Slab",
+    "type": "end",
+    "style": "Slab",
+    "isFinished": false
+  },
+  {
+    "height": 0,
+    "name": "Door(s)-(Loose-No Cabinet)",
+    "type": "end",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 0,
+    "name": "Drawer Front(s)-(Loose-No Cabinet)",
+    "type": "end",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 84,
+    "name": "Mirror Frame-24” X 36”",
+    "type": "end",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 84,
+    "name": "Mirror Frame-32” X 36”",
+    "type": "end",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 90,
+    "name": "Tall-End Panel-Panelized",
+    "type": "end",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 90,
+    "name": "Tall-End Panel-Slab",
+    "type": "end",
+    "style": "Slab",
+    "isFinished": false
+  },
+  {
+    "height": 95,
+    "name": "Upper-End Panel-Blind",
+    "type": "end",
+    "style": "Slab",
+    "isFinished": false
+  },
+  {
+    "height": 95,
+    "name": "Upper-End Panel-Panelized",
+    "type": "end",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 95,
+    "name": "Upper-End Panel-Slab",
+    "type": "end",
+    "style": "Slab",
+    "isFinished": false
+  },
+  {
+    "height": 26,
+    "name": "Vanity-End Panel-Blind",
+    "type": "end",
+    "style": "Slab",
+    "isFinished": false
+  },
+  {
+    "height": 26,
+    "name": "Vanity-End Panel-Panelized",
+    "type": "end",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 26,
+    "name": "Vanity-End Panel-Slab",
+    "type": "end",
+    "style": "Slab",
+    "isFinished": false
+  },
+  {
+    "height": 0,
+    "name": "Wainscot Panel-Panelized",
+    "type": "wainscot",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 0,
+    "name": "Wainscot Panel-Panelized - Testing Panel",
+    "type": "wainscot",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 0,
+    "name": "Wainscot Panel-Panelized-Bar Height",
+    "type": "wainscot",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 0,
+    "name": "Wainscot Panel-Panelized-Cabinet Height",
+    "type": "wainscot",
+    "style": "Multi-Panel",
+    "isFinished": false
+  },
+  {
+    "height": 0,
+    "name": "Wainscot Panel-Slab",
+    "type": "wainscot",
+    "style": "Slab",
+    "isFinished": false
+  },
+  {
+    "height": 0,
+    "name": "Wainscot Panel-Slab-Bar Height",
+    "type": "wainscot",
+    "style": "Slab",
+    "isFinished": false
+  },
+  {
+    "height": 0,
+    "name": "Wainscot Panel-Slab-Cabinet Height",
+    "type": "wainscot",
+    "style": "Slab",
+    "isFinished": false
+  }
+]

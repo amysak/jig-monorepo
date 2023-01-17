@@ -1,0 +1,124 @@
+.stripe-input {
+  border-radius: 7px;
+  background-color: $off-white;
+  padding: 5px;
+  margin-top: 15px;
+  border: 1px solid #f0f0f0;
+}
+
+.subscription {
+  width: 100%;
+
+  .card-details-row {
+    border: 1px solid #f0f0f0;
+    margin-top: 25px;
+    padding: 13px;
+    border-radius: 7px;
+
+    .card-details-title {
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    .stripe-form-item {
+      @extend .stripe-input;
+    }
+
+    .jig-button {
+      margin-top: 15px;
+    }
+  }
+}
+
+.plancard {
+  border: 2px solid #f0f0f0;
+  margin: 0 5px 0 0;
+  padding: 13px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  border-radius: 7px;
+
+  .plancard-name {
+    color: #cdcccc;
+  }
+
+  .plancard-description {
+    color: #cdcccc;
+  }
+
+  .plancard-cost {
+    color: $primary-jig;
+    display: block;
+  }
+
+  &.selected {
+    border: 2px solid $primary-jig;
+  }
+
+  .cancel-btn {
+    padding: 20px 0;
+  }
+}
+
+.activeplan,
+.paymentmethod,
+.lifetime {
+  margin-bottom: 30px;
+
+  &__cta {
+    button {
+      padding: 20px 0;
+    }
+  }
+
+  &__details {
+    display: flex;
+    align-items: center;
+
+    &-cardimage,
+    svg {
+      margin-right: 15px;
+    }
+  }
+
+  &__cardinput {
+    @extend .stripe-input;
+  }
+}
+
+.billingdetails,
+.lifetime {
+  justify-content: space-between;
+  background-color: rgb(247, 249, 252);
+  color: rgb(74, 93, 133);
+  margin-bottom: 12px;
+  padding: 12px;
+  border-style: solid;
+  border-color: rgb(231, 236, 247);
+  border-image: initial;
+  border-radius: 6px;
+  position: relative;
+  margin-bottom: 30px;
+
+  &__title,
+  h4.ant-typography {
+    margin-bottom: 0;
+  }
+
+  &__email {
+    margin-bottom: 8px;
+  }
+
+  &__address {
+    p {
+      margin: 0;
+    }
+  }
+
+  &__edit {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}

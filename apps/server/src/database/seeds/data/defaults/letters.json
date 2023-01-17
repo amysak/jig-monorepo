@@ -1,0 +1,34 @@
+[
+  {
+    "description": "This letter should accompany an estimate that requires a design fee.",
+    "name": "Estimate Cover Letter (with design fee)"
+  },
+  {
+    "description": "This letter should accompany an estimate that does not require a design fee.",
+    "name": "Estimate Cover Letter (without design fee)"
+  },
+  {
+    "description": "This letter is to be sent as a followup after an estimate has been delivered, but not responded to. Typically this letter should be sent one week after the estimate has been delivered.",
+    "name": "Estimate Follow-up Letter"
+  },
+  {
+    "description": "This letter is designed as a first contact with a potential builder client.",
+    "name": "Introductory Letter-Builder"
+  },
+  {
+    "description": "This letter should accompany a net terms Proposal.",
+    "name": "Proposal Cover Letter (2 or 3 payment terms)"
+  },
+  {
+    "description": "This letter should accompany a net terms Proposal.",
+    "name": "Proposal Cover Letter (net terms)"
+  },
+  {
+    "description": "This letter is to be sent as a followup after a proposal with 2 or 3 payment terms has been delivered, but not responded to.",
+    "name": "Proposal Follow-up Letter (2 or 3 payment terms)"
+  },
+  {
+    "description": "This letter is to be sent as a followup after a proposal with net terms has been delivered, but not responded to.",
+    "name": "Proposal Follow-up Letter (net terms)"
+  }
+]

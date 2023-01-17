@@ -1,0 +1,686 @@
+[
+  {
+    "description": "Colourtone Stain on Wood",
+    "status": "Active",
+    "name": "Colourtone-Wood",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-rubbed edges",
+    "status": "Active",
+    "name": "Colourtone-Antiqued",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-rubbed edges-light distressing",
+    "status": "Active",
+    "name": "Colourtone-Ant-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-rubbed edges-heavy distressing",
+    "status": "Active",
+    "name": "Colourtone-Ant-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-light distressing",
+    "status": "Active",
+    "name": "Colourtone-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-heavy distressing",
+    "status": "Active",
+    "name": "Colourtone-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-glaze",
+    "status": "Active",
+    "name": "Colourtone-Glz",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-glaze-rubbed edges",
+    "status": "Active",
+    "name": "Colourtone-Glz-Ant",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-glaze-rubbed edges-light distressing",
+    "status": "Active",
+    "name": "Colourtone-Glz-Ant-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-glaze-rubbed edges-heavy distressing",
+    "status": "Active",
+    "name": "Colourtone-Glz-Ant-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-glaze-light distressing",
+    "status": "Active",
+    "name": "",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-glaze-heavy distressing",
+    "status": "Active",
+    "name": "Colourtone-Glz-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat-light distressing",
+    "status": "Active",
+    "name": "Natural-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat-heavy distressing",
+    "status": "Active",
+    "name": "Natural-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat-glaze-rubbed edges",
+    "status": "Active",
+    "name": "Natural-Glz-Ant",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat-glaze-rubbed edges-light distressing",
+    "status": "Active",
+    "name": "Natural-Glz-Ant-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat-glaze-rubbed edges-heavy distressing",
+    "status": "Active",
+    "name": "Natural-Glz-Ant-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat-glaze-light distressing",
+    "status": "Active",
+    "name": "Natural-Glz-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat-glaze-heavy distressing",
+    "status": "Active",
+    "name": "Natural-Glz-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "No Finish Process",
+    "status": "Active",
+    "name": "None (finish process)",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Finish on MDF",
+    "status": "Active",
+    "name": "Colourtone-MDF",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Prime only on Hybrid or MDF",
+    "status": "Active",
+    "name": "Prime-MDF",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Prime only on Wood",
+    "status": "Active",
+    "name": "Prime-Wood",
+    "category": "Finish Process"
+  },
+  {
+    "description": "No Finish Process Included",
+    "status": "Active",
+    "name": "Raw (No Finish Cost)",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Multi-step stain process (high complexity)",
+    "status": "Active",
+    "name": "Stain (HC)",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step stain process (low complexity)",
+    "status": "Active",
+    "name": "Stain (LC)",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Multi-step stain process (high complexity)-light distressing",
+    "status": "Active",
+    "name": "Stain (HC)-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step stain process (low complexity)-light distressing",
+    "status": "Active",
+    "name": "Stain (LC)-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Multi-step stain process (high complexity)-heavy distressing",
+    "status": "Active",
+    "name": "Stain (HC)-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step stain process (low complexity)-heavy distressing",
+    "status": "Active",
+    "name": "Stain (LC)-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Multi-step stain process (high complexity)-glaze",
+    "status": "Active",
+    "name": "Stain (HC)-Glz",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step stain process (low complexity) with glaze added",
+    "status": "Active",
+    "name": "Stain (LC)-Glz",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Multi-step stain process (high complexity)-glaze-light distressing",
+    "status": "Active",
+    "name": "Stain (HC)-Glz-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step stain process (low complexity)-glaze-light distressing",
+    "status": "Active",
+    "name": "Stain (LC)-Glz-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Multi-step stain process (high complexity)-glaze-heavy distressing",
+    "status": "Active",
+    "name": "Stain (HC)-Glz-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step stain process (low complexity)-glaze-heavy distressing",
+    "status": "Active",
+    "name": "Stain (LC)-Glz-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Dark Brown Glaze",
+    "status": "Active",
+    "name": "Brown",
+    "category": "Glaze Colors"
+  },
+  {
+    "description": "Carmel Glaze",
+    "status": "Active",
+    "name": "Carmel",
+    "category": "Glaze Colors"
+  },
+  {
+    "description": "",
+    "status": "Active",
+    "name": "Need Selection",
+    "category": "Glaze Colors"
+  },
+  {
+    "description": "No Glaze",
+    "status": "Active",
+    "name": "None",
+    "category": "Glaze Colors"
+  },
+  {
+    "description": "Black Glaze",
+    "status": "Active",
+    "name": "Sable (black)",
+    "category": "Glaze Colors"
+  },
+  {
+    "description": "White Glaze",
+    "status": "Active",
+    "name": "White",
+    "category": "Glaze Colors"
+  },
+  {
+    "description": "Standard Paint Color",
+    "status": "Active",
+    "name": "Antique White",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Custom Paint Color",
+    "status": "Active",
+    "name": "Custom Blend",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Standard Paint Color",
+    "status": "Active",
+    "name": "Frosty White",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "No Paint",
+    "status": "Active",
+    "name": "None",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Stain (complex)",
+    "status": "Active",
+    "name": "Alpine (HC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Stain (simple)",
+    "status": "Active",
+    "name": "Autumn (LC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Opaque Stain",
+    "status": "Active",
+    "name": "Chesapeak",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Stain (simple)",
+    "status": "Active",
+    "name": "Colonial (LC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Stain (complex)",
+    "status": "Active",
+    "name": "Cordovan (HC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Opaque Stain",
+    "status": "Active",
+    "name": "Crystal White",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Stain (complex)",
+    "status": "Active",
+    "name": "Espresso (HC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Stain (simple)",
+    "status": "Active",
+    "name": "Harvest Gold (LC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Stain (simple)",
+    "status": "Active",
+    "name": "Honey (LC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Stain (complex)",
+    "status": "Active",
+    "name": "Mesa (HC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Clearcoat",
+    "status": "Active",
+    "name": "Natural",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "",
+    "status": "Active",
+    "name": "Need Selection",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "No Stain",
+    "status": "Active",
+    "name": "None",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Stain (simple)",
+    "status": "Active",
+    "name": "Nutmeg (LC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Stain (complex)",
+    "status": "Active",
+    "name": "Riviera",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Stain (simple)",
+    "status": "Active",
+    "name": "Washington Cherry (LC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Clearcoat-Glaze",
+    "status": "Active",
+    "name": "Natural-Glz",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat",
+    "status": "Active",
+    "name": "Natural (finish process)",
+    "category": "Finish Process"
+  },
+  {
+    "description": "",
+    "status": "Active",
+    "name": "Need Selection (finish process)",
+    "category": "Finish Process"
+  },
+  {
+    "description": "No Finish Process Included",
+    "status": "Active",
+    "name": "Pre-Finished",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Opaque Stain",
+    "status": "Active",
+    "name": "Ebony",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Grey Glaze",
+    "status": "Active",
+    "name": "Pewter",
+    "category": "Glaze Colors"
+  },
+  {
+    "description": "Opaque Stain",
+    "status": "Active",
+    "name": "Creamy Butter",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Opaque Stain",
+    "status": "Active",
+    "name": "Sage",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "No Finish Process Included",
+    "status": "Active",
+    "name": "Rigid Thermal Foil (pre-finished)",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step stain process (low complexity)-glaze-rubbed edges-light distressing",
+    "status": "Active",
+    "name": "Stain (LC)-Glz-Ant-Dist 1",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Northern Contours-Group B-RTF Color",
+    "status": "Active",
+    "name": "Taupe",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Dark Brown Glaze",
+    "status": "Active",
+    "name": "Coffee",
+    "category": "Glaze Colors"
+  },
+  {
+    "description": "Opaque Stain",
+    "status": "Active",
+    "name": "Sandstone",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "RTF Color",
+    "status": "Active",
+    "name": "Fashion Grey",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Single step stain process (low Complexity)-glaze-rubbed edges-heavy distressing",
+    "status": "Active",
+    "name": "Stain (LC)-Glz-Ant-Dist 2",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Northern Contours-Group-B-RTF Color",
+    "status": "Active",
+    "name": "Snow White-Satin",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Northern Contours-Group-E-RTF Color",
+    "status": "Active",
+    "name": "White Gloss",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Opaque Stain",
+    "status": "Active",
+    "name": "Black Gloss",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Stain (simple)",
+    "status": "Active",
+    "name": "Ginger (LC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Stain (complex)",
+    "status": "Active",
+    "name": "Chestnut (HC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "Opaque Stain",
+    "status": "Active",
+    "name": "Classic Burgundy",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Standard Polymer Color",
+    "status": "Active",
+    "name": "Light Gray-Polymer",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Decorative Laminate Veneer-No Finish Process Cost",
+    "status": "Active",
+    "name": "DLV (pre-finished)",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Standard Paint Color",
+    "status": "Active",
+    "name": "Designer White",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Opaque Stain on Opaque Stain",
+    "status": "Active",
+    "name": "Ebony on Classic Burgundy",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Colourtone Stain-Brushed Glaze",
+    "status": "Active",
+    "name": "Colourtone-BrushGlz",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Heirloom (includes glaze and vintage distressing)",
+    "status": "Active",
+    "name": "Heirloom",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-rubbed edges-extra heavy distressing",
+    "status": "Active",
+    "name": "Colourtone-Ant-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-extra heavy distressing",
+    "status": "Active",
+    "name": "Colourtone-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-glaze-rubbed edges-extra heavy distressing",
+    "status": "Active",
+    "name": "Colourtone-Glz-Ant-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Colourtone Stain-glaze-extra heavy distressing",
+    "status": "Active",
+    "name": "Colourtone-Glz-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat-extra heavy distressing",
+    "status": "Active",
+    "name": "Natural-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat-glaze-rubbed edges-extra heavy distressing",
+    "status": "Active",
+    "name": "Natural-Glz-Ant-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Clearcoat-glaze-extra heavy distressing",
+    "status": "Active",
+    "name": "Natural-Glz-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Multi-step stain process (high complexity)-extra heavy distressing",
+    "status": "Active",
+    "name": "Stain (HC)-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Multi-step stain process (high complexity)-glaze-extra heavy distressing",
+    "status": "Active",
+    "name": "Stain (HC)-Glz-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step stain process (low complexity)-extra heavy distressing",
+    "status": "Active",
+    "name": "Stain (LC)-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step stain process (low complexity)-glaze-extra heavy distressing",
+    "status": "Active",
+    "name": "Stain (LC)-Glz-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step stain process (low Complexity)-glaze-rubbed edges-extra heavy distressing",
+    "status": "Active",
+    "name": "Stain (LC)-Glz-Ant-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Stain (complex)",
+    "status": "Active",
+    "name": "Bordeaux (HC)",
+    "category": "Stain Colors"
+  },
+  {
+    "description": "",
+    "status": "Active",
+    "name": "Need Selection",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "No Stain",
+    "status": "Active",
+    "name": "None",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Opaque Stain",
+    "status": "Active",
+    "name": "Sage",
+    "category": "Paint Colors"
+  },
+  {
+    "description": "Multi-step stain process (high complexity)-glaze-rubbed edges-heavy distressing",
+    "status": "Active",
+    "name": "Stain (HC)-Glz-Ant-Dist 3",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Chai Glaze",
+    "status": "Active",
+    "name": "Chai",
+    "category": "Glaze Colors"
+  },
+  {
+    "description": "Oyster Glaze",
+    "status": "Active",
+    "name": "Oyster",
+    "category": "Glaze Colors"
+  },
+  {
+    "description": "Prism Finish on Wood",
+    "status": "Active",
+    "name": "Prism Paint-Wood-Pastel Colors",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Prism Finish on Hybrid and MDF",
+    "status": "Active",
+    "name": "Prism Paint-MDF-Pastel Colors",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Prism Finish on Hybrid and MDF",
+    "status": "Active",
+    "name": "Prism Paint-MDF-Deep Tones",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Prism Finish on Wood",
+    "status": "Active",
+    "name": "Prism Paint-Wood-Deep Tones",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Single step Truetones process (low complexity)",
+    "status": "Active",
+    "name": "Truetones (LC)",
+    "category": "Finish Process"
+  },
+  {
+    "description": "Multi-step Truetones process (high complexity)",
+    "status": "Active",
+    "name": "Truetones (HC)",
+    "category": "Finish Process"
+  }
+]

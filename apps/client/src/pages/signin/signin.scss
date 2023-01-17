@@ -1,0 +1,26 @@
+.custom-errorList {
+  color: #ff4d4f;
+  & > .-item-explain-error {
+    transition: all 0.4s ease-out;
+  }
+}
+
+.authlayout__centerCol-signinform {
+  & .ant-form-item-label::before {
+    display: inline-block;
+    margin-right: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: "*";
+  }
+
+  .custom-formItem {
+    margin-top: 20px;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+}
