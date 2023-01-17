@@ -43,16 +43,14 @@ export default defineConfig(({ mode }) => {
       //   mode === "development" ? "http://localhost:5050" : env.APP_API_HOST_V2,
     },
     optimizeDeps: {
-      exclude: ["type-defs"],
+      include: ["type-defs"],
     },
     build: {
       outDir: "build",
       sourcemap: false,
-      // build: {
-      //   commonjsOptions: {
-      //     include: ["type-defs"],
-      //   },
-      // },
+      commonjsOptions: {
+        include: ["type-defs", /node_modules/],
+      },
       // rollupOptions: {
       //   output: {
       //     manualChunks: {

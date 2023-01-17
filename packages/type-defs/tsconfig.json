@@ -5,9 +5,6 @@
     "outDir": "dist",
     "lib": ["ESNext", "DOM", "DOM.Iterable", "ScriptHost"],
     "target": "ESNext",
-    "paths": {
-      "@server/*": ["../../apps/server/src/*"]
-    },
     "skipLibCheck": true,
     "strict": true,
     "esModuleInterop": true,
