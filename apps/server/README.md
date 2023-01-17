@@ -86,22 +86,6 @@
 |   +-- index.ts // Barrel file (Re-exports)
 ```
 
-### Project setup
-
-`pnpm i && pnpm docker:start && pnpm migrate:run && pnpm start:dev`
-
-Project is currently available in production at
-`https://jigbid-new.onrender.com/`
-
-Health-check route available at `https://jigbid-new.onrender.com/health`
-
-### Code conventions
-
-- Modules only re-export themselves and their interfaces
-- camelCase only, enums and constants could be in UPPER_CASE
-- Linter rules
-- Semantical commits (later)
-
 ### References
 
 - https://medium.com/the-crowdlinker-chronicle/best-way-to-structure-your-directory-code-nestjs-a06c7a641401
