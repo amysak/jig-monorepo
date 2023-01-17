@@ -42,17 +42,9 @@ export default defineConfig(({ mode }) => {
       // APP_API_HOST_V2:
       //   mode === "development" ? "http://localhost:5050" : env.APP_API_HOST_V2,
     },
-    optimizeDeps: {
-      exclude: ["type-defs"],
-    },
     build: {
       outDir: "build",
       sourcemap: false,
-      // build: {
-      //   commonjsOptions: {
-      //     include: ["type-defs"],
-      //   },
-      // },
       // rollupOptions: {
       //   output: {
       //     manualChunks: {
@@ -87,7 +79,14 @@ export default defineConfig(({ mode }) => {
       //   ],
       // }),
     ],
-    resolve: {},
+    resolve: {
+      alias: {
+        "type-defs": path.resolve(
+          __dirname,
+          "../../packages/type-defs/dist/es/index.js"
+        ),
+      },
+    },
     css: {
       preprocessorOptions: {
         scss: {
