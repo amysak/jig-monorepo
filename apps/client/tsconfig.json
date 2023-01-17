@@ -8,8 +8,7 @@
       "assets/*": ["assets/*"],
       "components/*": ["components/*"],
       "pages/*": ["pages/*"],
-      "utilities/*": ["utilities/*"],
-      "typeorm": ["../node_modules/typeorm/typeorm-model-shim.js"]
+      "utilities/*": ["utilities/*"]
     },
     "noImplicitAny": false,
     "resolveJsonModule": true
