@@ -4,30 +4,8 @@ import checker from "vite-plugin-checker";
 import { createHtmlPlugin } from "vite-plugin-html";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
-// import vitePluginImp from "vite-plugin-imp";
 
 import path from "path";
-// import { dependencies } from "./package.json";
-
-// function renderChunks(deps: Record<string, unknown>) {
-//   const chunks = {};
-
-//   Object.keys(deps).forEach((key) => {
-//     if (
-//       [
-//         "react",
-//         "react-dom",
-//         "antd",
-//         "@ant-design/pro-layout",
-//         "@react-pdf/renderer",
-//       ].includes(key)
-//     )
-//       return;
-//     chunks[key] = [key];
-//   });
-
-//   return chunks;
-// }
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -37,22 +15,18 @@ export default defineConfig(({ mode }) => {
   return {
     server: { hmr: true, port: 3000 },
     envPrefix: "APP_",
-    define: {
-      // Wont work because not all of the files with JSX are .tsx (i think)
-      // APP_API_HOST_V2:
-      //   mode === "development" ? "http://localhost:5050" : env.APP_API_HOST_V2,
-    },
+    define: {},
     build: {
       outDir: "build",
       sourcemap: false,
-      // rollupOptions: {
-      //   output: {
-      //     manualChunks: {
-      //       vendor: ["react", "react-dom"],
-      //       ...renderChunks(dependencies),
-      //     },
-      //   },
-      // },
+    },
+    resolve: {
+      alias: {
+        "type-defs": path.resolve(
+          __dirname,
+          "../../packages/type-defs/dist/es/index.js"
+        ),
+      },
     },
     plugins: [
       react({
@@ -70,23 +44,7 @@ export default defineConfig(({ mode }) => {
         },
       }),
       checker({ typescript: true }),
-      // vitePluginImp({
-      //   libList: [
-      //     {
-      //       libName: "antd",
-      //       style: (name) => `antd/es/${name}/style`,
-      //     },
-      //   ],
-      // }),
     ],
-    resolve: {
-      alias: {
-        "type-defs": path.resolve(
-          __dirname,
-          "../../packages/type-defs/dist/es/index.js"
-        ),
-      },
-    },
     css: {
       preprocessorOptions: {
         scss: {
@@ -96,12 +54,6 @@ export default defineConfig(({ mode }) => {
           `,
           javascriptEnabled: true,
         },
-      },
-    },
-    test: {
-      globals: true,
-      coverage: {
-        reporter: ["text", "json", "html"],
       },
     },
   };

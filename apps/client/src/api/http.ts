@@ -1,7 +1,7 @@
 import Axios, { AxiosError, AxiosInstance } from "axios";
 
 import { tokenStorage } from "utilities/token-storage";
-import { API_BASE_URL_V2 } from "../utilities/envs";
+import { API_BASE_URL } from "../utilities/envs";
 
 export type QueryResult<T extends (...args: unknown[]) => unknown> = Awaited<
   ReturnType<T>
@@ -62,7 +62,7 @@ export default class Client {
 }
 
 export const axios = Axios.create({
-  baseURL: API_BASE_URL_V2,
+  baseURL: API_BASE_URL,
 });
 
 export const client = new Client(axios);

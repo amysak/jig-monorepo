@@ -8,8 +8,7 @@
     "build:cjs": "tsc --build",
     "build:esm": "tsc -p ./tsconfig.esm.json",
     "dev": "tsc --watch",
-    "clean": "tsc --build --clean && rm -rf dist",
-    "type-check": "tsc"
+    "clean": "tsc --build --clean && rm -rf dist"
   },
   "dependencies": {
     "class-transformer": "^0.5.1",
