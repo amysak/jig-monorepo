@@ -7,6 +7,9 @@ echo "Directory contents two levels up: $(ls ../../)"
 
 rm -rf dist
 cp -R ../../apps/server/src/database/entities src
+
+echo "Src contents: $(ls src)"
+
 find src/entities -type f -name '*.ts' -exec sed -i '' -e 's/type-defs/\.\.\/types/g' {} \; 
 
 tsc -p tsconfig.typegen.json
