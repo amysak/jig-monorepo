@@ -8,4 +8,5 @@ build
 .env
 .env.production
 
-dts
+packages/type-defs/src/generated
+packages/type-defs/src/entities
