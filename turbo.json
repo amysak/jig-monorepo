@@ -16,7 +16,7 @@
       "dependsOn": ["^build"]
     },
     "start": {
-      "dependsOn": ["^clean", "^build"]
+      "dependsOn": ["build"]
     },
     "dev": {
       "dependsOn": ["^build"],
