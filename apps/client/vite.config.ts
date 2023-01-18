@@ -13,7 +13,10 @@ export default defineConfig(({ mode }) => {
   const dirSrc = path.resolve(__dirname, "src").replace(/\\/g, "/");
 
   return {
-    server: { hmr: true, port: +env.PORT || 3000 },
+    server: { hmr: true, port: 3000 },
+    preview: {
+      port: +env.PORT || 4173,
+    },
     envPrefix: "APP_",
     define: {},
     build: {
