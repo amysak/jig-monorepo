@@ -48,18 +48,27 @@ export class SeedingService {
 
   async resetSequences(): Promise<void> {
     const result = await this.entityManager.query(`
-    SELECT sequence_name
-    FROM information_schema.sequences
-  `);
+      SELECT *
+      FROM information_schema.sequences
+    `);
+
+    console.log("result => ", result);
+
+    await this.sleep(60000);
 
     const sequences = result.map(
       (row: { sequence_name?: string }) => row["sequence_name"]
     );
 
     for (const sequence of sequences) {
-      await this.entityManager.query(
-        `ALTER SEQUENCE ${sequence} RESTART WITH 1`
-      );
+      try {
+        await this.entityManager.query(
+          `ALTER SEQUENCE ${sequence} RESTART WITH 1`
+        );
+      } catch (error) {
+        console.log("Error while resetting sequences:");
+        console.dir(error, { depth: null });
+      }
     }
   }
 
