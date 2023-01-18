@@ -12,7 +12,6 @@ else
   find src/entities -type f -name '*.ts' -exec sed -i -e 's/type-defs/\.\.\/types/g' {} \; 
 fi
 
-
 tsc -p tsconfig.typegen.json
 
 mkdir -p dist/es

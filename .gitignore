@@ -9,4 +9,4 @@ build
 .env.production
 
 packages/type-defs/src/generated
-packages/type-defs/src/entities
+packages/type-defs/entities
