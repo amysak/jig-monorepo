@@ -1,8 +1,7 @@
 import { FormDatePicker, FormInput, FormSelect } from "@jigbid/ui";
-import { Col, Form, Row, Typography } from "antd";
+import { Card, Col, Form, Row, Space, Typography } from "antd";
 
 import { JOB_STATUSES_OPTIONS } from "utilities/constants";
-import { tailLayout } from "../../core";
 
 const { Text } = Typography;
 
@@ -10,60 +9,56 @@ export const JobFormHeader = () => {
   const form = Form.useFormInstance();
 
   return (
-    <>
-      <Row className="bordered-row">
-        <Col span={11}>
-          <FormInput label="Job" name="name" />
-        </Col>
-        <Col offset={1} span={12}>
-          <FormInput {...tailLayout} label="Subdivision" name="subdivision" />
-        </Col>
+    <Space direction="vertical">
+      <Card>
+        <Row>
+          <Col span={11}>
+            <FormInput label="Job" name="name" />
+          </Col>
+          <Col offset={1} span={12}>
+            <FormInput label="Subdivision" name="subdivision" />
+          </Col>
 
-        <Col span={11}>
-          <FormDatePicker
-            {...tailLayout}
-            label="Estimated Date"
-            name="estimateDate"
-          />
-        </Col>
-        <Col offset={1} span={12}>
-          <FormDatePicker
-            {...tailLayout}
-            label="Proposed Date"
-            name="proposalDate"
-          />
-        </Col>
-      </Row>
+          <Col span={11}>
+            <FormDatePicker label="Estimated Date" name="estimateDate" />
+          </Col>
+          <Col offset={1} span={12}>
+            <FormDatePicker label="Proposed Date" name="proposalDate" />
+          </Col>
+        </Row>
+      </Card>
 
-      <Row className="bordered-row">
-        <Col span={8}>
-          <FormInput label="Lot Number" name="lotNumber" />
-        </Col>
+      <Card>
+        <Row>
+          <Col span={8}>
+            <FormInput label="Lot Number" name="lotNumber" />
+          </Col>
 
-        <Col span={8} style={{ paddingLeft: "3px" }}>
-          <FormSelect
-            options={JOB_STATUSES_OPTIONS}
-            label="Status"
-            name="status"
-          />
-        </Col>
-        <Col span={8}>
-          <Form.Item>
-            <Row justify="space-between" style={{ paddingLeft: "10px" }}>
-              <Text>Job ID</Text>
+          <Col span={8} style={{ paddingLeft: "3px" }}>
+            <FormSelect
+              options={JOB_STATUSES_OPTIONS}
+              label="Status"
+              name="status"
+            />
+          </Col>
+          <Col span={8}>
+            <Form.Item>
+              <Row justify="space-between" style={{ paddingLeft: "10px" }}>
+                <Text>Job ID</Text>
 
-              <Text>{form.getFieldValue("id")}</Text>
-            </Row>
-          </Form.Item>
-        </Col>
-        <Col span={24}>
-          <FormInput
-            textarea={{ style: { width: "100%" }, rows: 6 }}
-            label="Description"
-            name="description"
-          />
-        </Col>
-      </Row>
-    </>
+                <Text>{form.getFieldValue("id")}</Text>
+              </Row>
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <FormInput
+              textarea={{ style: { width: "100%" }, rows: 6 }}
+              label="Description"
+              name="description"
+            />
+          </Col>
+        </Row>
+      </Card>
+    </Space>
   );
 };

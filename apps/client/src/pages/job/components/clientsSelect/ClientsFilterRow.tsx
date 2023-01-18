@@ -1,4 +1,6 @@
-import { FormInput, FormSelect, Row } from "@jigbid/ui";
+import { Row } from "antd";
+
+import { FormInput, FormSelect } from "@jigbid/ui";
 import { ACTIVE_INACTIVE_STATUSES_OPTIONS } from "utilities/constants";
 
 export function ClientsFilterRow() {

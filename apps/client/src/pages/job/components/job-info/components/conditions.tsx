@@ -1,6 +1,7 @@
-import { FormInput } from "@jigbid/ui";
 import { Button, Modal } from "antd";
 import { useState } from "react";
+
+import { FormInput } from "@jigbid/ui";
 
 interface ConditionsProps {
   name: string | string[];

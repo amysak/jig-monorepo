@@ -2,6 +2,8 @@ import { Link } from "@tanstack/react-location";
 
 import LogoImg from "assets/images/logos/svgs/Icon.svg";
 
+import "./icon.scss";
+
 export const Logo = ({ scale = 35 }) => {
   return (
     <Link to="/" className="jiglogo">

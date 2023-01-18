@@ -1,75 +1,63 @@
-import { createElement, FC, ReactNode, useState } from "react";
-import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import type { LayoutProps, MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
-import headerLinks from "../header/links";
+import { PlusOutlined } from "@ant-design/icons";
+import { Link, useLocation } from "@tanstack/react-location";
+import { Button, Divider, Layout, Menu, Row, type LayoutProps } from "antd";
+import { FC, ReactNode, useState } from "react";
+
+import { Logo } from "../../icon";
+import { headerLinks } from "../header/links";
 import { sideLinks } from "../sidebar/links";
 
-import "./sidebar.scss";
+import "./style.scss";
 
-const { Header, Content, Footer, Sider } = Layout;
-
-const items2: MenuProps["items"] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-].map((icon, index) => {
-  const key = String(index + 1);
-
-  return {
-    key: `sub${key}`,
-    icon: createElement(icon),
-    label: `subnav ${key}`,
-
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
+const { Header, Content, Sider } = Layout;
 
 type MainLayoutProps = {
   children?: ReactNode;
 };
 
-const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
+export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
   children,
   ...props
 }) => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-
   const [isCollapsed, setIsCollapsed] = useState(true);
 
+  const location = useLocation();
+  const currentTabName = location.current.pathname.split("/")[1];
+
   return (
-    <Layout {...props}>
-      <Header className="header">
-        <div className="logo" />
+    <Layout {...props} className="pagelayout">
+      <Header className="apppageheader " style={{ justifyContent: "flex-end" }}>
         <Menu
+          defaultSelectedKeys={[currentTabName]}
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["2"]}
           items={headerLinks}
         />
       </Header>
       <Layout>
         <Sider
           className="sidepanel"
+          theme="dark"
           collapsible
           collapsedWidth="50px"
           collapsed={isCollapsed}
           onCollapse={(value) => setIsCollapsed(value)}
           width={200}
-          style={{ background: colorBgContainer }}
         >
+          <Row className={`sidepanel__header`} justify="space-around">
+            <Logo />
+
+            <Link to="/start-bid">
+              <Button
+                shape="round"
+                className="sidepanel__header-btn"
+                icon={<PlusOutlined />}
+              />
+            </Link>
+          </Row>
+
+          <Divider className="x5" />
+
           <Menu
             mode="inline"
             theme="dark"
@@ -80,17 +68,16 @@ const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
           />
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
+          {/* <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
+          </Breadcrumb> */}
           <Content
             style={{
               padding: 24,
               margin: 0,
               minHeight: 280,
-              background: colorBgContainer,
             }}
           >
             {children}

@@ -1,8 +1,9 @@
 import { ResponsiveLine, Serie } from "@nivo/line";
+import { Col, Row } from "antd";
 import { isNil, upperFirst } from "lodash-es";
-import React, { CSSProperties, useMemo } from "react";
+import { CSSProperties, useMemo } from "react";
 
-import { Col, Row, SkeletonInput, Title } from "@jigbid/ui";
+import { SkeletonInput, Title } from "@jigbid/ui";
 import {
   DASHBOARD_ENTITIES,
   type AccountStats,

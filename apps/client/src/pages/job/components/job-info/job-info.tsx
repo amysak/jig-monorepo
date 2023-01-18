@@ -1,6 +1,6 @@
 import { PageSkeleton } from "@jigbid/ui";
 import { useMatch } from "@tanstack/react-location";
-import { Form, Row } from "antd";
+import { Form, Space } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { debounce, findKey } from "lodash-es";
 import { Job } from "type-defs";
@@ -65,12 +65,12 @@ export function JobInfoForm() {
   };
 
   return (
-    <Row justify="center">
+    <Space direction="vertical" style={{ width: "100%" }}>
       <Form form={form} onValuesChange={onValuesChange}>
         <JobFormHeader />
         <JobFormTerms />
         <JobFormPreferences />
       </Form>
-    </Row>
+    </Space>
   );
 }

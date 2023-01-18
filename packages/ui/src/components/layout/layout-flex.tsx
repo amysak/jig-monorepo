@@ -1,7 +1,6 @@
-import { Col, Row, type ColProps, type RowProps } from "antd";
-import { Children, cloneElement, ReactElement } from "react";
+import { Children, cloneElement, FC, ReactElement } from "react";
 
-interface WithLayoutProps {
+interface FormLayoutProps {
   children: ReactElement | ReactElement[];
   layout?: {
     labelCol: { span: number };
@@ -9,42 +8,15 @@ interface WithLayoutProps {
   };
 }
 
-export const RowWithLayout = ({
-  children,
-  layout,
-  ...props
-}: RowProps & WithLayoutProps) => {
-  return (
-    <Row {...props}>
-      {layout
-        ? Children.map(children, (child) =>
-            cloneElement(child, {
-              ...child.props,
-              ...layout,
-            })
-          )
-        : children}
-    </Row>
-  );
-};
+export const FormLayout: FC<FormLayoutProps> = ({ layout, children }) => {
+  const wrappedItems = layout
+    ? Children.map(children, (child) =>
+        cloneElement(child, {
+          ...child.props,
+          ...layout,
+        })
+      )
+    : children;
 
-export const ColWithLayout = ({
-  children,
-  layout,
-  ...props
-}: ColProps & WithLayoutProps) => {
-  return (
-    <Col {...props}>
-      {layout
-        ? Children.map(children, (child) =>
-            cloneElement(child, {
-              ...child.props,
-              ...layout,
-            })
-          )
-        : children}
-    </Col>
-  );
+  return <>{wrappedItems}</>;
 };
-
-export { ColWithLayout as Col, RowWithLayout as Row };

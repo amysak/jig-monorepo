@@ -1,4 +1,3 @@
-import { GetMeResult } from "type-defs";
 import { FallbackUI } from "@jigbid/ui";
 import {
   MakeGenerics,
@@ -6,23 +5,23 @@ import {
   ReactLocation,
   type Route,
 } from "@tanstack/react-location";
+import { GetMeResult } from "type-defs";
+
+import { MainLayout } from "components/layout";
 import { useAuthorization } from "hooks";
 
 const ProtectedRoute = ({ children }) => {
   const { data, isLoading } = useAuthorization();
-
-  console.log("data => ", data);
 
   if (isLoading) {
     return <FallbackUI />;
   }
 
   if (!data?.account) {
-    // user is not authenticated
     return <Navigate to="/signin" />;
   }
 
-  return children;
+  return <MainLayout className="dashboardlayout">{children}</MainLayout>;
 };
 
 const PublicRoute = ({ children }) => {
@@ -33,7 +32,6 @@ const PublicRoute = ({ children }) => {
   }
 
   if (data?.account) {
-    // user is not authenticated
     return <Navigate to="/dashboard" />;
   }
 
@@ -80,11 +78,33 @@ export const routes: Route<LocationGenerics>[] = [
   // },
   {
     path: "jobs",
-    element: () => import("pages/job").then((res) => <res.default />),
     children: [
       {
+        path: "/",
+        element: () =>
+          import("pages/jobs").then((res) => (
+            <ProtectedRoute>
+              <res.default />
+            </ProtectedRoute>
+          )),
+      },
+      {
         path: ":id",
-        element: () => import("pages/job").then((res) => <res.default />),
+        children: [
+          {
+            path: "/",
+            element: <Navigate to="info" />,
+          },
+          {
+            path: ":tabName",
+            element: () =>
+              import("pages/job").then((res) => (
+                <ProtectedRoute>
+                  <res.default />
+                </ProtectedRoute>
+              )),
+          },
+        ],
       },
     ],
   },

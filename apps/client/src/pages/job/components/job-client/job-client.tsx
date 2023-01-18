@@ -1,22 +1,16 @@
 import { LinkOutlined } from "@ant-design/icons";
-import { Client } from "type-defs";
-import { Alert, Button, Col, FormInput, PageSkeleton, Row } from "@jigbid/ui";
 import { useMatch } from "@tanstack/react-location";
-import { Divider, Form, message, Typography } from "antd";
+import { Alert, Button, Col, Divider, Form, message, Row } from "antd";
 import { debounce } from "lodash-es";
+import { Client } from "type-defs";
 
+import { FormInput, PageSkeleton } from "@jigbid/ui";
 import { api } from "api";
-// import {
-//   MailingAddressForm,
-//   PhysicalAddressForm,
-// } from "components/molecules/addressforms";
 import { useMutateClient, useQueryJob } from "hooks/queries";
 import { LocationGenerics } from "router";
+
 import { ClientsSelect } from "../clientsSelect/ClientsSelect";
-
-const { Title } = Typography;
-
-const footerStyle = {};
+import { AddressForm } from "./components";
 
 const layout = {
   labelCol: { span: 6 },
@@ -100,37 +94,22 @@ export function JobClientForm() {
 
         <Divider />
 
-        <Row>
-          <Row>
-            <Col span={11}>
-              <Title level={4}>Billing Address</Title>
-              {/* <MailingAddressForm title="Billing Address" requireContact /> */}
-            </Col>
-
-            <Col offset={2} span={11}>
-              <Title level={4}>Shipping Address</Title>
-              {/* <PhysicalAddressForm
-                title="Shipping Address"
-                useCopyAddressbtn={false}
-                requireContact
-              /> */}
-            </Col>
-          </Row>
-
-          <Col span={11} style={footerStyle}>
-            <Alert
-              type="warning"
-              message="Changing the billing address will change the information in the client file."
-            />
+        <Row justify="space-between" style={{ padding: "0 2rem" }}>
+          <Col span={11}>
+            <AddressForm title={"Billing Address"} />
           </Col>
 
-          <Col offset={2} span={11} style={footerStyle}>
-            <Alert
-              type="warning"
-              message="You may change the shipping address independently for each job. This will not change the client file."
-            />
+          <Col span={11}>
+            <AddressForm title={"Shipping Address"} />
           </Col>
         </Row>
+
+        <Divider />
+
+        <Alert
+          type="warning"
+          message="Changing this will not affect the client's information. This overrides the address for this job only."
+        />
       </Form>
     </>
   );

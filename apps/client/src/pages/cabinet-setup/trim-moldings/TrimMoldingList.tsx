@@ -1,6 +1,6 @@
-import { FormInput, FormSelect, Row } from "@jigbid/ui";
-import { Form } from "antd";
+import { Form, Row } from "antd";
 
+import { FormInput, FormSelect } from "@jigbid/ui";
 import {
   ACTIVE_INACTIVE_STATUSES_OPTIONS,
   TRIM_MOLDING_CLASSIFICATIONS_OPTIONS,

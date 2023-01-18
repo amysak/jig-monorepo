@@ -26,7 +26,6 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.0",
     "@ant-design/pro-layout": "^7.6.1",
-    "type-defs": "workspace:*",
     "@jigbid/ui": "workspace:*",
     "@nivo/bar": "^0.80.0",
     "@nivo/core": "^0.80.0",
@@ -50,7 +49,9 @@
     "react-select": "5.7.0",
     "react-sticky": "^6.0.3",
     "sass": "^1.57.1",
-    "valtio": "^1.9.0"
+    "type-defs": "workspace:*",
+    "valtio": "^1.9.0",
+    "vite-plugin-svgr": "^2.4.0"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
@@ -74,10 +75,10 @@
     "tsconfig": "workspace:*",
     "typescript": "^4.8.4",
     "vite": "^4.0.4",
+    "vite-imagetools": "^4.0.15",
     "vite-plugin-checker": "^0.5.3",
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-imp": "^2.3.1",
-    "vite-plugin-svgr": "^2.4.0",
     "vite-tsconfig-paths": "^4.0.3"
   },
   "msw": {

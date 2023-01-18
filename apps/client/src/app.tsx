@@ -1,16 +1,15 @@
 // import Notification from './components/organisms/notification'
-import { FallbackUI } from "@jigbid/ui";
 import { Outlet, Router } from "@tanstack/react-location";
 import { ReactLocationDevtools } from "@tanstack/react-location-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ConfigProvider, message } from "antd";
 
+import { FallbackUI } from "@jigbid/ui";
+
 import { ErrorBoundary } from "components/error";
-import MainLayout from "components/layout/main";
 import { formatError } from "utilities/error";
 import { theme } from "utilities/theme";
-import { api } from "./api";
 import { location, routes } from "./router";
 
 // The results of this query will be cached like a normal query
@@ -39,11 +38,6 @@ export const queryClient = new QueryClient({
   },
 });
 
-queryClient.prefetchQuery({
-  queryKey: ["account", "me"],
-  queryFn: api.auth.getMe,
-});
-
 export const App = () => {
   return (
     <ErrorBoundary>
@@ -56,9 +50,7 @@ export const App = () => {
         >
           <ReactLocationDevtools position="top-right" />
           <ConfigProvider theme={theme} componentSize="small">
-            <MainLayout className="dashboardlayout">
-              <Outlet />
-            </MainLayout>
+            <Outlet />
           </ConfigProvider>
         </Router>
       </QueryClientProvider>

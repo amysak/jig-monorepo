@@ -1,13 +1,9 @@
-import { Affix, Layout, Menu, MenuProps } from "antd";
-import { AppDrawer } from "components/layout/sidebar";
-import { isValidElement, ReactNode, useState } from "react";
+import { Layout } from "antd";
+import { isValidElement, ReactNode } from "react";
 
-import { useLocation } from "@tanstack/react-location";
 import Toolbar from "components/toolbar";
-import { capitalize } from "lodash-es";
-import { LocationGenerics } from "router";
-import headerLinks from "../header/links";
-import "./uilayout.scss";
+
+import "./style.scss";
 
 const { Content } = Layout;
 
@@ -23,66 +19,20 @@ export const UILayout = ({
   className,
   ...props
 }: MainLayoutProps) => {
-  const location = useLocation<LocationGenerics>();
-
-  const [current, setCurrent] = useState(
-    capitalize(location.current.pathname.replace(/\//g, ""))
-  );
-
   const hasToolbar = isValidElement(ToolbarContent);
-
-  const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
-    setCurrent(capitalize(e.key));
-  };
 
   return (
     <Layout className={`pagelayout ${className}`}>
-      <AppDrawer />
-      <Layout
-        style={{
-          minHeight: "100vh",
-          backgroundColor: "transparent",
-        }}
+      {/* <div className="pagelayout__contentwrapper"> */}
+      {hasToolbar ? <Toolbar>{ToolbarContent}</Toolbar> : null}
+      <Content
+        className={`${
+          hasToolbar ? "pagelayout__contenttoolbar" : "pagelayout__content"
+        }`}
       >
-        {/* <Affix className="apppageheader">
-          <Menu
-            onClick={onClick}
-            selectedKeys={[current]}
-            mode="horizontal"
-            items={headerLinks}
-          />
-        </Affix> */}
-        {/* <Sticky topOffset={100}>
-            {({ style, isSticky }) => {
-              return (
-                <header
-                  style={{
-                    zIndex: 1500,
-                    width: "100%",
-                    ...style,
-                  }}
-                  className={isSticky ? "animated slideInDown" : ""}
-                >
-                  <Header>
-                    <AppHeader />
-                  </Header>
-                </header>
-              );
-            }}
-          </Sticky> */}
-
-        <div className="pagelayout__contentwrapper">
-          {hasToolbar ? <Toolbar>{ToolbarContent}</Toolbar> : null}
-          <Content
-            className={`${
-              hasToolbar ? "pagelayout__contenttoolbar" : "pagelayout__content"
-            }`}
-          >
-            {props.children}
-          </Content>
-        </div>
-      </Layout>
+        {props.children}
+      </Content>
+      {/* </div> */}
     </Layout>
   );
 };

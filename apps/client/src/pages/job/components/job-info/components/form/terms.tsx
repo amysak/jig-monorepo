@@ -1,12 +1,13 @@
-import { FormRadioSet, FormSelect, PageSkeleton } from "@jigbid/ui";
-import { Button, Col, Form, Modal, Row, Typography } from "antd";
+import { Button, Card, Col, Form, Modal, Row, Space, Typography } from "antd";
 import { useState } from "react";
 
+import { FormRadioSet, FormSelect, PageSkeleton } from "@jigbid/ui";
 import { useQueryTerms } from "hooks/queries";
-import { FormJob } from "../../core";
-import { Conditions } from "../ant/conditions";
-import { TermsPayment } from "../modal";
 import { isMultiTerms } from "type-defs";
+
+import { FormJob } from "../../core";
+import { Conditions } from "../conditions";
+import { TermsPayment } from "../modal";
 
 const { Text, Paragraph, Title } = Typography;
 
@@ -40,64 +41,71 @@ export const JobFormTerms = () => {
   const toggleModal = () => setIsModalOpen((prevOpen) => !prevOpen);
 
   return (
-    <Row className="bordered-row">
-      <Col span={18}>
-        <Title level={4}>Terms</Title>
-        <Paragraph strong>
-          Edit Default Terms and Conditions if necessary (DO NOT leave blank)
-        </Paragraph>
-      </Col>
-      <Col span={6}>
-        <Button size="small" onClick={toggleModal}>
-          Terms Details
-        </Button>
-        <Modal open={isModalOpen} onCancel={toggleModal} footer={null}>
-          <TermsPayment terms={formTerms} />
-        </Modal>
-      </Col>
+    <Space direction="vertical" style={{ margin: "8px 0 5px", width: "100%" }}>
+      <Card>
+        <Row>
+          <Col span={18}>
+            <Title level={4}>Terms</Title>
+            <Paragraph strong>
+              Edit Default Terms and Conditions if necessary (DO NOT leave
+              blank)
+            </Paragraph>
+          </Col>
+          <Col span={6}>
+            <Button size="small" onClick={toggleModal}>
+              Terms Details
+            </Button>
+            <Modal open={isModalOpen} onCancel={toggleModal} footer={null}>
+              <TermsPayment terms={formTerms} />
+            </Modal>
+          </Col>
+        </Row>
 
-      <Col span={16}>
-        <FormSelect
-          options={termsOptions}
-          label="Terms Preset"
-          name={["preferences", "terms", "id"]}
-        />
+        <Row>
+          <Col span={16}>
+            <FormSelect
+              options={termsOptions}
+              label="Terms Preset"
+              name={["preferences", "terms", "id"]}
+            />
 
-        {!isMultiTerms(formTerms) && formTerms.adjustTotal && (
-          <FormRadioSet
-            options={[
-              { label: "yes", value: true },
-              { label: "no", value: false },
-            ]}
-            label="Adjust Total to compensate for discount amount?"
-            name={["preferences", "terms", "adjustTotal"]}
-          />
-        )}
+            {!isMultiTerms(formTerms) && formTerms.adjustTotal && (
+              <FormRadioSet
+                options={[
+                  { label: "yes", value: true },
+                  { label: "no", value: false },
+                ]}
+                label="Adjust Total to compensate for discount amount?"
+                name={["preferences", "terms", "adjustTotal"]}
+              />
+            )}
 
-        <Paragraph>
-          The Terms for this Estimate or Proposal will read as follows:
-        </Paragraph>
+            <Paragraph>
+              The Terms for this Estimate or Proposal will read as follows:
+            </Paragraph>
 
-        <Paragraph style={{ paddingRight: "10px" }} strong>
-          {formTerms.text}
-        </Paragraph>
-      </Col>
+            <Paragraph style={{ paddingRight: "10px" }} strong>
+              {formTerms.text}
+            </Paragraph>
+          </Col>
 
-      <Col span={8} style={{ textAlign: "center" }}>
-        <Text>Terms Choice</Text>
+          <Col span={8} style={{ textAlign: "center" }}>
+            <Text>Terms Choice</Text>
 
-        <br />
-        <Conditions
-          title="Estimate Conditions"
-          name={["preferences", "terms", "conditions", "estimate"]}
-        />
+            <br />
+            <Conditions
+              title="Estimate Conditions"
+              name={["preferences", "terms", "conditions", "estimate"]}
+            />
 
-        <br />
-        <Conditions
-          title="Proposal Conditions"
-          name={["preferences", "terms", "conditions", "proposal"]}
-        />
-      </Col>
-    </Row>
+            <br />
+            <Conditions
+              title="Proposal Conditions"
+              name={["preferences", "terms", "conditions", "proposal"]}
+            />
+          </Col>
+        </Row>
+      </Card>
+    </Space>
   );
 };

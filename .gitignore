@@ -8,5 +8,5 @@ build
 .env
 .env.production
 
-packages/type-defs/src/generated
-packages/type-defs/entities
+packages/type-defs/**/generated
+packages/type-defs/**/entities

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import { App } from "./app";
 
-import "./assets/styles/index.scss";
+import "assets/styles/index.scss";
 
 export const rootNode = document.getElementById("root");
 if (!rootNode) {

@@ -1,7 +1,7 @@
 {
   "extends": "tsconfig/react.json",
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "src",
     "lib": ["ESNext", "DOM", "DOM.Iterable", "ScriptHost"],
     "paths": {
       "api/*": ["api/*"],

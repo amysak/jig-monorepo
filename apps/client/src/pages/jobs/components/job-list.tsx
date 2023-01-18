@@ -130,20 +130,9 @@ export function JobList() {
     queryClient.invalidateQueries(["jobs", filters]);
   };
 
-  const initialPath = {
-    title: "Jobs",
-    path: "/jobs",
-  };
-
   return (
-    <UILayout
-    // ToolbarContent={
-    //   <PageHeader initial={initialPath} component={<NewJobPopover />} />
-    // }
-    >
-      <Form form={form} onValuesChange={onValuesChange} layout="inline">
-        <JobsFilterRow />
-      </Form>
+    <>
+      <JobsFilterRow />
 
       <Table
         // {...tableProps}
@@ -161,7 +150,7 @@ export function JobList() {
         rowKey="id"
         className="clickablerows pagewrapper__maincontent nomargin"
       />
-    </UILayout>
+    </>
   );
 }
 

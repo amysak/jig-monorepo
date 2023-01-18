@@ -1,7 +1,7 @@
-import type { DashboardEntities } from "type-defs";
-import { Col, Row } from "@jigbid/ui";
+import { Col, Row } from "antd";
 import dayjs from "dayjs";
 import { FC, useCallback } from "react";
+import type { DashboardEntities } from "type-defs";
 
 import { useLineSettingsType } from "../hooks/useLineSettings";
 import { Ranges } from "../utils";

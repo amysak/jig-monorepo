@@ -1,4 +1,4 @@
-import { Col, Row } from "@jigbid/ui";
+import { Col, Row } from "antd";
 import { FC } from "react";
 import { Clients } from "./Clients";
 import { Jobs } from "./Jobs";

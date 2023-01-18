@@ -1,10 +1,8 @@
 import { useMatch, useNavigate } from "@tanstack/react-location";
-import { Col, Row, Tabs } from "antd";
+import { Tabs } from "antd";
 
 import { UILayout } from "components/layout";
-import { NewJobPopover } from "components/popover-form";
 import { LocationGenerics } from "router";
-import { cleanParam } from "utilities";
 import {
   JobClientForm,
   JobInfoForm,
@@ -23,6 +21,7 @@ export const Job = () => {
   const {
     params: { id, tabName },
   } = useMatch<LocationGenerics>();
+
   const navigate = useNavigate();
 
   return (
@@ -34,17 +33,14 @@ export const Job = () => {
     // />
     // }
     >
-      <Col className="pagewrapper__maincontent nomargin">
-        <Row>
-          <Tabs
-            defaultActiveKey="info"
-            onChange={(tabName) => navigate({ to: `/jobs/${id}/${tabName}` })}
-            activeKey={tabName}
-            style={{ width: "100%" }}
-            items={panes}
-          />
-        </Row>
-      </Col>
+      <Tabs
+        className="pagewrapper__maincontent nomargin"
+        defaultActiveKey={tabName}
+        onChange={(tabName) => navigate({ to: `/jobs/${id}/${tabName}` })}
+        activeKey={tabName}
+        style={{ width: "100%" }}
+        items={panes}
+      />
     </UILayout>
   );
 };

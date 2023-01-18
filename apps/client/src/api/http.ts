@@ -7,12 +7,6 @@ export type QueryResult<T extends (...args: unknown[]) => unknown> = Awaited<
   ReturnType<T>
 >;
 
-// TODO: this needs to be redesigned. the way it should look is us importing bunch of stuff
-// from files in that directory and joining each individual import (all its contents like `* from`)
-// to a field in api object exported from this directory.
-// exported object: api: { jobs: { <methods> }, accounts: { <methods> }, ... }
-// for example, instead of importing getJobs, we could import `api` object and call:
-// const jobs = api.jobs.getJobs();
 export default class Client {
   constructor(private _client: AxiosInstance) {
     const token = tokenStorage.get();

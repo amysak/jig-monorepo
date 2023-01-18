@@ -5,7 +5,7 @@ import { Link } from "@tanstack/react-location";
 import { Button, Popover, Row, Table, Typography } from "antd";
 import { ColumnType } from "antd/es/table";
 
-import DeleteSVG from "assets/images/delete";
+import DeleteIcon from "assets/images/delete.svg";
 import { useMatch } from "hooks";
 import { useCreateRoom, useDeleteRoom, useQueryRooms } from "hooks/queries";
 import { NewRoom } from "./components";
@@ -64,7 +64,7 @@ export function JobRoomList() {
               Duplicate Room
             </Button>
             <Icon
-              component={DeleteSVG}
+              component={DeleteIcon}
               onClick={() => deleteRoom(room.id.toString())}
               style={{ marginLeft: "10px" }}
             />

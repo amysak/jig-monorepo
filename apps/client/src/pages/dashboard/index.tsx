@@ -1,16 +1,14 @@
-import { Card, Col, FallbackUI, Row, TabPane, Tabs } from "@jigbid/ui";
 import { Link } from "@tanstack/react-location";
 import { useQuery } from "@tanstack/react-query";
+import { Card, Col, Row } from "antd";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
+import { FallbackUI, TabPane, Tabs } from "@jigbid/ui";
 import { api } from "api";
 import { DashboardLines } from "pages/dashboard/DashboardLine";
 
-import UILayout from "../../components/layout/ui";
-
 import "./dashboard.scss";
-import MainLayout from "components/layout/main";
 
 dayjs.extend(relativeTime);
 

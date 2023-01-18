@@ -1,6 +1,7 @@
+import { Row } from "antd";
 import React, { FC, useMemo } from "react";
 
-import { Row, Text } from "@jigbid/ui";
+import { Text } from "@jigbid/ui";
 import type { DashboardEntities } from "type-defs";
 
 import { LineColorsByEntities } from "../utils";

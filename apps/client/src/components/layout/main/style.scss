@@ -1,3 +1,16 @@
+.pagelayout {
+  height: 100%;
+  position: relative;
+  background-color: $jig-background;
+  background-image: url(#{$assetPath}/banner/banner-bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  max-width: 2000px;
+  margin: 0 auto;
+}
+
 .sidepanel {
   &__header {
     padding: 5px 0;

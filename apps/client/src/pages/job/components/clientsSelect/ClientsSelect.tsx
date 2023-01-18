@@ -1,6 +1,8 @@
-import { Client } from "type-defs";
-import { Button, Popover } from "@jigbid/ui";
+import { Button } from "antd";
 import { FC } from "react";
+
+import { Popover } from "@jigbid/ui";
+import { Client } from "type-defs";
 
 import { ClientsList } from "./ClientsList";
 

@@ -23,7 +23,6 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx,md}\"",
     "lint:fix": "eslint . --fix && prettier --write \"**/*.{tsx,ts,js,json,css,md}\"",
-    "migrate:run": "pnpm --filter server migrate:run",
     "docker:start": "docker-compose --env-file ./apps/server/.env up -d && pnpm migrate:run",
     "docker:restart": "docker-compose down && docker-compose up -d && pnpm migrate:run"
   },

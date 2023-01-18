@@ -1,7 +1,16 @@
+import { UILayout } from "components/layout";
 import { JobList } from "./components";
 
 function JobsPage() {
-  return <JobList />;
+  return (
+    <UILayout
+    // ToolbarContent={
+    //   <PageHeader initial={initialPath} component={<NewJobPopover />} />
+    // }
+    >
+      <JobList />
+    </UILayout>
+  );
 }
 
 export default JobsPage;
