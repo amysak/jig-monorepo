@@ -8,7 +8,7 @@ import {
   MultiPaymentTerms,
   NetTerms,
   Room as RoomEntity,
-} from "../dts";
+} from "../entities";
 
 export type Terms = MultiPaymentTerms | NetTerms;
 

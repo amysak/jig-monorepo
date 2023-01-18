@@ -3,8 +3,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "pnpm run build:cjs && pnpm run build:esm && pnpm build:dts",
-    "build:dts": "find ./ -type f -name '*.d.ts' -exec sed -i '' -e 's/type-defs/\\.\\.\\/types/g' {} \\; && cp -R src/dts dist && cp -R src/dts dist/es",
+    "build": "pnpm run build:cjs && pnpm run build:esm",
+    "typegen": "bash bin/typegen.sh",
     "build:cjs": "tsc --build",
     "build:esm": "tsc -p ./tsconfig.esm.json",
     "dev": "tsc --watch",

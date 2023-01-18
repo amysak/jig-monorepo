@@ -1,5 +1,6 @@
 ## Implementation checklist:
 
+- [x] Finalize typegen
 - [ ] Setup CI using Railway
 - [ ] Share eslint config and remove dep from root
 

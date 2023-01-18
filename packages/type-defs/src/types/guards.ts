@@ -1,4 +1,4 @@
-import { AccountPreferences, MultiPaymentTerms } from "../dts";
+import { AccountPreferences, MultiPaymentTerms } from "../entities";
 import { Preferences, Terms } from "./models";
 
 export function isAccountPreferences(

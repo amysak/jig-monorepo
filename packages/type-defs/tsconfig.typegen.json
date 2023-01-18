@@ -1,0 +1,20 @@
+{
+  "extends": "tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "generated",
+    "declarationMap": true,
+
+    "target": "ESNext",
+    "lib": ["esnext", "dom"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": false,
+    "strictPropertyInitialization": false
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": ["src/entities/*.ts"]
+}

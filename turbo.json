@@ -5,13 +5,12 @@
       "outputs": ["dist/**"],
       "dependsOn": ["^build"]
     },
+    "type-defs#typegen": {
+      "outputs": ["dist/**"]
+    },
     "type-defs#build": {
       "outputs": ["dist/**"],
-      "dependsOn": ["clean"]
-    },
-    "server#typegen": {
-      "dependsOn": ["type-defs#build"],
-      "outputs": ["packages/type-defs/src/dts/**"]
+      "dependsOn": ["typegen"]
     },
     "lint": {
       "dependsOn": ["^build"]
