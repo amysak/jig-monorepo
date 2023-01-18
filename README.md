@@ -1,14 +1,14 @@
 ## Implementation checklist:
 
 - [x] Finalize typegen
-- [ ] Setup CI using Railway
+- [x] Setup CI using Railway
 - [ ] Share eslint config and remove dep from root
 
 ### Project setup
 
 `pnpm i && pnpm docker:start && pnpm dev`
 
-Project is being moved to Railway.app
+🎉Project is live on Railway.app!🚀
 
 Health-check route available at `/health`
 
