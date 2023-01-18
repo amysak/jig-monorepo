@@ -52,10 +52,6 @@ export class SeedingService {
       FROM information_schema.sequences
     `);
 
-    console.log("result => ", result);
-
-    await this.sleep(60000);
-
     const sequences = result.map(
       (row: { sequence_name?: string }) => row["sequence_name"]
     );
