@@ -2,6 +2,8 @@
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 cd ..
+echo "Current directory: $(pwd)"
+echo "Directory contents two levels up: $(ls ../../)"
 
 rm -rf dist
 cp -R ../../apps/server/src/database/entities src
