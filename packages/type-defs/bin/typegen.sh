@@ -9,8 +9,9 @@ rm -rf dist
 cp -R ../../apps/server/src/database/entities src
 
 echo "Src contents: $(ls src)"
+echo "Find results: $(find ./src/entities -type f -name '*.ts')"
 
-find src/entities -type f -name '*.ts' -exec sed -i '' -e 's/type-defs/\.\.\/types/g' {} \; 
+find ./src/entities -type f -name '*.ts' -exec sed -i '' -e 's/type-defs/\.\.\/types/g' {} \; 
 
 tsc -p tsconfig.typegen.json
 
