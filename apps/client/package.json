@@ -39,6 +39,7 @@
     "antd": "^5.1.4",
     "axios": "^1.2.2",
     "client-v1": "workspace:*",
+    "d3": "^5.16.0",
     "dayjs": "^1.11.7",
     "dotenv": "16.0.3",
     "framer-motion": "^8.2.4",
@@ -54,6 +55,7 @@
     "vite-plugin-svgr": "^2.4.0"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.0",
     "@types/lodash-es": "^4.17.6",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",

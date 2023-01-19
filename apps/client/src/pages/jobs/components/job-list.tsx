@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-location";
+import { Link, useSearch } from "@tanstack/react-location";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Form, Input, Row, Select, Table } from "antd";
 import dayjs from "dayjs";

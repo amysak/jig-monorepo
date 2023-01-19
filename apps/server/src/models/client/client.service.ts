@@ -3,8 +3,12 @@ import { InjectRepository } from "@nestjs/typeorm";
 import type { Repository } from "typeorm";
 
 import { Account, Client } from "database/entities";
-import type { CreateClientDto } from "./dto/create-client.dto";
-import type { UpdateClientDto } from "./dto/update-client.dto";
+import {
+  CreateClientDto,
+  PaginationDto,
+  UpdateClientDto,
+  WithCountDto,
+} from "type-defs";
 
 @Injectable()
 export class ClientService {
@@ -25,15 +29,15 @@ export class ClientService {
 
   async findByAccountId(
     accountId: number,
-    opts?: { limit?: number; skip?: number }
-  ) {
+    opts?: PaginationDto
+  ): Promise<WithCountDto<Client>> {
     const accountClients = await this.clientRepository.find({
       where: { account: { id: accountId } },
-      skip: opts?.skip,
+      skip: (opts?.page - 1) * opts?.limit,
       take: opts?.limit,
     });
 
-    return { count: accountClients.length, clients: accountClients };
+    return { count: accountClients.length, data: accountClients };
   }
 
   async findAll() {

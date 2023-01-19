@@ -2,12 +2,12 @@ import { Row } from "antd";
 import React, { FC, useMemo } from "react";
 
 import { Text } from "@jigbid/ui";
-import type { DashboardEntities } from "type-defs";
+import type { StatsOption } from "type-defs";
 
 import { LineColorsByEntities } from "../utils";
 
 interface TitleProps {
-  entity: DashboardEntities;
+  entity: StatsOption;
   period: string;
 }
 

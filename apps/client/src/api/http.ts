@@ -1,5 +1,8 @@
 import Axios, { AxiosError, AxiosInstance } from "axios";
 
+import { LocationGenerics } from "router";
+import { PaginationDto } from "type-defs";
+
 import { tokenStorage } from "utilities/token-storage";
 import { API_BASE_URL } from "../utilities/envs";
 
@@ -52,6 +55,14 @@ export default class Client {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
     this._client.defaults.headers.common = headers;
+  }
+
+  getQueryString(search?: LocationGenerics["Search"]) {
+    const query = new URLSearchParams(search as any);
+
+    console.log("query.toString() => ", query.toString());
+
+    return query.toString();
   }
 }
 

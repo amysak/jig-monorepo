@@ -2,6 +2,7 @@ import { useMatch, useNavigate } from "@tanstack/react-location";
 import { Tabs } from "antd";
 
 import { UILayout } from "components/layout";
+import { useQueryJob } from "hooks/queries";
 import { LocationGenerics } from "router";
 import {
   JobClientForm,
@@ -22,21 +23,20 @@ export const Job = () => {
     params: { id, tabName },
   } = useMatch<LocationGenerics>();
 
+  console.log("useMatch() => ", useMatch());
+
+  const { data: job, isFetching } = useQueryJob(id);
+
   const navigate = useNavigate();
 
   return (
-    <UILayout
-    // ToolbarContent={
-    // <PageHeader
-    //   label={cleanParam(tabName ?? "")}
-    //   component={<NewJobPopover />}
-    // />
-    // }
-    >
+    <UILayout title={`${!isFetching && job ? job.name : "Job ..."}`}>
       <Tabs
         className="pagewrapper__maincontent nomargin"
         defaultActiveKey={tabName}
-        onChange={(tabName) => navigate({ to: `/jobs/${id}/${tabName}` })}
+        onChange={(tabName) =>
+          navigate({ to: `/jobs/${id}/${tabName}`, replace: true })
+        }
         activeKey={tabName}
         style={{ width: "100%" }}
         items={panes}

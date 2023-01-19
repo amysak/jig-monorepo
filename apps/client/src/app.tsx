@@ -10,7 +10,7 @@ import { FallbackUI } from "@jigbid/ui";
 import { ErrorBoundary } from "components/error";
 import { formatError } from "utilities/error";
 import { theme } from "utilities/theme";
-import { location, routes } from "./router";
+import { location, LocationGenerics, routes } from "./router";
 
 // The results of this query will be cached like a normal query
 // await queryClient.prefetchQuery({
@@ -43,7 +43,7 @@ export const App = () => {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools position="bottom-right" />
-        <Router
+        <Router<LocationGenerics>
           location={location}
           routes={routes}
           defaultPendingElement={<FallbackUI />}

@@ -11,7 +11,7 @@ interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
 
-declare module "*&imagetools" {
+declare module "*&meta&imagetools" {
   interface OutputMetadata {
     src: string; // URL of the generated image
     width: number; // Width of the image
@@ -29,7 +29,18 @@ declare module "*&imagetools" {
   }
 
   const output: OutputMetadata;
-  export default output;
+  export = output;
+}
+
+declare module "*&imagetools" {
+  /**
+   * actual types
+   * - code https://github.com/JonasKruckenberg/imagetools/blob/main/packages/core/src/output-formats.ts
+   * - docs https://github.com/JonasKruckenberg/imagetools/blob/main/docs/guide/getting-started.md#metadata
+   */
+
+  const output: string;
+  export = output;
 }
 
 declare module "*.svg" {

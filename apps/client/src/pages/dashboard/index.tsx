@@ -63,7 +63,7 @@ function Dashboard() {
     isLoading: clientsLoading,
     error: clientsError,
   } = useQuery(["clients", NUMBER_TO_GET], () =>
-    api.clients.getAll(`limit=${NUMBER_TO_GET}`)
+    api.clients.getAll({ limit: NUMBER_TO_GET })
   );
 
   const {
@@ -97,7 +97,7 @@ function Dashboard() {
             <Tabs defaultActiveKey="clients">
               <TabPane tab="Clients" key="clients">
                 <ActivityCard
-                  entries={clientsData?.clients}
+                  entries={clientsData?.data}
                   loading={loading}
                   label="Clients"
                 />

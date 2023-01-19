@@ -6,10 +6,14 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from "@nestjs/common";
 
 import { JwtAuthGuard } from "auth/guards";
+import { ReqUser } from "common/decorators";
+import { PaginationDto, Payload } from "type-defs";
+
 import { CabinetService } from "./cabinet.service";
 import type { CreateCabinetDto } from "./dto/create-cabinet.dto";
 import type { UpdateCabinetDto } from "./dto/update-cabinet.dto";
@@ -25,8 +29,8 @@ export class CabinetController {
   }
 
   @Get()
-  findAll() {
-    return this.cabinetService.findAll();
+  getAccountCabinets(@ReqUser() user: Payload, @Query() query: PaginationDto) {
+    return this.cabinetService.findByAccountId(user.accountId, query);
   }
 
   @Get(":id")

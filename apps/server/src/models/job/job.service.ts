@@ -7,6 +7,7 @@ import { DeepPartial, EntityManager, Repository } from "typeorm";
 import { Job } from "database/entities";
 import { DatabaseService } from "services";
 import type { UpdateJobDto } from "./dto/update-job.dto";
+import { PaginationDto, WithCountDto } from "type-defs";
 
 @Injectable()
 export class JobService {
@@ -23,15 +24,15 @@ export class JobService {
 
   async findByAccountId(
     accountId: number,
-    opts?: { limit?: number; skip?: number }
-  ) {
+    opts?: PaginationDto
+  ): Promise<WithCountDto<Job>> {
     const accountJobs = await this.jobRepository.find({
       where: { account: { id: accountId } },
-      skip: opts?.skip,
+      skip: (opts?.page - 1) * opts?.limit,
       take: opts?.limit,
     });
 
-    return { count: accountJobs.length, jobs: accountJobs };
+    return { count: accountJobs.length, data: accountJobs };
   }
 
   findAll() {

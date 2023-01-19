@@ -5,10 +5,11 @@ import {
   ReactLocation,
   type Route,
 } from "@tanstack/react-location";
-import { GetMeResult } from "type-defs";
 
+import { queryClient } from "app";
 import { MainLayout } from "components/layout";
 import { useAuthorization } from "hooks";
+import { api } from "./api";
 
 const ProtectedRoute = ({ children }) => {
   const { data, isLoading } = useAuthorization();
@@ -21,7 +22,7 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/signin" />;
   }
 
-  return <MainLayout className="dashboardlayout">{children}</MainLayout>;
+  return <MainLayout>{children}</MainLayout>;
 };
 
 const PublicRoute = ({ children }) => {
@@ -40,17 +41,91 @@ const PublicRoute = ({ children }) => {
 
 export type LocationGenerics = MakeGenerics<{
   LoaderData: {
-    me: GetMeResult;
+    // me?: GetMeResult;
+  };
+  Search: {
+    page?: number;
   };
   Params: {
     id: string;
-    tabName: string;
+    tabName?: string;
   };
   // Search: {};
 }>;
 
 // Set up a ReactLocation instance
 export const location = new ReactLocation<LocationGenerics>();
+
+//   {
+//   path: "/door-drawers",
+//   component: DoorDrawerList,
+//   exact: true,
+// },
+// {
+//   path: "/door-drawers/:id",
+//   component: DoorDrawer,
+//   exact: true,
+// },
+// {
+//   path: "/door-drawer-profiles",
+//   component: DoorDrawerProfilesList,
+//   exact: true,
+// },
+// {
+//   path: "/door-drawer-profiles/:id",
+//   component: DoorDrawerProfile,
+//   exact: true,
+// },
+// {
+//   path: "/accessories-hardwares",
+//   component: AccessoriesHardwareList,
+//   exact: true,
+// },
+// {
+//   path: "/accessories-hardwares/:id",
+//   component: AccessoryHardware,
+//   exact: true,
+// },
+// {
+//   path: "/trim-moldings",
+//   component: TrimMoldingList,
+//   exact: true,
+// },
+// {
+//   path: "/trim-moldings/:id",
+//   component: TrimMolding,
+//   exact: true,
+// },
+// {
+//   path: "/materials",
+//   component: MaterialList,
+//   exact: true,
+// },
+// {
+//   path: "/materials/:id",
+//   component: Material,
+//   exact: true,
+// },
+// {
+//   path: "/finishes",
+//   component: FinishesList,
+//   exact: true,
+// },
+// {
+//   path: "/finishes/:id",
+//   component: Finishes,
+//   exact: true,
+// },
+// {
+//   path: "/labor-rates",
+//   component: LaborRatesList,
+//   exact: true,
+// },
+// {
+//   path: "/labor-rates/:id",
+//   component: Laborrate,
+//   exact: true,
+// },
 
 // Build our routes. We could do this in our component, too.
 export const routes: Route<LocationGenerics>[] = [
@@ -90,10 +165,17 @@ export const routes: Route<LocationGenerics>[] = [
       },
       {
         path: ":id",
+        loader: (routeMatch) =>
+          queryClient.getQueryData(["job", routeMatch.params.id]) ??
+          queryClient
+            .fetchQuery(["job", routeMatch.params.id], () =>
+              api.jobs.getById(routeMatch.params.id)
+            )
+            .then(() => ({})),
         children: [
           {
             path: "/",
-            element: <Navigate to="info" />,
+            element: <Navigate to="info" replace />,
           },
           {
             path: ":tabName",
@@ -108,16 +190,49 @@ export const routes: Route<LocationGenerics>[] = [
       },
     ],
   },
-  // {
-  //   path: "rooms",
-  //   element: () => import("pages/rooms").then((res) => <res.default />),
-  //   children: [
-  //     {
-  //       path: ":id",
-  //       element: () => import("pages/room").then((res) => <res.default />),
-  //     },
-  //   ],
-  // },
+  {
+    path: "cabinet-setup",
+    children: [
+      {
+        path: "/",
+        element: () =>
+          import("pages/cabinet-setup").then((res) => (
+            <ProtectedRoute>
+              <res.default />
+            </ProtectedRoute>
+          )),
+      },
+      {
+        path: "/cabinets",
+        element: () =>
+          import("pages/cabinet-setup/cabinets").then((res) => (
+            <ProtectedRoute>
+              <res.default />
+            </ProtectedRoute>
+          )),
+        children: [
+          {
+            path: ":id",
+            children: [
+              {
+                path: "/",
+                element: <Navigate to="info" />,
+              },
+              {
+                path: ":tabName",
+                // element: () =>
+                //   import("pages/cabinet-setup/cabinet").then((res) => (
+                //     <ProtectedRoute>
+                //       <res.default />
+                //     </ProtectedRoute>
+                //   )),
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   {
     element: <FallbackUI />,
   },

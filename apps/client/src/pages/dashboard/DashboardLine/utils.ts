@@ -1,8 +1,4 @@
-import {
-  DASHBOARD_ENTITIES,
-  type AccountStats,
-  type DashboardEntities,
-} from "type-defs";
+import { STATS_OPTION, type AccountStats, type StatsOption } from "type-defs";
 import { DatePickerProps as DefaultDatePickerProps } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -47,9 +43,9 @@ export const formatsByRange: TFormatsByRange = {
 };
 
 export const LineColorsByEntities = {
-  [DASHBOARD_ENTITIES.CLIENT]: Colors.yellow,
-  [DASHBOARD_ENTITIES.JOB]: Colors.green,
-  [DASHBOARD_ENTITIES.REVENUE]: Colors.purple,
+  [STATS_OPTION.CLIENTS]: Colors.yellow,
+  [STATS_OPTION.JOBS]: Colors.green,
+  [STATS_OPTION.REVENUE]: Colors.purple,
 };
 
 const isWeekOrMonth = (range: Ranges) =>
@@ -60,7 +56,7 @@ export const prepareData = (
   from: Dayjs,
   range: Ranges,
   inputData: AccountStats,
-  type: DashboardEntities
+  type: StatsOption
 ) => {
   const daysInWeek = 7;
   const daysInMonth = from.daysInMonth();

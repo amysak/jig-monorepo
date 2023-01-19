@@ -1,4 +1,3 @@
-import { Account } from "database/entities";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import bcrypt from "bcrypt";
@@ -6,9 +5,10 @@ import dayjs from "dayjs";
 import omit from "lodash.omit";
 import { EntityManager, Repository } from "typeorm";
 
-import type { CreateAccountDto } from "./dto/create-account.dto";
-import type { GetAccountStatsDTO } from "./dto/get-account-stats.dto";
-import type { UpdateAccountDto } from "./dto/update-account.dto";
+import { Account } from "database/entities";
+import { GetStatsDto } from "type-defs";
+
+import type { CreateAccountDto, UpdateAccountDto } from "./dto";
 
 @Injectable()
 export class AccountService {
@@ -63,7 +63,7 @@ export class AccountService {
   }
 
   // This is a temporary solution, it will be only used in v1 and further refactored in v2
-  async getStats(accountId: number, data: GetAccountStatsDTO) {
+  async getStats(accountId: number, data: GetStatsDto) {
     const { type, date, range } = data;
 
     // TODO: Add validation for date and range

@@ -2,7 +2,7 @@ import { Button, Divider, Form, Popover, Row, Typography } from "antd";
 import { capitalize } from "lodash-es";
 
 import { PageSkeleton, FormInput, FormSelect } from "@jigbid/ui";
-import { useCreateJob, useQueryClients } from "hooks/queries";
+import { useCreateJob, useClients } from "hooks/queries";
 import { JOB_STATUSES } from "../utilities/constants";
 
 const { Title } = Typography;
@@ -10,7 +10,7 @@ const { Title } = Typography;
 function NewJobForm() {
   const [form] = Form.useForm();
 
-  const { data: clients, isLoading } = useQueryClients();
+  const { data: clients, isLoading } = useClients();
 
   const { mutate: createJob, isLoading: isCreatingJob } = useCreateJob();
 
@@ -18,8 +18,9 @@ function NewJobForm() {
     return <PageSkeleton />;
   }
 
+  // TODO
   if (!clients) {
-    return <PageSkeleton />;
+    return null;
   }
 
   return (

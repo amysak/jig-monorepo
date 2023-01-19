@@ -1,6 +1,7 @@
 import { client as _client } from "./http";
 import * as accounts from "./routes/accounts";
 import * as auth from "./routes/auth";
+import * as cabinets from "./routes/cabinets";
 import * as clients from "./routes/clients";
 import * as jobs from "./routes/jobs";
 import * as rooms from "./routes/rooms";
@@ -10,6 +11,7 @@ import * as terms from "./routes/terms";
 export const api = {
   accounts,
   auth,
+  cabinets,
   clients,
   jobs,
   // reports,

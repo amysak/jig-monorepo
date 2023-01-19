@@ -3,6 +3,7 @@ import { Link, useLocation } from "@tanstack/react-location";
 import { Button, Divider, Layout, Menu, Row, type LayoutProps } from "antd";
 import { FC, ReactNode, useState } from "react";
 
+import backgroundImage from "assets/images/banner/banner-bg.png?webp&imagetools";
 import { Logo } from "../../icon";
 import { headerLinks } from "../header/links";
 import { sideLinks } from "../sidebar/links";
@@ -24,9 +25,11 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
   const location = useLocation();
   const currentTabName = location.current.pathname.split("/")[1];
 
+  console.log("backgroundImage => ", backgroundImage);
+
   return (
     <Layout {...props} className="pagelayout">
-      <Header className="apppageheader " style={{ justifyContent: "flex-end" }}>
+      <Header className="apppageheader" style={{ justifyContent: "flex-end" }}>
         <Menu
           defaultSelectedKeys={[currentTabName]}
           theme="dark"
@@ -67,7 +70,12 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
             items={sideLinks}
           />
         </Sider>
-        <Layout style={{ padding: "0 24px 24px" }}>
+        <Layout
+          style={{
+            padding: "0 24px 24px",
+            backgroundImage: `url(${backgroundImage})`,
+          }}
+        >
           {/* <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>

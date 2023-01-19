@@ -14,5 +14,5 @@
     "resolveJsonModule": true
   },
   "include": ["**/*.ts", "**/*.tsx", "vite-env.d.ts"],
-  "exclude": ["pages/cabinet-setup/**/*", "node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

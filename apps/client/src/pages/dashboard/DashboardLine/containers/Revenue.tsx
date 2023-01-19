@@ -3,12 +3,12 @@ import { FC } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "api";
+import { PageSkeleton } from "@jigbid/ui";
+import { STATS_OPTION } from "type-defs";
 
 import { Line } from "../components";
 import { useLineSettings } from "../hooks/useLineSettings";
 import { Ranges } from "../utils";
-import { PageSkeleton } from "@jigbid/ui";
-import { DASHBOARD_ENTITIES } from "type-defs";
 
 type RevenueProps = unknown;
 
@@ -40,7 +40,7 @@ export const Revenue: FC<RevenueProps> = () => {
       setTemporaryDate={setTemporaryDate}
       responseDates={responseDates}
       setResponseDates={setResponseDates}
-      entity={DASHBOARD_ENTITIES.REVENUE}
+      entity={STATS_OPTION.REVENUE}
       data={data}
       range={range}
       setRange={setRange}

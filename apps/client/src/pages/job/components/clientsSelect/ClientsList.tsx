@@ -1,12 +1,11 @@
-import { Client } from "type-defs";
 import { Table } from "@jigbid/ui";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSearch } from "@tanstack/react-location";
+import { useQueryClient } from "@tanstack/react-query";
 import { Form } from "antd";
-import { useState } from "react";
 
-import { api } from "api";
-// import { tableProps } from "pages/cabinet-setup/utils";
-import { getQueryString } from "utilities/utils";
+import { useClientsPaginated } from "hooks/queries";
+import { LocationGenerics } from "router";
+import { Client, DEFAULT_PAGE_SIZE } from "type-defs";
 
 import { ClientsFilterRow } from "./ClientsFilterRow";
 import { columns } from "./ClientsList.utils";
@@ -21,21 +20,14 @@ interface ClientsListProps {
 export function ClientsList({ onSelect, onOpenChange }: ClientsListProps) {
   const [form] = Form.useForm();
 
-  // Make it a convention (limit, skip)
-  const [filters, setFilters] = useState({ limit: 20, skip: 1 });
+  const search = useSearch<LocationGenerics>();
 
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery(
-    ["clients", filters],
-    () => api.clients.getAll(getQueryString(filters)),
-    {
-      onError: (error) => console.error(error),
-    }
-  );
+  const { data, isLoading } = useClientsPaginated(search);
 
   const onValuesChange = () => {
-    queryClient.invalidateQueries(["clients", filters]);
+    queryClient.invalidateQueries(["clients", search]);
   };
 
   return (
@@ -48,14 +40,14 @@ export function ClientsList({ onSelect, onOpenChange }: ClientsListProps) {
         // {...tableProps}
         loading={isLoading}
         columns={columns}
-        dataSource={data?.clients}
+        dataSource={data?.data}
         // onChange={onPaginate}
         pagination={{
           total: data?.count,
-          pageSize: filters.limit,
+          pageSize: DEFAULT_PAGE_SIZE,
           size: "small",
           showSizeChanger: false,
-          current: filters.skip,
+          current: search.page,
         }}
         rowKey="id"
         className="clickablerows pagewrapper__maincontent nomargin"

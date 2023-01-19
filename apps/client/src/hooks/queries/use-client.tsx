@@ -1,4 +1,4 @@
-import { Client } from "type-defs";
+import { Client, PaginationDto, WithCountDto } from "type-defs";
 import {
   useMutation,
   useQuery,
@@ -8,28 +8,30 @@ import {
 
 import { api } from "api";
 
-export const useQueryClients = (options?: UseQueryOptions<Client[]>) =>
+export const useClients = (options?: UseQueryOptions<Client[]>) =>
   useQuery<Client[]>(
     ["clients"],
     async () => {
-      const { clients } = await api.clients.getAll();
+      const { data } = await api.clients.getAll();
 
-      return clients;
+      return data;
     },
     {
       ...options,
     }
   );
 
-type PaginatedClients = { clients: Client[]; count: number };
-
-export const useQueryClientsPaginated = (
-  query?: string,
-  options?: UseQueryOptions<PaginatedClients>
+export const useClientsPaginated = (
+  query: PaginationDto,
+  options?: UseQueryOptions<WithCountDto<Client>>
 ) =>
-  useQuery<PaginatedClients>(["clients"], () => api.clients.getAll(query), {
-    ...options,
-  });
+  useQuery<WithCountDto<Client>>(
+    ["clients", query],
+    () => api.clients.getAll(query),
+    {
+      ...options,
+    }
+  );
 
 export const useMutateClient = (id: string | number) => {
   const queryClient = useQueryClient();

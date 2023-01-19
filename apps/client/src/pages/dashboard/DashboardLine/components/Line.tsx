@@ -4,11 +4,7 @@ import { isNil, upperFirst } from "lodash-es";
 import { CSSProperties, useMemo } from "react";
 
 import { SkeletonInput, Title } from "@jigbid/ui";
-import {
-  DASHBOARD_ENTITIES,
-  type AccountStats,
-  type DashboardEntities,
-} from "type-defs";
+import { STATS_OPTION, type AccountStats, type StatsOption } from "type-defs";
 
 import { useLineSettingsType } from "../hooks/useLineSettings";
 import { LineColorsByEntities, prepareData } from "../utils";
@@ -16,14 +12,14 @@ import { Settings } from "./Settings";
 
 import "./Line.styles.scss";
 
-const getDefaultData = (color: unknown, entity: DashboardEntities): Serie[] => [
+const getDefaultData = (color: unknown, entity: StatsOption): Serie[] => [
   { id: entity, data: [], color },
 ];
 
 interface LineProps extends ReturnType<useLineSettingsType> {
   data: AccountStats;
   isLoading: boolean;
-  entity: DashboardEntities;
+  entity: StatsOption;
 }
 
 // TODO: please refactor
@@ -63,9 +59,9 @@ export const Line = ({
     return (
       <div className="line-counters">
         <Title className="line-count" level={5}>
-          {entity === DASHBOARD_ENTITIES.REVENUE ? totalRevenue : total}
+          {entity === STATS_OPTION.REVENUE ? totalRevenue : total}
         </Title>
-        {!(entity === DASHBOARD_ENTITIES.REVENUE) && (
+        {!(entity === STATS_OPTION.REVENUE) && (
           <Title
             className="line-count"
             level={5}

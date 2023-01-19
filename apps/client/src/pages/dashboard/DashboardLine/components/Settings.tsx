@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import dayjs from "dayjs";
 import { FC, useCallback } from "react";
-import type { DashboardEntities } from "type-defs";
+import type { StatsOption } from "type-defs";
 
 import { useLineSettingsType } from "../hooks/useLineSettings";
 import { Ranges } from "../utils";
@@ -12,7 +12,7 @@ import { Title } from "./Title";
 import "./Settings.styles.scss";
 
 interface SettingsProps extends ReturnType<useLineSettingsType> {
-  entityName: DashboardEntities;
+  entityName: StatsOption;
   range: Ranges;
   isLoading: boolean;
 }

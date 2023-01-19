@@ -2,15 +2,11 @@ import { Dayjs } from "dayjs";
 import { random } from "lodash-es";
 import { nanoid } from "nanoid";
 
-import type { DashboardEntities } from "type-defs";
+import type { StatsOption } from "type-defs";
 
 import { Ranges } from "./utils";
 
-export const getClients = (
-  from: Dayjs,
-  range: Ranges,
-  type: DashboardEntities
-) => {
+export const getClients = (from: Dayjs, range: Ranges, type: StatsOption) => {
   const daysInWeek = 7;
   const daysInMonth = from.daysInMonth();
   const monthsInYear = 12;

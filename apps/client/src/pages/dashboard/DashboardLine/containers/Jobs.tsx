@@ -3,7 +3,7 @@ import { FC } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { api } from "api";
-import { DASHBOARD_ENTITIES } from "type-defs";
+import { STATS_OPTION } from "type-defs";
 
 import { Line } from "../components";
 import { useLineSettings } from "../hooks/useLineSettings";
@@ -45,7 +45,7 @@ export const Jobs: FC<JobsProps> = () => {
       setTemporaryDate={setTemporaryDate}
       responseDates={responseDates}
       setResponseDates={setResponseDates}
-      entity={DASHBOARD_ENTITIES.JOB}
+      entity={STATS_OPTION.JOBS}
       data={data}
       range={range}
       setRange={setRange}

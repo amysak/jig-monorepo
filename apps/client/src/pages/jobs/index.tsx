@@ -3,11 +3,7 @@ import { JobList } from "./components";
 
 function JobsPage() {
   return (
-    <UILayout
-    // ToolbarContent={
-    //   <PageHeader initial={initialPath} component={<NewJobPopover />} />
-    // }
-    >
+    <UILayout>
       <JobList />
     </UILayout>
   );

@@ -1,22 +1,15 @@
-import { Client } from "type-defs";
+import { Client, PaginationDto, WithCountDto } from "type-defs";
+
 import { client } from "../http";
 
 export const getById = (clientId: string): Promise<Client> => {
   return client.get(`/clients/${clientId}`);
 };
-export type TGetClientsData = { clients: Client[]; count: number };
 
-// Could later be changed to something like:
-// export const getClients(opts?: => {
-//     limit?: number
-// }): Promise<TGetClientsData> {
-export const getAll = async (query = ""): Promise<TGetClientsData> => {
-  const data = await client.get(`/clients?${query}`);
-
-  return {
-    count: data.total,
-    clients: data.clients,
-  };
+export const getAll = (
+  query?: PaginationDto
+): Promise<WithCountDto<Client>> => {
+  return client.get(`/clients?${client.getQueryString(query)}`);
 };
 
 export const create = (payload: { name: string }): Promise<Client> => {

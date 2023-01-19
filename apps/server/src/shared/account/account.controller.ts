@@ -14,9 +14,9 @@ import {
 
 import { JwtAuthGuard } from "auth/guards";
 import { ReqUser } from "common/decorators";
-import type { Payload } from "type-defs";
+import type { GetStatsDto, Payload } from "type-defs";
+
 import { AccountService } from "./account.service";
-import { GetAccountStatsDTO } from "./dto";
 import type { CreateAccountDto } from "./dto/create-account.dto";
 import type { UpdateAccountDto } from "./dto/update-account.dto";
 
@@ -27,7 +27,7 @@ export class AccountController {
 
   @UseGuards(JwtAuthGuard)
   @Get("/stats")
-  getStats(@ReqUser() user: Payload, @Query() query: GetAccountStatsDTO) {
+  getStats(@ReqUser() user: Payload, @Query() query: GetStatsDto) {
     return this.accountService.getStats(user.accountId, query);
   }
 

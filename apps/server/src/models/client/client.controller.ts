@@ -12,14 +12,14 @@ import {
 
 import { JwtAuthGuard } from "auth/guards";
 import { ReqUser } from "common/decorators";
-import type { Payload } from "type-defs";
-import { ClientService } from "./client.service";
 import {
   CreateClientDto,
-  GetClientsByAccountDto,
-  GetClientsByAccountInputDto,
+  PaginationDto,
   UpdateClientDto,
-} from "./dto";
+  type Payload,
+} from "type-defs";
+
+import { ClientService } from "./client.service";
 
 @UseGuards(JwtAuthGuard)
 @Controller("clients")
@@ -37,8 +37,8 @@ export class ClientController {
   @Get()
   async getAccountClients(
     @ReqUser() user: Payload,
-    @Query() query: GetClientsByAccountInputDto
-  ): Promise<GetClientsByAccountDto> {
+    @Query() query: PaginationDto
+  ) {
     return this.clientService.findByAccountId(user.accountId, query);
   }
 
