@@ -1,5 +1,5 @@
 [build]
-  publish = "build"
+  publish = "apps/client/build"
   command = "pnpm build --filter client"
 
 [build.environment]
