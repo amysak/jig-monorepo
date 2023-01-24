@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
     },
     // TODO: change to VITE_
     // https://turbo.build/repo/docs/core-concepts/caching#automatic-environment-variable-inclusion
-    envPrefix: "APP_",
+    envPrefix: "VITE_",
     define: {},
     build: {
       outDir: "build",
