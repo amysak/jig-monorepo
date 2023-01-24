@@ -7,6 +7,9 @@ export const RECORD_STATUS = {
 
 export type RecordStatus = ObjectValues<typeof RECORD_STATUS>;
 
+export const getActiveStatus = (isActive: boolean) =>
+  isActive ? RECORD_STATUS.ACTIVE : RECORD_STATUS.INACTIVE;
+
 export const COMPLETION_STATUS = {
   ESTIMATE: "estimate",
   PROPOSAL: "proposal",

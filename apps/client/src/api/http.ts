@@ -1,7 +1,8 @@
 import Axios, { AxiosError, AxiosInstance } from "axios";
+import { isArray, isEmpty, mapValues, merge } from "lodash-es";
 
 import { LocationGenerics } from "router";
-import { PaginationDto } from "type-defs";
+import { flattenObject } from "utilities";
 
 import { tokenStorage } from "utilities/token-storage";
 import { API_BASE_URL } from "../utilities/envs";
@@ -58,9 +59,14 @@ export default class Client {
   }
 
   getQueryString(search?: LocationGenerics["Search"]) {
-    const query = new URLSearchParams(search as any);
+    if (isEmpty(search)) {
+      return "";
+    }
+    // TODO: type
+    const flattenedSearch = flattenObject(search);
 
-    console.log("query.toString() => ", query.toString());
+    const query = new URLSearchParams(flattenedSearch as any);
+    console.log("query => ", query.toString());
 
     return query.toString();
   }

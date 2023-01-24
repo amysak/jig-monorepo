@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import type { Repository } from "typeorm";
+import { FindManyOptions, In, Repository } from "typeorm";
 
 import { Cabinet } from "database/entities";
-import { DEFAULT_PAGE_SIZE, PaginationDto, WithCountDto } from "type-defs";
-import type { CreateCabinetDto } from "./dto/create-cabinet.dto";
-import type { UpdateCabinetDto } from "./dto/update-cabinet.dto";
+import { WithCountDto } from "type-defs";
+
+import { CreateCabinetDto, GetCabinetsDto, UpdateCabinetDto } from "./dto";
 
 @Injectable()
 export class CabinetService {
@@ -15,7 +15,7 @@ export class CabinetService {
   ) {}
 
   create(data: CreateCabinetDto) {
-    const cabinet = this.cabinetRepository.create(data);
+    const cabinet = this.cabinetRepository.create(data as Cabinet);
 
     return cabinet.save();
   }
@@ -26,17 +26,33 @@ export class CabinetService {
 
   async findByAccountId(
     accountId: number,
-    opts?: PaginationDto
+    opts: GetCabinetsDto
   ): Promise<WithCountDto<Cabinet>> {
-    const limit = opts?.limit ?? DEFAULT_PAGE_SIZE;
+    console.log("opts => ", opts);
+    const queryOpts: FindManyOptions<Cabinet> = {
+      skip: (opts.page - 1) * opts.limit,
+      take: opts.limit,
+      order: {
+        favourite: "DESC",
+        ...(opts.orderBy ? { [opts.orderBy]: "DESC" } : {}),
+        updatedAt: "DESC",
+      },
+      where: {
+        ...(opts.type ? { type: In(opts.type) } : {}),
+      },
+    };
 
     const accountCabinets = await this.cabinetRepository.find({
       where: { account: { id: accountId } },
-      skip: (opts.page - 1) * limit,
-      take: limit,
+      relations: ["specifications"],
+      ...queryOpts,
     });
 
-    return { count: accountCabinets.length, data: accountCabinets };
+    const count = await this.cabinetRepository.count({
+      where: queryOpts.where,
+    });
+
+    return { count, data: accountCabinets };
   }
 
   findOne(id: number) {

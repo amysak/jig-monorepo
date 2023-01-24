@@ -1,4 +1,3 @@
-import type { GetMeResult, Payload, TokenPair } from "type-defs";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
@@ -6,6 +5,7 @@ import bcrypt from "bcrypt";
 
 import type { Account } from "database/entities";
 import { AccountService } from "shared";
+import type { GetMeResult, Payload, TokenPair } from "type-defs";
 
 @Injectable()
 export class AuthService {
@@ -54,7 +54,7 @@ export class AuthService {
   public jwtSign(payload: Payload): TokenPair {
     console.log("payload => ", payload);
     return {
-      accessToken: this.jwt.sign(payload),
+      accessToken: this.jwt.sign(payload, { expiresIn: "30m" }),
       refreshToken: this.getRefreshToken(payload.accountId),
     };
   }
@@ -75,7 +75,10 @@ export class AuthService {
       throw new Error("Account not found");
     }
 
-    return { ...jwtUser, account };
+    return {
+      ...jwtUser,
+      account,
+    };
   }
 
   public isAccessTokenValid(token: string): boolean {

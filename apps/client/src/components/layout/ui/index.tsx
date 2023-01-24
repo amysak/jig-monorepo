@@ -40,12 +40,11 @@ export const UILayout = ({
     [router.state.matches]
   );
 
-  const LatestTitle = () =>
-    title ? (
-      <Breadcrumb.Item key={nanoid()}>
-        <Link>{title}</Link>
-      </Breadcrumb.Item>
-    ) : null;
+  const latestTitle = title ? (
+    <Breadcrumb.Item key={nanoid()}>
+      <Link>{title}</Link>
+    </Breadcrumb.Item>
+  ) : null;
 
   return (
     <Layout {...props}>
@@ -58,12 +57,14 @@ export const UILayout = ({
             <HomeOutlined style={{ fontSize: "14px" }} />
           </Link>
         </Breadcrumb.Item>
+
         {getNonGenericRoutes().map(({ title, pathname }) => (
           <Breadcrumb.Item key={nanoid()}>
             <Link to={pathname}>{title}</Link>
           </Breadcrumb.Item>
         ))}
-        <LatestTitle />
+
+        {latestTitle}
       </Breadcrumb>
 
       <Content>{children}</Content>

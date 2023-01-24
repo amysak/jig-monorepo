@@ -1,23 +1,28 @@
 import { useNavigate } from "@tanstack/react-location";
+import { merge } from "antd/es/theme/util/statistic";
 import { useCallback } from "react";
+
 import { LocationGenerics } from "router";
+import { cleanObject } from "utilities/functions";
 
-import { PaginationDto } from "type-defs";
-
-export const usePagination = (pagination: PaginationDto) => {
+export const useSetSearch = () => {
   const navigate = useNavigate<LocationGenerics>();
 
-  const paginate = useCallback(() => {
+  const set = (search: LocationGenerics["Search"]) => {
     navigate({
       search: (old) => {
-        return {
-          ...old,
-          pagination,
-        };
+        if (!old) return search;
+        return cleanObject(merge(old, search));
       },
-      replace: true,
+      // replace: true,
     });
+  };
 
-    return paginate;
-  }, [pagination, navigate]);
+  const clear = useCallback(() => {
+    navigate({
+      search: () => ({}),
+    });
+  }, [navigate]);
+
+  return [set, clear];
 };

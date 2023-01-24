@@ -1,4 +1,5 @@
-import { Client, PaginationDto, WithCountDto } from "type-defs";
+import { LocationGenerics } from "router";
+import { Client, Pagination, WithCountDto } from "type-defs";
 
 import { client } from "../http";
 
@@ -7,7 +8,7 @@ export const getById = (clientId: string): Promise<Client> => {
 };
 
 export const getAll = (
-  query?: PaginationDto
+  query?: LocationGenerics["Search"]
 ): Promise<WithCountDto<Client>> => {
   return client.get(`/clients?${client.getQueryString(query)}`);
 };

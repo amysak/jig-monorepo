@@ -18,6 +18,8 @@ export default defineConfig(({ mode }) => {
     preview: {
       port: +env.PORT || 4173,
     },
+    // TODO: change to VITE_
+    // https://turbo.build/repo/docs/core-concepts/caching#automatic-environment-variable-inclusion
     envPrefix: "APP_",
     define: {},
     build: {

@@ -5,9 +5,10 @@ import mergeWith from "lodash.mergewith";
 import { DeepPartial, EntityManager, Repository } from "typeorm";
 
 import { Job } from "database/entities";
-import { DatabaseService } from "services";
-import type { UpdateJobDto } from "./dto/update-job.dto";
 import { PaginationDto, WithCountDto } from "type-defs";
+import { DatabaseService } from "services";
+
+import type { UpdateJobDto } from "./dto/update-job.dto";
 
 @Injectable()
 export class JobService {
@@ -28,8 +29,10 @@ export class JobService {
   ): Promise<WithCountDto<Job>> {
     const accountJobs = await this.jobRepository.find({
       where: { account: { id: accountId } },
-      skip: (opts?.page - 1) * opts?.limit,
-      take: opts?.limit,
+      skip: (opts.page - 1) * opts.limit,
+      take: opts.limit,
+      order: { updatedAt: "DESC" },
+      relations: ["client", "preferences"],
     });
 
     return { count: accountJobs.length, data: accountJobs };

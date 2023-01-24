@@ -1,54 +1,41 @@
 import {
-  BaseEntity,
-  ChildEntity,
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-  TableInheritance,
 } from "typeorm";
 
-import {
-  CABINET_BASE_TYPE,
-  CABINET_PLACEMENT,
-  CABINET_TYPE,
-  type CabinetBaseType,
-  type CabinetPlacement,
-  type CabinetType,
-} from "type-defs";
+import { type CabinetType } from "type-defs";
+
 import { Account } from "./account.entity";
-import { CabinetOpening } from "./cabinet-opening.entity";
+import { DefaultableBaseEntity } from "./base.entity";
 import { CabinetSpecifications } from "./cabinet-specifications.entity";
-import { Filler } from "./filler.entity";
-import { EndPanel } from "./panel.entity";
 import { Room } from "./room.entity";
 
+// Cannot use STI (Single Table Inheritance) because TypeORM is a bad library:
+// https://github.com/typeorm/typeorm/issues/9033
+// https://github.com/typeorm/typeorm/issues/7558
+// https://github.com/typeorm/typeorm/pull/9034
 @Entity()
-@TableInheritance({
-  column: { type: "varchar", name: "type", enum: CABINET_TYPE },
-})
-export class Cabinet extends BaseEntity {
+// @TableInheritance({
+//   column: { type: "text", name: "type" },
+// })
+export class Cabinet extends DefaultableBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("text", { default: CABINET_TYPE.BASE })
+  @Column({ type: "text" })
   type: CabinetType;
 
-  get isFramed(): boolean {
-    return this.specifications.faceFrame.included;
-  }
+  @Column("text")
+  name: string;
 
-  @Column("text", { default: CABINET_PLACEMENT.DEFAULT })
-  placement: CabinetPlacement;
-
-  @Column("text", { default: CABINET_BASE_TYPE.STANDARD })
-  baseType: CabinetBaseType;
-
-  // @Column("text")
-  // materialType: MaterialType; => Create enum
+  // TODO
+  // Could be related per user when we create account's users
+  @Column("boolean", { default: false })
+  favourite: boolean;
 
   @OneToOne(
     () => CabinetSpecifications,
@@ -58,38 +45,44 @@ export class Cabinet extends BaseEntity {
   @JoinColumn()
   specifications: CabinetSpecifications;
 
-  @OneToMany(
-    () => CabinetOpening,
-    (cabinetOpening) => cabinetOpening.cabinets,
-    { nullable: true }
-  )
-  cabinetOpenings?: CabinetOpening[];
-
-  @OneToMany(() => EndPanel, (endPanel) => endPanel.cabinet, {
-    nullable: true,
-  })
-  endPanel?: EndPanel[];
-
-  @OneToMany(() => Filler, (filler) => filler.cabinet, {
-    nullable: true,
-  })
-  fillers?: Filler[];
-
   @ManyToOne(() => Account, (account) => account.cabinets, { nullable: false })
   account: Account;
 
   @ManyToOne(() => Room, (room) => room.cabinets, { nullable: true })
   room?: Room;
+
+  // Most likely has to be in some other table which holds room and cabinet
+  // Data about parts that this cabinet needs by default is stored inside specifcations
+  // Later we could also add other table that would represent customizations using existing cabinet
+  // parts in system
+  // TODO
+
+  // @OneToMany(
+  //   () => CabinetOpening,
+  //   (cabinetOpening) => cabinetOpening.cabinets,
+  //   { nullable: true }
+  // )
+  // cabinetOpenings?: CabinetOpening[];
+
+  // @OneToMany(() => EndPanel, (endPanel) => endPanel.cabinet, {
+  //   nullable: true,
+  // })
+  // endPanel?: EndPanel[];
+
+  // @OneToMany(() => Filler, (filler) => filler.cabinet, {
+  //   nullable: true,
+  // })
+  // fillers?: Filler[];
 }
 
-@ChildEntity(CABINET_TYPE.BASE)
-export class BaseCabinet extends Cabinet {}
+// @ChildEntity(CABINET_TYPE.BASE)
+// export class BaseCabinet extends Cabinet {}
 
-@ChildEntity(CABINET_TYPE.UPPER)
-export class UpperCabinet extends Cabinet {}
+// @ChildEntity(CABINET_TYPE.UPPER)
+// export class UpperCabinet extends Cabinet {}
 
-@ChildEntity(CABINET_TYPE.TALL)
-export class TallCabinet extends Cabinet {}
+// @ChildEntity(CABINET_TYPE.TALL)
+// export class TallCabinet extends Cabinet {}
 
-@ChildEntity(CABINET_TYPE.VANITY)
-export class VanityCabinet extends Cabinet {}
+// @ChildEntity(CABINET_TYPE.VANITY)
+// export class VanityCabinet extends Cabinet {}

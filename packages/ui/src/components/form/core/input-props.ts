@@ -1,7 +1,7 @@
 import { InputNumberProps } from "antd";
 
 const isValidNumber = (value: any): value is number => {
-  return !value || isNaN(+value);
+  return !!value && !isNaN(value);
 };
 
 const generateFormatter =
@@ -10,11 +10,12 @@ const generateFormatter =
     precision = 2
   ): InputNumberProps["formatter"] =>
   (value, { userTyping, input }) => {
-    if (userTyping || !isValidNumber(value)) {
+    const numValue = Number(value);
+    if (userTyping || !isValidNumber(numValue)) {
       return input;
     }
 
-    const fixedValue = value.toFixed(precision);
+    const fixedValue = numValue.toFixed(precision);
     return formatFunc ? formatFunc(fixedValue) : fixedValue;
   };
 

@@ -33,8 +33,10 @@ export class ClientService {
   ): Promise<WithCountDto<Client>> {
     const accountClients = await this.clientRepository.find({
       where: { account: { id: accountId } },
-      skip: (opts?.page - 1) * opts?.limit,
-      take: opts?.limit,
+      skip: (opts.page - 1) * opts.limit,
+      take: opts.limit,
+      order: { updatedAt: "DESC" },
+      relations: ["jobs"],
     });
 
     return { count: accountClients.length, data: accountClients };

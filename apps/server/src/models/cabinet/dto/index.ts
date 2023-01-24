@@ -1,2 +1,2 @@
-export * from "./create-cabinet.dto";
-export * from "./update-cabinet.dto";
+export * from "./get-cabinets.dto";
+export * from "./crud-cabinet.dto";

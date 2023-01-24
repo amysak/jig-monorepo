@@ -1,22 +1,36 @@
-import { CopyOutlined } from "@ant-design/icons";
-import { Link, useMatch } from "@tanstack/react-location";
-import { useQueryClient } from "@tanstack/react-query";
-import { Button, Col, Form, Row, Table, Tooltip, Typography } from "antd";
+import {
+  CopyOutlined,
+  DeleteOutlined,
+  StarOutlined,
+  StarTwoTone,
+} from "@ant-design/icons";
+import { Link, useSearch } from "@tanstack/react-location";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Col, Row, Space, Table, Tag, Typography } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import { capitalize } from "lodash-es";
 
+import { PageSkeleton } from "@jigbid/ui";
+import { api } from "api";
 import { UILayout } from "components/layout";
-import { useCabinetsPaginated } from "hooks/queries";
+import { useSetSearch } from "hooks";
+import {
+  useCabinetDeletion,
+  useCabinetMutation,
+  useCabinetsPaginated,
+} from "hooks/queries";
 import { LocationGenerics } from "router";
 import {
   Cabinet,
+  CabinetSpecifications,
   CabinetType,
   CABINET_TYPE,
-  DEFAULT_PAGE_SIZE,
+  WithCountDto,
 } from "type-defs";
 
-import { PageSkeleton } from "@jigbid/ui";
-import type { ColumnsType } from "antd/es/table";
-import { capitalize } from "lodash-es";
 import { tableProps } from "../utils";
+
+import "./cabinet.scss";
 
 // const isMeasured = (category: string) =>
 //     ['base', 'upper', 'tall', 'vanity'].includes(
@@ -85,19 +99,27 @@ const { Title } = Typography;
 //   );
 // }
 
-export const CabinetPage = (props: JSX.IntrinsicAttributes) => {
-  const [form] = Form.useForm();
+// TODO: Allow user to choose quantity
+const CABINETS_LIMIT = 30;
 
-  const { search } = useMatch<LocationGenerics>();
-
-  console.log("search => ", search);
+export const CabinetsPage = () => {
+  const search = useSearch<LocationGenerics>();
+  const [setSearch] = useSetSearch();
 
   const queryClient = useQueryClient();
 
-  const { data: cabinets, isLoading, error } = useCabinetsPaginated(search);
+  const { data: cabinets, isLoading } = useCabinetsPaginated(
+    { ...search, pagination: { ...search.pagination, limit: CABINETS_LIMIT } },
+    {
+      keepPreviousData: true,
+    }
+  );
 
-  console.log("cabinets => ", cabinets);
+  const { mutateAsync: mutateCabinetAsync } = useCabinetMutation();
 
+  const { mutateAsync: deleteCabinetAsync } = useCabinetDeletion();
+
+  // TODO: can be omitted like in jobs, prefetch with react-location
   if (isLoading) {
     return <PageSkeleton />;
   }
@@ -106,52 +128,12 @@ export const CabinetPage = (props: JSX.IntrinsicAttributes) => {
     return null;
   }
 
-  // const onDuplicate = async (cabinetId) => {
-  //   setLoading(true);
-
-  //   try {
-  //     const cabinet = await duplicateCabinetSetup({ cabinetId });
-
-  //     navigate(`/cabinet-setup/cabinets/${cabinet.id}`);
-  //   } catch {
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const onRowChange = async (value: boolean, row: { id: any }, key: string) => {
-  //   try {
-  //     setLoading(true);
-  //     const payload = { [key]: value };
-
-  //     await updateCabinet(row.id, payload);
-
-  //     const updatedCabinets = cabinets[0].map((cabinet: { id: any }) => {
-  //       if (cabinet.id === row.id) {
-  //         return { ...cabinet, ...payload };
-  //       }
-
-  //       return cabinet;
-  //     });
-
-  //     setCabinets([updatedCabinets, cabinets[1]] as TGetSetupCabinets);
-  //     message.success("Status updated!");
-  //   } catch (error) {
-  //     message.error("Failed to update status!");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const onValuesChange = () => {
-  //   queryClient.invalidateQueries(["cabinets", search]);
-  // };
-
   const columns: ColumnsType<Cabinet> = [
     {
       title: "Name",
       key: "name",
       dataIndex: "name",
+      width: "20%",
       render(cabinetName: string, row: { id: number }) {
         if (Object.values(CABINET_TYPE).includes(cabinetName as CabinetType)) {
           return <Title level={4}>{capitalize(cabinetName)}</Title>;
@@ -169,217 +151,164 @@ export const CabinetPage = (props: JSX.IntrinsicAttributes) => {
               </Link>
             </Col>
 
-            <Col className="cabinet-dub-btn-wrapper">
+            {/* <Col className="cabinet-dub-btn-wrapper">
               <Tooltip title="Duplicate Cabinet">
                 <Button
-                  // onClick={() => onDuplicate(row.id)}
+                  onClick={() => duplicateCabinet(row)}
                   className="cabinet-dub-btn"
                   icon={<CopyOutlined />}
                 />
               </Tooltip>
-            </Col>
+            </Col> */}
           </Row>
         );
       },
     },
-    // {
-    //   key: "favourite",
-    //   dataIndex: "favourite",
-    //   title: <StarTwoTone />,
-    //   render(favourite, row: { isCategory: any }) {
-    //     if (row.isCategory) return null;
+    {
+      key: "favourite",
+      dataIndex: "favourite",
+      title: <StarTwoTone />,
+      width: "3%",
+      render(favourite: boolean, row) {
+        const handleClick = async () => {
+          await mutateCabinetAsync({
+            id: row.id,
+            values: {
+              favourite: !favourite,
+            },
+          });
+          await queryClient.invalidateQueries(["cabinets", search]);
+        };
 
-    //     const props = {
-    //       // @ts-expect-error TS(2345): Argument of type '{ isCategory: any; }' is not ass... Remove this comment to see the full error message
-    //       onClick: () => onRowChange(!favourite, row, "favourite"),
-    //     };
+        if (favourite) {
+          return <StarTwoTone twoToneColor="#00a6fb" onClick={handleClick} />;
+        }
 
-    //     return favourite ? (
-    //       <StarTwoTone
-    //         twoToneColor="#00a6fb"
-    //         // @ts-expect-error TS(2322): Type '{ onClick: () => Promise<void>; twoToneColor... Remove this comment to see the full error message
-    //         fill="#00a6fb"
-    //         {...props}
-    //       />
-    //     ) : (
-    //       <StarOutlined {...props} />
-    //     );
-    //   },
-    // },
-    // {
-    //   title: "Floor to Bottom of Upper",
-    //   key: "floor_to_bottom_of_upper",
-    //   dataIndex: "floor_to_bottom_of_upper",
-    // },
-    // {
-    //   title: "Floor to Top of Cabinet",
-    //   key: "cabinet_height",
-    //   dataIndex: "cabinet_height",
-    // },
-    // {
-    //   title: "Cabinet Height",
-    //   key: "cabinet_height",
-    //   dataIndex: "cabinet_height",
-    // },
-    // {
-    //   title: "Toe Kick Height",
-    //   key: "toe_kick_height",
-    //   dataIndex: "toe_kick_height",
-    // },
-    // {
-    //   title: "Cabinet Depth",
-    //   key: "cabinet_depth",
-    //   dataIndex: "cabinet_depth",
-    // },
-    // {
-    //   title: "Qty Parts",
-    //   key: "quantity_parts",
-    //   dataIndex: "quantity_parts",
-    // },
-    // {
-    //   title: "Stacked Height",
-    //   key: "stacked_height",
-    //   dataIndex: "stacked_height",
-    // },
-    // {
-    //   title: "Cabinet Side Height",
-    //   key: "cabinet_side_height",
-    //   dataIndex: "cabinet_side_height",
-
-    //   render(
-    //     _,
-    //     cabinet: {
-    //       [x: string]: { base_style: string };
-    //       isCategory?: any;
-    //       cabinet_height?: any;
-    //       toe_kick_height?: any;
-    //       category?: any;
-    //     }
-    //   ) {
-    //     if (cabinet.isCategory) return null;
-
-    //     const { category } = cabinet;
-
-    //     return cabinet?.[category]?.base_style === "standard"
-    //       ? safeNum(cabinet.cabinet_height)
-    //       : safeNum(cabinet.cabinet_height) - safeNum(cabinet.toe_kick_height);
-    //   },
-    // },
-    // {
-    //   title: "Cabinet Back Height",
-    //   key: "cabinet_back_height",
-    //   dataIndex: "cabinet_back_height",
-
-    //   render(
-    //     _,
-    //     cabinet: {
-    //       [x: string]: { base_style: string };
-    //       isCategory?: any;
-    //       cabinet_height?: any;
-    //       toe_kick_height?: any;
-    //       category?: any;
-    //     }
-    //   ) {
-    //     if (cabinet.isCategory) return null;
-
-    //     const { category } = cabinet;
-
-    //     return cabinet?.[category]?.base_style !== "standard"
-    //       ? safeNum(cabinet?.cabinet_height) - safeNum(cabinet?.toe_kick_height)
-    //       : safeNum(cabinet?.cabinet_height);
-    //   },
-    // },
-    // {
-    //   title: "Filler Width",
-    //   key: "filler_width",
-    //   dataIndex: "filler_width",
-    // },
-    // {
-    //   title: "Toe Bd Length",
-    //   key: "toe_board_width",
-    //   dataIndex: "toe_board_width",
-    // },
-    // {
-    //   title: "End Panel Height",
-    //   key: "end_panel_height",
-    //   dataIndex: "end_panel_height",
-    // },
-    // {
-    //   title: "Appliance Panel Height",
-    //   key: "appliance_panel_height",
-    //   dataIndex: "appliance_panel_height",
-    // },
-    // {
-    //   title: "Wainscot Height",
-    //   key: "wainscot_height",
-    //   dataIndex: "wainscot_height",
-    // },
-    // {
-    //   title: "Base Doors",
-    //   key: "base_doors",
-    //   dataIndex: "base_doors",
-    // },
-    // {
-    //   title: "Upper Doors",
-    //   key: "upper_doors",
-    //   dataIndex: "upper_doors",
-    // },
-    // {
-    //   title: "DF",
-    //   key: "df",
-    //   dataIndex: "df",
-    // },
-    // {
-    //   title: "Drawers",
-    //   key: "number_of_drawers",
-    //   dataIndex: "number_of_drawers",
-    // },
-    // {
-    //   title: "Trays",
-    //   key: "number_of_rollout_trays",
-    //   dataIndex: "number_of_rollout_trays",
-    // },
-    // {
-    //   title: "Sides",
-    //   key: "number_of_cabinet_sides",
-    //   dataIndex: "number_of_cabinet_sides",
-
-    //   render(
-    //     _,
-    //     cabinet: {
-    //       [x: string]: { number_of_cabinet_sides: any };
-    //       isCategory: any;
-    //       // @ts-ignore
-    //       category: string | number;
-    //     }
-    //   ) {
-    //     if (cabinet.isCategory) return null;
-
-    //     return cabinet[cabinet.category]?.number_of_cabinet_sides;
-    //   },
-    // },
-    // {
-    //   title: "Status",
-    //   key: "status",
-    //   dataIndex: "status",
-    //   render(currentStatus: string, row: { isCategory: any }) {
-    //     if (row.isCategory) return null;
-
-    //     return (
-    //       <Select
-    //         style={{ width: "100px" }}
-    //         onChange={(value) => onRowChange(value, row, "status")}
-    //         value={currentStatus?.toLowerCase()}
-    //       >
-    //         {Object.values(RECORD_STATUS).map((status) => (
-    //           <Select.Option key={nanoid()} value={status}>
-    //             {capitalize(status)}
-    //           </Select.Option>
-    //         ))}
-    //       </Select>
-    //     );
-    //   },
-    // },
+        return <StarOutlined onClick={handleClick} />;
+      },
+    },
+    {
+      key: "type",
+      dataIndex: "type",
+      title: "Type",
+      width: "7%",
+      filters: Object.values(CABINET_TYPE).map((type) => ({
+        text: capitalize(type),
+        value: type,
+      })),
+      filteredValue: search.filters?.type,
+      render: (type: CabinetType) => <Tag className="type-tag">{type}</Tag>,
+    },
+    {
+      key: "style",
+      dataIndex: "specifications",
+      title: "Style",
+      width: "10%",
+      render: (specifications: CabinetSpecifications) => (
+        <Tag className="style-tag">
+          {specifications.isFramed ? "Face Frame" : "Full Access"}
+        </Tag>
+      ),
+    },
+    {
+      key: "dimensions",
+      title: "Cabinet Dimensions",
+      width: "17%",
+      children: [
+        {
+          dataIndex: "specifications",
+          title: "Height",
+          render: (specifications: CabinetSpecifications) =>
+            specifications.dimensions.height,
+        },
+        {
+          key: "depth",
+          dataIndex: "specifications",
+          title: "Depth",
+          render: (specifications: CabinetSpecifications) =>
+            specifications.dimensions.depth,
+        },
+        {
+          key: "elevation",
+          dataIndex: "specifications",
+          title: "Elevation",
+          render: (specifications: CabinetSpecifications) =>
+            specifications.dimensions.elevation,
+        },
+        {
+          key: "toeKickHeight",
+          dataIndex: "specifications",
+          title: "Toe Kick Height",
+          render: (specifications: CabinetSpecifications) =>
+            specifications.dimensions.toeKickHeight,
+        },
+      ],
+    },
+    {
+      title: "Required Parts",
+      width: "17%",
+      children: [
+        {
+          key: "doorCount",
+          dataIndex: "specifications",
+          title: "Door Count",
+          render: (specifications: CabinetSpecifications) =>
+            specifications.partCounts.doors,
+        },
+        {
+          key: "drawerCount",
+          dataIndex: "specifications",
+          title: "Drawers",
+          render: (specifications: CabinetSpecifications) =>
+            specifications.partCounts.drawers,
+        },
+        {
+          key: "drawerFrontCount",
+          dataIndex: "specifications",
+          title: "Drawer Fronts",
+          render: (specifications: CabinetSpecifications) =>
+            specifications.partCounts.drawerFronts,
+        },
+        {
+          key: "trayCount",
+          dataIndex: "specifications",
+          title: "Tray Count",
+          render: (specifications: CabinetSpecifications) =>
+            specifications.partCounts.trays,
+        },
+      ],
+    },
+    {
+      key: "sideCount",
+      dataIndex: "specifications",
+      title: "Side Count",
+      width: "5%",
+      render: (specifications: CabinetSpecifications) =>
+        specifications.partCounts.sides,
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      width: "20%",
+      render: (_, row) => (
+        <Space size="middle">
+          <DeleteOutlined
+            className="actions-icon"
+            onClick={async () => {
+              await deleteCabinetAsync(row.id);
+              await queryClient.invalidateQueries(["cabinets", search]);
+            }}
+          />
+          <CopyOutlined
+            className="actions-icon"
+            onClick={() => {
+              const { id: _, ...rest } = row;
+              api.cabinets.create(rest);
+            }}
+          />
+        </Space>
+      ),
+    },
   ];
 
   return (
@@ -398,16 +327,25 @@ export const CabinetPage = (props: JSX.IntrinsicAttributes) => {
         loading={isLoading}
         dataSource={cabinets.data}
         {...tableProps}
+        onChange={(pagination, filters) => {
+          setSearch({
+            pagination: {
+              page: pagination.current,
+            },
+            filters,
+          });
+        }}
         pagination={{
+          // onChange: (page) => setSearch({ page }),
           total: cabinets.count,
-          pageSize: DEFAULT_PAGE_SIZE,
+          pageSize: CABINETS_LIMIT,
           size: "small",
           showSizeChanger: false,
-          current: search.page,
+          current: search.pagination?.page,
         }}
         className="pagewrapper__maincontent nomargin"
       />
     </UILayout>
   );
 };
-export default CabinetPage;
+export default CabinetsPage;

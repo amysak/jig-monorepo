@@ -1,7 +1,5 @@
 import { Table } from "@jigbid/ui";
 import { useSearch } from "@tanstack/react-location";
-import { useQueryClient } from "@tanstack/react-query";
-import { Form } from "antd";
 
 import { useClientsPaginated } from "hooks/queries";
 import { LocationGenerics } from "router";
@@ -18,23 +16,13 @@ interface ClientsListProps {
 }
 
 export function ClientsList({ onSelect, onOpenChange }: ClientsListProps) {
-  const [form] = Form.useForm();
-
   const search = useSearch<LocationGenerics>();
-
-  const queryClient = useQueryClient();
 
   const { data, isLoading } = useClientsPaginated(search);
 
-  const onValuesChange = () => {
-    queryClient.invalidateQueries(["clients", search]);
-  };
-
   return (
     <div>
-      <Form form={form} onValuesChange={onValuesChange} layout="inline">
-        <ClientsFilterRow />
-      </Form>
+      <ClientsFilterRow />
 
       <Table
         // {...tableProps}
@@ -47,7 +35,7 @@ export function ClientsList({ onSelect, onOpenChange }: ClientsListProps) {
           pageSize: DEFAULT_PAGE_SIZE,
           size: "small",
           showSizeChanger: false,
-          current: search.page,
+          current: search.pagination?.page,
         }}
         rowKey="id"
         className="clickablerows pagewrapper__maincontent nomargin"

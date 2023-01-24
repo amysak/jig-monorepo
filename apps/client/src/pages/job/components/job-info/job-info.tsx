@@ -9,6 +9,7 @@ import { useMutateJob, useQueryJob } from "hooks/queries";
 import { LocationGenerics } from "router";
 import { JobFormHeader, JobFormTerms } from "./components";
 import { JobFormPreferences } from "./components/form/preferences";
+import { useEffect } from "react";
 
 type FormJob = Job & { estimateDate: Dayjs; proposalDate: Dayjs };
 
@@ -26,16 +27,16 @@ export function JobInfoForm() {
     });
   };
 
-  const {
-    data: job,
-    isLoading,
-    isError,
-  } = useQueryJob(id, {
-    onSuccess: refillForm,
-  });
+  const { data: job, isLoading, isError } = useQueryJob(id);
 
   const { mutate: mutateJob } = useMutateJob(id, {
     onSuccess: refillForm,
+  });
+
+  useEffect(() => {
+    if (job) {
+      refillForm(job);
+    }
   });
 
   if (!job || isLoading) {

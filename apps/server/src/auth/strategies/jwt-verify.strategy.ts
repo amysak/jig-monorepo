@@ -18,8 +18,11 @@ export class JwtVerifyStrategy extends PassportStrategy(
     });
   }
 
-  public validate(payload: any): Payload {
-    console.log("payload => ", payload);
-    return { accountId: payload.sub, email: payload.email, role: payload.role };
+  public validate(payload: Payload): Payload {
+    return {
+      accountId: payload.accountId,
+      email: payload.email,
+      role: payload.role,
+    };
   }
 }

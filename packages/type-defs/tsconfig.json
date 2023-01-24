@@ -17,5 +17,5 @@
     "useDefineForClassFields": false
   },
   "include": ["**/*.ts", "**/*.js", "**/*.d.ts"],
-  "exclude": ["dist"]
+  "exclude": ["node_modules", "dist"]
 }

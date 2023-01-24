@@ -95,6 +95,7 @@ export class SeedingService {
     await this.entityManager.save(letters);
 
     const { cabinetsAndSpecs } = getRoomDefaults({ account: superAccount });
+
     await Promise.all(
       cabinetsAndSpecs.map(async ({ cabinet, cabinetSpecifications }) => {
         await cabinetSpecifications.save();

@@ -9,7 +9,6 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-import { RecordStatus, RECORD_STATUS } from "type-defs";
 import { Account } from "./account.entity";
 import { AccountPreferences } from "./preferences.entity";
 

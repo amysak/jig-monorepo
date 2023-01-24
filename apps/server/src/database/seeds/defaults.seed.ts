@@ -223,29 +223,46 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
 
   const cabinetSeeds = defaultCabinets.map((cabinet) => {
     const resCabinet: Record<string, unknown> & Partial<typeof cabinet> = {
-      name: cabinet.name,
+      name: cabinet.name.replace(/.*-.{2}-/, ""),
       type: cabinet.type,
     };
 
-    // Create cabinet specifications for the cabinet
     const cabinetSpecifications = new CabinetSpecifications();
 
-    cabinetSpecifications.faceFrame = {
-      included: cabinet.style === "Face Frame" ? true : false,
-    } as CabinetSpecifications["faceFrame"];
-    cabinetSpecifications.elevation = cabinet.floorToBottomOfUpper
-      ? +cabinet.floorToBottomOfUpper
-      : 0;
-    cabinetSpecifications.toeKickHeight = +cabinet.toeKickHeight;
-    cabinetSpecifications.doorCount = +cabinet.baseDoors + +cabinet.upperDoors;
-    cabinetSpecifications.drawerCount = +cabinet.drawers;
-    cabinetSpecifications.trayCount = +cabinet.trays;
-    cabinetSpecifications.depth = +cabinet.cabinetDepth;
-    cabinetSpecifications.height =
-      Number(cabinet.cabinetHeight) ||
-      Number(cabinet.floorToTopOfCabinet) ||
-      34.5;
+    // ?? TODO
+    // "quantityParts": "10",
+    // "stackedHeight": "168",
+    // cabinetSpecifications.backHeight =  +cabinet.cabinetBackHeight;
+    // cabinetSpecifications.sideHeight =  +cabinet.cabinetSideHeight;
+
     cabinetSpecifications.isInteriorFinished = cabinet.interior === "Finished";
+    cabinetSpecifications.isFramed =
+      cabinet.style === "Face Frame" ? true : false;
+
+    // ?? TODO
+    // cabinetSpecifications.partsQuantity = +cabinet.quantityParts
+    // cabinetSpecifications.stackedHeight = +cabinet.stackedHeight
+
+    cabinetSpecifications.partCounts = {
+      doors: +cabinet.baseDoors + +cabinet.upperDoors,
+      drawers: +cabinet.drawers,
+      drawerFronts: +cabinet.df,
+      trays: +cabinet.trays,
+      sides: +cabinet.sides,
+    };
+
+    cabinetSpecifications.dimensions = {
+      height:
+        Number(cabinet.cabinetHeight) ||
+        Number(cabinet.floorToTopOfCabinet) -
+          Number(cabinet.floorToBottomOfUpper) ||
+        34.5,
+      depth: +cabinet.cabinetDepth,
+      elevation: cabinet.floorToBottomOfUpper
+        ? +cabinet.floorToBottomOfUpper
+        : 0,
+      toeKickHeight: cabinet.type !== "upper" ? +cabinet.toeKickHeight : 0,
+    };
 
     return { cabinet: resCabinet, cabinetSpecifications };
   });

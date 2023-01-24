@@ -24,9 +24,7 @@ export const Revenue: FC<RevenueProps> = () => {
 
   const { data, isLoading } = useQuery(["stats", "revenue"], () =>
     api.accounts.getAccountStats({
-      type: "revenue",
-      date: responseDates[0].unix(),
-      range,
+      stats: { type: "revenue", date: responseDates[0].unix(), range },
     })
   );
 

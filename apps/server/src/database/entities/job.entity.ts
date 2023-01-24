@@ -13,7 +13,7 @@ import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
 import { Client } from "./client.entity";
 import { JobPreferences } from "./preferences.entity";
-import type { Room } from "./room.entity";
+import { Room } from "./room.entity";
 
 export class JobNotes {
   @Column("text", { nullable: true })

@@ -1,6 +1,6 @@
 import { IsOptional, IsString } from "class-validator";
 
-import { Address } from "../models";
+import type { Address } from "../models";
 
 export class CreateClientDto {
   @IsString()

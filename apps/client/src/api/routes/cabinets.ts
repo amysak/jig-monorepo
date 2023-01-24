@@ -1,4 +1,5 @@
-import { Cabinet, PaginationDto, WithCountDto } from "type-defs";
+import { LocationGenerics } from "router";
+import { Cabinet, WithCountDto } from "type-defs";
 import { client } from "../http";
 
 export const getById = (cabinetId: string): Promise<Cabinet> => {
@@ -6,7 +7,7 @@ export const getById = (cabinetId: string): Promise<Cabinet> => {
 };
 
 export const getAll = (
-  query?: PaginationDto
+  query?: LocationGenerics["Search"]
 ): Promise<WithCountDto<Cabinet>> => {
   return client.get(`/cabinets?${client.getQueryString(query)}`);
 };
@@ -77,13 +78,4 @@ export const deleteById = (clientId: string | number): Promise<any> => {
 // }
 
 export // getDefaultCabinetSpecification,
-// getSpecificationByCabinet,
-// getCabinetByEntity,
-// getCabinetByRoom,
-// uploadCabinetImage,
-// getCabinetSpecification,
-// updateCabinetSpecification,
-// createCabinetSpecification,
-// duplicateCabinetSetup,
-// deleteCabinetSetup,
  {};

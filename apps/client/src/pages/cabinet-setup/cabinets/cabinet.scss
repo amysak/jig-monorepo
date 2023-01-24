@@ -1,3 +1,33 @@
+.actions-icon {
+  transition: color 0.3s;
+  &:hover {
+    color: $secondary-jig;
+  }
+}
+
+.ant-table-cell:not(:first-child) {
+  text-align: center !important;
+}
+
+th.ant-table-cell {
+  text-align: center !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+}
+
+.type-tag {
+  color: $secondary-jig;
+}
+
+.style-tag {
+  color: $jig-red;
+}
+
+.type-tag,
+.style-tag {
+  text-transform: uppercase;
+}
+
 .specification-footer {
   display: flex;
   flex-direction: column;

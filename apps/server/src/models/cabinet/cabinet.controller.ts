@@ -12,11 +12,10 @@ import {
 
 import { JwtAuthGuard } from "auth/guards";
 import { ReqUser } from "common/decorators";
-import { PaginationDto, Payload } from "type-defs";
+import { Payload } from "type-defs";
 
 import { CabinetService } from "./cabinet.service";
-import type { CreateCabinetDto } from "./dto/create-cabinet.dto";
-import type { UpdateCabinetDto } from "./dto/update-cabinet.dto";
+import { CreateCabinetDto, GetCabinetsDto, UpdateCabinetDto } from "./dto";
 
 @UseGuards(JwtAuthGuard)
 @Controller("cabinets")
@@ -29,7 +28,7 @@ export class CabinetController {
   }
 
   @Get()
-  getAccountCabinets(@ReqUser() user: Payload, @Query() query: PaginationDto) {
+  getAccountCabinets(@ReqUser() user: Payload, @Query() query: GetCabinetsDto) {
     return this.cabinetService.findByAccountId(user.accountId, query);
   }
 

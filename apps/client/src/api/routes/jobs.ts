@@ -1,10 +1,13 @@
-import { Job } from "type-defs";
+import { LocationGenerics } from "router";
+import { Job, WithCountDto } from "type-defs";
 import { client } from "../http";
 
 // TODO: move to own interface file & merge when move to monorepo
 export type PaginatedJobs = { jobs: Job[]; count: number };
 
-export const getAll = (query = ""): Promise<PaginatedJobs> => {
+export const getAll = (
+  query?: LocationGenerics["Search"]
+): Promise<WithCountDto<Job>> => {
   return client.get(`/jobs?${query}`);
 };
 

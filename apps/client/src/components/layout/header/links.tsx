@@ -26,15 +26,16 @@ export const headerLinks: MenuProps["items"] = [
     icon: <DeliveredProcedureOutlined />,
   },
   {
-    key: "rooms",
-    label: <Link to="/rooms">Rooms</Link>,
+    key: "cabinet-setup",
+    label: <Link to="/cabinet-setup">Cabinet Setup</Link>,
     icon: <LayoutOutlined />,
   },
-  {
-    key: "reports",
-    label: <Link to="/reports">Reports</Link>,
-    icon: <ProfileOutlined />,
-  },
+  // TODO: put inside account?
+  // {
+  //   key: "reports",
+  //   label: <Link to="/reports">Reports</Link>,
+  //   icon: <ProfileOutlined />,
+  // },
   {
     key: "account",
     label: <Link to="/account">Account</Link>,

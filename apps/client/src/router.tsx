@@ -2,13 +2,17 @@ import { FallbackUI } from "@jigbid/ui";
 import {
   MakeGenerics,
   Navigate,
+  parseSearchWith,
   ReactLocation,
+  stringifySearchWith,
   type Route,
 } from "@tanstack/react-location";
+import { FilterValue } from "antd/es/table/interface";
 
 import { queryClient } from "app";
 import { MainLayout } from "components/layout";
 import { useAuthorization } from "hooks";
+import { GetStatsDto, Pagination } from "type-defs";
 import { api } from "./api";
 
 const ProtectedRoute = ({ children }) => {
@@ -44,17 +48,40 @@ export type LocationGenerics = MakeGenerics<{
     // me?: GetMeResult;
   };
   Search: {
-    page?: number;
+    stats?: GetStatsDto;
+    filters?: Record<string, FilterValue | null>;
+    pagination?: Pagination;
   };
   Params: {
     id: string;
     tabName?: string;
   };
-  // Search: {};
 }>;
 
+// export function decodeFromBinary(str: string): string {
+//   return decodeURIComponent(
+//     Array.prototype.map
+//       .call(atob(str), function (c) {
+//         return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+//       })
+//       .join("")
+//   );
+// }
+// export function encodeToBinary(str: string): string {
+//   return btoa(
+//     encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+//       return String.fromCharCode(parseInt(p1, 16));
+//     })
+//   );
+// }
+
 // Set up a ReactLocation instance
-export const location = new ReactLocation<LocationGenerics>();
+export const location = new ReactLocation<LocationGenerics>({
+  // parseSearch: parseSearchWith((value) => JSON.parse(decodeFromBinary(value))),
+  // stringifySearch: stringifySearchWith((value) =>
+  //   encodeToBinary(JSON.stringify(value))
+  // ),
+});
 
 //   {
 //   path: "/door-drawers",

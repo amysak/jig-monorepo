@@ -24,9 +24,7 @@ export const Jobs: FC<JobsProps> = () => {
 
   const { data, isLoading } = useQuery(["stats", "jobs"], () =>
     api.accounts.getAccountStats({
-      type: "jobs",
-      date: responseDates[0].unix(),
-      range,
+      stats: { type: "jobs", date: responseDates[0].unix(), range },
     })
   );
 

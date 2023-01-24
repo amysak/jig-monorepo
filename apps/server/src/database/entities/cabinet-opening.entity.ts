@@ -3,14 +3,13 @@ import {
   ChildEntity,
   Column,
   Entity,
-  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   TableInheritance,
 } from "typeorm";
 
 import { CABINET_OPENING_TYPE } from "type-defs";
-import { Cabinet } from "./cabinet.entity";
+
 import { ProfileSet } from "./profile.entity";
 import { Vendor } from "./vendor.entity";
 
@@ -29,8 +28,8 @@ export class CabinetOpening extends BaseEntity {
   modelName: string;
 
   // TODO: define a way to manage this data
-  @Column("text")
-  materialType: string; // used to determine what material is applicable to this opening. matches "type" in material entity
+  // @Column("text")
+  // materialType: string; // used to determine what material is applicable to this opening. matches "type" in material entity
 
   @Column("real")
   price: number;
@@ -41,8 +40,8 @@ export class CabinetOpening extends BaseEntity {
   @ManyToOne(() => Vendor)
   vendor: Vendor;
 
-  @ManyToMany(() => Cabinet, (cabinet) => cabinet.cabinetOpenings)
-  cabinets?: Cabinet[];
+  // @ManyToMany(() => Cabinet, (cabinet) => cabinet.cabinetOpenings)
+  // cabinets?: Cabinet[];
 }
 
 @ChildEntity(CABINET_OPENING_TYPE.DOOR)

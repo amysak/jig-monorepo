@@ -14,7 +14,7 @@ import {
 
 import { JwtAuthGuard } from "auth/guards";
 import { ReqUser } from "common/decorators";
-import type { GetStatsDto, Payload } from "type-defs";
+import { GetStatsDto, Payload } from "type-defs";
 
 import { AccountService } from "./account.service";
 import type { CreateAccountDto } from "./dto/create-account.dto";

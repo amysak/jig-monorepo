@@ -1,13 +1,17 @@
 import { ApartmentOutlined, SettingOutlined } from "@ant-design/icons";
+import { Link } from "@tanstack/react-location";
 import { SubMenuType } from "antd/es/menu/hooks/useItems";
 
 export const sideLinks: SubMenuType[] = [
   {
-    label: "Cabinet Setup",
-    key: "/cabinet-setup",
+    key: "cabinet-setup",
+    label: <Link to="/cabinet-setup">Cabinet Setup</Link>,
     icon: <SettingOutlined />,
     children: [
-      { label: "Cabinets", key: "cabinets" },
+      {
+        label: <Link to="/cabinet-setup/cabinets">Cabinets</Link>,
+        key: "cabinets",
+      },
       { label: "Door/Drawers", key: "door-drawers" },
       { label: "Door/Drawer Profiles", key: "door-drawer-profiles" },
       { label: "Accessories/Hardware", key: "accessories-hardwares" },

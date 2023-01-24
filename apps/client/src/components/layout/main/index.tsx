@@ -25,15 +25,24 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
   const location = useLocation();
   const currentTabName = location.current.pathname.split("/")[1];
 
-  console.log("backgroundImage => ", backgroundImage);
-
   return (
-    <Layout {...props} className="pagelayout">
-      <Header className="apppageheader" style={{ justifyContent: "flex-end" }}>
+    <Layout
+      {...props}
+      className="pagelayout"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+      }}
+    >
+      <Header
+        className="apppageheader"
+        style={{ width: "100%", justifyContent: "flex-end" }}
+      >
         <Menu
           defaultSelectedKeys={[currentTabName]}
           theme="dark"
           mode="horizontal"
+          // TODO: weird that we have to do this
+          disabledOverflow={true}
           items={headerLinks}
         />
       </Header>
@@ -62,10 +71,9 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
           <Divider className="x5" />
 
           <Menu
+            className="sidepanel__menu"
             mode="inline"
             theme="dark"
-            // defaultSelectedKeys={["1"]}
-            // defaultOpenKeys={["sub1"]}
             style={{ height: "100%", borderRight: 0 }}
             items={sideLinks}
           />
@@ -73,7 +81,6 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
         <Layout
           style={{
             padding: "0 24px 24px",
-            backgroundImage: `url(${backgroundImage})`,
           }}
         >
           {/* <Breadcrumb style={{ margin: "16px 0" }}>

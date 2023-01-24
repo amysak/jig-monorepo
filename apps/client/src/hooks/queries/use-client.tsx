@@ -1,4 +1,4 @@
-import { Client, PaginationDto, WithCountDto } from "type-defs";
+import { Client, Pagination, WithCountDto } from "type-defs";
 import {
   useMutation,
   useQuery,
@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 
 import { api } from "api";
+import { LocationGenerics } from "router";
 
 export const useClients = (options?: UseQueryOptions<Client[]>) =>
   useQuery<Client[]>(
@@ -22,7 +23,7 @@ export const useClients = (options?: UseQueryOptions<Client[]>) =>
   );
 
 export const useClientsPaginated = (
-  query: PaginationDto,
+  query: LocationGenerics["Search"],
   options?: UseQueryOptions<WithCountDto<Client>>
 ) =>
   useQuery<WithCountDto<Client>>(

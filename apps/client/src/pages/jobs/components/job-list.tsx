@@ -13,6 +13,9 @@ import { api } from "api";
 import UILayout from "components/layout/ui";
 import { JOB_STATUSES_OPTIONS } from "../../../utilities/constants";
 import { getQueryString } from "../../../utilities/utils";
+import { useJobsPaginated } from "hooks/queries";
+import { LocationGenerics } from "router";
+import { DEFAULT_PAGE_SIZE } from "type-defs";
 
 function JobsFilterRow() {
   return (
@@ -107,28 +110,9 @@ const columns = [
 ];
 
 export function JobList() {
-  const [form] = Form.useForm();
-  const [filters, setFilters] = useState({ limit: 20, skip: 1 });
+  const search = useSearch<LocationGenerics>();
 
-  const queryClient = useQueryClient();
-
-  const { data, isLoading } = useQuery(
-    ["jobs", filters],
-    () => api.jobs.getAll(getQueryString(filters)),
-    {
-      onError: (error) => console.error(error),
-    }
-  );
-
-  // const onPaginate = (config) => {
-  //   const queryFilters = { ...filters, ...api.paginateObj(config) };
-
-  //   setFilters(queryFilters);
-  // };
-
-  const onValuesChange = () => {
-    queryClient.invalidateQueries(["jobs", filters]);
-  };
+  const { data, isLoading } = useJobsPaginated(search);
 
   return (
     <>
@@ -138,14 +122,14 @@ export function JobList() {
         // {...tableProps}
         loading={isLoading}
         columns={columns}
-        dataSource={data?.jobs}
+        dataSource={data?.data}
         // onChange={onPaginate}
         pagination={{
           total: data?.count,
-          pageSize: filters.limit,
+          pageSize: DEFAULT_PAGE_SIZE,
           size: "small",
           showSizeChanger: false,
-          current: filters.skip,
+          current: search.pagination?.page,
         }}
         rowKey="id"
         className="clickablerows pagewrapper__maincontent nomargin"

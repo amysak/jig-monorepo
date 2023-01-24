@@ -23,8 +23,6 @@ export const Job = () => {
     params: { id, tabName },
   } = useMatch<LocationGenerics>();
 
-  console.log("useMatch() => ", useMatch());
-
   const { data: job, isFetching } = useQueryJob(id);
 
   const navigate = useNavigate();

@@ -10,12 +10,7 @@ import {
   TableInheritance,
 } from "typeorm";
 
-import {
-  RECORD_STATUS,
-  TERMS_TYPE,
-  type RecordStatus,
-  type TermsType,
-} from "type-defs";
+import { TERMS_TYPE, type TermsType } from "type-defs";
 import { Account } from "./account.entity";
 import { DefaultableBaseEntity } from "./base.entity";
 import { AccountPreferences, JobPreferences } from "./preferences.entity";

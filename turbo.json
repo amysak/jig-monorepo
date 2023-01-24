@@ -6,11 +6,13 @@
       "dependsOn": ["^build"]
     },
     "type-defs#typegen": {
+      "inputs": ["../../apps/server/src/database/entities/*.ts"],
       "outputs": ["dist/**"]
     },
     "type-defs#build": {
-      "outputs": ["dist/**"],
-      "dependsOn": ["typegen"]
+      "dependsOn": ["typegen"],
+      "inputs": ["../../apps/server/src/database/entities/*.ts"],
+      "outputs": ["dist/**"]
     },
     "lint": {
       "dependsOn": ["^build"]

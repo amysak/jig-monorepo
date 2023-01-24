@@ -1,17 +1,13 @@
 import { client } from "../http";
 
+import { LocationGenerics } from "router";
 import { Account, AccountStats } from "type-defs";
-import { Ranges, StatsType } from "pages/dashboard/DashboardLine/utils";
 
 // TODO: Can be typed generically
-export const getAccountStats = (data: {
-  type: StatsType;
-  date: number;
-  range: Ranges;
-}): Promise<AccountStats> => {
-  return client.get(
-    `accounts/stats/?type=${data.type}&date=${data.date}&range=${data.range}`
-  );
+export const getAccountStats = (
+  query: LocationGenerics["Search"]
+): Promise<AccountStats> => {
+  return client.get(`accounts/stats?${client.getQueryString(query)}`);
 };
 
 export const getCompany = (): Promise<Account> => {

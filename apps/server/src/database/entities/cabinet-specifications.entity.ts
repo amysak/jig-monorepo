@@ -1,11 +1,12 @@
 import {
-  BaseEntity,
-  Column,
-  Entity,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+  CABINET_BASE_TYPE,
+  CABINET_PLACEMENT,
+  type CabinetBaseType,
+  type CabinetPlacement,
+} from "type-defs";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
+import { AppBaseEntity } from "./base.entity";
 import { Cabinet } from "./cabinet.entity";
 import { AccountPreferences } from "./preferences.entity";
 
@@ -53,9 +54,6 @@ class CabinetFiller {
 }
 
 class FaceFrame {
-  @Column("boolean", { default: false })
-  included: boolean;
-
   @Column("real", { default: 3 })
   railHeight: number;
 
@@ -95,8 +93,8 @@ class Nailer {
 }
 
 class CabinetSides {
-  @Column("int", { default: 2 })
-  quantity: 1 | 2;
+  // @Column("int", { default: 2 })
+  // quantity: 1 | 2;
 
   @Column("int", { default: 2 })
   finishedSidesCount: 0 | 1 | 2;
@@ -140,48 +138,38 @@ class CabinetTop {
   depthDifference: number;
 }
 
-@Entity()
-export class CabinetSpecifications extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @OneToOne(() => Cabinet, (cabinet) => cabinet.specifications, {
-    onDelete: "CASCADE",
-    nullable: true,
-  })
-  cabinet?: Cabinet; // if tied to a cabinet, then its this cabinet's specs
-
-  @OneToOne(
-    () => AccountPreferences,
-    (accountPreferences) => accountPreferences.cabinetSpecifications,
-    { onDelete: "CASCADE", nullable: true }
-  )
-  accountPreferences?: AccountPreferences; // if tied to acc preferences, then its a default
-
-  @Column("boolean")
-  isInteriorFinished: boolean;
-
+class CabinetDimensions {
   @Column("real")
   height: number; // floor to top = height + elevation
 
   @Column("real", { default: 0 })
-  elevation: number; // Defines floor to bottom of cabinet
+  elevation: number; // floor to bottom
 
   @Column("real")
   depth: number;
 
-  @Column("integer")
-  drawerCount: number;
-
-  @Column("integer")
-  trayCount: number;
-
-  @Column("integer")
-  doorCount: number;
-
   @Column("real", { default: 4.25 })
   toeKickHeight: number;
+}
 
+class CabinetCounts {
+  @Column("integer")
+  sides: number;
+
+  @Column("integer")
+  trays: number;
+
+  @Column("integer")
+  doors: number;
+
+  @Column("integer")
+  drawers: number;
+
+  @Column("integer")
+  drawerFronts: number;
+}
+
+class CabinetIntrinsicDimensions {
   @Column(() => CabinetTop)
   top: CabinetTop;
 
@@ -220,4 +208,59 @@ export class CabinetSpecifications extends BaseEntity {
 
   @Column(() => CabinetDrawers)
   drawers: CabinetDrawers;
+}
+
+@Entity()
+export class CabinetSpecifications extends AppBaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column("text", { default: CABINET_PLACEMENT.DEFAULT })
+  placement: CabinetPlacement;
+
+  @Column("text", { default: CABINET_BASE_TYPE.STANDARD })
+  baseType: CabinetBaseType;
+
+  @Column("boolean")
+  isInteriorFinished: boolean;
+
+  @Column("boolean")
+  isFramed: boolean;
+
+  @Column(() => CabinetDimensions)
+  dimensions: CabinetDimensions;
+
+  @Column(() => CabinetCounts)
+  partCounts: CabinetCounts;
+
+  @Column(() => CabinetIntrinsicDimensions)
+  intrinsic: CabinetIntrinsicDimensions;
+
+  // ?? TODO
+  get partsQuantity() {
+    return (
+      this.partCounts.drawers +
+      this.partCounts.drawerFronts +
+      this.partCounts.doors +
+      this.partCounts.trays
+    );
+  }
+
+  // ?? TODO
+  get stackedHeight() {
+    return 0;
+  }
+
+  @OneToOne(() => Cabinet, (cabinet) => cabinet.specifications, {
+    onDelete: "CASCADE",
+    nullable: true,
+  })
+  cabinet?: Cabinet; // if tied to a cabinet, then its this cabinet's specs
+
+  @OneToOne(
+    () => AccountPreferences,
+    (accountPreferences) => accountPreferences.cabinetSpecifications,
+    { onDelete: "CASCADE", nullable: true }
+  )
+  accountPreferences?: AccountPreferences; // if tied to acc preferences, then its a default
 }

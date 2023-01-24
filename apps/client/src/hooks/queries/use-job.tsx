@@ -6,10 +6,11 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query";
 import { merge } from "lodash-es";
-import { Job } from "type-defs";
+import { Job, WithCountDto } from "type-defs";
 
-import { queryClient } from "app";
 import { api } from "api";
+import { queryClient } from "app";
+import { LocationGenerics } from "router";
 
 export const invalidateJob = (id: string) =>
   queryClient.invalidateQueries(["job", id]);
@@ -17,6 +18,14 @@ export const invalidateJob = (id: string) =>
 export const useQueryJob = (id: string, options?: UseQueryOptions<Job>) =>
   useQuery<Job>(["job", id], () => api.jobs.getById(id), {
     staleTime: 60000,
+    ...options,
+  });
+
+export const useJobsPaginated = (
+  query: LocationGenerics["Search"],
+  options?: UseQueryOptions<WithCountDto<Job>>
+) =>
+  useQuery<WithCountDto<Job>>(["jobs", query], () => api.jobs.getAll(query), {
     ...options,
   });
 

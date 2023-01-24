@@ -24,9 +24,7 @@ export const Clients: FC<ClientsProps> = () => {
 
   const { data, isLoading } = useQuery(["stats", "clients"], () =>
     api.accounts.getAccountStats({
-      type: "clients",
-      date: responseDates[0].unix(),
-      range,
+      stats: { type: "clients", date: responseDates[0].unix(), range },
     })
   );
 

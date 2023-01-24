@@ -51,9 +51,6 @@ export class EndPanel extends Panel {
 
   @Column("real")
   depth: number;
-
-  @ManyToOne(() => Cabinet, (cabinet) => cabinet.endPanel)
-  cabinet: Cabinet;
 }
 
 @ChildEntity(PANEL_TYPE.WAINSCOT)

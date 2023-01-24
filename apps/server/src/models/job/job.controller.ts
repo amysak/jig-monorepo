@@ -12,13 +12,9 @@ import {
 
 import { JwtAuthGuard } from "auth/guards";
 import { ReqUser } from "common/decorators";
-import type { Payload } from "type-defs";
+import { PaginationDto, Payload } from "type-defs";
 
-import {
-  CreateJobDto,
-  GetJobsByAccountDto,
-  GetJobsByAccountInputDto,
-} from "./dto";
+import { CreateJobDto } from "./dto";
 import { JobService } from "./job.service";
 
 @UseGuards(JwtAuthGuard)
@@ -34,8 +30,9 @@ export class JobController {
   @Get()
   async getAccountJobs(
     @ReqUser() user: Payload,
-    @Query() query: GetJobsByAccountInputDto
-  ): Promise<GetJobsByAccountDto> {
+    @Query() query: PaginationDto
+  ) {
+    console.log("query => ", query);
     return this.jobService.findByAccountId(user.accountId, query);
   }
 
@@ -44,6 +41,7 @@ export class JobController {
     return this.jobService.findOne(id);
   }
 
+  // TODO: DTO
   @Patch(":id")
   async update(@Param("id") id: number, @Body() data: any) {
     return this.jobService.update(id, data);
