@@ -4,7 +4,7 @@ import { FC, ReactNode } from "react";
 
 import backgroundImage from "assets/images/banner/banner-bg.png?webp&imagetools";
 import { Logo } from "../../icon";
-import { headerLinks } from "./links";
+import { useHeaderLinks } from "./links";
 
 import "./style.scss";
 
@@ -21,6 +21,8 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
   const {
     token: { colorLink },
   } = theme.useToken();
+
+  const headerLinks = useHeaderLinks();
 
   // TODO: probably wrong
   const location = useLocation();
@@ -42,7 +44,7 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
           theme="dark"
           mode="horizontal"
           items={headerLinks}
-          disabledOverflow={true}
+          // disabledOverflow={true}
           style={{ color: colorLink }}
         />
       </Header>

@@ -1,287 +1,287 @@
-// .ant-page-header-heading-title {
-//   color: #ffffff !important;
-// }
+.ant-page-header-heading-title {
+  color: #ffffff !important;
+}
 
-// .ant-btn,
-// .ant-btn-danger {
-//   padding: 20px 40px;
-//   line-height: 0;
-//   height: auto;
+.ant-btn,
+.ant-btn-danger {
+  padding: 20px 40px;
+  line-height: 0;
+  height: auto;
 
-//   &:focus {
-//     filter: invert(10%);
-//   }
-// }
+  &:focus {
+    filter: invert(10%);
+  }
+}
 
-// .ant-btn-icon-only {
-//   padding: 4px 0;
-// }
+.ant-btn-icon-only {
+  padding: 4px 0;
+}
 
-// .ant-btn-sm {
-//   padding: 1.6px 7px;
-//   height: 24px;
-// }
+.ant-btn-sm {
+  padding: 1.6px 7px;
+  height: 24px;
+}
 
-// .ant-form-item-label {
-//   padding: 0 !important;
+.ant-form-item-label {
+  padding: 0 !important;
 
-//   label,
-//   .ant-form-item-required {
-//     height: 0;
-//     font-size: 12px;
-//   }
-// }
+  label,
+  .ant-form-item-required {
+    height: 0;
+    font-size: 12px;
+  }
+}
 
-// .ant-form-item {
-//   margin-bottom: 5px;
-// }
+.ant-form-item {
+  margin-bottom: 5px;
+}
 
-// .ant-form-item-label > label,
-// .as-form-label {
-//   font-size: 12px !important;
-// }
+.ant-form-item-label > label,
+.as-form-label {
+  font-size: 12px !important;
+}
 
-// .as-form-label-subtitle {
-//   font-size: 10px;
-// }
+.as-form-label-subtitle {
+  font-size: 10px;
+}
 
-// h1.ant-typography {
-//   font-size: 26px !important;
-// }
+h1.ant-typography {
+  font-size: 26px !important;
+}
 
-// h2.ant-typography {
-//   font-size: 22px !important;
-// }
+h2.ant-typography {
+  font-size: 22px !important;
+}
 
-// h3.ant-typography {
-//   font-size: 18px !important;
-// }
+h3.ant-typography {
+  font-size: 18px !important;
+}
 
-// h4.ant-typography {
-//   font-size: 15px !important;
-// }
+h4.ant-typography {
+  font-size: 15px !important;
+}
 
-// h5.ant-typography {
-//   font-size: 16px !important;
-// }
+h5.ant-typography {
+  font-size: 16px !important;
+}
 
-// h6.ant-typography {
-//   font-size: 14px !important;
-// }
+h6.ant-typography {
+  font-size: 14px !important;
+}
 
-// .anticon {
-//   cursor: pointer;
+.anticon {
+  cursor: pointer;
 
-//   &:hover {
-//     color: rgba(21, 59, 80, 1);
-//   }
-// }
+  &:hover {
+    color: rgba(21, 59, 80, 1);
+  }
+}
 
-// .ant-layout-header {
-//   background-color: $primary-white;
-//   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-//   display: flex;
-//   align-items: center;
-//   height: auto;
-//   padding: 0 0 0 60px;
-// }
+.ant-layout-header {
+  background-color: $primary-white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  height: auto;
+  padding: 0 0 0 60px;
+}
 
-// .ant-tabs {
-//   padding: 13px !important;
-// }
+.ant-tabs {
+  padding: 13px !important;
+}
 
-// .ant-table {
-//   .ant-table-title {
-//     padding: 0 0 8px 0 !important;
-//   }
+.ant-table {
+  .ant-table-title {
+    padding: 0 0 8px 0 !important;
+  }
 
-//   .ant-table-container {
-//     border-collapse: collapse;
-//     border: 1px solid #f0f0f0;
-//   }
+  .ant-table-container {
+    border-collapse: collapse;
+    border: 1px solid #f0f0f0;
+  }
 
-//   thead tr th {
-//     font-weight: 500;
-//     font-size: 12px;
-//     background-color: rgb(245, 248, 250) !important;
-//     color: rgb(51, 71, 91);
-//     text-transform: uppercase;
-//     height: 44px;
+  thead tr th {
+    font-weight: 500;
+    font-size: 12px;
+    background-color: rgb(245, 248, 250) !important;
+    color: rgb(51, 71, 91);
+    text-transform: uppercase;
+    height: 44px;
 
-//     &:hover {
-//     }
-//   }
+    &:hover {
+    }
+  }
 
-//   .ant-table-tbody {
-//     tr td.ant-table-cell {
-//       padding: 5px 8px !important;
-//     }
-//   }
+  .ant-table-tbody {
+    tr td.ant-table-cell {
+      padding: 5px 8px !important;
+    }
+  }
 
-//   thead tr th.ant-table-cell {
-//     border-bottom: 2px solid transparent;
+  thead tr th.ant-table-cell {
+    border-bottom: 2px solid transparent;
 
-//     &.ant-table-column-sort {
-//       color: #24678d;
-//       background-color: $jig-background !important;
+    &.ant-table-column-sort {
+      color: #24678d;
+      background-color: $jig-background !important;
 
-//       &:hover {
-//         border-bottom: 2px solid #24678d;
-//       }
+      &:hover {
+        border-bottom: 2px solid #24678d;
+      }
 
-//       svg {
-//         &:hover {
-//           color: #fafafa;
-//         }
-//       }
-//     }
-//   }
-// }
+      svg {
+        &:hover {
+          color: #fafafa;
+        }
+      }
+    }
+  }
+}
 
-// .ant-table thead tr th {
-//   text-transform: none;
-//   font-size: 11px;
-//   padding: 3px 3px;
-// }
+.ant-table thead tr th {
+  text-transform: none;
+  font-size: 11px;
+  padding: 3px 3px;
+}
 
-// .ant-tabs-top-bar .ant-tabs-nav .ant-tabs-tab-active {
-//   color: #24678d;
-//   font-weight: 500;
-//   border-bottom: 3px solid #24678d;
-// }
+.ant-tabs-top-bar .ant-tabs-nav .ant-tabs-tab-active {
+  color: #24678d;
+  font-weight: 500;
+  border-bottom: 3px solid #24678d;
+}
 
-// .ant-divider.ant-divider-horizontal.measurement {
-//   margin: 0;
-// }
+.ant-divider.ant-divider-horizontal.measurement {
+  margin: 0;
+}
 
-// .ant-divider.ant-divider-horizontal.x5 {
-//   margin: 5px 0;
-// }
+.ant-divider.ant-divider-horizontal.x5 {
+  margin: 5px 0;
+}
 
-// // TODO: this was changed, !important removed
-// .ant-input-search {
-//   padding: 9px 10px;
-//   border: 1px solid #cbd6e2;
-//   background-color: $off-white;
-//   height: 40px;
+// TODO: this was changed, !important removed
+.ant-input-search {
+  padding: 9px 10px;
+  border: 1px solid #cbd6e2;
+  background-color: $off-white;
+  height: 40px;
 
-//   &.ant-input-affix-wrapper-focused {
-//     border-color: rgba(0, 208, 228, 0.5);
-//     box-shadow: 0 0 4px 1px rgba(0, 208, 228, 0.3), 0 0 0 1px #00d0e4;
-//     outline: 0;
-//   }
+  &.ant-input-affix-wrapper-focused {
+    border-color: rgba(0, 208, 228, 0.5);
+    box-shadow: 0 0 4px 1px rgba(0, 208, 228, 0.3), 0 0 0 1px #00d0e4;
+    outline: 0;
+  }
 
-//   input {
-//     height: auto;
+  input {
+    height: auto;
 
-//     &:focus,
-//     &:hover {
-//       border: none !important;
-//       box-shadow: none !important;
-//     }
-//   }
-// }
+    &:focus,
+    &:hover {
+      border: none !important;
+      box-shadow: none !important;
+    }
+  }
+}
 
-// .input-base {
-//   border-radius: 3px;
-//   border: 1px solid #cbd6e2;
-//   font-size: 16px;
-//   transition: all 0.15s ease-out;
-//   background-color: $off-white;
-//   display: block;
-//   height: 22x;
-//   line-height: 22px;
-//   text-align: left;
-//   width: 100%;
-// }
+.input-base {
+  border-radius: 3px;
+  border: 1px solid #cbd6e2;
+  font-size: 16px;
+  transition: all 0.15s ease-out;
+  background-color: $off-white;
+  display: block;
+  height: 22x;
+  line-height: 22px;
+  text-align: left;
+  width: 100%;
+}
 
-// .input-base-disabled {
-//   border-color: #cbd6e2 !important;
-//   box-shadow: none !important;
-//   outline: 0 !important;
-// }
+.input-base-disabled {
+  border-color: #cbd6e2 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
 
-// .input-base-focused-hover {
-//   border-color: $primary-jig !important;
-//   box-shadow: 0 0 4px 1px $jig-washed, 0 0 0 1px $primary-jig !important;
-//   outline: 0;
-// }
+.input-base-focused-hover {
+  border-color: $primary-jig !important;
+  box-shadow: 0 0 4px 1px $jig-washed, 0 0 0 1px $primary-jig !important;
+  outline: 0;
+}
 
-// .ant-input,
-// .ant-input-number-input {
-//   @extend .input-base;
+.ant-input,
+.ant-input-number-input {
+  @extend .input-base;
 
-//   &:focus,
-//   &:hover {
-//     @extend .input-base-focused-hover;
-//   }
+  &:focus,
+  &:hover {
+    @extend .input-base-focused-hover;
+  }
 
-//   &:disabled,
-//   &.ant-input-disabled {
-//     &:focus,
-//     &:hover {
-//       @extend .input-base-disabled;
-//     }
-//   }
-// }
+  &:disabled,
+  &.ant-input-disabled {
+    &:focus,
+    &:hover {
+      @extend .input-base-disabled;
+    }
+  }
+}
 
-// .ant-input-number-input {
-//   background-color: $off-white !important;
-// }
+.ant-input-number-input {
+  background-color: $off-white !important;
+}
 
-// .ant-select {
-//   @extend .input-base;
+.ant-select {
+  @extend .input-base;
 
-//   &.ant-select-focused {
-//     @extend .input-base-focused-hover;
-//   }
+  &.ant-select-focused {
+    @extend .input-base-focused-hover;
+  }
 
-//   .ant-select-selector {
-//     border: none !important;
-//     height: 100% !important;
-//     background-color: $off-white !important;
-//     display: flex;
-//     align-items: center;
-//   }
-// }
+  .ant-select-selector {
+    border: none !important;
+    height: 100% !important;
+    background-color: $off-white !important;
+    display: flex;
+    align-items: center;
+  }
+}
 
-// .ant-picker {
-//   @extend .input-base;
+.ant-picker {
+  @extend .input-base;
 
-//   &.ant-picker-focused,
-//   &:focus,
-//   &:hover {
-//     @extend .input-base-focused-hover;
-//   }
-// }
+  &.ant-picker-focused,
+  &:focus,
+  &:hover {
+    @extend .input-base-focused-hover;
+  }
+}
 
-// .ant-input-password,
-// .ant-input-affix-wrapper {
-//   background-color: $off-white;
+.ant-input-password,
+.ant-input-affix-wrapper {
+  background-color: $off-white;
 
-//   &.ant-input-affix-wrapper-focused,
-//   &:focus,
-//   &:hover {
-//     @extend .input-base-focused-hover;
-//   }
+  &.ant-input-affix-wrapper-focused,
+  &:focus,
+  &:hover {
+    @extend .input-base-focused-hover;
+  }
 
-//   input {
-//     &:focus,
-//     &:hover {
-//       @extend .input-base-disabled;
-//     }
-//   }
-// }
+  input {
+    &:focus,
+    &:hover {
+      @extend .input-base-disabled;
+    }
+  }
+}
 
-// .ant-message {
-//   z-index: 1600;
-//   white-space: pre-line;
-// }
+.ant-message {
+  z-index: 1600;
+  white-space: pre-line;
+}
 
-// .input-base,
-// .ant-input,
-// .ant-input-number-input,
-// .ant-select,
-// .ant-picker {
-//   font-size: 12px;
-// }
+.input-base,
+.ant-input,
+.ant-input-number-input,
+.ant-select,
+.ant-picker {
+  font-size: 12px;
+}
