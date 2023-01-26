@@ -10,7 +10,7 @@ import { AppModule } from "./app.module";
 async function bootstrap(): Promise<string> {
   const isProduction = process.env.NODE_ENV === "production";
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    bufferLogs: false,
+    // bufferLogs: false,
   });
 
   if (isProduction) {

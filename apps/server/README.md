@@ -24,15 +24,9 @@
 - [x] Bind preferences to their models and implement preferences inheritance
       logic
 - [x] Add isDefault fields to db (version=0)
-- [ ] Implement creating new record if version=0 and custom logic for creating a
-      dedicated client for a job etc.
-- [ ] Use .env file on render instead of doing manual setup
-- [ ] Re-implement mailing module and bind authorization
 - [ ] Design new material set logic (sets in general)
 - [ ] Bind rooms to front-end
-- [ ] Implement [event listener flow](https://docs.nestjs.com/techniques/events)
-      for re-applying different sets of data on other entitites
-      ([possibly could be omitted](https://orkhan.gitbook.io/typeorm/docs/listeners-and-subscribers))
+- [ ] Re-implement mailing module and bind authorization
 - [ ] Add
       [custom serialization](https://blog.logrocket.com/serialization-in-nestjs-a-different-approach/),
       fixes [this](src/shared/account/account.service.ts#L54)

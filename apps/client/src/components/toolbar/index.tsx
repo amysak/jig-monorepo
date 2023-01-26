@@ -53,11 +53,3 @@ export default function Toolbar({ initial, label, parent }: ToolbarProps) {
     </Breadcrumb>
   );
 }
-
-Toolbar.defaultProps = {
-  label: "",
-  initial: {
-    title: "Cabinet Setup",
-    path: "/cabinet-setup",
-  },
-};

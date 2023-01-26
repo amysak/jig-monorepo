@@ -1,4 +1,4 @@
-import { forEach, isEmpty, isPlainObject } from "lodash-es";
+import { cloneDeep, forEach, isEmpty, isPlainObject } from "lodash-es";
 import { capitalize } from "./utils";
 
 export const cleanParam = (urlParam: string) => {
@@ -36,19 +36,24 @@ export const flattenObject = (
 };
 
 export const cleanObject = (obj: Record<string, unknown>) => {
-  forEach(obj, (value, key) => {
+  const newObj = cloneDeep(obj);
+
+  forEach(newObj, (value, key) => {
     if (isPlainObject(value)) {
-      cleanObject(value as Record<string, unknown>);
-      if (isEmpty(value)) {
-        delete obj[key];
+      const cleanedValue = cleanObject(value as Record<string, unknown>);
+      if (isEmpty(cleanedValue)) {
+        delete newObj[key];
+      } else {
+        newObj[key] = cleanedValue;
       }
     } else {
       if (!value) {
-        delete obj[key];
+        delete newObj[key];
       }
     }
   });
-  return obj;
+
+  return newObj;
 };
 
 // const buildSelectOptions = (list: any[], current: { id: any }) => {

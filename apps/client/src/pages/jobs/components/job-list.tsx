@@ -132,7 +132,7 @@ export function JobList() {
           current: search.pagination?.page,
         }}
         rowKey="id"
-        className="clickablerows pagewrapper__maincontent nomargin"
+        className="clickablerows"
       />
     </>
   );

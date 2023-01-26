@@ -18,15 +18,20 @@
 - [x] Get rid of unused or redundant dependencies in package.json and replace
       their usages in code if necessary
 - [x] Move to monorepo
-- [ ] 🔥 Starting cabinet setup
-- [ ] ♻️ Finish migrating AntDesign v4 to v5
-- [ ] ♻️ Configure antd theme accordingly (some of the styles corrupted for
+- [x] Finish migrating AntDesign v4 to v5
+- [x] Finish updating packages
+- [x] 🔥 Start cabinet setup
+- [ ] Complete data rendering and editing (cabinets and others)
+- [ ] ❗ Configure antd theme accordingly (some of the styles corrupted for
       various reasons)
-- [ ] ♻️ Create global date object and reuse it from utils
+- [ ] ❗ Remove SCSS where possible and get rid of !important
+- [ ] Fix problem with injecting too much CSS from Vite
+- [ ] Fix redundant footer whitespaces
+- [ ] Finish authorization
 - [ ] Finish job's client page (select from all client names & submit address
       override for job)
+- [ ] Create global date object and reuse it from utils
 - [ ] [Remove default exports](https://www.reddit.com/r/javascript/comments/x3hsov/default_exports_in_javascript_modules_are_terrible/)
-- [ ] Finish updating packages
 
 ```bash
 git clone git@github.com:jigbid/web.git

@@ -101,11 +101,11 @@ function Dashboard() {
   return (
     <div className="dashboardWrapper">
       <Row gutter={[20, 0]}>
-        <Col xs={24} xxl={18} className="dashboardWrapper__canvas">
+        <Col xs={24} xl={18} className="dashboardWrapper__canvas">
           <DashboardLines />
         </Col>
 
-        <Col xs={24} xxl={6}>
+        <Col xs={24} xl={6}>
           <Card size="default" className="card-tabs card">
             <Tabs defaultActiveKey="clients">
               <TabPane tab="Clients" key="clients">

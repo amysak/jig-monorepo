@@ -17,8 +17,8 @@ export {};
 //   ACTIVE_INACTIVE_STATUSES_OPTIONS,
 //   CABINET_PARTS,
 //   CABINET_STYLES,
-// } from "../../../utilities/constants";
-// import { capitalize, shortId } from "../../../utilities/utils";
+// } from "../../../../utilities/constants";
+// import { capitalize, shortId } from "../../../../utilities/utils";
 
 // const layout = {
 //   wrapperCol: { span: 18 },

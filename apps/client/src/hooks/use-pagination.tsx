@@ -1,28 +1,34 @@
 import { useNavigate } from "@tanstack/react-location";
-import { merge } from "antd/es/theme/util/statistic";
-import { useCallback } from "react";
+import { merge } from "lodash-es";
 
 import { LocationGenerics } from "router";
 import { cleanObject } from "utilities/functions";
 
+export type UseSetSearchProps = {
+  clean?: boolean;
+};
+
 export const useSetSearch = () => {
   const navigate = useNavigate<LocationGenerics>();
 
-  const set = (search: LocationGenerics["Search"]) => {
+  const set = (
+    search: LocationGenerics["Search"],
+    options?: UseSetSearchProps
+  ) =>
     navigate({
       search: (old) => {
         if (!old) return search;
-        return cleanObject(merge(old, search));
+        if (options?.clean) {
+          return cleanObject(search);
+        }
+
+        const mergedSearch = merge({}, old, search);
+        const cleanedSearch = cleanObject(mergedSearch);
+
+        return cleanedSearch;
       },
       // replace: true,
     });
-  };
 
-  const clear = useCallback(() => {
-    navigate({
-      search: () => ({}),
-    });
-  }, [navigate]);
-
-  return [set, clear];
+  return [set];
 };

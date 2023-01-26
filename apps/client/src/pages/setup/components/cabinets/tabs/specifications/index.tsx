@@ -25,7 +25,7 @@ import {
   polyPoints,
   safeNum,
   toFixed,
-} from "../../../../../utilities/utils";
+} from "../../../../../../utilities/utils";
 
 // import BaseCabinet, { basePoints } from "./components/Base";
 import UpperCabinet from "./components/Upper";

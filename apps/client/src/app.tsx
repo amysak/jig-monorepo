@@ -1,4 +1,3 @@
-// import Notification from './components/organisms/notification'
 import { Outlet, Router } from "@tanstack/react-location";
 import { ReactLocationDevtools } from "@tanstack/react-location-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

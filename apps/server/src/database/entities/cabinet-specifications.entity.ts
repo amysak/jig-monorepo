@@ -169,7 +169,7 @@ class CabinetCounts {
   drawerFronts: number;
 }
 
-class CabinetIntrinsicDimensions {
+export class CabinetIntrinsicDimensions {
   @Column(() => CabinetTop)
   top: CabinetTop;
 

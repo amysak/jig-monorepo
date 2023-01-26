@@ -8,7 +8,7 @@ export type PaginatedJobs = { jobs: Job[]; count: number };
 export const getAll = (
   query?: LocationGenerics["Search"]
 ): Promise<WithCountDto<Job>> => {
-  return client.get(`/jobs?${query}`);
+  return client.get(`/jobs?${client.getQueryString(query)}`);
 };
 
 export const getById = (jobId: string): Promise<Job> => {

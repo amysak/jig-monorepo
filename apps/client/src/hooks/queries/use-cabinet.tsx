@@ -10,6 +10,28 @@ import { api } from "api";
 import { LocationGenerics } from "router";
 import { Cabinet, WithCountDto } from "type-defs";
 
+export const useCachedCabinet = (id: string) => {
+  const queryClient = useQueryClient();
+
+  const matched = queryClient.getQueryCache().findAll(["cabinets"]);
+
+  if (!matched.length) {
+    return null;
+  }
+
+  const cabinets = (matched[0].state.data as WithCountDto<Cabinet>).data;
+
+  return cabinets.find((cabinet) => cabinet.id.toString() === id);
+};
+
+export const useCabinetQuery = (
+  id: string,
+  options?: UseQueryOptions<Cabinet>
+) =>
+  useQuery<Cabinet>(["cabinets", id], () => api.cabinets.getById(id), {
+    ...options,
+  });
+
 export const useCabinetsPaginated = (
   search: LocationGenerics["Search"],
   options?: UseQueryOptions<WithCountDto<Cabinet>>

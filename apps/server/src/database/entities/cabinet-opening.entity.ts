@@ -14,9 +14,10 @@ import { ProfileSet } from "./profile.entity";
 import { Vendor } from "./vendor.entity";
 
 @Entity()
-@TableInheritance({
-  column: { type: "varchar", name: "type", enum: CABINET_OPENING_TYPE },
-})
+// )))))))))))))))))))))))))))))))))
+// @TableInheritance({
+//   column: { type: "varchar", name: "type", enum: CABINET_OPENING_TYPE },
+// })
 export class CabinetOpening extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -44,20 +45,20 @@ export class CabinetOpening extends BaseEntity {
   // cabinets?: Cabinet[];
 }
 
-@ChildEntity(CABINET_OPENING_TYPE.DOOR)
-export class Door extends CabinetOpening {
-  @Column(() => ProfileSet)
-  defaultProfiles: ProfileSet;
-}
+// @ChildEntity(CABINET_OPENING_TYPE.DOOR)
+// export class Door extends CabinetOpening {
+//   @Column(() => ProfileSet)
+//   defaultProfiles: ProfileSet;
+// }
 
-@ChildEntity(CABINET_OPENING_TYPE.DRAWER_FRONT)
-export class DrawerFront extends CabinetOpening {
-  @Column(() => ProfileSet)
-  defaultProfiles: ProfileSet;
-}
+// @ChildEntity(CABINET_OPENING_TYPE.DRAWER_FRONT)
+// export class DrawerFront extends CabinetOpening {
+//   @Column(() => ProfileSet)
+//   defaultProfiles: ProfileSet;
+// }
 
-@ChildEntity(CABINET_OPENING_TYPE.DRAWER_BOX)
-export class DrawerBox extends CabinetOpening {}
+// @ChildEntity(CABINET_OPENING_TYPE.DRAWER_BOX)
+// export class DrawerBox extends CabinetOpening {}
 
-@ChildEntity(CABINET_OPENING_TYPE.TRAY)
-export class Tray extends CabinetOpening {}
+// @ChildEntity(CABINET_OPENING_TYPE.TRAY)
+// export class Tray extends CabinetOpening {}

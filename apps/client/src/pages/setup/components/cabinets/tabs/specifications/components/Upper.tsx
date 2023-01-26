@@ -12,7 +12,7 @@ import {
 
 import { inputNumberProps, inputNumberPropsNoDecimal } from "@jigbid/ui";
 
-import { CABINET_POSITION_METHODS_OPTIONS } from "../../../../../../utilities/constants";
+import { CABINET_POSITION_METHODS_OPTIONS } from "../../../../../../../utilities/constants";
 
 import "../../../../../defaultsetup/cabinet-specification/style.scss";
 import { nanoid } from "nanoid";

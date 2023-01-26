@@ -9,7 +9,7 @@ import "./style.scss";
 
 const { Content } = Layout;
 
-interface MainLayoutProps {
+interface UILayoutProps {
   // breadcrumb?: boolean;
   title?: string;
   children?: ReactNode;
@@ -20,7 +20,7 @@ export const UILayout = ({
   title,
   children,
   ...props
-}: MainLayoutProps & LayoutProps) => {
+}: UILayoutProps & LayoutProps) => {
   const router = useRouter();
 
   // Could break
@@ -47,7 +47,10 @@ export const UILayout = ({
   ) : null;
 
   return (
-    <Layout {...props}>
+    <Layout
+      {...props}
+      className={`pagewrapper__maincontent nomargin ${props.className}`}
+    >
       <Breadcrumb
         separator={<DoubleRightOutlined />}
         style={{ marginBottom: "1.5rem" }}

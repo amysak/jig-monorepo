@@ -1,9 +1,17 @@
 import omit from "lodash.omit";
+import {
+  randAirportName,
+  randBoolean,
+  randFutureDate,
+  randNumber,
+} from "@ngneat/falso";
 
+import { CABINET_BASE_TYPE, CABINET_PLACEMENT } from "type-defs";
 import {
   Accessory,
   Account,
   Cabinet,
+  CabinetIntrinsicDimensions,
   CabinetSpecifications,
   Filler,
   Finish,
@@ -42,6 +50,44 @@ type DefaultSeedsOptions = {
   bindTo?: Preferences;
   account: Account;
 };
+
+function generateValue(type: any) {
+  switch (type) {
+    case String:
+      return randAirportName();
+    case Number:
+      return randNumber();
+    case Boolean:
+      return randBoolean();
+    case Date:
+      return randFutureDate();
+    default:
+      return null;
+  }
+}
+
+function generateData(obj: any) {
+  const data = {};
+  const props = Object.getOwnPropertyNames(obj.constructor.prototype);
+  for (const prop of props) {
+    if (prop !== "constructor") {
+      const type = obj[prop];
+      if (typeof type === "object") {
+        data[prop] = generateData(type);
+      } else {
+        data[prop] = generateValue(type);
+      }
+    }
+  }
+  return data;
+}
+
+function generateIntrinsicDimensions() {
+  return Object.assign(
+    new CabinetIntrinsicDimensions(),
+    generateData(new CabinetIntrinsicDimensions())
+  );
+}
 
 const setIsDefault = (entity: any) =>
   Object.assign(entity, { isDefault: true });
@@ -238,6 +284,16 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     cabinetSpecifications.isInteriorFinished = cabinet.interior === "Finished";
     cabinetSpecifications.isFramed =
       cabinet.style === "Face Frame" ? true : false;
+
+    const baseTypes = Object.values(CABINET_BASE_TYPE);
+    cabinetSpecifications.baseType =
+      baseTypes[randNumber({ max: baseTypes.length })];
+
+    const placements = Object.values(CABINET_PLACEMENT);
+    cabinetSpecifications.placement =
+      placements[randNumber({ max: placements.length })];
+
+    cabinetSpecifications.intrinsic = generateIntrinsicDimensions();
 
     // ?? TODO
     // cabinetSpecifications.partsQuantity = +cabinet.quantityParts

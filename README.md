@@ -23,7 +23,8 @@ Health-check route available at `/health`
 
 ### Code conventions
 
-- camelCase, enums and constants could be in UPPER_CASE
+- camelCase only. snake_case and UPPER_CASE are only allowed in enums and
+  constants
 - ESLint, Prettier
-- Strict TypeScript (later)
-- Semantical commits (later)
+- Strict TypeScript
+- Decompose logic as much as possible and make it generic

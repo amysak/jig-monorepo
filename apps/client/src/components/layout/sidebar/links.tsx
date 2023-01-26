@@ -4,12 +4,12 @@ import { SubMenuType } from "antd/es/menu/hooks/useItems";
 
 export const sideLinks: SubMenuType[] = [
   {
-    key: "cabinet-setup",
-    label: <Link to="/cabinet-setup">Cabinet Setup</Link>,
+    key: "setup",
+    label: <Link to="/setup">Cabinet Setup</Link>,
     icon: <SettingOutlined />,
     children: [
       {
-        label: <Link to="/cabinet-setup/cabinets">Cabinets</Link>,
+        label: <Link to="/setup/cabinets">Cabinets</Link>,
         key: "cabinets",
       },
       { label: "Door/Drawers", key: "door-drawers" },
