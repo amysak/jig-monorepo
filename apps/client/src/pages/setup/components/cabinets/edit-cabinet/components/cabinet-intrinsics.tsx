@@ -42,13 +42,22 @@ export const CabinetIntrinsics = () => {
               {points.map((point) => {
                 return (
                   <Fragment key={point.x}>
-                    <Group style={{ cursor: "pointer" }}>
+                    <Group
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setPoint(point)}
+                    >
                       <Circle
                         cx={point.x}
                         cy={point.y}
                         r={5}
+                        stroke={fillColor}
+                        fill="none"
+                      />
+                      <Circle
+                        cx={point.x}
+                        cy={point.y}
+                        r={3}
                         fill={fillColor}
-                        onClick={() => setPoint(point)}
                       />
                     </Group>
                     <polyline

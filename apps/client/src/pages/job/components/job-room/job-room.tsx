@@ -1,13 +1,14 @@
 import Icon, { PlusOutlined } from "@ant-design/icons";
-import { Room } from "type-defs";
 import { PageSkeleton } from "@jigbid/ui";
-import { Link } from "@tanstack/react-location";
+import { Link, useMatch } from "@tanstack/react-location";
 import { Button, Popover, Row, Table, Typography } from "antd";
 import { ColumnType } from "antd/es/table";
+import { Room } from "type-defs";
 
 import DeleteIcon from "assets/images/delete.svg";
-import { useMatch } from "hooks";
 import { useCreateRoom, useDeleteRoom, useQueryRooms } from "hooks/queries";
+import { LocationGenerics } from "router";
+
 import { NewRoom } from "./components";
 
 import "./roomlist.scss";
@@ -15,9 +16,10 @@ import "./roomlist.scss";
 const { Paragraph } = Typography;
 
 export function JobRoomList() {
+  // TODO: move to hooks with generic already included
   const {
     params: { id: jobId },
-  } = useMatch();
+  } = useMatch<LocationGenerics>();
 
   const { data: rooms, isLoading, isError } = useQueryRooms(jobId);
 

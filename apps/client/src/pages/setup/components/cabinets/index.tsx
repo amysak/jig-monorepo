@@ -1,7 +1,6 @@
-import { Outlet, useNavigate, useSearch } from "@tanstack/react-location";
-import { Modal, Table } from "antd";
+import { Outlet, useSearch } from "@tanstack/react-location";
+import { Table } from "antd";
 import { isEmpty } from "lodash-es";
-import { useState } from "react";
 
 import { PageSkeleton } from "@jigbid/ui";
 import { useSetSearch } from "hooks";

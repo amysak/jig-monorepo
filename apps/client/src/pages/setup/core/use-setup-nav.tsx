@@ -87,7 +87,6 @@ export const useSetupNav: UseSetupNav = () => {
               onClick: () => {
                 setSearch({
                   setup: {
-                    category: item.key,
                     [child.key]:
                       search.setup?.[child.key] !== nestedChild?.key
                         ? nestedChild?.key

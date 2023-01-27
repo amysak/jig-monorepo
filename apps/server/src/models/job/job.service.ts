@@ -6,7 +6,6 @@ import { DeepPartial, EntityManager, Repository } from "typeorm";
 
 import { Job } from "database/entities";
 import { PaginationDto, WithCountDto } from "type-defs";
-import { DatabaseService } from "services";
 
 import type { UpdateJobDto } from "./dto/update-job.dto";
 
@@ -15,8 +14,7 @@ export class JobService {
   constructor(
     @InjectRepository(Job)
     private jobRepository: Repository<Job>,
-    private entityManager: EntityManager,
-    private databaseService: DatabaseService
+    private entityManager: EntityManager
   ) {}
 
   create(data: DeepPartial<Job>) {

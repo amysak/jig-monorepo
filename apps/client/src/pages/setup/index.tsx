@@ -1,6 +1,6 @@
 import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
 import { Outlet, useSearch } from "@tanstack/react-location";
-import { Divider, Input, Layout, Menu, Segmented, theme } from "antd";
+import { Divider, Input, Layout, Menu, Segmented } from "antd";
 import { FC } from "react";
 
 import { LocationGenerics } from "router";
@@ -15,10 +15,6 @@ const { Search } = Input;
 
 // TODO: do we need this component?
 export const SetupHome: FC = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-
   const search = useSearch<LocationGenerics>();
 
   const { view } = useToggles();
