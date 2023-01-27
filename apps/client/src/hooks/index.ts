@@ -1,3 +1,3 @@
 export * from "./use-auth";
 export * from "./use-match";
-export * from "./use-pagination";
+export * from "./use-set-search";

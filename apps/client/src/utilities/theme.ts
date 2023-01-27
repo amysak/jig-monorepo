@@ -7,6 +7,7 @@ const appTheme: ThemeConfig = {
     colorLink: "#6194FF",
     colorSuccess: "#57D2B5",
     colorBgContainer: "#FFFFFF",
+    colorInfo: "#6194FF",
 
     // colorError: "#F5222D",
     // // colorTextHeading: "#273167",

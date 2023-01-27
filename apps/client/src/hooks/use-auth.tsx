@@ -4,31 +4,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { api } from "api";
 import { refreshTokenStorage, tokenStorage } from "utilities/token-storage";
 
-// for reference
-
-// let Element = data.element;
-
-// switch (true) {
-//   case authCtx.isAuthenticated && data.isAuth:
-//     Element = IndexPage;
-//     break;
-
-//   case authCtx.isAuthenticated && hasAccount && !hasCard:
-//     Element = GettingStarted;
-//     break;
-
-//   case authCtx.loaded &&
-//     !authCtx.isAuthenticated &&
-//     !hasAccount &&
-//     data.isPrivate:
-//   case authCtx.loaded && !authCtx.isAuthenticated && data.isPrivate:
-//     Element = SignIn;
-//     break;
-
-//   default:
-//     break;
-// }
-
 export const useAuthorization = () => {
   const { mutate: updateTokens, isLoading: isUpdatingTokens } = useMutation(
     api.auth.updateTokenPair,
@@ -52,7 +27,7 @@ export const useAuthorization = () => {
     data: account,
     isLoading: isFetchingUserAccount,
     refetch: refetchMe,
-  } = useQuery<GetMeResult, HttpError>(
+  } = useQuery<GetMeResult & { isAuthenticated: boolean }, HttpError>(
     ["account", "me"],
     async () => {
       const me = await api.auth.getMe();
@@ -76,10 +51,6 @@ export const useAuthorization = () => {
 
           return updateTokens();
         }
-
-        // if (error.statusCode === 400) {
-        //   return
-        // }
       },
     }
   );

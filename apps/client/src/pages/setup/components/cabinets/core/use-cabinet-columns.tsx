@@ -12,7 +12,13 @@ import { capitalize } from "lodash-es";
 
 import { useCabinetDeletion, useCabinetMutation } from "hooks/queries";
 import { LocationGenerics } from "router";
-import { Cabinet, CabinetSpecifications, CabinetType } from "type-defs";
+import {
+  Cabinet,
+  CabinetBaseType,
+  CabinetCornerPlacement,
+  CabinetSpecifications,
+  CabinetType,
+} from "type-defs";
 
 export const useCabinetColumns = () => {
   const search = useSearch<LocationGenerics>();
@@ -67,24 +73,22 @@ export const useCabinetColumns = () => {
     },
     {
       key: "style",
-      dataIndex: "specifications",
+      dataIndex: "isFramed",
       title: "Style",
-      render: (specifications: CabinetSpecifications) =>
-        specifications.isFramed ? "Face Frame" : "Full Access",
+      render: (isFramed: boolean) => (isFramed ? "Face Frame" : "Full Access"),
     },
     {
       key: "baseType",
-      dataIndex: "specifications",
+      dataIndex: "baseType",
       title: "Base Type",
-      render: (specifications: CabinetSpecifications) =>
-        capitalize(specifications.baseType),
+      render: (baseType: CabinetBaseType) => capitalize(baseType),
     },
     {
-      key: "placement",
-      dataIndex: "specifications",
-      title: "Placement",
-      render: (specifications: CabinetSpecifications) =>
-        capitalize(specifications.placement),
+      key: "cornerPlacement",
+      dataIndex: "cornerPlacement",
+      title: "Corner Placement",
+      render: (cornerPlacement: CabinetCornerPlacement) =>
+        capitalize(cornerPlacement),
     },
     {
       title: "Actions",

@@ -1,7 +1,15 @@
 .setup-layout {
   border-radius: 12px;
   padding: 12px;
-  background-color: $primary-white;
+  // background-color: $primary-white;
+}
+
+.setup-sider {
+  background-color: $primary-white !important;
+  padding: 10px 0;
+  box-shadow: #ccc 0 0 5px !important;
+  border-radius: 10px;
+  margin-right: 10px !important;
 }
 
 .ant-input-search {
@@ -14,10 +22,10 @@
   }
 }
 
-.ant-table-wrapper:only-child .ant-table {
-  margin-block: 0 !important;
-  margin-inline: 0 !important;
-}
+// .ant-table-wrapper:only-child .ant-table {
+//   margin-block: 0 !important;
+//   margin-inline: 0 !important;
+// }
 
 // .cabinetsetup-breadcrumb {
 //   padding-bottom: 7px;

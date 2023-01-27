@@ -99,9 +99,6 @@ export const Line = ({
       </Col>
 
       <Col xs={24}>
-        {
-          // TODO: please refactor
-        }
         <Settings
           responseDates={responseDates}
           setResponseDates={setResponseDates}

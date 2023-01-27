@@ -1,3 +1,4 @@
+export * from "./checkbox";
 export * from "./core";
 export * from "./date-picker";
 export * from "./form";

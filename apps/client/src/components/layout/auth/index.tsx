@@ -1,5 +1,6 @@
 import { Col, Layout, Typography } from "antd";
 import { Logo } from "components/icon";
+import { ReactNode } from "react";
 
 import "./authlayout.scss";
 
@@ -9,11 +10,7 @@ const { Paragraph } = Typography;
 export const AuthLayout = (props: {
   contenStyle: React.CSSProperties;
   useTitle: boolean;
-  children:
-    | boolean
-    | React.ReactChild
-    | React.ReactFragment
-    | React.ReactPortal;
+  children?: ReactNode;
 }) => {
   return (
     <Layout

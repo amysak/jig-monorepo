@@ -1,3 +1,4 @@
+// TODO: remove all this shit
 import { delay, isEmpty, slice } from "lodash-es";
 
 type TKeyMirror<Type> = {
@@ -61,26 +62,7 @@ export function drawCircles(canvas: any, points: { start: number[] }[]) {
   });
 }
 
-function setTableRowClass(id) {
-  return (record: { id: any }) => {
-    const classname =
-      record.id === id ? `${record.id} selected-row` : record.id;
-
-    return classname;
-  };
-}
-
-export interface ISerializedResponse<T> {
-  data: T[];
-  total: number;
-}
-
-function serializeResponse(data: any[]) {
-  return { data: data[0], total: data[1] };
-}
-
-function sleep(ms: number | (() => void)) {
-  // @ts-expect-error TS(2345): Argument of type 'number | (() => void)' is not as... Remove this comment to see the full error message
+function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
@@ -195,8 +177,6 @@ export {
   capitalize,
   lowerCase,
   polyPoints,
-  setTableRowClass,
-  serializeResponse,
   sleep,
   calcDiscount,
   safeNum,

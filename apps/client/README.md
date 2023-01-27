@@ -21,12 +21,14 @@
 - [x] Finish migrating AntDesign v4 to v5
 - [x] Finish updating packages
 - [x] 🔥 Start cabinet setup
-- [ ] Complete data rendering and editing (cabinets and others)
+- [ ] Complete data rendering, filtering and editing (cabinets + others ASAP)
+- [ ] Fix redundant footer whitespaces
+- [ ] Fix `Unathorized` message to display correct message when the token gets
+      refreshed
 - [ ] ❗ Configure antd theme accordingly (some of the styles corrupted for
       various reasons)
 - [ ] ❗ Remove SCSS where possible and get rid of !important
 - [ ] Fix problem with injecting too much CSS from Vite
-- [ ] Fix redundant footer whitespaces
 - [ ] Finish authorization
 - [ ] Finish job's client page (select from all client names & submit address
       override for job)

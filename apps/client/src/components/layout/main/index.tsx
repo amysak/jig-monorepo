@@ -2,7 +2,7 @@ import { useLocation } from "@tanstack/react-location";
 import { Layout, Menu, theme, type LayoutProps } from "antd";
 import { FC, ReactNode } from "react";
 
-import backgroundImage from "assets/images/banner/banner-bg.png?webp&imagetools";
+import backgroundImage from "assets/images/banner/banner-bg.png";
 import { Logo } from "../../icon";
 import { useHeaderLinks } from "./links";
 

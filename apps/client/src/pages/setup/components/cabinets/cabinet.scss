@@ -6,16 +6,17 @@
 }
 
 // Name
-.cabinets-table * {
-  text-align: center;
+.cabinets-table td,
+.cabinets-table th {
+  text-align: center !important;
 }
 
-.cabinets-table .ant-table-cell:nth-child(2) {
-  text-align: start;
+.cabinets-table td:nth-child(2) {
+  text-align: start !important;
 }
 
-.specifications-table .ant-table-cell:nth-child(2) {
-  text-align: center;
+.specifications-table td:nth-child(2) {
+  text-align: center !important;
 }
 
 th.ant-table-cell {
@@ -35,6 +36,11 @@ th.ant-table-cell {
 .type-tag,
 .style-tag {
   text-transform: uppercase;
+}
+
+.visx-tooltip {
+  pointer-events: all !important;
+  padding: 10px !important;
 }
 
 // .specification-footer {

@@ -1,14 +1,15 @@
 import { Layout, Spin, Typography } from "antd";
+import { ReactNode } from "react";
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
 interface FallbackUIProps {
   info?: string;
-  Icon?: any;
+  icon?: ReactNode;
 }
 
-export const FallbackUI = ({ info, Icon }: FallbackUIProps) => {
+export const FallbackUI = ({ info, icon }: FallbackUIProps) => {
   return (
     <Layout>
       <Content
@@ -23,7 +24,7 @@ export const FallbackUI = ({ info, Icon }: FallbackUIProps) => {
         <Title level={3}>Cabinet Estimating Software</Title>
 
         {info && <Text strong>{info}</Text>}
-        {Icon ? <Icon spin fontSize={60} /> : <Spin />}
+        {icon ? icon : <Spin />}
       </Content>
     </Layout>
   );

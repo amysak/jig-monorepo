@@ -18,8 +18,6 @@ export default defineConfig(({ mode }) => {
     preview: {
       port: +env.PORT || 4173,
     },
-    // TODO: change to VITE_
-    // https://turbo.build/repo/docs/core-concepts/caching#automatic-environment-variable-inclusion
     envPrefix: "VITE_",
     define: {},
     build: {
@@ -39,7 +37,13 @@ export default defineConfig(({ mode }) => {
         include: ["**/*.tsx", "**/*.ts"],
       }),
       tsconfigPaths(),
-      imagetools(),
+      imagetools({
+        defaultDirectives: (_url) => {
+          return new URLSearchParams({
+            format: "webp",
+          });
+        },
+      }),
       svgr({ exportAsDefault: true }),
       createHtmlPlugin({
         minify: true,

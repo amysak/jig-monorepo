@@ -30,12 +30,9 @@ export const SetupHome: FC = () => {
       style={{
         minHeight: 800,
       }}
-      className="setup-layout"
+      className="setup-layout pagelayout"
     >
-      <Sider
-        style={{ background: colorBgContainer, marginRight: 10 }}
-        width={256}
-      >
+      <Sider width={256} className="setup-sider">
         <Segmented
           block
           options={[

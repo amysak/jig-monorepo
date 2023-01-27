@@ -1,3 +1,4 @@
+// TODO: refactor
 import { createOptions, keyMirror } from "./utils";
 
 const CABINET_STYLES = ["full access", "face frame"];

@@ -7,7 +7,13 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-import { type CabinetType } from "type-defs";
+import {
+  CABINET_BASE_TYPE,
+  CABINET_CORNER_PLACEMENT,
+  type CabinetBaseType,
+  type CabinetCornerPlacement,
+  type CabinetType,
+} from "type-defs";
 
 import { Account } from "./account.entity";
 import { DefaultableBaseEntity } from "./base.entity";
@@ -32,10 +38,23 @@ export class Cabinet extends DefaultableBaseEntity {
   @Column("text")
   name: string;
 
-  // TODO
-  // Could be related per user when we create account's users
+  @Column("text", { nullable: true })
+  cornerPlacement: CabinetCornerPlacement;
+
+  @Column("text", { default: CABINET_BASE_TYPE.STANDARD })
+  baseType: CabinetBaseType;
+
+  @Column("boolean")
+  isInteriorFinished: boolean;
+
+  @Column("boolean")
+  isFramed: boolean;
+
   @Column("boolean", { default: false })
   favourite: boolean;
+
+  @Column("boolean", { default: false })
+  cornered: boolean;
 
   @OneToOne(
     () => CabinetSpecifications,

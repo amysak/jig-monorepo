@@ -1,4 +1,3 @@
-import { FallbackUI } from "@jigbid/ui";
 import {
   MakeGenerics,
   Navigate,
@@ -7,6 +6,7 @@ import {
 } from "@tanstack/react-location";
 import { FilterValue } from "antd/es/table/interface";
 
+import { Fallback } from "components/layout";
 import { queryClient } from "app";
 import { MainLayout } from "components/layout";
 import { useAuthorization } from "hooks";
@@ -18,10 +18,10 @@ const ProtectedRoute = ({ children }) => {
   const { data, isLoading } = useAuthorization();
 
   if (isLoading) {
-    return <FallbackUI />;
+    return <Fallback />;
   }
 
-  if (!data?.account) {
+  if (!data?.isAuthenticated) {
     return <Navigate to="/signin" />;
   }
 
@@ -32,10 +32,10 @@ const PublicRoute = ({ children }) => {
   const { data, isLoading } = useAuthorization();
 
   if (isLoading) {
-    return <FallbackUI />;
+    return <Fallback />;
   }
 
-  if (data?.account) {
+  if (data?.isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
 
@@ -150,9 +150,9 @@ export const routes: Route<LocationGenerics>[] = [
           {
             path: ":id",
             element: () =>
-              import(
-                "pages/setup/components/cabinets/components/edit-cabinet"
-              ).then((res) => <res.default />),
+              import("pages/setup/components/cabinets/edit-cabinet").then(
+                (res) => <res.default />
+              ),
 
             // children: [
             //   {

@@ -1,9 +1,3 @@
-import {
-  CABINET_BASE_TYPE,
-  CABINET_PLACEMENT,
-  type CabinetBaseType,
-  type CabinetPlacement,
-} from "type-defs";
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 import { AppBaseEntity } from "./base.entity";
@@ -214,18 +208,6 @@ export class CabinetIntrinsicDimensions {
 export class CabinetSpecifications extends AppBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column("text", { default: CABINET_PLACEMENT.DEFAULT })
-  placement: CabinetPlacement;
-
-  @Column("text", { default: CABINET_BASE_TYPE.STANDARD })
-  baseType: CabinetBaseType;
-
-  @Column("boolean")
-  isInteriorFinished: boolean;
-
-  @Column("boolean")
-  isFramed: boolean;
 
   @Column(() => CabinetDimensions)
   dimensions: CabinetDimensions;

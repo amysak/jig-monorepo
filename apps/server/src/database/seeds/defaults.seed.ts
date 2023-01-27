@@ -6,7 +6,7 @@ import {
   randNumber,
 } from "@ngneat/falso";
 
-import { CABINET_BASE_TYPE, CABINET_PLACEMENT } from "type-defs";
+import { CABINET_BASE_TYPE, CABINET_CORNER_PLACEMENT } from "type-defs";
 import {
   Accessory,
   Account,
@@ -266,47 +266,24 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
 
   // some fields might be needed but we can define those in the child entity of cabinet
   // most of those parameters are usually defined in the cabinet specifications
+  const baseTypes = Object.values(CABINET_BASE_TYPE);
+  const placements = Object.values(CABINET_CORNER_PLACEMENT);
 
   const cabinetSeeds = defaultCabinets.map((cabinet) => {
-    const resCabinet: Record<string, unknown> & Partial<typeof cabinet> = {
+    const resCabinet: Record<string, unknown> &
+      Partial<typeof cabinet> &
+      Partial<Cabinet> = {
       name: cabinet.name.replace(/.*-.{2}-/, ""),
-      type: cabinet.type,
+      type: cabinet.type as any,
+      isInteriorFinished: cabinet.interior === "Finished",
+      isFramed: cabinet.style === "Face Frame" ? true : false,
+      baseType: baseTypes[randNumber({ max: baseTypes.length })],
+      cornerPlacement: placements[randNumber({ max: placements.length })],
     };
 
     const cabinetSpecifications = new CabinetSpecifications();
 
-    // ?? TODO
-    // "quantityParts": "10",
-    // "stackedHeight": "168",
-    // cabinetSpecifications.backHeight =  +cabinet.cabinetBackHeight;
-    // cabinetSpecifications.sideHeight =  +cabinet.cabinetSideHeight;
-
-    cabinetSpecifications.isInteriorFinished = cabinet.interior === "Finished";
-    cabinetSpecifications.isFramed =
-      cabinet.style === "Face Frame" ? true : false;
-
-    const baseTypes = Object.values(CABINET_BASE_TYPE);
-    cabinetSpecifications.baseType =
-      baseTypes[randNumber({ max: baseTypes.length })];
-
-    const placements = Object.values(CABINET_PLACEMENT);
-    cabinetSpecifications.placement =
-      placements[randNumber({ max: placements.length })];
-
     cabinetSpecifications.intrinsic = generateIntrinsicDimensions();
-
-    // ?? TODO
-    // cabinetSpecifications.partsQuantity = +cabinet.quantityParts
-    // cabinetSpecifications.stackedHeight = +cabinet.stackedHeight
-
-    cabinetSpecifications.partCounts = {
-      doors: +cabinet.baseDoors + +cabinet.upperDoors,
-      drawers: +cabinet.drawers,
-      drawerFronts: +cabinet.df,
-      trays: +cabinet.trays,
-      sides: +cabinet.sides,
-    };
-
     cabinetSpecifications.dimensions = {
       height:
         Number(cabinet.cabinetHeight) ||
@@ -319,8 +296,23 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
         : 0,
       toeKickHeight: cabinet.type !== "upper" ? +cabinet.toeKickHeight : 0,
     };
+    cabinetSpecifications.partCounts = {
+      doors: +cabinet.baseDoors + +cabinet.upperDoors,
+      drawers: +cabinet.drawers,
+      drawerFronts: +cabinet.df,
+      trays: +cabinet.trays,
+      sides: +cabinet.sides,
+    };
 
     return { cabinet: resCabinet, cabinetSpecifications };
+
+    // ?? TODO
+    // "quantityParts": "10",
+    // "stackedHeight": "168",
+    // cabinetSpecifications.backHeight =  +cabinet.cabinetBackHeight;
+    // cabinetSpecifications.sideHeight =  +cabinet.cabinetSideHeight;
+    // cabinetSpecifications.partsQuantity = +cabinet.quantityParts
+    // cabinetSpecifications.stackedHeight = +cabinet.stackedHeight
   });
 
   const cabinetsAndSpecs = cabinetSeeds.map(

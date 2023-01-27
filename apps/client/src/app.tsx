@@ -4,8 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ConfigProvider, message } from "antd";
 
-import { FallbackUI } from "@jigbid/ui";
-
+import { Fallback } from "components/layout";
 import { ErrorBoundary } from "components/error";
 import { formatError } from "utilities/error";
 import { theme } from "utilities/theme";
@@ -21,6 +20,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 0,
+      networkMode: "always",
       refetchOnWindowFocus: import.meta.env.DEV,
       onError: async (error) => {
         await queryClient.cancelQueries();
@@ -29,6 +29,7 @@ export const queryClient = new QueryClient({
     },
     mutations: {
       retry: 0,
+      networkMode: "always",
       onError: async (error) => {
         await queryClient.cancelQueries();
         message.error(formatError(error));
@@ -45,9 +46,11 @@ export const App = () => {
         <Router<LocationGenerics>
           location={location}
           routes={routes}
-          defaultPendingElement={<FallbackUI />}
+          defaultPendingElement={<Fallback />}
         >
-          <ReactLocationDevtools position="top-right" />
+          {import.meta.env.DEV && (
+            <ReactLocationDevtools position="top-right" />
+          )}
           <ConfigProvider theme={theme} componentSize="small">
             <Outlet />
           </ConfigProvider>

@@ -1,13 +1,13 @@
-import { Link, useNavigate } from "@tanstack/react-location";
+import { Link } from "@tanstack/react-location";
 import { useQuery } from "@tanstack/react-query";
 import { Card, Col, Row } from "antd";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
-import { FallbackUI, PageSkeleton, TabPane, Tabs } from "@jigbid/ui";
+import { PageSkeleton, TabPane, Tabs } from "@jigbid/ui";
 import { api } from "api";
+import { Fallback } from "components/layout";
 import { DashboardLines } from "pages/dashboard/DashboardLine";
-import { LocationGenerics } from "router";
 import { Client, Job } from "type-defs";
 
 import "./dashboard.scss";
@@ -28,10 +28,7 @@ const isJob = (value: any): value is Job => {
 const ActivityCard = <T extends Job | Client>({
   urlGenerator,
   entries,
-  label,
 }: ActivityCardProps<T>) => {
-  const navigate = useNavigate<LocationGenerics>();
-
   if (!entries || entries.length === 0) {
     return <PageSkeleton />;
   }
@@ -95,7 +92,7 @@ function Dashboard() {
   const loading = clientsLoading || jobsLoading;
 
   if (loading) {
-    return <FallbackUI />;
+    return <Fallback />;
   }
 
   return (

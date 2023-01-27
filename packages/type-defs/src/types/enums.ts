@@ -58,7 +58,6 @@ export const CABINET_TYPE = {
   UPPER: "upper",
   TALL: "tall",
   VANITY: "vanity",
-  CORNER: "corner",
 } as const;
 
 export type CabinetType = ObjectValues<typeof CABINET_TYPE>;
@@ -71,14 +70,15 @@ export const CABINET_BASE_TYPE = {
 
 export type CabinetBaseType = ObjectValues<typeof CABINET_BASE_TYPE>;
 
-export const CABINET_PLACEMENT = {
+export const CABINET_CORNER_PLACEMENT = {
   BLIND: "blind",
   DEGREE_90: "90deg",
   DIAGONAL: "diagonal",
-  DEFAULT: "default",
 } as const;
 
-export type CabinetPlacement = ObjectValues<typeof CABINET_PLACEMENT>;
+export type CabinetCornerPlacement = ObjectValues<
+  typeof CABINET_CORNER_PLACEMENT
+>;
 
 export const MATERIAL_PURPOSE = {
   EDGEBANDING: "edgebanding",
