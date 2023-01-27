@@ -64,11 +64,7 @@ export class JobService {
       }
     });
 
-    console.dir(data, { depth: null });
-    console.dir(mergedJob, { depth: null });
-    const savedJob = await this.jobRepository.save(mergedJob);
-    console.dir(savedJob, { depth: null });
-    return savedJob;
+    return this.jobRepository.save(mergedJob);
   }
 
   async updateTerms(id: number, termsId: number) {

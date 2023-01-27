@@ -45,6 +45,8 @@ export function JobInfoForm() {
   }
 
   const onValuesChange = (changedValues) => {
+    console.log("qqeqweqw");
+
     const cb = () =>
       mutateJob({
         ...changedValues,
@@ -53,9 +55,9 @@ export function JobInfoForm() {
       });
 
     if (findKey(changedValues, "id")) {
-      return cb;
+      return cb();
     } else {
-      return debounce(cb, 500);
+      return debounce(cb, 500)();
     }
   };
 

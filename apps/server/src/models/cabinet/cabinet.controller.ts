@@ -37,8 +37,9 @@ export class CabinetController {
     return this.cabinetService.findOne(id);
   }
 
+  // TODO: DTO
   @Patch(":id")
-  update(@Param("id") id: number, @Body() data: UpdateCabinetDto) {
+  update(@Param("id") id: number, @Body() data: any) {
     return this.cabinetService.update(id, data);
   }
 

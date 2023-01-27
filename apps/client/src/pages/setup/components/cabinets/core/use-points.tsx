@@ -37,5 +37,7 @@ const pointsMap: PointsMap = {
 };
 
 export const usePoints = (cabinetType: CabinetType) => {
-  return pointsMap[cabinetType]();
+  return pointsMap[cabinetType]
+    ? pointsMap[cabinetType]()
+    : { points: [], image: "" };
 };

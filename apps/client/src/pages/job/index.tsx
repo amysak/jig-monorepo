@@ -23,12 +23,12 @@ export const Job = () => {
     params: { id, tabName },
   } = useMatch<LocationGenerics>();
 
-  const { data: job, isFetching } = useQueryJob(id);
+  const { data: job } = useQueryJob(id);
 
   const navigate = useNavigate();
 
   return (
-    <UILayout title={`${!isFetching && job ? job.name : "Job ..."}`}>
+    <UILayout title={job?.name}>
       <Tabs
         className="pagewrapper__maincontent nomargin"
         defaultActiveKey={tabName}

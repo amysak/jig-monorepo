@@ -14,8 +14,6 @@ export const CabinetIntrinsics = () => {
 
   const [activePoint, setPoint] = useState<(typeof points)[number]>();
 
-  console.log("points  => ", points);
-
   const {
     token: { colorInfo: fillColor },
   } = theme.useToken();

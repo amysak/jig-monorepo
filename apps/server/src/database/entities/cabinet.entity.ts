@@ -59,7 +59,12 @@ export class Cabinet extends DefaultableBaseEntity {
   @OneToOne(
     () => CabinetSpecifications,
     (specifications) => specifications.cabinet,
-    { onDelete: "CASCADE", nullable: false }
+    {
+      onDelete: "CASCADE",
+      nullable: false,
+      eager: true,
+      cascade: true,
+    }
   )
   @JoinColumn()
   specifications: CabinetSpecifications;

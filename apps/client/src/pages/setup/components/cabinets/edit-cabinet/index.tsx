@@ -1,6 +1,6 @@
 import { useMatch, useNavigate } from "@tanstack/react-location";
 import { Card, Col, Divider, Form, Modal, Row, Space, theme } from "antd";
-import { capitalize } from "lodash-es";
+import { capitalize, debounce } from "lodash-es";
 
 import {
   FormCheckbox,
@@ -9,11 +9,7 @@ import {
   FormRadioSet,
   FormSelect,
 } from "@jigbid/ui";
-import {
-  useCabinetQuery,
-  useCachedCabinet,
-  useMutateCabinet,
-} from "hooks/queries";
+import { useCabinetQuery, useMutateCabinet } from "hooks/queries";
 import { LocationGenerics } from "router";
 import {
   Cabinet,
@@ -27,6 +23,7 @@ import {
   CabinetIntrinsics,
   CabinetParts,
 } from "./components";
+import { useQueryClient } from "@tanstack/react-query";
 
 // const panes = [
 //   {
@@ -72,7 +69,6 @@ export const EditCabinet = () => {
     token: { colorInfo },
   } = theme.useToken();
   const setFormFields = (cabinet: Cabinet) => {
-    console.log("cabinet => ", cabinet);
     form.setFieldsValue(cabinet);
   };
 
@@ -81,23 +77,31 @@ export const EditCabinet = () => {
   } = useMatch<LocationGenerics>();
   const navigate = useNavigate<LocationGenerics>();
 
-  const { refetch } = useCabinetQuery(id, {
-    enabled: false,
-    onSuccess: (data) => setFormFields(data),
+  const { data: _cabinet, isLoading: _ } = useCabinetQuery(id, {
+    onSuccess: setFormFields,
   });
 
   // Checking for existing queries with requested cabinet
   // Using the same constant to render the form
-  const cachedCabinet = useCachedCabinet(id);
+  // THIS DOES NOT WORK BECAUSE IT DOES NOT UPDATE THE FORM STATE IN USEEFFECT
+  // AND WHEN OUTSIDE OF USEEFFECT, IT RENDERS EVEN WITHOUT VALUES AND DOES NOT RERENDER ON GETTING THEM
+  // I DONT WANT TO PUT THIS IN STATE SO WE REFUSE TO CACHE THIS
+  // const cachedCabinet = useCachedCabinet(id);
 
-  if (!cachedCabinet) {
-    refetch();
-  } else {
-    setFormFields(cachedCabinet);
-  }
+  // if (!cachedCabinet) {
+  //   refetch();
+  // } else {
+  //   setFormFields(cachedCabinet);
+  // }
+
+  const queryClient = useQueryClient();
 
   // Calling mutate cabinet hook
-  const { mutate: mutateCabinet } = useMutateCabinet(id);
+  const { mutate: mutateCabinet } = useMutateCabinet(id, {
+    onSettled: () => {
+      queryClient.invalidateQueries(["cabinets", id]);
+    },
+  });
 
   return (
     <Modal
@@ -110,8 +114,7 @@ export const EditCabinet = () => {
     >
       <Form
         form={form}
-        onFinish={(values) => mutateCabinet(values)}
-        // onChange={debounce(() => mutateCabinet(id), 300)}
+        onValuesChange={debounce((values) => mutateCabinet(values), 300)}
       >
         <Row justify="center">
           <Col flex="50%">

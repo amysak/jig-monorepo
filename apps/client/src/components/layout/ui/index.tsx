@@ -40,12 +40,6 @@ export const UILayout = ({
     [router.state.matches]
   );
 
-  const latestTitle = title ? (
-    <Breadcrumb.Item key={nanoid()}>
-      <Link>{title}</Link>
-    </Breadcrumb.Item>
-  ) : null;
-
   return (
     <Layout
       {...props}
@@ -67,7 +61,9 @@ export const UILayout = ({
           </Breadcrumb.Item>
         ))}
 
-        {latestTitle}
+        <Breadcrumb.Item key={nanoid()}>
+          <Link>{title}</Link>
+        </Breadcrumb.Item>
       </Breadcrumb>
 
       <Content>{children}</Content>

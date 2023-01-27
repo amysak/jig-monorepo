@@ -2,14 +2,14 @@ import { PageSkeleton } from "@jigbid/ui";
 import { useMatch } from "@tanstack/react-location";
 import { Form, Space } from "antd";
 import dayjs, { Dayjs } from "dayjs";
-import { debounce, findKey } from "lodash-es";
+import { debounce } from "lodash-es";
 import { Job } from "type-defs";
 
 import { useMutateJob, useQueryJob } from "hooks/queries";
+import { useEffect } from "react";
 import { LocationGenerics } from "router";
 import { JobFormHeader, JobFormTerms } from "./components";
 import { JobFormPreferences } from "./components/form/preferences";
-import { useEffect } from "react";
 
 type FormJob = Job & { estimateDate: Dayjs; proposalDate: Dayjs };
 
@@ -50,24 +50,12 @@ export function JobInfoForm() {
     // return <ErrorScreen/>
   }
 
-  const onValuesChange = (changedValues) => {
-    const cb = () =>
-      mutateJob({
-        ...changedValues,
-        estimateDate: changedValues.estimateDate?.toDate(),
-        proposalDate: changedValues.proposalDate?.toDate(),
-      });
-
-    if (findKey(changedValues, "id")) {
-      return cb;
-    } else {
-      return debounce(cb, 500);
-    }
-  };
-
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
-      <Form form={form} onValuesChange={onValuesChange}>
+      <Form
+        form={form}
+        onValuesChange={debounce((values) => mutateJob(values), 300)}
+      >
         <JobFormHeader />
         <JobFormTerms />
         <JobFormPreferences />

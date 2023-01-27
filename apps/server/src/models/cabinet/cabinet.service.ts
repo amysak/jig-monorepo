@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindManyOptions, In, Repository } from "typeorm";
 
@@ -6,6 +6,7 @@ import { Cabinet } from "database/entities";
 import { WithCountDto } from "type-defs";
 
 import { CreateCabinetDto, GetCabinetsDto, UpdateCabinetDto } from "./dto";
+import mergeWith from "lodash.mergewith";
 
 @Injectable()
 export class CabinetService {
@@ -59,8 +60,22 @@ export class CabinetService {
     return this.cabinetRepository.findOne({ where: { id } });
   }
 
-  update(id: number, data: UpdateCabinetDto) {
-    return this.cabinetRepository.update(id, data);
+  async update(id: number, data: any) {
+    const cabinet = await this.cabinetRepository.findOneBy({ id });
+
+    if (!cabinet) {
+      throw new HttpException("Job not found", 404);
+    }
+
+    const mergedCabinet = mergeWith(cabinet, data, (_, srcValue) => {
+      if (srcValue?.id) {
+        return { id: srcValue.id };
+      }
+    });
+
+    const res = await this.cabinetRepository.save(mergedCabinet);
+    console.log("res => ", res);
+    return res;
   }
 
   remove(id: number) {

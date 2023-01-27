@@ -10,9 +10,10 @@ export class IsDefaultSubscriber {
       return true;
     }
 
+    // TODO: do we even need this?..
     if (entity.isDefault) {
-      entity.id = null;
-      entity.account = null;
+      // entity.id = null;
+      // entity.account = null;
       entity.isDefault = false;
       await entity.save();
 

@@ -21,9 +21,10 @@
 - [x] Bind main models logic to front-end (**jobs**, account, clients)
 - [x] Implement error catching
 - [x] Fix DTO validation
-- [x] Bind preferences to their models and implement preferences inheritance
+- [ ] ♻️ Bind cabinets to front-end
+- [ ] ♻️ Bind preferences to their models and implement preferences inheritance
       logic
-- [x] Add isDefault fields to db (version=0)
+- [ ] ♻️ Rethink isDefault fields in db
 - [ ] Design new material set logic (sets in general)
 - [ ] Bind rooms to front-end
 - [ ] Re-implement mailing module and bind authorization

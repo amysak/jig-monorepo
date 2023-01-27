@@ -41,7 +41,6 @@ export const useMutateJob = (
     (values: Partial<Job>) => api.jobs.updateById(id, values),
     {
       onMutate: async (job) => {
-        console.log("job => ", job);
         await queryClient.cancelQueries(["job", id]);
 
         const previousValue = queryClient.getQueryData(["job", id]);
