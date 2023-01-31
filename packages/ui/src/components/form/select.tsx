@@ -1,7 +1,7 @@
 import { Form, FormItemProps, Select, SelectProps } from "antd";
 
 interface FormSelectProps {
-  options: { label: string; value: any }[];
+  options: { label: string | number; value: unknown }[];
   select?: SelectProps;
 }
 

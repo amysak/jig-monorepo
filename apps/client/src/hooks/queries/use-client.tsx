@@ -6,7 +6,7 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query";
 
-import { api } from "api";
+import { api } from "lib/api";
 import { LocationGenerics } from "router";
 
 export const useClients = (options?: UseQueryOptions<Client[]>) =>

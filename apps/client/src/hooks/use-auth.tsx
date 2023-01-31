@@ -1,8 +1,8 @@
-import type { GetMeResult, HttpError } from "type-defs";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import type { GetMeResult, HttpError } from "type-defs";
 
-import { api } from "api";
-import { refreshTokenStorage, tokenStorage } from "utilities/token-storage";
+import { api } from "lib/api";
+import { refreshTokenStorage, tokenStorage } from "lib/token-storage";
 
 export const useAuthorization = () => {
   const { mutate: updateTokens, isLoading: isUpdatingTokens } = useMutation(

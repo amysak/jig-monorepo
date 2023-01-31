@@ -21,19 +21,35 @@
 - [x] Finish migrating AntDesign v4 to v5
 - [x] Finish updating packages
 - [x] 🔥 Start cabinet setup
-- [ ] Complete data rendering, filtering and editing (cabinets + others ASAP)
-- [ ] Fix redundant footer whitespaces
-- [ ] Fix `Unathorized` message to display correct message when the token gets
-      refreshed
-- [ ] ❗ Configure antd theme accordingly (some of the styles corrupted for
+- [x] Create global objects and reuse from utils
+- [x] Refactor code (structure and data)
+- [x] Finish base/vanity cabinet editing page with intrinsic dimensions
+- [x] Fix search bar
+- [x] Add proper client-side state management
+- [x] ❗ Configure antd theme accordingly (some of the styles corrupted for
       various reasons)
-- [ ] ❗ Remove SCSS where possible and get rid of !important
-- [ ] Fix problem with injecting too much CSS from Vite
-- [ ] Finish authorization
+- [ ] ♻️ Add tall/upper, corner cabinets pictures and points with edit forms
+- [ ] ♻️ Transfer the same logic for other setup parts
+- [ ] ♻️ Implement individual editing pages for all of those parts
 - [ ] Finish job's client page (select from all client names & submit address
       override for job)
-- [ ] Create global date object and reuse it from utils
-- [ ] [Remove default exports](https://www.reddit.com/r/javascript/comments/x3hsov/default_exports_in_javascript_modules_are_terrible/)
+- [ ] Finish authorization
+- [ ] Implement rooms, preferences, calculation logic
+
+---
+
+- [ ] Rework reports
+- [ ] Polish dashboard
+- [ ] Rework adding clients
+- [ ] Implement payments
+
+---
+
+- [ ] Fix redundant footer whitespaces
+- [ ] Fix problem with injecting too much CSS from Vite
+- [ ] ❗ Remove SCSS where possible and get rid of !important
+- [ ] Fix `Unathorized` message to display correct message when the token gets
+      refreshed
 
 ```bash
 git clone git@github.com:jigbid/web.git

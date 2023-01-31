@@ -18,22 +18,29 @@
 - [x] Add logic for getting all account's jobs
 - [x] Move [seeds](src/database/seeds/data) to JSON and finish seeding logic
 - [x] Finish basic services logic and controllers
+- [x] [Seed](src/services/seeding.service.ts) other parts
 - [x] Bind main models logic to front-end (**jobs**, account, clients)
 - [x] Implement error catching
 - [x] Fix DTO validation
-- [ ] ♻️ Bind cabinets to front-end
+- [x] Bind cabinets to front-end
+- [x] Implement basic search capabilities for cabinets
 - [ ] ♻️ Bind preferences to their models and implement preferences inheritance
       logic
 - [ ] ♻️ Rethink isDefault fields in db
 - [ ] Design new material set logic (sets in general)
 - [ ] Bind rooms to front-end
+
+---
+
 - [ ] Re-implement mailing module and bind authorization
 - [ ] Add
       [custom serialization](https://blog.logrocket.com/serialization-in-nestjs-a-different-approach/),
       fixes [this](src/shared/account/account.service.ts#L54)
-- [ ] [Seed](src/services/seeding.service.ts) other parts
-- [ ] Beta release
 - [ ] Finish all basic logic and tie front-end
+- [ ] Beta release
+
+---
+
 - [ ] Implement calculation module (metrics system could be different)
 - [ ] Stable release
 - [ ] Documentation

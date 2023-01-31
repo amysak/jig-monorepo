@@ -4,10 +4,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ConfigProvider, message } from "antd";
 
-import { Fallback } from "components/layout";
 import { ErrorBoundary } from "components/error";
-import { formatError } from "utilities/error";
-import { theme } from "utilities/theme";
+import { Fallback } from "layouts/fallback";
+import { formatError } from "lib/error";
+import { theme } from "lib/theme";
+
 import { location, LocationGenerics, routes } from "./router";
 
 // The results of this query will be cached like a normal query

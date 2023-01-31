@@ -1,12 +1,21 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindManyOptions, In, Repository } from "typeorm";
+import {
+  FindManyOptions,
+  FindOptionsWhere,
+  In,
+  Like,
+  Raw,
+  Repository,
+} from "typeorm";
 
 import { Cabinet } from "database/entities";
 import { WithCountDto } from "type-defs";
 
 import { CreateCabinetDto, GetCabinetsDto, UpdateCabinetDto } from "./dto";
 import mergeWith from "lodash.mergewith";
+import merge from "lodash.merge";
+import { getRawSearch } from "common/lib";
 
 @Injectable()
 export class CabinetService {
@@ -25,11 +34,25 @@ export class CabinetService {
     return this.cabinetRepository.find();
   }
 
-  async findByAccountId(
-    accountId: number,
-    opts: GetCabinetsDto
-  ): Promise<WithCountDto<Cabinet>> {
+  async findByAccountId(accountId: number, opts: GetCabinetsDto): Promise<any> {
     console.log("opts => ", opts);
+
+    const defaultWhere: FindOptionsWhere<Cabinet> = {
+      account: { id: accountId },
+    };
+    if (opts.type) defaultWhere.type = opts.type;
+
+    // This should be a common way to define orWhere
+    const where = opts.search
+      ? [
+          merge(defaultWhere, {
+            name: getRawSearch(opts.search),
+          }),
+        ]
+      : defaultWhere;
+
+    console.log("where => ", where);
+
     const queryOpts: FindManyOptions<Cabinet> = {
       skip: (opts.page - 1) * opts.limit,
       take: opts.limit,
@@ -38,13 +61,10 @@ export class CabinetService {
         ...(opts.orderBy ? { [opts.orderBy]: "DESC" } : {}),
         updatedAt: "DESC",
       },
-      where: {
-        ...(opts.type ? { type: In(opts.type) } : {}),
-      },
+      where,
     };
 
     const accountCabinets = await this.cabinetRepository.find({
-      where: { account: { id: accountId } },
       relations: ["specifications"],
       ...queryOpts,
     });

@@ -18,6 +18,10 @@ export class PaginationDto {
 
   @IsString()
   @IsOptional()
+  search?: string;
+
+  @IsString()
+  @IsOptional()
   orderBy?: string;
 }
 

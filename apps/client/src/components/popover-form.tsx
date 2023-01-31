@@ -3,7 +3,7 @@ import { capitalize } from "lodash-es";
 
 import { PageSkeleton, FormInput, FormSelect } from "@jigbid/ui";
 import { useCreateJob, useClients } from "hooks/queries";
-import { JOB_STATUSES } from "../utilities/constants";
+import { JOB_STATUSES } from "../lib/constants";
 
 const { Title } = Typography;
 

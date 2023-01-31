@@ -1,21 +1,15 @@
-import { Link, useSearch } from "@tanstack/react-location";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Form, Input, Row, Select, Table } from "antd";
-import dayjs from "dayjs";
-import { nanoid } from "nanoid";
-import { useState } from "react";
-
-import { api } from "api";
+import { Link } from "@tanstack/react-location";
+import { Select, Table } from "antd";
+import { DEFAULT_PAGE_SIZE } from "type-defs";
 
 // wtf?
 // import { tableProps } from "../../cabinet-setup/utils";
 
-import { UILayout } from "components/layout";
-import { JOB_STATUSES_OPTIONS } from "../../utilities/constants";
-import { getQueryString } from "../../utilities/utils";
 import { useJobsPaginated } from "hooks/queries";
-import { LocationGenerics } from "router";
-import { DEFAULT_PAGE_SIZE } from "type-defs";
+import { useSearch } from "hooks/router";
+import { UILayout } from "layouts/ui";
+import { JOB_STATUSES_OPTIONS } from "lib/constants";
+import { dayjs } from "lib/dayjs";
 
 // export const  JobsFilterRow() {
 //   return (
@@ -111,7 +105,7 @@ const columns = [
 ];
 
 export const JobsPage = () => {
-  const search = useSearch<LocationGenerics>();
+  const search = useSearch();
 
   const { data, isLoading } = useJobsPaginated(search);
 

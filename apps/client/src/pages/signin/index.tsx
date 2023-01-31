@@ -1,12 +1,13 @@
-import { Link, useNavigate } from "@tanstack/react-location";
+import { FormInput, FormPasswordInput } from "@jigbid/ui";
+import { Link } from "@tanstack/react-location";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Form, message, Row } from "antd";
 import { isEmpty } from "lodash-es";
 
-import { FormInput, FormPasswordInput } from "@jigbid/ui";
-import { api, client } from "api";
-import { AuthLayout } from "components/layout";
-import { refreshTokenStorage, tokenStorage } from "utilities/token-storage";
+import { useNavigate } from "hooks/router";
+import { AuthLayout } from "layouts/auth";
+import { api, client } from "lib/api";
+import { refreshTokenStorage, tokenStorage } from "lib/token-storage";
 
 import "./signin.scss";
 

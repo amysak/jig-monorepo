@@ -1,15 +1,15 @@
-import { useNavigate } from "@tanstack/react-location";
 import { merge } from "lodash-es";
 
+import { useNavigate } from "hooks/router";
+import { cleanObject } from "lib/functions";
 import { LocationGenerics } from "router";
-import { cleanObject } from "utilities/functions";
 
 export type UseSetSearchProps = {
   clean?: boolean;
 };
 
 export const useSetSearch = () => {
-  const navigate = useNavigate<LocationGenerics>();
+  const navigate = useNavigate();
 
   const set = (
     search: LocationGenerics["Search"],

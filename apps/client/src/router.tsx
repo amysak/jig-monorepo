@@ -5,14 +5,14 @@ import {
   type Route,
 } from "@tanstack/react-location";
 import { FilterValue } from "antd/es/table/interface";
-
-import { Fallback } from "components/layout";
-import { queryClient } from "app";
-import { MainLayout } from "components/layout";
-import { useAuthorization } from "hooks";
 import { GetStatsDto, Pagination } from "type-defs";
 
-import { api } from "./api";
+import { useAuthorization } from "hooks";
+import { Fallback } from "layouts/fallback";
+import { MainLayout } from "layouts/main";
+import { api } from "lib/api";
+
+import { queryClient } from "./app";
 
 const ProtectedRoute = ({ children }) => {
   const { data, isLoading } = useAuthorization();
@@ -44,7 +44,8 @@ const PublicRoute = ({ children }) => {
 
 export type SetupSearch = {
   category?: string;
-  subCategory?: string | null;
+  subCategory?: string;
+  search?: string;
 };
 
 export type LocationGenerics = MakeGenerics<{
@@ -142,17 +143,15 @@ export const routes: Route<LocationGenerics>[] = [
       {
         path: "cabinets",
         element: () =>
-          import("pages/setup/components/cabinets").then((res) => (
-            <res.default />
-          )),
+          import("pages/setup/cabinets").then((res) => <res.default />),
         children: [
           // Below is a modal
           {
             path: ":id",
             element: () =>
-              import("pages/setup/components/cabinets/edit-cabinet").then(
-                (res) => <res.default />
-              ),
+              import("pages/setup/cabinets/edit-cabinet").then((res) => (
+                <res.default />
+              )),
 
             // children: [
             //   {

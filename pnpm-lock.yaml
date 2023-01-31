@@ -20,6 +20,7 @@ importers:
     specifiers:
       '@ant-design/icons': ^5.0.0
       '@ant-design/pro-layout': ^7.6.1
+      '@formkit/auto-animate': 1.0.0-beta.6
       '@jigbid/ui': workspace:*
       '@nivo/bar': ^0.80.0
       '@nivo/core': ^0.80.0
@@ -84,6 +85,7 @@ importers:
     dependencies:
       '@ant-design/icons': 5.0.0_biqbaboplfbrettd7655fr4n2y
       '@ant-design/pro-layout': 7.6.1_yupzvqydyot4z6a4ljo5diundu
+      '@formkit/auto-animate': 1.0.0-beta.6
       '@jigbid/ui': link:../../packages/ui
       '@nivo/bar': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
       '@nivo/core': 0.80.0_g5kln477lwx3caqucf3exzf3du
@@ -2399,6 +2401,10 @@ packages:
     resolution: {integrity: sha512-TSogMPVxbRe77QCj1dt8NmRiJasPvuc+eT5jnJ6YpLqgOD2zXc5UA3S1qwybN+GVCDNdKfpKy1oj8RpzLJvh6A==}
     dependencies:
       '@floating-ui/core': 1.1.0
+    dev: false
+
+  /@formkit/auto-animate/1.0.0-beta.6:
+    resolution: {integrity: sha512-PVDhLAlr+B4Xb7e+1wozBUWmXa6BFU8xUPR/W/E+TsQhPS1qkAdAsJ25keEnFrcePSnXHrOsh3tiFbEToOzV9w==}
     dev: false
 
   /@humanwhocodes/config-array/0.11.8:

@@ -1,6 +1,6 @@
 import { QueryKey, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { QueryResult } from "api";
+import { QueryResult } from "lib/api";
 
 export const useQueryCache = <T extends (...args: unknown[]) => unknown>(
   queryKey: QueryKey,

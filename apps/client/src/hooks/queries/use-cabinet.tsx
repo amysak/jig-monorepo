@@ -6,7 +6,7 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query";
 
-import { api } from "api";
+import { api } from "lib/api";
 import { LocationGenerics } from "router";
 import { Cabinet, WithCountDto } from "type-defs";
 

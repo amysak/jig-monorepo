@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
-import { api } from "api";
+import { api } from "lib/api";
 import { Terms } from "type-defs";
 
 export const useQueryTerms = (options?: UseQueryOptions<Terms[]>) =>

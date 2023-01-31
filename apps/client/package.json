@@ -26,6 +26,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.0",
     "@ant-design/pro-layout": "^7.6.1",
+    "@formkit/auto-animate": "1.0.0-beta.6",
     "@jigbid/ui": "workspace:*",
     "@nivo/bar": "^0.80.0",
     "@nivo/core": "^0.80.0",

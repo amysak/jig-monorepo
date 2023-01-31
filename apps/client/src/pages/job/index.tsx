@@ -1,46 +1,21 @@
-import { useMatch, useNavigate } from "@tanstack/react-location";
-import { Tabs } from "antd";
-
-import { UILayout } from "components/layout";
+import { Job } from "features/job";
 import { useQueryJob } from "hooks/queries";
-import { LocationGenerics } from "router";
-import {
-  JobClientForm,
-  JobInfoForm,
-  JobNoteForm,
-  JobRoomList,
-} from "./components";
+import { useMatch } from "hooks/router";
+import UILayout from "layouts/ui";
 
-const panes = [
-  { label: "Job Info", children: <JobInfoForm />, key: "info" },
-  { label: "Client Info", children: <JobClientForm />, key: "client" },
-  { label: "Rooms", children: <JobRoomList />, key: "rooms" },
-  { label: "Notes", children: <JobNoteForm />, key: "notes" },
-];
-
-export const Job = () => {
+const JobPage = () => {
   const {
-    params: { id, tabName },
-  } = useMatch<LocationGenerics>();
+    params: { id },
+  } = useMatch();
 
   const { data: job } = useQueryJob(id);
 
-  const navigate = useNavigate();
-
   return (
     <UILayout title={job?.name}>
-      <Tabs
-        className="pagewrapper__maincontent nomargin"
-        defaultActiveKey={tabName}
-        onChange={(tabName) =>
-          navigate({ to: `/jobs/${id}/${tabName}`, replace: true })
-        }
-        activeKey={tabName}
-        style={{ width: "100%" }}
-        items={panes}
-      />
+      <Job />
     </UILayout>
   );
 };
 
-export default Job;
+// TODO: do we need this component?
+export default JobPage;

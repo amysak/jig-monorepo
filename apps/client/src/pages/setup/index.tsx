@@ -1,74 +1,14 @@
-import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
-import { Outlet, useSearch } from "@tanstack/react-location";
-import { Divider, Input, Layout, Menu, Segmented } from "antd";
+import { Outlet } from "@tanstack/react-location";
 import { FC } from "react";
 
-import { LocationGenerics } from "router";
-import { SetupViews, toggleActions, useToggles } from "store";
+import SetupLayout from "layouts/setup";
 
-import { useSetupNav } from "./core";
-
-import "./cabinet-setup.scss";
-
-const { Sider, Content } = Layout;
-const { Search } = Input;
-
-// TODO: do we need this component?
-export const SetupHome: FC = () => {
-  const search = useSearch<LocationGenerics>();
-
-  const { view } = useToggles();
-
-  const { setupNav, openKeys, onOpenChange } = useSetupNav();
-
+const SetupHome: FC = () => {
   return (
-    <Layout
-      style={{
-        minHeight: 800,
-      }}
-      className="setup-layout pagelayout"
-    >
-      <Sider width={256} className="setup-sider">
-        <Segmented
-          block
-          options={[
-            {
-              label: "Table",
-              value: "table",
-              icon: <BarsOutlined />,
-            },
-            {
-              label: "Card",
-              value: "card",
-              icon: <AppstoreOutlined />,
-            },
-          ]}
-          onChange={(value) => toggleActions.setView(value as SetupViews)}
-          value={view}
-          style={{ margin: "0 5px" }}
-        />
-        <Divider />
-        <Search
-          size="middle"
-          placeholder="Search"
-          allowClear
-          style={{ marginBottom: 10 }}
-          // onSearch={onSearch}
-        />
-        <Menu
-          selectedKeys={
-            search.setup ? (Object.values(search.setup) as string[]) : []
-          }
-          openKeys={openKeys}
-          onOpenChange={onOpenChange}
-          mode="inline"
-          items={setupNav}
-        />
-      </Sider>
-      <Content>
-        <Outlet />
-      </Content>
-    </Layout>
+    <SetupLayout>
+      {/* renders children of a route if matched */}
+      <Outlet />
+    </SetupLayout>
   );
 };
 

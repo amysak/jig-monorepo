@@ -8,7 +8,7 @@ import {
 import { merge } from "lodash-es";
 import { Job, WithCountDto } from "type-defs";
 
-import { api } from "api";
+import { api } from "lib/api";
 import { queryClient } from "app";
 import { LocationGenerics } from "router";
 

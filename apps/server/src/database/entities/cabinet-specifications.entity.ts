@@ -4,20 +4,13 @@ import { AppBaseEntity } from "./base.entity";
 import { Cabinet } from "./cabinet.entity";
 import { AccountPreferences } from "./preferences.entity";
 
-class AdjustableShelves {
-  @Column("int", { default: 0 })
-  quantity: number;
-
-  @Column("int", { default: 2 })
-  finishedSidesCount: 0 | 1 | 2;
-
-  @Column("real", { default: 0 })
-  depthDifference: number;
-}
-
 class CabinetBack {
   @Column("boolean", { default: true })
   included: boolean;
+
+  @Column("text", { default: "behind" })
+  // TODO: consider enum
+  position: "behind" | "front";
 
   @Column("int", { default: 2 })
   finishedSidesCount: 0 | 1 | 2;
@@ -61,7 +54,7 @@ class FaceFrame {
   stileFinishedSides: 0 | 1 | 2;
 }
 
-class FixedShelves {
+class CabinetShelf {
   @Column("int", { default: 0 })
   quantity: number;
 
@@ -97,28 +90,23 @@ class CabinetSides {
   depthDifference: number;
 }
 
-class StretcherBelowDrawer {
-  @Column("real", { default: 0 })
-  depth: number;
-
-  @Column("int", { default: 2 })
-  finishedSidesCount: 0 | 1 | 2;
-}
-
-class TopBackStretcher {
-  @Column("real", { default: 0 })
-  depth: number;
-
-  @Column("int", { default: 2 })
-  finishedSidesCount: 0 | 1 | 2;
-}
-
-class TopFrontStretcher {
+class CabinetStretcher {
   @Column("real", { default: 0 })
   depth: number;
 
   @Column("int", { default: 0 })
   finishedSidesCount: 0 | 1 | 2;
+}
+
+class CabinetStretchers {
+  @Column(() => CabinetStretcher)
+  back: CabinetStretcher;
+
+  @Column(() => CabinetStretcher)
+  top: CabinetStretcher;
+
+  @Column(() => CabinetStretcher)
+  bottom: CabinetStretcher;
 }
 
 class CabinetTop {
@@ -130,6 +118,14 @@ class CabinetTop {
 
   @Column("real", { default: 0 })
   depthDifference: number;
+}
+
+class CabinetShelves {
+  @Column(() => CabinetShelf)
+  adjustable: CabinetShelf;
+
+  @Column(() => CabinetShelf)
+  fixed: CabinetShelf;
 }
 
 class CabinetDimensions {
@@ -173,11 +169,8 @@ export class CabinetIntrinsicDimensions {
   @Column(() => CabinetDeck)
   deck: CabinetDeck;
 
-  @Column(() => AdjustableShelves)
-  adjustableShelves: AdjustableShelves;
-
-  @Column(() => FixedShelves)
-  fixedShelves: FixedShelves;
+  @Column(() => CabinetShelves)
+  shelves: CabinetShelves;
 
   @Column(() => Nailer)
   nailer: Nailer;
@@ -185,14 +178,8 @@ export class CabinetIntrinsicDimensions {
   @Column(() => CabinetSides)
   sides: CabinetSides;
 
-  @Column(() => StretcherBelowDrawer)
-  stretcherBelowDrawer: StretcherBelowDrawer;
-
-  @Column(() => TopBackStretcher)
-  topBackStretcher: TopBackStretcher;
-
-  @Column(() => TopFrontStretcher)
-  topFrontStretcher: TopFrontStretcher;
+  @Column(() => CabinetStretchers)
+  stretchers: CabinetStretchers;
 
   @Column(() => FaceFrame)
   faceFrame: FaceFrame;
