@@ -44,6 +44,17 @@ export const CABINET_OPENING_TYPE = {
 
 export type CabinetOpeningType = ObjectValues<typeof CABINET_OPENING_TYPE>;
 
+export const CABINET_EQUIPMENT_CATEGORY = {
+  TRIM: "trim",
+  MOLDING: "molding",
+  ACCESSORY: "accessory",
+  HARDWARE: "hardware",
+} as const;
+
+export type CabinetEquipmentCategory = ObjectValues<
+  typeof CABINET_EQUIPMENT_CATEGORY
+>;
+
 export const CABINET_TYPE = {
   BASE: "base",
   UPPER: "upper",

@@ -13,16 +13,13 @@ import {
   type CompletionStatus,
   type RoomElevation,
 } from "type-defs";
-import { Accessory, Hardware } from "./cabinet-equipment.entity";
 import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
+import { CabinetEquipment } from "./cabinet-equipment.entity";
 import { Cabinet } from "./cabinet.entity";
-import { Filler } from "./cabinet-extension.entity";
 import { HardwareSet } from "./hardware-set.entity";
 import { Job } from "./job.entity";
 import { MaterialSet } from "./material-set.entity";
-import { Panel } from "./cabinet-extension.entity";
-import { ToePlatform } from "./cabinet-extension.entity";
 
 // relations in this model are OneToMany because it is planned to create a separate related entity for each room
 @Entity()
@@ -39,8 +36,8 @@ export class Room extends AppBaseEntity {
   @OneToMany(() => Cabinet, (cabinet) => cabinet.room)
   cabinets?: Cabinet[];
 
-  @OneToMany(() => Accessory, (accessory) => accessory.room)
-  accessories?: Accessory[];
+  @OneToMany(() => CabinetEquipment, (equipment) => equipment.room)
+  equipment?: CabinetEquipment[];
 
   // @OneToMany(() => Panel, (panel) => panel.room)
   // panels?: Panel[];

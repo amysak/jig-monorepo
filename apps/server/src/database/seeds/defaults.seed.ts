@@ -9,7 +9,6 @@ import {
 import omit from "lodash.omit";
 
 import {
-  Accessory,
   Account,
   Cabinet,
   CabinetIntrinsicDimensions,
@@ -17,18 +16,15 @@ import {
   CabinetSpecifications,
   Filler,
   Finish,
-  Hardware,
-  LaborRate,
   Letter,
   Markup,
   Material,
-  Molding,
+  CabinetEquipment,
   Panel,
   Preferences,
   Profile,
   Terms,
   ToePlatform,
-  Trim,
   Vendor,
 } from "database/entities";
 import { SeedingService } from "services";
@@ -137,18 +133,16 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     .map((profile) => SeedingService.bindEntityToAccount(profile, account))
     .map(setIsDefault);
 
-  const moldings = SeedingService.convertDumpToEntities(
-    Molding,
-    defaultMoldings.map((molding) => omit(molding, "type"))
+  const equipment = SeedingService.convertDumpToEntities(
+    CabinetEquipment,
+    [
+      ...defaultMoldings,
+      ...defaultTrims,
+      ...defaultAccessories,
+      ...defaultHardware,
+    ].map((molding) => omit(molding, "type"))
   )
     .map((molding) => SeedingService.bindEntityToAccount(molding, account))
-    .map(setIsDefault);
-
-  const trims = SeedingService.convertDumpToEntities(
-    Trim,
-    defaultTrims.map((trim) => omit(trim, "type"))
-  )
-    .map((trim) => SeedingService.bindEntityToAccount(trim, account))
     .map(setIsDefault);
 
   const toes = SeedingService.convertDumpToEntities(
@@ -211,38 +205,6 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     })
   )
     .map((finish) => SeedingService.bindEntityToAccount(finish, account))
-    .map(setIsDefault);
-
-  const laborRates = SeedingService.convertDumpToEntities(
-    LaborRate,
-    defaultLaborRates.map((laborRate) => ({
-      ...laborRate,
-      category: laborRate.category.toLowerCase(),
-    }))
-  )
-    .map((laborRate) => SeedingService.bindEntityToAccount(laborRate, account))
-    .map(setIsDefault);
-
-  const accessories = SeedingService.convertDumpToEntities(
-    Accessory,
-    defaultAccessories.map((accessory) => ({
-      ...accessory,
-      report: true,
-      discount: accessory.discount ? accessory.discount * 100 : 5,
-    }))
-  )
-    .map((accessory) => SeedingService.bindEntityToAccount(accessory, account))
-    .map(setIsDefault);
-
-  const hardware = SeedingService.convertDumpToEntities(
-    Hardware,
-    defaultHardware.map((hardware) => ({
-      ...hardware,
-      report: true,
-      discount: hardware.discount ? hardware.discount * 100 : 5,
-    }))
-  )
-    .map((hardware) => SeedingService.bindEntityToAccount(hardware, account))
     .map(setIsDefault);
 
   const fillers = SeedingService.convertDumpToEntities(
@@ -370,16 +332,12 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     .map((opening) => SeedingService.bindEntityToAccount(opening, account));
 
   return {
+    equipment,
     panels,
     profiles,
-    moldings,
-    trims,
     toes,
     materials,
     finishes,
-    laborRates,
-    accessories,
-    hardware,
     fillers,
     cabinetsAndSpecs,
     openings,

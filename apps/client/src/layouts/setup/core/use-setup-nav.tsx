@@ -1,9 +1,19 @@
-import Icon, { AppstoreOutlined, SwapOutlined } from "@ant-design/icons";
+import Icon, {
+  AppstoreAddOutlined,
+  BuildOutlined,
+  DollarOutlined,
+  FormatPainterOutlined,
+  PlusCircleOutlined,
+  SettingOutlined,
+  SwapOutlined,
+} from "@ant-design/icons";
 import { MenuProps } from "antd";
-import { isNil } from "lodash-es";
+import { isEmpty, isNil } from "lodash-es";
 import { useState } from "react";
 import { CABINET_OPENING_TYPE, CABINET_TYPE, PROFILE_TYPE } from "type-defs";
 
+import CabinetIcon from "assets/images/setup/cabinet.svg";
+import DoorIcon from "assets/images/setup/door.svg";
 import { useSetSearch } from "hooks";
 import {
   useMatches,
@@ -11,8 +21,6 @@ import {
   useNavigate,
   useSearch,
 } from "hooks/router";
-import CabinetIcon from "assets/images/setup/cabinet.svg";
-import DoorIcon from "assets/images/setup/door.svg";
 
 import { isDivider, isGroup, isStandardMenu, isSubMenu } from "./guards";
 import { prepareAntdCollection } from "./prepare-antd-data";
@@ -46,6 +54,7 @@ export const useSetupNav: UseSetupNav = () => {
     if (isStandardMenu(item)) {
       return {
         ...item,
+        onClick: () => navigate({ to: `/setup/${item.key}` }),
       };
     }
 
@@ -65,16 +74,7 @@ export const useSetupNav: UseSetupNav = () => {
         if (isStandardMenu(child)) {
           return {
             ...child,
-            onClick: () => {
-              setSearch({
-                setup: {
-                  category:
-                    search.setup?.category !== child.key
-                      ? (child.key as string)
-                      : null,
-                },
-              });
-            },
+            onClick: () => navigate({ to: `/setup/${item.key}/${child.key}` }),
           };
         }
 
@@ -85,7 +85,7 @@ export const useSetupNav: UseSetupNav = () => {
             ...child,
             children: child.children.map((nestedChild) => ({
               ...nestedChild,
-              onClick: () => {
+              onClick: () =>
                 setSearch({
                   setup: {
                     [child.key]:
@@ -93,8 +93,7 @@ export const useSetupNav: UseSetupNav = () => {
                         ? nestedChild?.key
                         : null,
                   },
-                });
-              },
+                }),
             })),
           };
         }
@@ -130,7 +129,14 @@ export const useSetupNav: UseSetupNav = () => {
       key: "openings",
       icon: <Icon component={DoorIcon} />,
       label: "Cabinet Openings",
-      children: prepareAntdCollection(Object.values(CABINET_OPENING_TYPE)),
+      children: [
+        {
+          key: "category",
+          label: "Opening Category",
+          type: "group",
+          children: prepareAntdCollection(Object.values(CABINET_OPENING_TYPE)),
+        },
+      ],
     },
     {
       key: "profiles",
@@ -145,7 +151,46 @@ export const useSetupNav: UseSetupNav = () => {
         },
       ],
     },
-    { type: "divider" },
+    {
+      key: "equipment",
+      icon: <AppstoreAddOutlined />,
+      label: "Equipment",
+      children: prepareAntdCollection([
+        "trims",
+        "moldings",
+        "accessories",
+        "hardware",
+      ]),
+    },
+    {
+      key: "extensions",
+      icon: <PlusCircleOutlined />,
+      label: "Extensions",
+      children: prepareAntdCollection(["panels", "fillers", "toe-platforms"]),
+    },
+    {
+      key: "materials",
+      icon: <BuildOutlined />,
+      label: "Materials",
+    },
+    {
+      key: "finishes",
+      icon: <FormatPainterOutlined />,
+      label: "Finishes",
+    },
+    {
+      key: "prices",
+      icon: <DollarOutlined />,
+      label: "Prices",
+      children: prepareAntdCollection(["markups", "terms", "upcharges"]),
+    },
+    {
+      key: "sets",
+      icon: <SettingOutlined />,
+      label: "Sets",
+      children: prepareAntdCollection(["material-sets", "hardware-sets"]),
+    },
+    // { type: "divider" },
     // {
     //   key: "toes",
     //   icon: <AppstoreOutlined />,

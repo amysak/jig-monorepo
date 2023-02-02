@@ -5,3 +5,4 @@ export * from "./client";
 export * from "./common";
 export * from "./opening";
 export * from "./profile";
+export * from "./equipment";

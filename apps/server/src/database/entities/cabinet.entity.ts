@@ -18,10 +18,10 @@ import {
 
 import { Account } from "./account.entity";
 import { DefaultableBaseEntity } from "./base.entity";
-import { Accessory } from "./cabinet-equipment.entity";
 import { CabinetSpecifications } from "./cabinet-specifications.entity";
 import { Room } from "./room.entity";
 import { Upcharge } from "./upcharge.entity";
+import { CabinetEquipment } from "./cabinet-equipment.entity";
 
 // Cannot use STI (Single Table Inheritance) because TypeORM is a bad library:
 // https://github.com/typeorm/typeorm/issues/9033
@@ -80,8 +80,8 @@ export class Cabinet extends DefaultableBaseEntity {
 
   // If room is present, then usually can have related parts, such as trims, accessory, etc.
   // Below is example of how to connect them
-  @ManyToOne(() => Accessory, { nullable: true })
-  accessories?: Accessory;
+  @ManyToOne(() => CabinetEquipment, { nullable: true })
+  equipment?: CabinetEquipment;
 
   @ManyToMany(() => Upcharge, { nullable: true })
   @JoinTable()

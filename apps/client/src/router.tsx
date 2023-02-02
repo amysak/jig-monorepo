@@ -67,7 +67,6 @@ export type LocationGenerics = MakeGenerics<{
 export const location = new ReactLocation<LocationGenerics>({});
 
 export const routes = [
-  // This is required to stay at index 0 for the file based key constraint in use-setup-nav.tsx to work
   {
     path: "setup",
     element: () =>
@@ -111,16 +110,20 @@ export const routes = [
         path: "profiles",
         element: () =>
           import("pages/setup/profiles").then((res) => <res.default />),
-        children: [
-          // Below is a modal
-          // {
-          //   path: ":id",
-          //   element: () =>
-          //     import("pages/setup/openings/edit-cabinet").then((res) => (
-          //       <res.default />
-          //     )),
-          // },
-        ],
+        children: [],
+      },
+      {
+        path: "equipment",
+        // loader: () =>
+        //   // queryClient.getQueryData(["equipment"]) ??
+        //   queryClient
+        //     .fetchQuery(["equipment"], () =>
+        //       Promise.all([api.trims.getAll(), api.moldings])
+        //     )
+        //     .then(() => ({})),
+        element: () =>
+          import("pages/setup/equipment").then((res) => <res.default />),
+        children: [],
       },
     ],
   },

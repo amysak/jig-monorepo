@@ -10,6 +10,12 @@ abstract class CabinetExtension extends DefaultableBaseEntity {
   @ManyToOne(() => Cabinet, { nullable: true })
   cabinet?: Cabinet;
 
+  @Column("real", { default: 18 })
+  depth: number;
+
+  @Column("real", { default: 0 })
+  height: number;
+
   @ManyToOne(() => Account, { eager: true })
   account: Account;
 }
@@ -27,12 +33,6 @@ export class ToePlatform extends CabinetExtension {
 
   @Column("integer")
   sleepersCount: number;
-
-  @Column("real", { default: 18 })
-  depth: number;
-
-  @Column("real", { default: 0 })
-  height: number;
 
   @Column("real", { default: 0 })
   minLength: number;
@@ -52,12 +52,6 @@ export class Panel extends CabinetExtension {
   @Column("real", { default: 0 })
   width: number;
 
-  @Column("real", { default: 0 })
-  depth: number;
-
-  @Column("real", { default: 0 })
-  height: number;
-
   @Column("integer", { nullable: true })
   panelsCount?: number;
 
@@ -67,9 +61,6 @@ export class Panel extends CabinetExtension {
 
 @Entity()
 export class Filler extends CabinetExtension {
-  @Column("real", { default: 0 })
-  depth: number;
-
   // @ManyToOne(() => Room, (room) => room.fillers, { nullable: true })
   // room?: Room;
 }

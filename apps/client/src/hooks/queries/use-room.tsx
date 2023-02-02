@@ -20,7 +20,8 @@ export const useCreateRoom = (jobId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (values: Partial<Room>) => api.rooms.create({ ...values, jobId: +jobId }),
+    (values: Partial<Room>) =>
+      api.rooms.create({ ...values, job: { id: +jobId } }),
     {
       onSettled: () => {
         queryClient.invalidateQueries(["job", +jobId]);

@@ -94,9 +94,10 @@ export class SeedingService {
     await this.entityManager.save(markups);
     await this.entityManager.save(letters);
 
-    const { cabinetsAndSpecs, vendors, openings, profiles } = getRoomDefaults({
-      account: superAccount,
-    });
+    const { cabinetsAndSpecs, vendors, openings, profiles, equipment } =
+      getRoomDefaults({
+        account: superAccount,
+      });
 
     await this.entityManager.save(vendors);
 
