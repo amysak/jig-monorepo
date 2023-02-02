@@ -159,6 +159,7 @@ export type Range = ObjectValues<typeof RANGE>;
 export const FINISH_COMPLEXITY = {
   COMPLEX: "complex",
   SIMPLE: "simple",
+  NONE: "none",
 } as const;
 
 export type FinishComplexity = ObjectValues<typeof FINISH_COMPLEXITY>;

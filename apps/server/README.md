@@ -24,9 +24,10 @@
 - [x] Fix DTO validation
 - [x] Bind cabinets to front-end
 - [x] Implement basic search capabilities for cabinets
+- [ ] Connect all the entities to front-end, send paginated data
 - [ ] ♻️ Bind preferences to their models and implement preferences inheritance
       logic
-- [ ] ♻️ Rethink isDefault fields in db
+- [ ] ♻️ Rethink isDefault behaviour in db
 - [ ] Design new material set logic (sets in general)
 - [ ] Bind rooms to front-end
 

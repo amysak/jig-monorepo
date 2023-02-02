@@ -10,7 +10,6 @@ export * from "./client.entity";
 export * from "./finish.entity";
 export * from "./hardware-set.entity";
 export * from "./job.entity";
-export * from "./labor-rate.entity";
 export * from "./letter.entity";
 export * from "./markup.entity";
 export * from "./material-set.entity";

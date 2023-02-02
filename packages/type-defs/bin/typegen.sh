@@ -4,6 +4,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 cd ..
 
 rm -rf dist
+rm -rf src/entities
 cp -R ../../apps/server/src/database/entities src
 
 if [[ "$OSTYPE" == "darwin"* ]]; then

@@ -31,6 +31,6 @@ export class Upcharge extends DefaultableBaseEntity {
 
   // Could be directly tied to a cabinet or other entity. If so, then we don't return them in findByAccountId.
   // Basically, need to check for the relationships
-  @ManyToOne(() => Account, { nullable: true, eager: true })
-  account?: Account;
+  @ManyToOne(() => Account, { eager: true })
+  account: Account;
 }

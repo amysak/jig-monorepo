@@ -13,7 +13,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "useDefineForClassFields": false,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "isolatedModules": false
   },
   "exclude": ["node_modules", "dist"],
   "include": ["src/entities/*.ts"]

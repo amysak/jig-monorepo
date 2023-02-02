@@ -17,14 +17,12 @@ import { Accessory, Hardware } from "./cabinet-equipment.entity";
 import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
 import { Cabinet } from "./cabinet.entity";
-import { Filler } from "./filler.entity";
+import { Filler } from "./cabinet-extension.entity";
 import { HardwareSet } from "./hardware-set.entity";
 import { Job } from "./job.entity";
-import { LaborRate } from "./labor-rate.entity";
 import { MaterialSet } from "./material-set.entity";
-import { Panel } from "./panel.entity";
-import { Toe } from "./toe.entity";
-import { TrimMolding } from "./trim-molding.entity";
+import { Panel } from "./cabinet-extension.entity";
+import { ToePlatform } from "./cabinet-extension.entity";
 
 // relations in this model are OneToMany because it is planned to create a separate related entity for each room
 @Entity()
@@ -38,35 +36,39 @@ export class Room extends AppBaseEntity {
   @Column("text", { nullable: true })
   elevation?: RoomElevation;
 
-  @OneToMany(() => Panel, (panel) => panel.room)
-  panels?: Panel[];
-
   @OneToMany(() => Cabinet, (cabinet) => cabinet.room)
   cabinets?: Cabinet[];
 
   @OneToMany(() => Accessory, (accessory) => accessory.room)
   accessories?: Accessory[];
 
-  @OneToMany(() => Hardware, (hardware) => hardware.room)
-  hardware?: Hardware[];
+  // @OneToMany(() => Panel, (panel) => panel.room)
+  // panels?: Panel[];
 
-  @OneToMany(() => TrimMolding, (molding) => molding.room)
-  moldings?: TrimMolding[];
+  // @OneToMany(() => Hardware, (hardware) => hardware.room)
+  // hardware?: Hardware[];
 
-  @OneToMany(() => Filler, (filler) => filler.room)
-  fillers?: Filler[];
+  // @OneToMany(() => TrimMolding, (molding) => molding.room)
+  // moldings?: TrimMolding[];
 
-  @OneToMany(() => Toe, (toe) => toe.room)
-  toes?: Toe[];
+  // @OneToMany(() => Filler, (filler) => filler.room)
+  // fillers?: Filler[];
 
-  @OneToMany(() => LaborRate, (laborRate) => laborRate.rooms)
-  laborRates?: LaborRate[];
+  // @OneToMany(() => ToePlatform , (toe) => toe.room)
+  // toes?: ToePlatform [];
 
-  @OneToOne(() => MaterialSet, (materialSet) => materialSet.room)
+  // @OneToMany(() => LaborRate, (laborRate) => laborRate.rooms)
+  // laborRates?: LaborRate[];
+
+  @OneToOne(() => MaterialSet, (materialSet) => materialSet.room, {
+    nullable: true,
+  })
   @JoinColumn()
   materialSet?: MaterialSet;
 
-  @OneToOne(() => HardwareSet, (hardwareSet) => hardwareSet.room)
+  @OneToOne(() => HardwareSet, (hardwareSet) => hardwareSet.room, {
+    nullable: true,
+  })
   @JoinColumn()
   hardwareSet?: HardwareSet;
 
@@ -75,9 +77,6 @@ export class Room extends AppBaseEntity {
 
   @ManyToOne(() => Job, "rooms", { onDelete: "CASCADE" })
   job: Job;
-
-  @Column("integer")
-  jobId: number;
 
   @ManyToOne(() => Account, "rooms", { onDelete: "CASCADE" })
   account: Account;

@@ -40,8 +40,8 @@ export class ToePlatform extends CabinetExtension {
   @Column("real", { default: 0 })
   maxLength: number;
 
-  @ManyToOne(() => Room, (room) => room.toes, { nullable: true })
-  room?: Room;
+  // @ManyToOne(() => Room, (room) => room.toes, { nullable: true })
+  // room?: Room;
 }
 
 @Entity()
@@ -61,8 +61,8 @@ export class Panel extends CabinetExtension {
   @Column("integer", { nullable: true })
   panelsCount?: number;
 
-  @ManyToOne(() => Room, (room) => room.panels, { nullable: true })
-  room?: Room;
+  // @ManyToOne(() => Room, (room) => room.panels, { nullable: true })
+  // room?: Room;
 }
 
 @Entity()
@@ -70,6 +70,6 @@ export class Filler extends CabinetExtension {
   @Column("real", { default: 0 })
   depth: number;
 
-  @ManyToOne(() => Room, (room) => room.fillers, { nullable: true })
-  room?: Room;
+  // @ManyToOne(() => Room, (room) => room.fillers, { nullable: true })
+  // room?: Room;
 }

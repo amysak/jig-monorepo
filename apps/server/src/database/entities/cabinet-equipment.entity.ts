@@ -1,3 +1,4 @@
+import { FinishComplexity, FINISH_COMPLEXITY } from "type-defs";
 import { Column, Entity, ManyToMany, ManyToOne } from "typeorm";
 
 import { Account } from "./account.entity";
@@ -68,8 +69,8 @@ export class Trim extends CabinetEquipment {
   @Column("real", { default: 0 })
   wasteFactor: number;
 
-  // @Column("text", )
-  // finishComplexity: FinishComplexity;
+  @Column("text", { default: FINISH_COMPLEXITY.NONE })
+  finishComplexity: FinishComplexity;
   // @ManyToOne(() => Room, (room) => room.accessories, { nullable: true })
   // room?: Room;
   // @ManyToMany(() => Room, (room) => room.accessories, { nullable: true })
@@ -80,6 +81,11 @@ export class Trim extends CabinetEquipment {
 
 @Entity()
 export class Molding extends CabinetEquipment {
+  @Column("real", { default: 0 })
+  wasteFactor: number;
+
+  @Column("text", { default: FINISH_COMPLEXITY.NONE })
+  finishComplexity: FinishComplexity;
   // @ManyToOne(() => Room, (room) => room.accessories, { nullable: true })
   // room?: Room;
   // @ManyToMany(() => Room, (room) => room.accessories, { nullable: true })
