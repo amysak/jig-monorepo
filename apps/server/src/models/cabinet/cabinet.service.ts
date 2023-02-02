@@ -1,21 +1,13 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import {
-  FindManyOptions,
-  FindOptionsWhere,
-  In,
-  Like,
-  Raw,
-  Repository,
-} from "typeorm";
-
-import { Cabinet } from "database/entities";
-import { WithCountDto } from "type-defs";
-
-import { CreateCabinetDto, GetCabinetsDto, UpdateCabinetDto } from "./dto";
-import mergeWith from "lodash.mergewith";
 import merge from "lodash.merge";
+import mergeWith from "lodash.mergewith";
+import { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
+
 import { getRawSearch } from "common/lib";
+import { Cabinet } from "database/entities";
+
+import { CreateCabinetDto, GetCabinetsDto } from "./dto";
 
 @Injectable()
 export class CabinetService {
@@ -34,9 +26,7 @@ export class CabinetService {
     return this.cabinetRepository.find();
   }
 
-  async findByAccountId(accountId: number, opts: GetCabinetsDto): Promise<any> {
-    console.log("opts => ", opts);
-
+  async findByAccountId(accountId: number, opts: GetCabinetsDto) {
     const defaultWhere: FindOptionsWhere<Cabinet> = {
       account: { id: accountId },
     };
@@ -50,8 +40,6 @@ export class CabinetService {
           }),
         ]
       : defaultWhere;
-
-    console.log("where => ", where);
 
     const queryOpts: FindManyOptions<Cabinet> = {
       skip: (opts.page - 1) * opts.limit,

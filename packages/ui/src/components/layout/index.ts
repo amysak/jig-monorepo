@@ -1,4 +1,3 @@
-export * from "./fallback-ui";
 export * from "./layout-flex";
 export * from "./notification";
 export * from "./popover";

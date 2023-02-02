@@ -13,8 +13,10 @@ import { HttpExceptionFilter } from "common/filters";
 
 import {
   CabinetModule,
+  CabinetOpeningModule,
   ClientModule,
   JobModule,
+  ProfileModule,
   RoomModule,
   TermsModule,
 } from "models";
@@ -52,8 +54,8 @@ import { configuration } from "./config";
     JobModule,
     RoomModule,
     CabinetModule,
-    // CabinetPartModule,
-    // ProfileModule,
+    CabinetOpeningModule,
+    ProfileModule,
     // PanelModule,
     // TrimMoldingModule,
     // MaterialModule,

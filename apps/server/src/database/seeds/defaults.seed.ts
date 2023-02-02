@@ -1,21 +1,22 @@
-import omit from "lodash.omit";
 import {
   randAirportName,
   randBoolean,
   randFutureDate,
   randNumber,
+  randVehicleManufacturer,
+  randVehicleModel,
 } from "@ngneat/falso";
+import omit from "lodash.omit";
 
-import { CABINET_BASE_TYPE, CABINET_CORNER_PLACEMENT } from "type-defs";
 import {
   Accessory,
   Account,
   Cabinet,
   CabinetIntrinsicDimensions,
+  CabinetOpening,
   CabinetSpecifications,
   Filler,
   Finish,
-  FinishProcess,
   Hardware,
   LaborRate,
   Letter,
@@ -26,9 +27,16 @@ import {
   Preferences,
   Profile,
   Terms,
-  Toe,
+  ToePlatform,
+  Trim,
+  Vendor,
 } from "database/entities";
 import { SeedingService } from "services";
+import {
+  CABINET_BASE_TYPE,
+  CABINET_CORNER_PLACEMENT,
+  CABINET_OPENING_TYPE,
+} from "type-defs";
 
 import defaultLetters from "database/seeds/data/defaults/letters.json";
 import defaultMarkups from "database/seeds/data/defaults/markups.json";
@@ -137,18 +145,21 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     .map(setIsDefault);
 
   const trims = SeedingService.convertDumpToEntities(
-    Molding,
+    Trim,
     defaultTrims.map((trim) => omit(trim, "type"))
   )
     .map((trim) => SeedingService.bindEntityToAccount(trim, account))
     .map(setIsDefault);
 
   const toes = SeedingService.convertDumpToEntities(
-    Toe,
-    defaultToes.map((toe) => ({
-      ...toe,
-      type: toe.type.split(" ")[1].toLowerCase(),
-    }))
+    ToePlatform,
+    defaultToes
+      .filter((toe) => toe.type === "Toe Platform")
+      .map((toe) => ({
+        ...toe,
+        type: undefined,
+        sleepersCount: toe.sleepers,
+      }))
   )
     .map((toe) => SeedingService.bindEntityToAccount(toe, account))
     .map(setIsDefault);
@@ -178,8 +189,8 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
       const resFinish: Partial<Finish> = { ...finish } as any;
 
       if (finish.category === "Finish Process") {
-        resFinish.category = "process";
-        (resFinish as FinishProcess).price = {
+        resFinish.type = "process";
+        resFinish.price = {
           perPart: {
             twoSidesCost: Math.random() * 10,
             simplePercent: 67,
@@ -191,9 +202,9 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
           },
         };
       } else {
-        resFinish.category = finish.category
+        resFinish.type = finish.category
           .toLowerCase()
-          .split(" ")[0] as Finish["category"];
+          .split(" ")[0] as Finish["type"];
       }
 
       return omit(resFinish, "type");
@@ -327,6 +338,37 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     }
   );
 
+  const vendors = Array.from({ length: 10 }).map(() => {
+    const data: Partial<Vendor> = {
+      name: randVehicleManufacturer(),
+    };
+
+    return Object.assign(new Vendor(), data);
+  });
+
+  const modelSet = Array.from({ length: 3 }).map(() => randVehicleModel());
+  const materialTypes = ["Wood", "Metal", "Plastic", "Glass", "Other"];
+
+  const openingTypes = Object.values(CABINET_OPENING_TYPE);
+  const openings = Array.from({ length: 30 })
+    .map(() => {
+      const override = Math.random() > 0.5;
+
+      const data: Partial<CabinetOpening> = {
+        name: override ? "Overriden name" : null,
+        description: `This opening has a custom name, so it is being shown instead of it's model name.
+           This is a sample description of a seeded cabinet opening. Feel free to edit it as you wish.`,
+        type: openingTypes[Math.floor(Math.random() * openingTypes.length)],
+        model: modelSet[Math.floor(Math.random() * modelSet.length)],
+        materialType:
+          materialTypes[Math.floor(Math.random() * materialTypes.length)],
+        price: randNumber({ min: 7, max: 30 }),
+      };
+
+      return Object.assign(new CabinetOpening(), data);
+    })
+    .map((opening) => SeedingService.bindEntityToAccount(opening, account));
+
   return {
     panels,
     profiles,
@@ -340,5 +382,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     hardware,
     fillers,
     cabinetsAndSpecs,
+    openings,
+    vendors,
   };
 }

@@ -16,7 +16,7 @@ export class AccountService {
     @InjectRepository(Account)
     private accountRepository: Repository<Account>,
     private readonly entityManager: EntityManager
-  ) {}
+  ) { }
   async findAll() {
     return this.accountRepository.find();
   }
@@ -72,9 +72,8 @@ export class AccountService {
 
     const dateField = "created_at"; // Could alter based on entity. For example, for jobs we could use updated_at.
 
-    const dateTruncated = `DATE_TRUNC('${
-      range === "year" ? "month" : "day"
-    }', ${dateField})`;
+    const dateTruncated = `DATE_TRUNC('${range === "year" ? "month" : "day"
+      }', ${dateField})`;
 
     // Could arguably add a status filter for jobs (only select finished for revenue calculation)
 

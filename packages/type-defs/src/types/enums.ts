@@ -35,15 +35,6 @@ export const ADDRESS_TYPE = {
 
 export type AddressType = ObjectValues<typeof ACCOUNT_ROLE>;
 
-export const ACCESSORY_HARDWARE_TYPE = {
-  HARDWARE: "hardware",
-  ACCESSORY: "accessory",
-} as const;
-
-export type AccessoryHardwareType = ObjectValues<
-  typeof ACCESSORY_HARDWARE_TYPE
->;
-
 export const CABINET_OPENING_TYPE = {
   DOOR: "door",
   DRAWER_FRONT: "drawer_front",
@@ -132,25 +123,8 @@ export const TOE_TYPE = {
 
 export type ToeType = ObjectValues<typeof TOE_TYPE>;
 
-export const ACCESSORY_CATEGORY = {
-  FUNCTIONAL: "functional",
-  COUNTER: "counter",
-  COUNTER_TOP: "counter_top",
-  COMPLEXITY_UPCHARGE: "complexity_upcharge",
-} as const;
-
-export type AccessoryCategory = ObjectValues<typeof ACCESSORY_CATEGORY>;
-
-export const HARDWARE_CATEGORY = {
-  FUNCTIONAL: "functional",
-  SURFACE: "surface",
-} as const;
-
-export type HardwareCategory = ObjectValues<typeof HARDWARE_CATEGORY>;
-
 export const FINISH_TYPE = {
   PROCESS: "process",
-  STAIN: "stain",
   GLAZE: "glaze",
   PAINT: "paint",
 } as const;
@@ -181,3 +155,10 @@ export const RANGE = {
 } as const;
 
 export type Range = ObjectValues<typeof RANGE>;
+
+export const FINISH_COMPLEXITY = {
+  COMPLEX: "complex",
+  SIMPLE: "simple",
+} as const;
+
+export type FinishComplexity = ObjectValues<typeof FINISH_COMPLEXITY>;

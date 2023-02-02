@@ -1,22 +1,15 @@
-import {
-  ChildEntity,
-  Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  TableInheritance,
-} from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-import { MATERIAL_PURPOSE, type MaterialPurpose } from "type-defs";
+import { type MaterialPurpose } from "type-defs";
 import { DefaultableBaseEntity } from "./base.entity";
 import { Vendor } from "./vendor.entity";
 
 // Maybe needs to be split by material source (discountedPrice = price * (100 { - or + } discount) / 100)
 // and create a getter for discounted price
 @Entity()
-@TableInheritance({
-  column: { type: "varchar", name: "purpose", enum: MATERIAL_PURPOSE },
-})
+// @TableInheritance({
+//   column: { type: "varchar", name: "purpose", enum: MATERIAL_PURPOSE },
+// })
 export class Material extends DefaultableBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -36,14 +29,16 @@ export class Material extends DefaultableBaseEntity {
   @Column("text")
   description: string;
 
-  @Column("real")
+  // This is not marked private/protected because it causes issues with type-defs package
+  // For example, in auth.service.ts:80
+  @Column("real", { name: "price" })
+  _price: number;
   set price(value: number) {
     this._price = value;
   }
   get price() {
     return this._price;
   }
-  protected _price: number;
 
   @Column("real")
   discount?: number;
@@ -63,12 +58,12 @@ export class Material extends DefaultableBaseEntity {
 }
 
 // price per foot is the actual one used in calculation
-@ChildEntity(MATERIAL_PURPOSE.EDGEBANDING)
-export class EdgebandingMaterial extends Material {
-  @Column("integer")
-  lengthOfRoll: number;
+// @ChildEntity(MATERIAL_PURPOSE.EDGEBANDING)
+// export class EdgebandingMaterial extends Material {
+//   @Column("integer")
+//   lengthOfRoll: number;
 
-  override get price() {
-    return this._price / this.lengthOfRoll;
-  }
-}
+//   override get price() {
+//     return this._price / this.lengthOfRoll;
+//   }
+// }

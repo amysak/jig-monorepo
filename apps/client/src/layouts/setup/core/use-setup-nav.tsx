@@ -1,8 +1,8 @@
-import { AppstoreOutlined } from "@ant-design/icons";
+import Icon, { AppstoreOutlined, SwapOutlined } from "@ant-design/icons";
 import { MenuProps } from "antd";
 import { isNil } from "lodash-es";
 import { useState } from "react";
-import { CABINET_OPENING_TYPE, CABINET_TYPE } from "type-defs";
+import { CABINET_OPENING_TYPE, CABINET_TYPE, PROFILE_TYPE } from "type-defs";
 
 import { useSetSearch } from "hooks";
 import {
@@ -11,6 +11,8 @@ import {
   useNavigate,
   useSearch,
 } from "hooks/router";
+import CabinetIcon from "assets/images/setup/cabinet.svg";
+import DoorIcon from "assets/images/setup/door.svg";
 
 import { isDivider, isGroup, isStandardMenu, isSubMenu } from "./guards";
 import { prepareAntdCollection } from "./prepare-antd-data";
@@ -66,10 +68,10 @@ export const useSetupNav: UseSetupNav = () => {
             onClick: () => {
               setSearch({
                 setup: {
-                  subCategory:
-                    search.setup?.subCategory !== child.key
+                  category:
+                    search.setup?.category !== child.key
                       ? (child.key as string)
-                      : undefined,
+                      : null,
                 },
               });
             },
@@ -102,10 +104,15 @@ export const useSetupNav: UseSetupNav = () => {
     };
   };
 
-  const originalLinks: MenuProps["items"] = [
+  // TODO:
+  type NavSetupItem = NonNullable<MenuProps["items"]>[number] &
+    ({ type: "divider"; key?: undefined } | { type?: undefined; key: string });
+
+  // Has to be strict
+  const originalLinks: NavSetupItem[] = [
     {
       key: "cabinets",
-      icon: <AppstoreOutlined />,
+      icon: <Icon component={CabinetIcon} />,
       label: "Cabinets",
       onTitleClick: (e) => {
         console.log("e => ", e);
@@ -121,9 +128,22 @@ export const useSetupNav: UseSetupNav = () => {
     },
     {
       key: "openings",
-      icon: <AppstoreOutlined />,
+      icon: <Icon component={DoorIcon} />,
       label: "Cabinet Openings",
       children: prepareAntdCollection(Object.values(CABINET_OPENING_TYPE)),
+    },
+    {
+      key: "profiles",
+      icon: <SwapOutlined />,
+      label: "Profiles",
+      children: [
+        {
+          key: "type",
+          label: "Profile Type",
+          type: "group",
+          children: prepareAntdCollection(Object.values(PROFILE_TYPE)),
+        },
+      ],
     },
     { type: "divider" },
     // {
@@ -154,6 +174,7 @@ export const useSetupNav: UseSetupNav = () => {
 
   // We put the key of the menu inside of the route path in cabinets page (for example)
   const routeKeys = originalLinks.map((link) => link?.key);
+
   const latestMatchRouteName = matches.find((match) =>
     routeKeys.includes(match.route.path)
   )?.route.path;

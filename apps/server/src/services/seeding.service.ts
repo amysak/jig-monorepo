@@ -94,7 +94,21 @@ export class SeedingService {
     await this.entityManager.save(markups);
     await this.entityManager.save(letters);
 
-    const { cabinetsAndSpecs } = getRoomDefaults({ account: superAccount });
+    const { cabinetsAndSpecs, vendors, openings, profiles } = getRoomDefaults({
+      account: superAccount,
+    });
+
+    await this.entityManager.save(vendors);
+
+    openings.forEach((opening) => {
+      opening.vendor = vendors[Math.floor(Math.random() * vendors.length)];
+    });
+    await this.entityManager.save(openings);
+
+    profiles.forEach((profile) => {
+      profile.vendor = vendors[Math.floor(Math.random() * vendors.length)];
+    });
+    await this.entityManager.save(profiles);
 
     await Promise.all(
       cabinetsAndSpecs.map(async ({ cabinet, cabinetSpecifications }) => {

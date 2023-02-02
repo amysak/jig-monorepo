@@ -80,6 +80,9 @@ export abstract class Preferences extends BaseEntity {
 
 @Entity()
 export class AccountPreferences extends Preferences {
+  @Column("real", { nullable: true })
+  ratePerMinute: number;
+
   @OneToOne(() => Account, (account) => account.preferences, {
     onDelete: "CASCADE",
   })

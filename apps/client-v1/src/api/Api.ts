@@ -78,8 +78,6 @@ export default class Api {
   }
 }
 
-console.log("API_BASE_URL => ", API_BASE_URL_V2);
-
 export const client = Axios.create({
   baseURL: API_BASE_URL,
 });

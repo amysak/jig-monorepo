@@ -23,7 +23,6 @@ export const updateById = (
   jobId: string,
   payload: Partial<Job>
 ): Promise<Job> => {
-  console.log("Updating job...");
   return client.update(`/jobs/${jobId}`, payload);
 };
 

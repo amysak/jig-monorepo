@@ -3,18 +3,16 @@
 
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
-  UpdateDateColumn,
 } from "typeorm";
 
 import { Account } from "./account.entity";
 import { MailingAddress, PhysicalAddress } from "./address.entity";
-import { DeactivatableEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
 import { Job } from "./job.entity";
 import { ClientPreferences } from "./preferences.entity";
 
@@ -29,7 +27,7 @@ class ClientAddresses {
 }
 
 @Entity()
-export class Client extends DeactivatableEntity {
+export class Client extends AppBaseEntity {
   @Column("text")
   name: string;
 

@@ -12,4 +12,4 @@ export const getDataSource = async () => {
   return new DataSource(config.db);
 };
 
-export default getDataSource();
+export default getDataSource;

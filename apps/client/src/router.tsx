@@ -2,7 +2,6 @@ import {
   MakeGenerics,
   Navigate,
   ReactLocation,
-  type Route,
 } from "@tanstack/react-location";
 import { FilterValue } from "antd/es/table/interface";
 import { GetStatsDto, Pagination } from "type-defs";
@@ -43,8 +42,7 @@ const PublicRoute = ({ children }) => {
 };
 
 export type SetupSearch = {
-  category?: string;
-  subCategory?: string;
+  category?: string | null;
   search?: string;
 };
 
@@ -68,7 +66,64 @@ export type LocationGenerics = MakeGenerics<{
 // Set up a ReactLocation instance
 export const location = new ReactLocation<LocationGenerics>({});
 
-export const routes: Route<LocationGenerics>[] = [
+export const routes = [
+  // This is required to stay at index 0 for the file based key constraint in use-setup-nav.tsx to work
+  {
+    path: "setup",
+    element: () =>
+      import("pages/setup").then((res) => (
+        <ProtectedRoute>
+          <res.default />
+        </ProtectedRoute>
+      )),
+    children: [
+      {
+        path: "cabinets",
+        element: () =>
+          import("pages/setup/cabinets").then((res) => <res.default />),
+        children: [
+          // Below is a modal
+          {
+            path: ":id",
+            element: () =>
+              import("pages/setup/cabinets/edit").then((res) => (
+                <res.default />
+              )),
+          },
+        ],
+      },
+      {
+        path: "openings",
+        element: () =>
+          import("pages/setup/openings").then((res) => <res.default />),
+        children: [
+          // Below is a modal
+          // {
+          //   path: ":id",
+          //   element: () =>
+          //     import("pages/setup/openings/edit-cabinet").then((res) => (
+          //       <res.default />
+          //     )),
+          // },
+        ],
+      },
+      {
+        path: "profiles",
+        element: () =>
+          import("pages/setup/profiles").then((res) => <res.default />),
+        children: [
+          // Below is a modal
+          // {
+          //   path: ":id",
+          //   element: () =>
+          //     import("pages/setup/openings/edit-cabinet").then((res) => (
+          //       <res.default />
+          //     )),
+          // },
+        ],
+      },
+    ],
+  },
   {
     path: "dashboard",
     element: () =>
@@ -125,45 +180,6 @@ export const routes: Route<LocationGenerics>[] = [
                   <res.default />
                 </ProtectedRoute>
               )),
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: "setup",
-    element: () =>
-      import("pages/setup").then((res) => (
-        <ProtectedRoute>
-          <res.default />
-        </ProtectedRoute>
-      )),
-    children: [
-      // { path: "/", element: <Navigate to="/setup/cabinets" replace /> },
-      {
-        path: "cabinets",
-        element: () =>
-          import("pages/setup/cabinets").then((res) => <res.default />),
-        children: [
-          // Below is a modal
-          {
-            path: ":id",
-            element: () =>
-              import("pages/setup/cabinets/edit-cabinet").then((res) => (
-                <res.default />
-              )),
-
-            // children: [
-            //   {
-            //     path: ":tabName",
-            //     // element: () =>
-            //     //   import("pages/cabinet-setup/cabinet").then((res) => (
-            //     //     <ProtectedRoute>
-            //     //       <res.default />
-            //     //     </ProtectedRoute>
-            //     //   )),
-            //   },
-            // ],
           },
         ],
       },

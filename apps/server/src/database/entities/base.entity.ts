@@ -17,12 +17,7 @@ export abstract class AppBaseEntity extends BaseEntity {
   updatedAt: Date;
 }
 
-export abstract class DeactivatableEntity extends AppBaseEntity {
-  @Column("boolean", { default: true })
-  isActive: boolean;
-}
-
-export abstract class DefaultableBaseEntity extends DeactivatableEntity {
+export abstract class DefaultableBaseEntity extends AppBaseEntity {
   @Column("boolean", { default: false })
   isDefault: boolean;
 }

@@ -1,14 +1,11 @@
 import {
   BeforeInsert,
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from "typeorm";
 
 import {
@@ -16,9 +13,9 @@ import {
   type CompletionStatus,
   type RoomElevation,
 } from "type-defs";
-import { Accessory, Hardware } from "./accessory-hardware.entity";
+import { Accessory, Hardware } from "./cabinet-equipment.entity";
 import { Account } from "./account.entity";
-import { DeactivatableEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
 import { Cabinet } from "./cabinet.entity";
 import { Filler } from "./filler.entity";
 import { HardwareSet } from "./hardware-set.entity";
@@ -31,7 +28,7 @@ import { TrimMolding } from "./trim-molding.entity";
 
 // relations in this model are OneToMany because it is planned to create a separate related entity for each room
 @Entity()
-export class Room extends DeactivatableEntity {
+export class Room extends AppBaseEntity {
   @Column("real", { default: 0 })
   totalPrice: number;
 

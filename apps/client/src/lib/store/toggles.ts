@@ -1,24 +1,34 @@
+import { merge } from "lodash-es";
 import { proxy, subscribe, useSnapshot } from "valtio";
 
 export type SetupViews = "table" | "card";
+export type SetupRecordLimit = 10 | 25 | 50 | 100;
 
 interface ToggleStore {
   // TOOD: create enum
-  view: SetupViews;
+  setup: {
+    recordLimit: SetupRecordLimit;
+    view: SetupViews;
+  };
 }
 
 const initialStore: ToggleStore = {
-  view: "table",
+  setup: {
+    view: "table",
+    recordLimit: 25,
+  },
 };
 const retrievedStore = localStorage.getItem("toggles");
 
 export const toggleStore = proxy<ToggleStore>(
-  retrievedStore ? JSON.parse(retrievedStore) : initialStore
+  retrievedStore
+    ? merge(initialStore, JSON.parse(retrievedStore))
+    : initialStore
 );
 
 export const toggleActions = {
   setView(view: SetupViews) {
-    toggleStore.view = view;
+    toggleStore.setup.view = view;
   },
 };
 

@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import bcrypt from "bcrypt";
 
-import type { Account } from "database/entities";
+import { Account } from "database/entities";
 import { AccountService } from "shared";
 import type { GetMeResult, Payload, TokenPair } from "type-defs";
 
@@ -44,9 +44,6 @@ export class AuthService {
     }
 
     const payload = <{ sub: string }>this.jwt.decode(refreshToken);
-
-    console.log("payload1111111111111 => ", payload);
-    console.log("data => ", data);
 
     return +payload.sub === data.accountId;
   }

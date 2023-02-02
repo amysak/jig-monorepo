@@ -65,7 +65,6 @@ export default class Client {
     const flattenedSearch = flattenObject(search);
 
     const query = new URLSearchParams(flattenedSearch as any);
-    console.log("query => ", query.toString());
 
     return query.toString();
   }

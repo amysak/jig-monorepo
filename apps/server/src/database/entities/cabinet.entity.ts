@@ -2,6 +2,8 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -9,7 +11,6 @@ import {
 
 import {
   CABINET_BASE_TYPE,
-  CABINET_CORNER_PLACEMENT,
   type CabinetBaseType,
   type CabinetCornerPlacement,
   type CabinetType,
@@ -17,8 +18,10 @@ import {
 
 import { Account } from "./account.entity";
 import { DefaultableBaseEntity } from "./base.entity";
+import { Accessory } from "./cabinet-equipment.entity";
 import { CabinetSpecifications } from "./cabinet-specifications.entity";
 import { Room } from "./room.entity";
+import { Upcharge } from "./upcharge.entity";
 
 // Cannot use STI (Single Table Inheritance) because TypeORM is a bad library:
 // https://github.com/typeorm/typeorm/issues/9033
@@ -74,6 +77,15 @@ export class Cabinet extends DefaultableBaseEntity {
 
   @ManyToOne(() => Room, (room) => room.cabinets, { nullable: true })
   room?: Room;
+
+  // If room is present, then usually can have related parts, such as trims, accessory, etc.
+  // Below is example of how to connect them
+  @ManyToOne(() => Accessory, { nullable: true })
+  accessories?: Accessory;
+
+  @ManyToMany(() => Upcharge, { nullable: true })
+  @JoinTable()
+  upcharges?: Upcharge[];
 
   // Most likely has to be in some other table which holds room and cabinet
   // Data about parts that this cabinet needs by default is stored inside specifcations

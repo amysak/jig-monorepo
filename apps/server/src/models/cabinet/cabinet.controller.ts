@@ -15,7 +15,7 @@ import { ReqUser } from "common/decorators";
 import { Payload } from "type-defs";
 
 import { CabinetService } from "./cabinet.service";
-import { CreateCabinetDto, GetCabinetsDto, UpdateCabinetDto } from "./dto";
+import { CreateCabinetDto, GetCabinetsDto } from "./dto";
 
 @UseGuards(JwtAuthGuard)
 @Controller("cabinets")

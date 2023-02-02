@@ -3,6 +3,8 @@ import { FC } from "react";
 
 import SetupLayout from "layouts/setup";
 
+import "./setup.scss";
+
 const SetupHome: FC = () => {
   return (
     <SetupLayout>

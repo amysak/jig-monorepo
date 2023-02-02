@@ -31,4 +31,4 @@ Health-check route available
 - ESLint, Prettier
 - Strict TypeScript
 - Decompose logic as much as possible and make it generic
-- index.ts files export only one level up (except client/features)
+- index.ts files export only one level up

@@ -23,7 +23,7 @@ export const SetupLayout: FC<SetupLayoutProps> = ({ children }) => {
   const search = useSearch();
   const [setSearch] = useSetSearch();
 
-  const { view } = useToggles();
+  const toggles = useToggles();
 
   const { setupNav, openKeys, onOpenChange } = useSetupNav();
 
@@ -54,7 +54,7 @@ export const SetupLayout: FC<SetupLayoutProps> = ({ children }) => {
             },
           ]}
           onChange={(value) => toggleActions.setView(value as SetupViews)}
-          value={view}
+          value={toggles.setup.view}
           style={{ margin: "0 5px" }}
         />
         <Divider />

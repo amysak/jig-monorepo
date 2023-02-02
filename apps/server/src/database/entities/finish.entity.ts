@@ -1,16 +1,17 @@
 import {
   BaseEntity,
-  ChildEntity,
   Column,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
-  TableInheritance,
 } from "typeorm";
 
-import { FINISH_TYPE, type FinishType } from "type-defs";
+import { type FinishType } from "type-defs";
 
+// Hopefully TypeORM fixes this soon: https://github.com/typeorm/typeorm/pull/9034
+// And we could use STI. Until then, nullable: true
 class PerPartPrice {
-  @Column("real")
+  @Column("real", { nullable: true })
   twoSidesCost: number;
 
   @Column("integer", { default: 100 })
@@ -18,34 +19,38 @@ class PerPartPrice {
 }
 
 class PerSquareFeetPrice {
-  @Column("real")
+  @Column("real", { nullable: true })
   twoSidesCost: number;
 
   @Column("integer", { default: 67 })
   simplePercent: number;
 
-  @Column("real")
+  @Column("real", { nullable: true })
   inHouseCost: number;
 }
 
 class FinishPrice {
-  @Column("text")
+  @Column(() => PerPartPrice)
   perPart: PerPartPrice;
 
-  @Column("text")
+  @Column(() => PerSquareFeetPrice)
   perSquareFeet: PerSquareFeetPrice;
 }
 
 @Entity()
-@TableInheritance({
-  column: { type: "text", name: "category", enum: FINISH_TYPE },
-})
+// @TableInheritance({
+//   column: { type: "text", name: "category", enum: FINISH_TYPE },
+// })
 export class Finish extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column("text")
-  category: FinishType;
+  type: FinishType;
+
+  // Exists only if type is PROCESS
+  @Column(() => FinishPrice)
+  price?: FinishPrice;
 
   @Column("text")
   description: string;
@@ -54,17 +59,25 @@ export class Finish extends BaseEntity {
   discount?: number;
 }
 
-@ChildEntity(FINISH_TYPE.PROCESS)
-export class FinishProcess extends Finish {
-  @Column(() => FinishPrice)
-  price: FinishPrice;
+export class FinishSet {
+  @ManyToOne(() => Finish, { nullable: true })
+  process?: Finish;
+
+  @ManyToOne(() => Finish, { nullable: true })
+  glaze?: Finish;
+
+  @ManyToOne(() => Finish, { nullable: true })
+  paint?: Finish;
 }
 
-@ChildEntity(FINISH_TYPE.GLAZE)
-export class GlazeColors extends Finish {}
+// @ChildEntity(FINISH_TYPE.PROCESS)
+// export class FinishProcess extends Finish {
+//   @Column(() => FinishPrice)
+//   price: FinishPrice;
+// }
 
-@ChildEntity(FINISH_TYPE.STAIN)
-export class StainColors extends Finish {}
+// @ChildEntity(FINISH_TYPE.GLAZE)
+// export class GlazeColors extends Finish {}
 
-@ChildEntity(FINISH_TYPE.PAINT)
-export class PaintColors extends Finish {}
+// @ChildEntity(FINISH_TYPE.PAINT)
+// export class PaintColors extends Finish {}
