@@ -28,14 +28,14 @@
 - [x] Add proper client-side state management
 - [x] ❗ Configure antd theme accordingly (some of the styles corrupted for
       various reasons)
+- [x] Prepare auto-complete search
+- [x] Transfer the same logic for other setup parts
+- [ ] ♻️ Implement rooms, preferences, calculation logic
 - [ ] ♻️ Add tall/upper, corner cabinets pictures and points with edit forms
-- [ ] ♻️ Transfer the same logic for other setup parts
-- [ ] Auto-complete search
-- [ ] Implement individual editing pages for cabinet parts
+- [ ] ♻️ Implement individual editing pages for cabinet parts
 - [ ] Finish job's client page (select from all client names & submit address
       override for job)
 - [ ] Finish authorization
-- [ ] Implement rooms, preferences, calculation logic
 
 ---
 

@@ -2,10 +2,10 @@
 
 - [x] Finalize typegen
 - [x] Setup CI using Railway & Netlify
-- [ ] Finish setup menu, seed & load equipment inside routes
-- [ ] Implement rooms basic view
-- [ ] Apply material sets logic on rooms
-- [ ] Implement calculations
+- [x] Finish setup menu, seed & load equipment inside routes
+- [ ] ♻️ Implement rooms basic view
+- [ ] ♻️ Apply material sets logic on rooms
+- [ ] ♻️ Implement calculations
 - [ ] Implement editing individual models
 - [ ] Add dynamic measurement systems
 
