@@ -30,7 +30,7 @@ export class JobService {
       skip: (opts.page - 1) * opts.limit || void 0,
       take: opts.limit,
       order: { updatedAt: "DESC" },
-      relations: ["client", "preferences"],
+      relations: ["client", "preferences", "rooms"],
     });
 
     return { count: accountJobs.length, data: accountJobs };

@@ -237,6 +237,20 @@ export const routes = [
     ],
   },
   {
+    path: "rooms",
+    children: [
+      {
+        path: ":id",
+        element: () =>
+          import("pages/room").then((res) => (
+            <ProtectedRoute>
+              <res.default />
+            </ProtectedRoute>
+          )),
+      },
+    ],
+  },
+  {
     element: <Navigate to="dashboard" replace />,
   },
 ];

@@ -12,13 +12,11 @@ import "./style.scss";
 const { Content } = Layout;
 
 interface UILayoutProps {
-  // breadcrumb?: boolean;
   title?: string;
   children?: ReactNode;
 }
 
 export const UILayout = ({
-  // breadcrumb = false,
   title,
   children,
   ...props
@@ -45,7 +43,8 @@ export const UILayout = ({
   return (
     <Layout
       {...props}
-      className={`pagewrapper__maincontent nomargin ${props.className}`}
+      className={props.className}
+      style={{ ...props.style, background: "transparent" }}
     >
       <Breadcrumb
         separator={<DoubleRightOutlined />}

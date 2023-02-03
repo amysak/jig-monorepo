@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-location";
-import { Select, Table } from "antd";
-import { DEFAULT_PAGE_SIZE } from "type-defs";
+import { Badge, List, Select, Table, TableProps } from "antd";
+import { DEFAULT_PAGE_SIZE, Job, Room } from "type-defs";
 
 // wtf?
 // import { tableProps } from "../../cabinet-setup/utils";
@@ -10,6 +10,7 @@ import { useSearch } from "hooks/router";
 import { UILayout } from "layouts/ui";
 import { JOB_STATUSES_OPTIONS } from "lib/constants";
 import { dayjs } from "lib/dayjs";
+import { capitalize, isEmpty } from "lodash-es";
 
 // export const  JobsFilterRow() {
 //   return (
@@ -32,7 +33,7 @@ import { dayjs } from "lib/dayjs";
 // }
 
 // TODO: decompose
-const columns = [
+const columns: TableProps<Job>["columns"] = [
   {
     title: "Jobs",
     dataIndex: "name",
@@ -104,6 +105,25 @@ const columns = [
   },
 ];
 
+const roomColumns: TableProps<Room>["columns"] = [
+  {
+    key: "name",
+    dataIndex: "name",
+    title: "Name",
+    render: (name: string, room) => (
+      <Link to={`/rooms/${room.id}`}>{name}</Link>
+    ),
+  },
+  {
+    key: "status",
+    dataIndex: "status",
+    title: "Status",
+    render: (status: string) => (
+      <Badge status="success" text={capitalize(status)} />
+    ),
+  },
+];
+
 export const JobsPage = () => {
   const search = useSearch();
 
@@ -119,6 +139,12 @@ export const JobsPage = () => {
         columns={columns}
         dataSource={data?.data}
         // onChange={onPaginate}
+        expandable={{
+          expandedRowRender: (job) => (
+            <Table dataSource={job.rooms} columns={roomColumns} />
+          ),
+          rowExpandable: (job) => !isEmpty(job.rooms),
+        }}
         pagination={{
           total: data?.count,
           pageSize: DEFAULT_PAGE_SIZE,

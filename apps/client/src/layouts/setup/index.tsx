@@ -32,12 +32,7 @@ export const SetupLayout: FC<SetupLayoutProps> = ({ children }) => {
   const [parent] = useAutoAnimate();
 
   return (
-    <Layout
-      style={{
-        minHeight: 800,
-      }}
-      className="setup-layout pagelayout"
-    >
+    <Layout className="setup-layout pagelayout">
       <Sider width={256} className="setup-sider">
         <Segmented
           block
