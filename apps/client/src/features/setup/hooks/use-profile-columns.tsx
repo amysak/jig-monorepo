@@ -53,7 +53,7 @@ export const useProfileColumns = () => {
             className="actions-icon"
             onClick={async () => {
               await deleteProfile(row.id);
-              await queryClient.invalidateQueries(["cabinets", search]);
+              await queryClient.invalidateQueries(["profiles", search]);
             }}
           />
           <CopyOutlined

@@ -12,11 +12,11 @@ export const flattenObject = (
   const preparedObject = { ...obj };
 
   return Object.keys(preparedObject).reduce((acc, key) => {
-    if (
-      typeof preparedObject[key] !== "object" ||
-      Array.isArray(preparedObject[key]) ||
-      !preparedObject[key]
-    ) {
+    if (Array.isArray(preparedObject[key])) {
+      return { ...acc, [key]: (preparedObject[key] as any[]).join(",") };
+    }
+
+    if (typeof preparedObject[key] !== "object" || !preparedObject[key]) {
       return {
         ...acc,
         [key]: preparedObject[key],

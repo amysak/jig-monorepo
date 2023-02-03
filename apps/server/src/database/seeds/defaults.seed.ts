@@ -7,6 +7,11 @@ import {
   randVehicleModel,
 } from "@ngneat/falso";
 import omit from "lodash.omit";
+import {
+  CABINET_BASE_TYPE,
+  CABINET_CORNER_PLACEMENT,
+  CABINET_OPENING_TYPE,
+} from "type-defs";
 
 import {
   Account,
@@ -26,13 +31,10 @@ import {
   Terms,
   ToePlatform,
   Vendor,
+  Upcharge,
+  DefaultableBaseEntity,
 } from "database/entities";
 import { SeedingService } from "services";
-import {
-  CABINET_BASE_TYPE,
-  CABINET_CORNER_PLACEMENT,
-  CABINET_OPENING_TYPE,
-} from "type-defs";
 
 import defaultLetters from "database/seeds/data/defaults/letters.json";
 import defaultMarkups from "database/seeds/data/defaults/markups.json";
@@ -42,7 +44,6 @@ import defaultCabinets from "database/seeds/data/setup/cabinets.json";
 import defaultFillers from "database/seeds/data/setup/fillers.json";
 import defaultFinishes from "database/seeds/data/setup/finishes.json";
 import defaultHardware from "database/seeds/data/setup/hardware.json";
-import defaultLaborRates from "database/seeds/data/setup/labor-rates.json";
 import defaultMaterials from "database/seeds/data/setup/materials.json";
 import defaultMoldings from "database/seeds/data/setup/moldings.json";
 import defaultPanels from "database/seeds/data/setup/panels.json";
@@ -93,8 +94,11 @@ function generateIntrinsicDimensions() {
   );
 }
 
-const setIsDefault = (entity: any) =>
-  Object.assign(entity, { isDefault: true });
+const setIsDefault = <T extends DefaultableBaseEntity>(entity: T): T => {
+  entity.isDefault = true;
+
+  return entity;
+};
 
 export function getDefaults({ account }: DefaultSeedsOptions) {
   const terms = SeedingService.convertDumpToEntities(Terms, defaultTerms)
@@ -133,16 +137,78 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     .map((profile) => SeedingService.bindEntityToAccount(profile, account))
     .map(setIsDefault);
 
+  const allEquipment = [
+    ...defaultMoldings,
+    ...defaultTrims,
+    ...defaultAccessories,
+    ...defaultHardware,
+  ] as Partial<
+    (typeof defaultAccessories)[number] & (typeof defaultTrims)[number]
+  >[];
+
   const equipment = SeedingService.convertDumpToEntities(
     CabinetEquipment,
-    [
-      ...defaultMoldings,
-      ...defaultTrims,
-      ...defaultAccessories,
-      ...defaultHardware,
-    ].map((molding) => omit(molding, "type"))
+    allEquipment.map((equipmentItem) => {
+      const upcharges: Partial<Upcharge>[] = [];
+      if (equipmentItem.shopLaborCost) {
+        upcharges.push({
+          name: "Shop Labor",
+          description:
+            "This is a shop labor upcharge for cabinet equipment item",
+          amount: equipmentItem.shopLaborCost,
+          account,
+        });
+      }
+
+      if (equipmentItem.installationLaborCost) {
+        upcharges.push({
+          name: "Installation",
+          description:
+            "This is an installation upcharge for cabinet equipment item",
+          amount: equipmentItem.installationLaborCost,
+          account,
+        });
+      }
+
+      const categoryField = (
+        equipmentItem.type ? equipmentItem.type : equipmentItem.category
+      ).toLowerCase();
+
+      // TODO: enum
+      let category: string;
+
+      if (categoryField.includes("trim")) {
+        category = "trim";
+      } else if (categoryField.includes("molding")) {
+        category = "molding";
+      } else if (categoryField.includes("hardware")) {
+        category = "hardware";
+      } else if (
+        categoryField.includes("counter") ||
+        categoryField.includes("access")
+      ) {
+        category = "accessory";
+      } else {
+        category = "misc";
+      }
+
+      return {
+        name: equipmentItem.name,
+        category,
+        classification:
+          equipmentItem.classification || equipmentItem.subclassification,
+        description: equipmentItem.description,
+        measurement: equipmentItem.unitOfMeasurement?.includes("linear")
+          ? "linear"
+          : "unit",
+        price: equipmentItem.materialCost,
+        discount: equipmentItem.discount,
+        report: equipmentItem.report === "Yes",
+        upcharges: SeedingService.convertDumpToEntities(Upcharge, upcharges),
+      };
+    })
   )
-    .map((molding) => SeedingService.bindEntityToAccount(molding, account))
+    .map((equipItem) => SeedingService.bindEntityToAccount(equipItem, account))
     .map(setIsDefault);
 
   const toes = SeedingService.convertDumpToEntities(
@@ -160,21 +226,18 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
 
   const materials = SeedingService.convertDumpToEntities(
     Material,
-    defaultMaterials.map((material) =>
-      omit(
-        {
-          ...material,
-          source: material.source || "in",
-          price: material.price || Math.random() * 100,
-          laborCost: material.laborCost || 0,
-          purpose: material.purpose.toLowerCase().replaceAll(" ", "_"),
-        },
-        "type"
-      )
-    )
+    defaultMaterials.map((material) => ({
+      ...material,
+      source: material.source || "in",
+      price: material.price || Math.random() * 100,
+      laborCost: material.laborCost || 0,
+      purpose: material.purpose.toLowerCase().replaceAll(" ", "_"),
+      vendor: SeedingService.convertDumpToEntities(Vendor, [
+        { name: material.vendor },
+      ]),
+    }))
   )
     .map((material) => SeedingService.bindEntityToAccount(material, account))
-
     .map(setIsDefault);
 
   const finishes = SeedingService.convertDumpToEntities(
@@ -182,7 +245,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     defaultFinishes.map((finish) => {
       const resFinish: Partial<Finish> = { ...finish } as any;
 
-      if (finish.category === "Finish Process") {
+      if (finish.category.toLowerCase().includes("process")) {
         resFinish.type = "process";
         resFinish.price = {
           perPart: {
@@ -201,7 +264,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
           .split(" ")[0] as Finish["type"];
       }
 
-      return omit(resFinish, "type");
+      return resFinish;
     })
   )
     .map((finish) => SeedingService.bindEntityToAccount(finish, account))

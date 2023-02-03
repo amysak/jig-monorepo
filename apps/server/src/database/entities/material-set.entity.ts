@@ -12,6 +12,8 @@ import { FinishSet } from "./finish.entity";
 import { Material } from "./material.entity";
 import { ProfileSet } from "./profile.entity";
 import { Room } from "./room.entity";
+import { Account } from "./account.entity";
+import { AppBaseEntity } from "./base.entity";
 
 class AppliedPart {
   @Column("text")
@@ -132,7 +134,7 @@ class MaterialSetInterior {
 }
 
 @Entity()
-export class MaterialSet extends BaseEntity {
+export class MaterialSet extends AppBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -165,4 +167,7 @@ export class MaterialSet extends BaseEntity {
 
   @OneToOne(() => Room, (room) => room.materialSet)
   room: Room;
+
+  @ManyToOne(() => Account)
+  account: Account;
 }

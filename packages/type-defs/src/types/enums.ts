@@ -55,6 +55,16 @@ export type CabinetEquipmentCategory = ObjectValues<
   typeof CABINET_EQUIPMENT_CATEGORY
 >;
 
+export const CABINET_EXTENSION_CATEGORY = {
+  PANEL: "panels",
+  FILLER: "fillers",
+  TOE_KICK: "toe-kicks",
+} as const;
+
+export type CabinetExtensionCategory = ObjectValues<
+  typeof CABINET_EXTENSION_CATEGORY
+>;
+
 export const CABINET_TYPE = {
   BASE: "base",
   UPPER: "upper",

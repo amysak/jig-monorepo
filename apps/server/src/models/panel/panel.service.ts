@@ -1,22 +1,66 @@
 import { Injectable } from "@nestjs/common";
-// import { CreatePanelDto } from './dto/create-panel.dto';
-// import { UpdatePanelDto } from './dto/update-panel.dto';
+import { InjectRepository } from "@nestjs/typeorm";
+import type { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
+
+import { Panel } from "database/entities";
+import { GetPanelsDto } from "./dto";
+import merge from "lodash.merge";
+import { getRawSearch } from "common/lib";
 
 @Injectable()
 export class PanelService {
-  // create(createPanelDto: CreatePanelDto) {
-  //   return 'This action adds a new panel';
-  // }
-  // findAll() {
-  //   return `This action returns all panel`;
-  // }
-  // findOne(id: number) {
-  //   return `This action returns a #${id} panel`;
-  // }
-  // update(id: number, updatePanelDto: UpdatePanelDto) {
-  //   return `This action updates a #${id} panel`;
-  // }
-  // remove(id: number) {
-  //   return `This action removes a #${id} panel`;
-  // }
+  constructor(
+    @InjectRepository(Panel)
+    private panelRepository: Repository<Panel>
+  ) {}
+
+  create(data: any) {
+    return this.panelRepository.save(data);
+  }
+
+  // TODO: type return type here and elsewhere
+  async findByAccountId(accountId: number, opts: GetPanelsDto) {
+    const defaultWhere: FindOptionsWhere<Panel> = {
+      account: { id: accountId },
+    };
+
+    const where = opts.search
+      ? [
+          merge(
+            { ...defaultWhere },
+            {
+              name: getRawSearch(opts.search),
+            }
+          ),
+        ]
+      : defaultWhere;
+
+    const queryOpts: FindManyOptions<Panel> = {
+      skip: (opts.page - 1) * opts.limit || void 0,
+      take: opts.limit,
+      order: {
+        ...(opts.orderBy ? { [opts.orderBy]: "DESC" } : {}),
+        updatedAt: "DESC",
+      },
+      where,
+    };
+
+    const queryResult = await this.panelRepository.find({
+      ...queryOpts,
+    });
+
+    return { data: queryResult };
+  }
+
+  findOne(id: number) {
+    return this.panelRepository.findOne({ where: { id } });
+  }
+
+  update(id: number, data: any) {
+    return this.panelRepository.update(id, data);
+  }
+
+  remove(id: number) {
+    return this.panelRepository.delete(id);
+  }
 }

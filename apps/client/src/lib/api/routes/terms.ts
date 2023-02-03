@@ -1,9 +1,11 @@
-import { Terms } from "type-defs";
-
+import { LocationGenerics } from "router";
+import { ApiGetResult, Terms } from "type-defs";
 import { client } from "../http";
 
-export const getAll = (): Promise<Terms[]> => {
-  return client.get("/terms");
+export const getAll = (
+  query?: LocationGenerics["Search"]
+): Promise<ApiGetResult<Terms>> => {
+  return client.get(`/terms?${client.getQueryString(query)}`);
 };
 
 export const getById = (termId: string | number): Promise<Terms> => {

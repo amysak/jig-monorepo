@@ -2,7 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import uniqBy from "lodash.uniqby";
 import { BaseEntity, DataSource, EntityManager } from "typeorm";
 
-import { Account, MultiPaymentTerms, NetTerms } from "database/entities";
+import { Account } from "database/entities";
 import {
   generateAccountPreferences,
   generateClientSeeds,
@@ -81,23 +81,24 @@ export class SeedingService {
 
     // https://github.com/typeorm/typeorm/issues/9033
     // https://stackoverflow.com/questions/74138654/how-to-specify-discriminator-value-for-the-parent-table-using-single-table-inher
-    await Promise.all(
-      terms.map(async (term) => {
-        if (term.type === "net") {
-          return this.entityManager.save(NetTerms, term);
-        } else {
-          return this.entityManager.save(MultiPaymentTerms, term);
-        }
-      })
-    );
-    // await this.entityManager.save(terms);
+    await this.entityManager.save(terms);
     await this.entityManager.save(markups);
     await this.entityManager.save(letters);
 
-    const { cabinetsAndSpecs, vendors, openings, profiles, equipment } =
-      getRoomDefaults({
-        account: superAccount,
-      });
+    const {
+      cabinetsAndSpecs,
+      vendors,
+      openings,
+      profiles,
+      equipment,
+      finishes,
+      materials,
+      panels,
+      toes,
+      fillers,
+    } = getRoomDefaults({
+      account: superAccount,
+    });
 
     await this.entityManager.save(vendors);
 
@@ -111,6 +112,8 @@ export class SeedingService {
     });
     await this.entityManager.save(profiles);
 
+    await this.entityManager.save(equipment);
+
     await Promise.all(
       cabinetsAndSpecs.map(async ({ cabinet, cabinetSpecifications }) => {
         await cabinetSpecifications.save();
@@ -119,6 +122,12 @@ export class SeedingService {
         await cabinet.save();
       })
     );
+
+    await this.entityManager.save(finishes);
+    await this.entityManager.save(materials);
+    await this.entityManager.save(panels);
+    await this.entityManager.save(toes);
+    await this.entityManager.save(fillers);
 
     const accountPreferences = generateAccountPreferences(superAccount);
     accountPreferences.terms = terms[Math.floor(Math.random() * terms.length)];

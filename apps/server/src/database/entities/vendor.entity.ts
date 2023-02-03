@@ -1,29 +1,13 @@
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 
-import { Account } from "../entities";
+import { Account } from "./account.entity";
+import { AppBaseEntity } from "./base.entity";
 
 @Entity({ name: "vendor" })
-export class Vendor extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
-
+export class Vendor extends AppBaseEntity {
   @Column("text")
   name: string;
 
   @ManyToOne(() => Account)
   account: Account;
-
-  @CreateDateColumn()
-  readonly createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

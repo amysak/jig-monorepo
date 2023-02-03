@@ -7,6 +7,8 @@ import {
 } from "typeorm";
 
 import { type FinishType } from "type-defs";
+import { DefaultableBaseEntity } from "./base.entity";
+import { Account } from "./account.entity";
 
 // Hopefully TypeORM fixes this soon: https://github.com/typeorm/typeorm/pull/9034
 // And we could use STI. Until then, nullable: true
@@ -41,9 +43,12 @@ class FinishPrice {
 // @TableInheritance({
 //   column: { type: "text", name: "category", enum: FINISH_TYPE },
 // })
-export class Finish extends BaseEntity {
+export class Finish extends DefaultableBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column("text")
+  name: string;
 
   @Column("text")
   type: FinishType;
@@ -57,6 +62,9 @@ export class Finish extends BaseEntity {
 
   @Column("real", { nullable: true })
   discount?: number;
+
+  @ManyToOne(() => Account)
+  account: Account;
 }
 
 export class FinishSet {

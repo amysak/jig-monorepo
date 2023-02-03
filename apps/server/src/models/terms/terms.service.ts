@@ -1,15 +1,16 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { EntityManager, Repository } from "typeorm";
-
 import {
-  JobPreferences,
-  MultiPaymentTerms,
-  NetTerms,
-  Terms,
-} from "database/entities";
+  EntityManager,
+  FindManyOptions,
+  FindOptionsWhere,
+  Repository,
+} from "typeorm";
+
+import { Terms } from "database/entities";
 import merge from "lodash.merge";
 import type { CreateTermsDto, UpdateTermsDto } from "./dto";
+import { getRawSearch } from "common/lib";
 
 @Injectable()
 export class TermsService {
@@ -25,8 +26,33 @@ export class TermsService {
     return terms.save();
   }
 
-  findAll() {
-    return this.termsRepository.find();
+  async findByAccountId(accountId: number, opts: any) {
+    const defaultWhere: FindOptionsWhere<Terms> = {
+      account: { id: accountId },
+    };
+
+    // This should be a common way to define orWhere
+    const where = opts.search
+      ? [
+          merge(defaultWhere, {
+            name: getRawSearch(opts.search),
+          }),
+        ]
+      : defaultWhere;
+
+    const queryOpts: FindManyOptions<Terms> = {
+      order: {
+        ...(opts.orderBy ? { [opts.orderBy]: "DESC" } : {}),
+        updatedAt: "DESC",
+      },
+      where,
+    };
+
+    const accountTerms = await this.termsRepository.find({
+      ...queryOpts,
+    });
+
+    return { data: accountTerms };
   }
 
   findOne(id: number) {
@@ -40,10 +66,7 @@ export class TermsService {
       throw new HttpException("Terms not found", 404);
     }
 
-    return this.entityManager.save(
-      terms.type === "multi" ? MultiPaymentTerms : NetTerms,
-      merge(terms, data)
-    );
+    return this.entityManager.save(merge(terms, data));
   }
 
   remove(id: number) {

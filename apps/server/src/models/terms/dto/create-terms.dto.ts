@@ -1,5 +1,5 @@
 import { IsOptional } from "class-validator";
-import type { MultiPaymentTerms } from "database/entities";
+import { Terms } from "database/entities";
 
 export class CreateTermsDto {
   @IsOptional()
@@ -9,5 +9,5 @@ export class CreateTermsDto {
   description!: string;
 
   @IsOptional()
-  payments!: MultiPaymentTerms["payments"];
+  payments!: Terms["payments"];
 }

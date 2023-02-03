@@ -33,7 +33,7 @@ export const JobFormTerms = () => {
     return <PageSkeleton />;
   }
 
-  const termsOptions = accountTerms.map((term) => ({
+  const termsOptions = accountTerms.data.map((term) => ({
     label: term.name,
     value: term.id,
   }));

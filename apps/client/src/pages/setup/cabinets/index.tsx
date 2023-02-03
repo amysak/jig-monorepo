@@ -63,7 +63,7 @@ export const CabinetsPage = () => {
           rowClassName="cabinets-table-row"
           columns={columns}
           expandableProps={cabinetExpanded}
-          dataWithCount={cabinets}
+          displayData={cabinets}
           isLoading={isLoading}
         />
       ) : null}

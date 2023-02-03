@@ -6,7 +6,10 @@
       "dependsOn": ["^build"]
     },
     "type-defs#typegen": {
-      "inputs": ["../../apps/server/src/database/entities/*.ts"],
+      "inputs": [
+        "../../apps/server/src/database/entities/*.ts",
+        "src/types/**/*"
+      ],
       "outputs": ["dist/**"]
     },
     "type-defs#build": {

@@ -8,19 +8,13 @@ import Icon, {
   SwapOutlined,
 } from "@ant-design/icons";
 import { MenuProps } from "antd";
-import { isEmpty, isNil } from "lodash-es";
 import { useState } from "react";
 import { CABINET_OPENING_TYPE, CABINET_TYPE, PROFILE_TYPE } from "type-defs";
 
 import CabinetIcon from "assets/images/setup/cabinet.svg";
 import DoorIcon from "assets/images/setup/door.svg";
 import { useSetSearch } from "hooks";
-import {
-  useMatches,
-  useMatchRoute,
-  useNavigate,
-  useSearch,
-} from "hooks/router";
+import { useMatches, useNavigate, useRouter, useSearch } from "hooks/router";
 
 import { isDivider, isGroup, isStandardMenu, isSubMenu } from "./guards";
 import { prepareAntdCollection } from "./prepare-antd-data";
@@ -33,7 +27,7 @@ type UseSetupNav = () => {
 
 export const useSetupNav: UseSetupNav = () => {
   const search = useSearch();
-  const matchRoute = useMatchRoute();
+  const router = useRouter();
   const navigate = useNavigate();
 
   const [setSearch] = useSetSearch();
@@ -54,7 +48,10 @@ export const useSetupNav: UseSetupNav = () => {
     if (isStandardMenu(item)) {
       return {
         ...item,
-        onClick: () => navigate({ to: `/setup/${item.key}` }),
+        onClick: () => {
+          setOpenKeys([item.key as string]);
+          navigate({ to: `/setup/${item.key}` });
+        },
       };
     }
 
@@ -63,10 +60,11 @@ export const useSetupNav: UseSetupNav = () => {
       icon: item.icon,
       label: item.label,
       onTitleClick: () => {
-        const route = matchRoute({ to: item.key });
-        const outletUrl = `/setup/${item.key}`;
+        const onRoute = !!router.state.matches.find(
+          (match) => match.route.path === item.key
+        );
 
-        return navigate({ to: !isNil(route) ? "/setup" : outletUrl });
+        return navigate({ to: onRoute ? "/setup" : `/setup/${item.key}` });
       },
       children: item.children.map((child) => {
         if (!child) return child;
@@ -155,18 +153,27 @@ export const useSetupNav: UseSetupNav = () => {
       key: "equipment",
       icon: <AppstoreAddOutlined />,
       label: "Equipment",
-      children: prepareAntdCollection([
-        "trims",
-        "moldings",
-        "accessories",
-        "hardware",
-      ]),
+      children: [
+        {
+          key: "category",
+          label: "Equipment Category",
+          type: "group",
+          // TODO: enum
+          children: prepareAntdCollection([
+            "trim",
+            "molding",
+            "accessory",
+            "hardware",
+            "misc",
+          ]),
+        },
+      ],
     },
     {
       key: "extensions",
       icon: <PlusCircleOutlined />,
       label: "Extensions",
-      children: prepareAntdCollection(["panels", "fillers", "toe-platforms"]),
+      children: prepareAntdCollection(["panels", "fillers", "toe-kicks"]),
     },
     {
       key: "materials",
@@ -182,12 +189,14 @@ export const useSetupNav: UseSetupNav = () => {
       key: "prices",
       icon: <DollarOutlined />,
       label: "Prices",
+      // TODO: enum
       children: prepareAntdCollection(["markups", "terms", "upcharges"]),
     },
     {
       key: "sets",
       icon: <SettingOutlined />,
       label: "Sets",
+      // TODO: enum
       children: prepareAntdCollection(["material-sets", "hardware-sets"]),
     },
     // { type: "divider" },

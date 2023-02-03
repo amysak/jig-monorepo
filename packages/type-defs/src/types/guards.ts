@@ -1,4 +1,4 @@
-import { AccountPreferences, MultiPaymentTerms } from "../entities";
+import { AccountPreferences } from "../entities";
 import { Preferences, Terms } from "./models";
 
 export function isAccountPreferences(
@@ -7,6 +7,8 @@ export function isAccountPreferences(
   return !!(preferences as AccountPreferences).account;
 }
 
-export function isMultiTerms(terms: Terms): terms is MultiPaymentTerms {
+export function isMultiTerms(
+  terms: Terms
+): terms is Terms & { payments: Terms["payments"]; type: "multi" } {
   return terms.type === "multi";
 }

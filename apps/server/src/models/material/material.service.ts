@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import type { Repository } from "typeorm";
+import { Brackets, FindOptionsWhere, Repository } from "typeorm";
 
 import { Material } from "database/entities";
-import type { CreateMaterialDto } from "./dto/create-material.dto";
-import type { UpdateMaterialDto } from "./dto/update-material.dto";
+
+import { GetMaterialsDto } from "./dto";
 
 @Injectable()
 export class MaterialService {
@@ -13,21 +13,71 @@ export class MaterialService {
     private materialRepository: Repository<Material>
   ) {}
 
-  create(data: CreateMaterialDto) {
-    const material = this.materialRepository.create(data);
-
-    return material.save();
+  create(data: any) {
+    return this.materialRepository.save(data);
   }
 
-  findAll() {
-    return this.materialRepository.find();
+  async findByAccountId(accountId: number, opts: GetMaterialsDto) {
+    const defaultWhere: FindOptionsWhere<Material> = {
+      account: { id: accountId },
+    };
+    if (opts.type) defaultWhere.type = opts.type;
+
+    let query = this.materialRepository
+      .createQueryBuilder("material")
+      .where("material.account_id = :accountId", { accountId });
+
+    if (opts.purpose)
+      query = query.andWhere("material.purpose IN (:...purpose)", {
+        purpose: opts.purpose.split(","),
+      });
+    if (opts.type)
+      query = query.andWhere("material.type = :type", { type: opts.type });
+
+    if (opts.search)
+      query = query.andWhere(
+        new Brackets((qb) => {
+          qb.where("material.purpose like :search", {
+            search: `%${opts.search}%`,
+          })
+            .orWhere("material.name like :search", {
+              search: `%${opts.search}%`,
+            })
+            .orWhere("material.type like :search", {
+              search: `%${opts.search}%`,
+            });
+        })
+      );
+
+    query = query
+      .skip((opts.page - 1) * opts.limit || void 0)
+      .take(opts.limit || void 0)
+      .orderBy("material.updated_at", "DESC");
+
+    if (opts.orderBy)
+      query = query.addOrderBy(`material.${opts.orderBy}`, "DESC");
+
+    const [data, count] = await query.getManyAndCount();
+
+    return { data, count };
+  }
+
+  async getTypes(accountId: number) {
+    const rawTypes = await this.materialRepository
+      .createQueryBuilder("material")
+      .where("material.account_id = :accountId", { accountId })
+      .groupBy("material.type")
+      .select("material.type", "type")
+      .getRawMany();
+
+    return rawTypes.map((rawType) => rawType.type);
   }
 
   findOne(id: number) {
     return this.materialRepository.findOne({ where: { id } });
   }
 
-  update(id: number, data: UpdateMaterialDto) {
+  update(id: number, data: any) {
     return this.materialRepository.update(id, data);
   }
 

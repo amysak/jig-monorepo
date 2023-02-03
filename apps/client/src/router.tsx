@@ -4,7 +4,7 @@ import {
   ReactLocation,
 } from "@tanstack/react-location";
 import { FilterValue } from "antd/es/table/interface";
-import { GetStatsDto, Pagination } from "type-defs";
+import { CabinetExtensionCategory, GetStatsDto, Pagination } from "type-defs";
 
 import { useAuthorization } from "hooks";
 import { Fallback } from "layouts/fallback";
@@ -52,14 +52,16 @@ export type LocationGenerics = MakeGenerics<{
   };
   Search: {
     stats?: GetStatsDto;
-    filters?: Record<string, FilterValue | null>;
+    filters?: Record<string, any>;
     pagination?: Pagination;
     // TODO: add enum
     setup?: SetupSearch;
+    group?: boolean;
   };
   Params: {
     id: string;
     tabName?: string;
+    extensionCategory?: CabinetExtensionCategory;
   };
 }>;
 
@@ -125,6 +127,52 @@ export const routes = [
           import("pages/setup/equipment").then((res) => <res.default />),
         children: [],
       },
+      {
+        path: "extensions",
+        // loader: () =>
+        //   // queryClient.getQueryData(["equipment"]) ??
+        //   queryClient
+        //     .fetchQuery(["equipment"], () =>
+        //       Promise.all([api.trims.getAll(), api.moldings])
+        //     )
+        //     .then(() => ({})),
+        element: () =>
+          import("pages/setup/extensions").then((res) => <res.default />),
+        children: [
+          {
+            path: ":extensionCategory",
+            // element: () =>
+            //   import("pages/setup/extensions").then((res) => (
+            //     <res.default />
+            //   )),
+          },
+        ],
+      },
+      {
+        path: "materials",
+        element: () =>
+          import("pages/setup/materials").then((res) => <res.default />),
+        children: [],
+      },
+      {
+        path: "finishes",
+        element: () =>
+          import("pages/setup/finishes").then((res) => <res.default />),
+        children: [],
+      },
+      {
+        path: "prices",
+        element: () =>
+          import("pages/setup/prices").then((res) => <res.default />),
+        children: [],
+      },
+      {
+        path: "sets",
+        element: () =>
+          import("pages/setup/sets").then((res) => <res.default />),
+        children: [],
+      },
+      { path: "*", element: <Navigate to="/setup" replace /> },
     ],
   },
   {

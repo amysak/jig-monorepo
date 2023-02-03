@@ -53,7 +53,7 @@ export const OpeningsPage = () => {
           rowClassName="openings-table-row"
           columns={columns}
           expandableProps={openingExpanded}
-          dataWithCount={openings}
+          displayData={openings}
           isLoading={isLoading}
         />
       ) : null}

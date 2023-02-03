@@ -1,37 +1,49 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
 } from "@nestjs/common";
-import { FinishService } from "./finish.service";
-import { CreateFinishDto } from "./dto/create-finish.dto";
-import { UpdateFinishDto } from "./dto/update-finish.dto";
+import { JwtAuthGuard } from "auth/guards";
+import { ReqUser } from "common/decorators";
+import { Payload } from "type-defs";
 
+import { GetFinishesDto } from "./dto";
+import { FinishService } from "./finish.service";
+
+// TODO: DTO
+@UseGuards(JwtAuthGuard)
 @Controller("finishes")
 export class FinishController {
   constructor(private readonly finishService: FinishService) {}
+
   @Post()
-  create(@Body() data: CreateFinishDto) {
+  create(@Body() data: any) {
     return this.finishService.create(data);
   }
+
   @Get()
-  findAll() {
-    return this.finishService.findAll();
+  getAccountFinishes(@ReqUser() user: Payload, @Query() query: GetFinishesDto) {
+    return this.finishService.findByAccountId(user.accountId, query);
   }
+
   @Get(":id")
   findOne(@Param("id") id: number) {
     return this.finishService.findOne(id);
   }
+
   @Patch(":id")
-  update(@Param("id") id: number, @Body() data: UpdateFinishDto) {
+  update(@Param("id") id: number, @Body() data: any) {
     return this.finishService.update(id, data);
   }
+
   @Delete(":id")
   remove(@Param("id") id: number) {
-    return this.finishService.remove(id);
+    return this.finishService.remove(+id);
   }
 }

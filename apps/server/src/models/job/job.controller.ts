@@ -32,7 +32,6 @@ export class JobController {
     @ReqUser() user: Payload,
     @Query() query: PaginationDto
   ) {
-    console.log("query => ", query);
     return this.jobService.findByAccountId(user.accountId, query);
   }
 

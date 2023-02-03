@@ -67,7 +67,6 @@ export class AuthController {
     @ReqUser() user: Payload,
     @Body("refreshToken") token?: string
   ): TokenPair {
-    console.log("user => ", user);
     if (!token || !this.auth.validateRefreshToken(user, token)) {
       throw new UnauthorizedException("InvalidRefreshToken");
     }

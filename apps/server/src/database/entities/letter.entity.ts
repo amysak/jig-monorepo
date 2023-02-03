@@ -10,10 +10,11 @@ import {
 } from "typeorm";
 
 import { Account } from "./account.entity";
+import { DefaultableBaseEntity } from "./base.entity";
 import { AccountPreferences } from "./preferences.entity";
 
 @Entity()
-export class Letter extends BaseEntity {
+export class Letter extends DefaultableBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -27,7 +27,7 @@ export class JobService {
   ): Promise<WithCountDto<Job>> {
     const accountJobs = await this.jobRepository.find({
       where: { account: { id: accountId } },
-      skip: (opts.page - 1) * opts.limit,
+      skip: (opts.page - 1) * opts.limit || void 0,
       take: opts.limit,
       order: { updatedAt: "DESC" },
       relations: ["client", "preferences"],

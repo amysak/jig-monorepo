@@ -3,12 +3,20 @@ import {
   FinishComplexity,
   FINISH_COMPLEXITY,
 } from "type-defs";
-import { Column, Entity, ManyToMany, ManyToOne } from "typeorm";
+import {
+  AfterLoad,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+} from "typeorm";
 
 import { Account } from "./account.entity";
 import { DefaultableBaseEntity } from "./base.entity";
 import { Cabinet } from "./cabinet.entity";
 import { Room } from "./room.entity";
+import { Upcharge } from "./upcharge.entity";
 
 @Entity()
 export class CabinetEquipment extends DefaultableBaseEntity {
@@ -27,11 +35,22 @@ export class CabinetEquipment extends DefaultableBaseEntity {
   @Column("text", { nullable: true })
   description: string;
 
+  // stored in %
+  @Column("real", { nullable: true })
+  discount?: number;
+
   @Column("real", { default: 0 })
   price: number;
 
-  @Column("real", { nullable: true })
-  discount?: number;
+  @AfterLoad()
+  discountPrice() {
+    const discountedPrice = this.discount
+      ? this.price * ((100 - this.discount) / 100)
+      : this.price;
+
+    // TODO: requires number type but toFixed outputs string
+    this.price = discountedPrice.toFixed(2) as unknown as number;
+  }
 
   // TODO: enum
   @Column("text", { default: "unit" })
@@ -40,11 +59,20 @@ export class CabinetEquipment extends DefaultableBaseEntity {
   @Column("boolean", { default: true })
   report: boolean;
 
+  // This is for trims and moldings
+  // Unfortunately, TypeORM does not allow single table inheritance if you want to use parent entity for manipulations
+  // TypeORM does not allow manual type field insertion because of an open issue on github
+  // Other than these 2 fields, accessory is identical to trims & moldings
   @Column("real", { default: 0 })
   wasteFactor: number;
 
+  // This is for trims and moldings
   @Column("text", { default: FINISH_COMPLEXITY.NONE })
   finishComplexity: FinishComplexity;
+
+  @ManyToMany(() => Upcharge, { nullable: true, cascade: true })
+  @JoinTable()
+  upcharges?: Upcharge[];
 
   @ManyToOne(() => Room, (room) => room.equipment, { nullable: true })
   room?: Room;

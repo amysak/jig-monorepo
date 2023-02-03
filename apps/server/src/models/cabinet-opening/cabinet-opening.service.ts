@@ -47,7 +47,7 @@ export class CabinetOpeningService {
       : defaultWhere;
 
     const queryOpts: FindManyOptions<CabinetOpening> = {
-      skip: (opts.page - 1) * opts.limit,
+      skip: (opts.page - 1) * opts.limit || void 0,
       take: opts.limit,
       order: {
         ...(opts.orderBy ? { [opts.orderBy]: "DESC" } : {}),

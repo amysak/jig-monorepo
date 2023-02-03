@@ -6,6 +6,7 @@ import { LocationGenerics } from "router";
 
 export type UseSetSearchProps = {
   clean?: boolean;
+  assign?: boolean;
 };
 
 export const useSetSearch = () => {
@@ -22,7 +23,13 @@ export const useSetSearch = () => {
           return cleanObject(search);
         }
 
-        const mergedSearch = merge({}, old, search);
+        let mergedSearch;
+
+        if (!options?.assign) {
+          mergedSearch = merge({}, old, search);
+        } else {
+          mergedSearch = Object.assign(old, search);
+        }
         const cleanedSearch = cleanObject(mergedSearch);
 
         return cleanedSearch;

@@ -3,6 +3,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { type MaterialPurpose } from "type-defs";
 import { DefaultableBaseEntity } from "./base.entity";
 import { Vendor } from "./vendor.entity";
+import { Account } from "./account.entity";
 
 // Maybe needs to be split by material source (discountedPrice = price * (100 { - or + } discount) / 100)
 // and create a getter for discounted price
@@ -29,32 +30,23 @@ export class Material extends DefaultableBaseEntity {
   @Column("text")
   description: string;
 
-  // This is not marked private/protected because it causes issues with type-defs package
-  // For example, in auth.service.ts:80
-  @Column("real", { name: "price" })
-  _price: number;
-  set price(value: number) {
-    this._price = value;
-  }
-  get price() {
-    return this._price;
-  }
-
   @Column("real")
-  discount?: number;
+  price: number;
 
-  @Column("real")
-  wasteFactor?: number;
+  @Column("real", { default: 0 })
+  discount: number;
 
-  // used for in-house materials
-  @Column("real")
-  laborCost?: number;
+  @Column("real", { default: 0 })
+  wasteFactor: number;
 
-  @Column("boolean")
+  @Column("boolean", { default: false })
   isFinished: boolean;
 
   @ManyToOne(() => Vendor)
   vendor: Vendor;
+
+  @ManyToOne(() => Account)
+  account: Account;
 }
 
 // price per foot is the actual one used in calculation

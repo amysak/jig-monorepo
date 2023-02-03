@@ -50,7 +50,7 @@ export const ProfilesPage = () => {
           rowClassName="profiles-table-row"
           columns={columns}
           expandableProps={openingExpanded}
-          dataWithCount={openings}
+          displayData={openings}
           isLoading={isLoading}
         />
       ) : null}

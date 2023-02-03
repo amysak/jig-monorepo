@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import type { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 import merge from "lodash.merge";
 
 import { CabinetEquipment } from "database/entities";
@@ -48,7 +48,7 @@ export class CabinetEquipmentService {
 
     // TODO: Add checking for relations other than account (?)
     const queryOpts: FindManyOptions<CabinetEquipment> = {
-      skip: (opts.page - 1) * opts.limit,
+      skip: (opts.page - 1) * opts.limit || void 0,
       take: opts.limit,
       order: {
         ...(opts.orderBy ? { [opts.orderBy]: "DESC" } : {}),

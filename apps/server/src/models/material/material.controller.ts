@@ -1,40 +1,57 @@
 import {
+  Body,
   Controller,
-  // Get,
-  // Post,
-  // Body,
-  // Patch,
-  // Param,
-  // Delete,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
 } from "@nestjs/common";
-// import { MaterialService } from "./material.service";
-// import { CreateMaterialDto } from "./dto/create-material.dto";
-// import { UpdateMaterialDto } from "./dto/update-material.dto";
+import { JwtAuthGuard } from "auth/guards";
+import { ReqUser } from "common/decorators";
+import { Payload } from "type-defs";
 
-@Controller("material")
+import { GetMaterialsDto } from "./dto";
+import { MaterialService } from "./material.service";
+
+// TODO: DTO
+@UseGuards(JwtAuthGuard)
+@Controller("materials")
 export class MaterialController {
-  // constructor(private readonly materialService: MaterialService) {}
-  // @Post()
-  // create(@Body() createMaterialDto: CreateMaterialDto) {
-  //   return this.materialService.create(createMaterialDto);
-  // }
-  // @Get()
-  // findAll() {
-  //   return this.materialService.findAll();
-  // }
-  // @Get(":id")
-  // findOne(@Param("id") id: string) {
-  //   return this.materialService.findOne(+id);
-  // }
-  // @Patch(":id")
-  // update(
-  //   @Param("id") id: string,
-  //   @Body() updateMaterialDto: UpdateMaterialDto
-  // ) {
-  //   return this.materialService.update(+id, updateMaterialDto);
-  // }
-  // @Delete(":id")
-  // remove(@Param("id") id: string) {
-  //   return this.materialService.remove(+id);
-  // }
+  constructor(private readonly materialService: MaterialService) {}
+
+  @Post()
+  create(@Body() data: any) {
+    return this.materialService.create(data);
+  }
+
+  @Get()
+  getAccountOpenings(
+    @ReqUser() user: Payload,
+    @Query() query: GetMaterialsDto
+  ) {
+    return this.materialService.findByAccountId(user.accountId, query);
+  }
+
+  @Get("types")
+  getMaterialTypes(@ReqUser() user: Payload) {
+    return this.materialService.getTypes(user.accountId);
+  }
+
+  @Get(":id")
+  findOne(@Param("id") id: number) {
+    return this.materialService.findOne(id);
+  }
+
+  @Patch(":id")
+  update(@Param("id") id: number, @Body() data: any) {
+    return this.materialService.update(id, data);
+  }
+
+  @Delete(":id")
+  remove(@Param("id") id: number) {
+    return this.materialService.remove(+id);
+  }
 }

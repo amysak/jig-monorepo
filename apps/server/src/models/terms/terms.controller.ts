@@ -6,10 +6,17 @@ import {
   Param,
   Patch,
   Post,
+  Query,
+  UseGuards,
 } from "@nestjs/common";
+import { JwtAuthGuard } from "auth/guards";
+import { ReqUser } from "common/decorators";
+import { Payload } from "type-defs";
+
 import { CreateTermsDto, UpdateTermsDto } from "./dto";
 import { TermsService } from "./terms.service";
 
+@UseGuards(JwtAuthGuard)
 @Controller("terms")
 export class TermsController {
   constructor(private readonly termsService: TermsService) {}
@@ -20,8 +27,8 @@ export class TermsController {
   }
 
   @Get()
-  findAll() {
-    return this.termsService.findAll();
+  getAccountTerms(@ReqUser() user: Payload, @Query() query: any) {
+    return this.termsService.findByAccountId(user.accountId, query);
   }
 
   @Get(":id")

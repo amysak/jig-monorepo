@@ -6,30 +6,40 @@ import {
   Param,
   Patch,
   Post,
+  Query,
+  UseGuards,
 } from "@nestjs/common";
+import { JwtAuthGuard } from "auth/guards";
+import { ReqUser } from "common/decorators";
+import { Payload } from "type-defs";
 
-import type { CreateMarkupDto, UpdateMarkupDto } from "./dto";
+import { CreateMarkupDto, UpdateMarkupDto } from "./dto";
 import { MarkupService } from "./markup.service";
 
-@Controller("markup")
+@UseGuards(JwtAuthGuard)
+@Controller("markups")
 export class MarkupController {
   constructor(private readonly markupService: MarkupService) {}
   @Post()
   create(@Body() createMarkupDto: CreateMarkupDto) {
     return this.markupService.create(createMarkupDto);
   }
+
   @Get()
-  findAll() {
-    return this.markupService.findAll();
+  getAccountMarkups(@ReqUser() user: Payload, @Query() query: any) {
+    return this.markupService.findByAccountId(user.accountId, query);
   }
+
   @Get(":id")
   findOne(@Param("id") id: string) {
     return this.markupService.findOne(+id);
   }
+
   @Patch(":id")
   update(@Param("id") id: string, @Body() updateMarkupDto: UpdateMarkupDto) {
     return this.markupService.update(+id, updateMarkupDto);
   }
+
   @Delete(":id")
   remove(@Param("id") id: string) {
     return this.markupService.remove(+id);

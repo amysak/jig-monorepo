@@ -10,13 +10,17 @@ abstract class CabinetExtension extends DefaultableBaseEntity {
   @ManyToOne(() => Cabinet, { nullable: true })
   cabinet?: Cabinet;
 
+  // TODO: consider removing
+  @Column("text")
+  name: string;
+
   @Column("real", { default: 18 })
   depth: number;
 
   @Column("real", { default: 0 })
   height: number;
 
-  @ManyToOne(() => Account, { eager: true })
+  @ManyToOne(() => Account, { eager: true, onDelete: "CASCADE" })
   account: Account;
 }
 

@@ -1,23 +1,23 @@
 import { PageSkeleton } from "@jigbid/ui";
 import { Outlet } from "@tanstack/react-location";
-import { TableProps } from "antd";
-import { Profile } from "type-defs";
+import { TableProps, Typography } from "antd";
+import { CabinetEquipment, Profile } from "type-defs";
 
-import { SetupTable } from "features/setup";
+import { SetupTable, useEquipmentColumns } from "features/setup";
+import { useEquipmentPaginated } from "hooks/queries";
 import { useSearch } from "hooks/router";
 import { useToggles } from "lib/store";
 
-import { useProfileColumns } from "features/setup";
-import { useProfilesPaginated } from "hooks/queries";
+import "./equipment.scss";
 
-import "./profiles.scss";
+const { Paragraph } = Typography;
 
 export const EquipmentPage = () => {
   const search = useSearch();
 
   const toggles = useToggles();
 
-  const { data: openings, isLoading } = useProfilesPaginated(
+  const { data: equipment, isLoading } = useEquipmentPaginated(
     {
       ...search,
       pagination: { ...search.pagination, limit: toggles.setup.recordLimit },
@@ -27,18 +27,21 @@ export const EquipmentPage = () => {
     }
   );
 
-  const [columns] = useProfileColumns();
+  const [columns] = useEquipmentColumns();
 
   if (isLoading) {
     return <PageSkeleton />;
   }
 
-  if (!openings) {
+  if (!equipment) {
     return null;
   }
 
-  const openingExpanded: TableProps<Profile>["expandable"] = {
-    rowExpandable: () => false,
+  const equipmentExpanded: TableProps<CabinetEquipment>["expandable"] = {
+    expandedRowRender: (equipment) => (
+      <Paragraph>{equipment.description}</Paragraph>
+    ),
+    rowExpandable: (equipment) => !!equipment.description,
   };
 
   return (
@@ -47,10 +50,10 @@ export const EquipmentPage = () => {
       <Outlet />
       {toggles.setup.view === "table" ? (
         <SetupTable
-          rowClassName="profiles-table-row"
+          rowClassName="equipment-table-row"
           columns={columns}
-          expandableProps={openingExpanded}
-          dataWithCount={openings}
+          expandableProps={equipmentExpanded}
+          displayData={equipment}
           isLoading={isLoading}
         />
       ) : null}

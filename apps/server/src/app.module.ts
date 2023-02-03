@@ -8,20 +8,28 @@ import {
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_FILTER, APP_PIPE } from "@nestjs/core";
 import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm";
+
 import { AuthModule } from "auth";
 import { HttpExceptionFilter } from "common/filters";
-
 import {
+  CabinetEquipmentModule,
   CabinetModule,
   CabinetOpeningModule,
   ClientModule,
+  FillerModule,
   JobModule,
+  MarkupModule,
+  MaterialModule,
+  PanelModule,
   ProfileModule,
   RoomModule,
   TermsModule,
+  ToeModule,
+  UpchargeModule,
 } from "models";
+import { FinishModule } from "models/finish";
 import { SeedingService } from "services";
-import { AccountModule } from "shared";
+import { AccountModule, HardwareSetModule, MaterialSetModule } from "shared";
 
 import { BaseModule } from "./base";
 import { CommonModule } from "./common";
@@ -34,42 +42,64 @@ import { configuration } from "./config";
       isGlobal: true,
       load: [configuration],
     }),
+
     // Database
     TypeOrmModule.forRootAsync({
       useFactory: (config: ConfigService) => {
-        console.log(config.get("db"));
         return {
           ...config.get<TypeOrmModuleOptions>("db"),
         };
       },
       inject: [ConfigService],
     }),
+
     // Service Modules
     AuthModule,
     CommonModule, // Global with Providers
     BaseModule, // Base
-    // Models Modules
+
+    // Main models
     AccountModule,
     ClientModule,
     JobModule,
     RoomModule,
-    CabinetModule,
-    CabinetOpeningModule,
-    ProfileModule,
-    // PanelModule,
-    // TrimMoldingModule,
-    // MaterialModule,
-    // FinishModule,
-    // AccessoryModule,
-    // VendorModule,
 
-    // MaterialSetModule,
-    // HardwareSetModule,
+    // Cabinet model
+    CabinetModule,
+
+    // Doors, Drawer boxes, Drawer fronts, Trays
+    CabinetOpeningModule,
+
+    // Trims, Moldings, Accessories, Hardware
+    CabinetEquipmentModule,
+
+    // Profiles (applied to cabinet, panels at least)
+    ProfileModule,
+
+    // Cabinet Extensions
+    PanelModule,
+    FillerModule,
+    ToeModule,
+
+    // Core models
+    MaterialModule,
+    FinishModule,
+
+    // Set models
+    MaterialSetModule,
+    HardwareSetModule,
+
+    // Preferences logic
     TermsModule,
-    // MarkupModule,
-    // LaborRateModule,
+    MarkupModule,
+    UpchargeModule,
     // LetterModule,
+
+    // Reports
     // ReportModule,
+
+    // Other
+    // VendorModule,
   ],
   providers: [
     // Global Guard, Authentication check on all routers

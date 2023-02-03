@@ -19,4 +19,5 @@ export * from "./profile.entity";
 export * from "./report.entity";
 export * from "./room.entity";
 export * from "./terms.entity";
+export * from "./upcharge.entity";
 export * from "./vendor.entity";

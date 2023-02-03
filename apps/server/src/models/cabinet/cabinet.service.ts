@@ -42,7 +42,8 @@ export class CabinetService {
       : defaultWhere;
 
     const queryOpts: FindManyOptions<Cabinet> = {
-      skip: (opts.page - 1) * opts.limit,
+      // left-side returns NaN
+      skip: (opts.page - 1) * opts.limit || void 0,
       take: opts.limit,
       order: {
         favourite: "DESC",

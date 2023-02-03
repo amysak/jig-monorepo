@@ -1,10 +1,11 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import type { Repository } from "typeorm";
+import type { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { Markup } from "database/entities";
 import type { CreateMarkupDto, UpdateMarkupDto } from "./dto";
 import merge from "lodash.merge";
+import { getRawSearch } from "common/lib";
 
 @Injectable()
 export class MarkupService {
@@ -19,8 +20,33 @@ export class MarkupService {
     return markup.save();
   }
 
-  findAll() {
-    return this.markupRepository.find();
+  async findByAccountId(accountId: number, opts: any) {
+    const defaultWhere: FindOptionsWhere<Markup> = {
+      account: { id: accountId },
+    };
+
+    // This should be a common way to define orWhere
+    const where = opts.search
+      ? [
+          merge(defaultWhere, {
+            name: getRawSearch(opts.search),
+          }),
+        ]
+      : defaultWhere;
+
+    const queryOpts: FindManyOptions<Markup> = {
+      order: {
+        ...(opts.orderBy ? { [opts.orderBy]: "DESC" } : {}),
+        updatedAt: "DESC",
+      },
+      where,
+    };
+
+    const accountMarkups = await this.markupRepository.find({
+      ...queryOpts,
+    });
+
+    return { data: accountMarkups };
   }
 
   findOne(id: number) {

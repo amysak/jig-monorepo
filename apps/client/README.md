@@ -30,7 +30,8 @@
       various reasons)
 - [ ] ♻️ Add tall/upper, corner cabinets pictures and points with edit forms
 - [ ] ♻️ Transfer the same logic for other setup parts
-- [ ] ♻️ Implement individual editing pages for all of those parts
+- [ ] Auto-complete search
+- [ ] Implement individual editing pages for cabinet parts
 - [ ] Finish job's client page (select from all client names & submit address
       override for job)
 - [ ] Finish authorization

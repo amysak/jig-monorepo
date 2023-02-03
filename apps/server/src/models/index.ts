@@ -1,4 +1,5 @@
 export * from "./cabinet";
+export * from "./cabinet-equipment";
 export * from "./cabinet-opening";
 export * from "./client";
 export * from "./filler";
@@ -10,5 +11,6 @@ export * from "./panel";
 export * from "./profile";
 export * from "./room";
 export * from "./terms";
-// export * from "./cabinet-equipment";
+export * from "./toe";
+export * from "./upcharge";
 // export * from "./vendor";

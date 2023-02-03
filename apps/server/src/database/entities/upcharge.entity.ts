@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { AfterLoad, Column, Entity, ManyToOne } from "typeorm";
 
 import { Account } from "./account.entity";
 import { DefaultableBaseEntity } from "./base.entity";
@@ -19,15 +19,17 @@ export class Upcharge extends DefaultableBaseEntity {
   // ^ If time is set then amount is defined by multiplying itself by the time,
   // because the user is prompted to only enter the time
   @Column("real")
-  _amount: number;
-  set amount(amount) {
-    this._amount = amount;
-  }
-  get amount() {
-    return this.time
+  amount: number;
+
+  @AfterLoad()
+  calculateAmount() {
+    this.amount = this.time
       ? this.account.preferences.ratePerMinute * this.time
-      : this._amount;
+      : this.amount;
   }
+
+  @Column("boolean", { default: true })
+  report: boolean;
 
   // Could be directly tied to a cabinet or other entity. If so, then we don't return them in findByAccountId.
   // Basically, need to check for the relationships

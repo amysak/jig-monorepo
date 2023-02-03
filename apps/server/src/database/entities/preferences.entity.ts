@@ -16,7 +16,7 @@ import { HardwareSet } from "./hardware-set.entity";
 import { Job } from "./job.entity";
 import { Markup } from "./markup.entity";
 import { MaterialSet } from "./material-set.entity";
-import { MultiPaymentTerms, NetTerms, Terms } from "./terms.entity";
+import { Terms } from "./terms.entity";
 
 export abstract class Preferences extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -29,7 +29,7 @@ export abstract class Preferences extends BaseEntity {
     cascade: true,
   })
   @JoinColumn()
-  terms?: MultiPaymentTerms | NetTerms;
+  terms?: Terms;
 
   @ManyToOne(() => Markup, {
     nullable: true,

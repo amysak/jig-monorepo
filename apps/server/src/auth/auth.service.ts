@@ -49,7 +49,6 @@ export class AuthService {
   }
 
   public jwtSign(payload: Payload): TokenPair {
-    console.log("payload => ", payload);
     return {
       accessToken: this.jwt.sign(payload, { expiresIn: "30m" }),
       refreshToken: this.getRefreshToken(payload.accountId),

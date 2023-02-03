@@ -76,6 +76,3 @@ export const deleteById = (clientId: string | number): Promise<any> => {
 // async function uploadCabinetImage(payload: FormData): Promise<any> {
 //   return client.post("/cabinets/upload", payload);
 // }
-
-export // getDefaultCabinetSpecification,
- {};
