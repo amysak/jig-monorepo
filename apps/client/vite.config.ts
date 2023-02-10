@@ -7,11 +7,11 @@ import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 import path from "path";
-import { dependencies } from "./package.json";
+// import { dependencies } from "./package.json";
 
-const reactDeps = Object.keys(dependencies).filter(
-  (key) => key === "react" || key.startsWith("react-")
-);
+// const reactDeps = Object.keys(dependencies).filter(
+//   (key) => key === "react" || key.startsWith("react-")
+// );
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());

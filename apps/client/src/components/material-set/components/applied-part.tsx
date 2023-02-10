@@ -2,11 +2,7 @@ import { FormSelect } from "@jigbid/ui";
 import { Form } from "antd";
 import { MaterialSet } from "type-defs";
 
-import {
-  useMaterialQuery,
-  useMaterialsQuery,
-  useModelsQuery,
-} from "lib/hooks/queries";
+import { useModelsQuery } from "lib/hooks/queries";
 import { MaterialSetSkeleton } from "./skeleton";
 
 type AppliedPartProps = {
