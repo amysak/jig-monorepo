@@ -9,7 +9,9 @@ import { FC } from "react";
 type SkeletonProps = AntSkeletonProps;
 
 export const PageSkeleton: FC<SkeletonProps> = (props) => {
-  return <AntSkeleton active {...props} />;
+  return (
+    <AntSkeleton style={{ height: "100%", width: "100%" }} active {...props} />
+  );
 };
 
 const AntSkeletonButton = AntSkeleton.Button;

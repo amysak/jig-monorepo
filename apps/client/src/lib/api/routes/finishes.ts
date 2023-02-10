@@ -1,13 +1,12 @@
-import { LocationGenerics } from "router";
 import { Finish, WithCountDto } from "type-defs";
 import { client } from "../http";
 
-export const getById = (finishId: string): Promise<Finish> => {
+export const getById = (finishId: number): Promise<Finish> => {
   return client.get(`/finishes/${finishId}`);
 };
 
 export const getAll = (
-  query?: LocationGenerics["Search"]
+  query?: Record<string, unknown>
 ): Promise<WithCountDto<Finish>> => {
   return client.get(`/finishes?${client.getQueryString(query)}`);
 };
@@ -20,7 +19,7 @@ export type GrouppedFinishes = {
 };
 
 export const getGroupped = (
-  query?: LocationGenerics["Search"]
+  query?: Record<string, unknown>
 ): Promise<GrouppedFinishes> => {
   return client.get(
     `/finishes?${client.getQueryString({ ...query, group: true })}`

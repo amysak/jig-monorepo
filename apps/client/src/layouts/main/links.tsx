@@ -5,7 +5,7 @@ import {
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
+import { Link } from "@tanstack/react-router";
 import { Avatar, MenuProps, theme } from "antd";
 
 export const useHeaderLinks = () => {
@@ -21,7 +21,7 @@ export const useHeaderLinks = () => {
     },
     {
       key: "clients",
-      label: <Link to="/clients">Clients</Link>,
+      label: <Link>Clients</Link>,
       icon: <TeamOutlined />,
     },
     {
@@ -34,35 +34,28 @@ export const useHeaderLinks = () => {
       label: <Link to="/setup">Setup</Link>,
       icon: <LayoutOutlined />,
     },
-    // TODO: put inside account?
-    // {
-    //   key: "reports",
-    //   label: <Link to="/reports">Reports</Link>,
-    //   icon: <ProfileOutlined />,
-    // },
     {
       key: "account",
       label: (
-        <Link to="/account">
+        <Link>
           <Avatar
             style={{ color: colorLink, backgroundColor: colorBgContainer }}
             icon={<UserOutlined />}
           />
         </Link>
       ),
-      // classes: "icon account",
       children: [
         {
-          label: <Link to="/account">Account management</Link>,
           key: "management",
+          label: <Link>Account management</Link>,
         },
         {
-          label: <Link to="/reports">My reports</Link>,
           key: "reports",
+          label: <Link>My reports</Link>,
         },
         {
-          label: <Link>Sign out</Link>,
           key: "sign-out",
+          label: <Link>Sign out</Link>,
         },
         // { label: "Cabinets", path: "cabinets" },
         // { label: "Security", path: "security" },

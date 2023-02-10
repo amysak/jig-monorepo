@@ -1,4 +1,3 @@
-import { LocationGenerics } from "router";
 import { Job, WithCountDto } from "type-defs";
 import { client } from "../http";
 
@@ -6,12 +5,12 @@ import { client } from "../http";
 export type PaginatedJobs = { jobs: Job[]; count: number };
 
 export const getAll = (
-  query?: LocationGenerics["Search"]
+  query?: Record<string, unknown>
 ): Promise<WithCountDto<Job>> => {
   return client.get(`/jobs?${client.getQueryString(query)}`);
 };
 
-export const getById = (jobId: string): Promise<Job> => {
+export const getById = (jobId: number): Promise<Job> => {
   return client.get(`/jobs/${jobId}`);
 };
 
@@ -20,7 +19,7 @@ export const create = (payload: Partial<Job>): Promise<Job> => {
 };
 
 export const updateById = (
-  jobId: string,
+  jobId: number,
   payload: Partial<Job>
 ): Promise<Job> => {
   return client.update(`/jobs/${jobId}`, payload);

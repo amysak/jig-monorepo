@@ -3,20 +3,20 @@ import {
   DeleteOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link, useSearch } from "@tanstack/react-router";
 import { AutoComplete, Space, TableProps, Tag, Typography } from "antd";
 import { capitalize } from "lodash-es";
 import { useState } from "react";
 import { Material, MaterialPurpose, MATERIAL_PURPOSE } from "type-defs";
 
-import { useMaterialTypesQuery } from "hooks/queries";
-import { useSearch } from "hooks/router";
+import { useMaterialTypesQuery } from "lib/hooks/queries";
+import { materialsIndexRoute } from "pages/setup";
 
 const { Text } = Typography;
 
 export const useMaterialsColumns = () => {
-  const search = useSearch();
+  const search = useSearch({ from: materialsIndexRoute.id });
 
   const queryClient = useQueryClient();
 
@@ -42,7 +42,7 @@ export const useMaterialsColumns = () => {
         text: capitalize(purpose.replaceAll("_", " ")),
         value: purpose,
       })),
-      defaultFilteredValue: search.filters?.purpose,
+      // defaultFilteredValue: search.filters?.purpose,
       render(purpose: MaterialPurpose) {
         return <Tag>{capitalize(purpose.replaceAll("_", " "))}</Tag>;
       },

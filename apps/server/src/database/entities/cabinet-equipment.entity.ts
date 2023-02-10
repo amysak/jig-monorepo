@@ -13,13 +13,13 @@ import {
 } from "typeorm";
 
 import { Account } from "./account.entity";
-import { DefaultableBaseEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
 import { Cabinet } from "./cabinet.entity";
 import { Room } from "./room.entity";
 import { Upcharge } from "./upcharge.entity";
 
 @Entity()
-export class CabinetEquipment extends DefaultableBaseEntity {
+export class CabinetEquipment extends AppBaseEntity {
   // Same technique with groupping is used to give autocomplete on client. No constraint is really needed
   // if we only let user edit these types of fields in certain scopes.
   @Column("text")
@@ -74,14 +74,20 @@ export class CabinetEquipment extends DefaultableBaseEntity {
   @JoinTable()
   upcharges?: Upcharge[];
 
-  @ManyToOne(() => Room, (room) => room.equipment, { nullable: true })
+  @ManyToOne(() => Cabinet, (cabinet) => cabinet.equipment, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  cabinet?: Cabinet;
+
+  @ManyToOne(() => Room, (room) => room.equipment, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
   room?: Room;
 
-  @ManyToMany(() => Cabinet, { nullable: true })
-  cabinets?: Cabinet[];
-
-  @ManyToOne(() => Account, { nullable: true })
-  account?: Account;
+  @ManyToOne(() => Account, { onDelete: "CASCADE", nullable: false })
+  account: Account;
 }
 
 // TODO: PLEASE TYPEORM FIX YOUR BUGS
@@ -92,7 +98,7 @@ export class CabinetEquipment extends DefaultableBaseEntity {
 // cannot be modified for a certain room, because they are generally a ready product with some sizes,
 // hence it doesn't really make much sense to make an individual copy per each.
 
-// TODO: make use of DefaultableBaseEntity and isDefault
+// TODO: make use of AppBaseEntity and isDefault
 // @Entity()
 // export class Accessory extends CabinetEquipment {
 // }

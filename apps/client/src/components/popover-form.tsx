@@ -2,7 +2,7 @@ import { Button, Divider, Form, Popover, Row, Typography } from "antd";
 import { capitalize } from "lodash-es";
 
 import { PageSkeleton, FormInput, FormSelect } from "@jigbid/ui";
-import { useCreateJob, useClients } from "hooks/queries";
+import { useCreateJob, useClients } from "lib/hooks/queries";
 import { JOB_STATUSES } from "../lib/constants";
 
 const { Title } = Typography;

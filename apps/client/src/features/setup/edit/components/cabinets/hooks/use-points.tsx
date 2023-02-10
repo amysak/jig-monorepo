@@ -1,16 +1,16 @@
 import baseCabinetImage from "assets/images/cabinets/Base_Vanity.png";
 import tallCabinetImage from "assets/images/cabinets/Upper_Tall.png";
-import { CabinetType, CABINET_TYPE } from "type-defs";
+import { CabinetType } from "type-defs";
 
 import {
-  EditBackStretcher,
-  EditShelves,
-  EditTop,
-  EditSides,
-  EditNailer,
-  EditDeck,
   EditBack,
+  EditBackStretcher,
+  EditDeck,
+  EditNailer,
+  EditShelves,
+  EditSides,
   EditStretchers,
+  EditTop,
 } from "../intrinsics";
 
 type Point = {
@@ -26,7 +26,7 @@ type PointsMap = {
 };
 
 const pointsMap: PointsMap = {
-  get [CABINET_TYPE.BASE]() {
+  get base() {
     return {
       points: [
         // Sorted by Y
@@ -69,10 +69,10 @@ const pointsMap: PointsMap = {
       image: baseCabinetImage,
     };
   },
-  get [CABINET_TYPE.VANITY]() {
-    return pointsMap[CABINET_TYPE.BASE];
+  get vanity() {
+    return pointsMap.base;
   },
-  get [CABINET_TYPE.TALL]() {
+  get tall() {
     return {
       points: [
         { x: 0, y: 0, label: "A" },
@@ -81,8 +81,8 @@ const pointsMap: PointsMap = {
       image: tallCabinetImage,
     };
   },
-  get [CABINET_TYPE.UPPER]() {
-    return pointsMap[CABINET_TYPE.TALL];
+  get upper() {
+    return pointsMap.tall;
   },
 };
 

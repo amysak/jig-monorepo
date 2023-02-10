@@ -1,17 +1,17 @@
 import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSearch } from "@tanstack/react-router";
 import { Space, TableProps, Tag, Typography } from "antd";
 import { capitalize } from "lodash-es";
-
-import { useOpeningDeletion } from "hooks/queries";
-import { useSearch } from "hooks/router";
 import { CabinetOpening, CabinetOpeningType, Vendor } from "type-defs";
+
+import { useOpeningDeletion } from "lib/hooks/queries";
+import { openingsIndexRoute } from "pages/setup";
 
 const { Text } = Typography;
 
 export const useOpeningColumns = () => {
-  const search = useSearch();
+  const search = useSearch({ from: openingsIndexRoute.id });
 
   const queryClient = useQueryClient();
 
@@ -25,9 +25,10 @@ export const useOpeningColumns = () => {
       width: "20%",
       render(openingName: string, row) {
         return (
-          <Link to={`/setup/openings/${row.id}`}>
-            {openingName || row.model}
-          </Link>
+          // TODO:
+          // <Link to="/setup/openings/$id" params={{id: row.id}}>
+          openingName || row.model.name
+          // </Link>
         );
       },
     },

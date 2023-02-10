@@ -1,13 +1,13 @@
 import Icon, { PlusOutlined } from "@ant-design/icons";
 import { PageSkeleton } from "@jigbid/ui";
-import { Link } from "@tanstack/react-location";
+import { Link, useParams } from "@tanstack/react-router";
 import { Button, Popover, Row, Table, Typography } from "antd";
 import { ColumnType } from "antd/es/table";
 import { Room } from "type-defs";
 
 import DeleteIcon from "assets/images/delete.svg";
-import { useMatch } from "hooks/router";
-import { useCreateRoom, useDeleteRoom, useQueryRooms } from "hooks/queries";
+import { useCreateRoom, useDeleteRoom, useQueryRooms } from "lib/hooks/queries";
+import { jobRoute } from "pages/routes";
 
 import { NewRoom } from "./components";
 
@@ -16,10 +16,7 @@ import "./roomlist.scss";
 const { Paragraph } = Typography;
 
 export function JobRoomList() {
-  // TODO: move to hooks with generic already included
-  const {
-    params: { id: jobId },
-  } = useMatch();
+  const { jobId } = useParams({ from: jobRoute.id });
 
   const { data: rooms, isLoading, isError } = useQueryRooms(jobId);
 
@@ -42,9 +39,16 @@ export function JobRoomList() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-
       render(name, room) {
-        return <Link to={`/rooms/${room.id}`}>{name}</Link>;
+        return (
+          <Link
+            to="/rooms/$roomId"
+            params={{ roomId: room.id }}
+            search={{ tabName: "summary" }}
+          >
+            {name}
+          </Link>
+        );
       },
     },
     {

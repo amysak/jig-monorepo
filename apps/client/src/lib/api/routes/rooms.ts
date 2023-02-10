@@ -27,6 +27,13 @@ export const updateById = (
   return client.update(`/rooms/${id}`, payload);
 };
 
+export const addCabinets = (
+  roomId: number,
+  cabinetIds: number[]
+): Promise<TGetRoomsData> => {
+  return client.update(`/rooms/${roomId}/cabinets`, { ids: cabinetIds });
+};
+
 export const deleteById = (id: number | string): Promise<unknown> => {
   return client.delete(`/rooms/${id}`);
 };

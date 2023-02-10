@@ -4,7 +4,7 @@ import { AfterLoad, Column, Entity, ManyToOne, OneToOne } from "typeorm";
 
 import { type TermsType } from "type-defs";
 import { Account } from "./account.entity";
-import { DefaultableBaseEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
 import { AccountPreferences, JobPreferences } from "./preferences.entity";
 
 class PaymentPart {
@@ -27,7 +27,7 @@ class Conditions {
 // @TableInheritance({
 //   column: { type: "text", name: "type", enum: TERMS_TYPE },
 // })
-export class Terms extends DefaultableBaseEntity {
+export class Terms extends AppBaseEntity {
   // https://github.com/typeorm/typeorm/issues/9033
   // https://stackoverflow.com/questions/74138654/how-to-specify-discriminator-value-for-the-parent-table-using-single-table-inher
   // =)))))))))))))))) TYPEORM IS DOGSHIT

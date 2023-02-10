@@ -1,5 +1,5 @@
 import { ApartmentOutlined, SettingOutlined } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
+import { Link } from "@tanstack/react-router";
 import { SubMenuType } from "antd/es/menu/hooks/useItems";
 
 export const sideLinks: SubMenuType[] = [

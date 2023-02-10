@@ -26,7 +26,7 @@ export class CabinetEquipmentService {
     const defaultWhere: FindOptionsWhere<CabinetEquipment> = {
       account: { id: accountId },
     };
-    if (opts.category) defaultWhere.category = opts.category;
+    if (opts.category) defaultWhere.category = getRawSearch(opts.category);
 
     // This should be a common way to define orWhere searches
     const where = opts.search

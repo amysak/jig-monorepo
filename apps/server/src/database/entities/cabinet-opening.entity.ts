@@ -1,24 +1,26 @@
+import { CabinetOpeningType } from "type-defs";
 import {
-  BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-import { CabinetOpeningType } from "type-defs";
-
-import { Vendor } from "./vendor.entity";
 import { Account } from "./account.entity";
+import { AppBaseEntity } from "./base.entity";
+import { Cabinet } from "./cabinet.entity";
+import { MaterialType, Model } from "./model.entity";
 import { Room } from "./room.entity";
-import { DefaultableBaseEntity } from "./base.entity";
+import { Vendor } from "./vendor.entity";
 
 @Entity({ name: "opening" })
 // )))))))))))))))))))))))))))))))))
 // @TableInheritance({
 //   column: { type: "varchar", name: "type", enum: CABINET_OPENING_TYPE },
 // })
-export class CabinetOpening extends DefaultableBaseEntity {
+export class CabinetOpening extends AppBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -33,13 +35,9 @@ export class CabinetOpening extends DefaultableBaseEntity {
   type: CabinetOpeningType;
 
   // TODO: on front-end, auto-complete (antd component) could use groupby query to find unique models
-  @Column("text")
-  model: string;
-
-  // used to determine what material is applicable to this opening. matches "type" in material entity
-  // TODO: auto-complete also uses groupby
-  @Column("text")
-  materialType: string;
+  @OneToOne(() => Model, (model) => model.opening)
+  @JoinColumn()
+  model: Model;
 
   @Column("real")
   price: number;
@@ -61,6 +59,9 @@ export class CabinetOpening extends DefaultableBaseEntity {
 
   @ManyToOne(() => Room, { nullable: true, onDelete: "CASCADE" })
   room?: Room;
+
+  @ManyToOne(() => Cabinet, { nullable: true })
+  cabinet?: Cabinet;
 }
 
 // @ChildEntity(CABINET_OPENING_TYPE.DOOR)

@@ -8,7 +8,7 @@ import {
 } from "@ngneat/falso";
 import omit from "lodash.omit";
 import {
-  CABINET_BASE_TYPE,
+  CABINET_BASE_TYPES,
   CABINET_CORNER_PLACEMENT,
   CABINET_OPENING_TYPE,
 } from "type-defs";
@@ -16,6 +16,7 @@ import {
 import {
   Account,
   Cabinet,
+  CabinetEquipment,
   CabinetIntrinsicDimensions,
   CabinetOpening,
   CabinetSpecifications,
@@ -24,15 +25,15 @@ import {
   Letter,
   Markup,
   Material,
-  CabinetEquipment,
+  MaterialType,
+  Model,
   Panel,
   Preferences,
   Profile,
   Terms,
   ToePlatform,
-  Vendor,
   Upcharge,
-  DefaultableBaseEntity,
+  Vendor,
 } from "database/entities";
 import { SeedingService } from "services";
 
@@ -94,20 +95,15 @@ function generateIntrinsicDimensions() {
   );
 }
 
-const setIsDefault = <T extends DefaultableBaseEntity>(entity: T): T => {
-  entity.isDefault = true;
-
-  return entity;
-};
-
 export function getDefaults({ account }: DefaultSeedsOptions) {
-  const terms = SeedingService.convertDumpToEntities(Terms, defaultTerms)
-    .map((terms) => SeedingService.bindEntityToAccount(terms, account))
-    .map(setIsDefault);
+  const terms = SeedingService.convertDumpToEntities(Terms, defaultTerms).map(
+    (terms) => SeedingService.bindEntityToAccount(terms, account)
+  );
 
-  const markups = SeedingService.convertDumpToEntities(Markup, defaultMarkups)
-    .map((markup) => SeedingService.bindEntityToAccount(markup, account))
-    .map(setIsDefault);
+  const markups = SeedingService.convertDumpToEntities(
+    Markup,
+    defaultMarkups
+  ).map((markup) => SeedingService.bindEntityToAccount(markup, account));
 
   const letters = SeedingService.convertDumpToEntities(
     Letter,
@@ -115,17 +111,15 @@ export function getDefaults({ account }: DefaultSeedsOptions) {
       ...letter,
       body: "Modify me",
     }))
-  )
-    .map((letter) => SeedingService.bindEntityToAccount(letter, account))
-    .map(setIsDefault);
+  ).map((letter) => SeedingService.bindEntityToAccount(letter, account));
 
   return { terms, markups, letters };
 }
 
 export function getRoomDefaults({ account }: DefaultSeedsOptions) {
-  const panels = SeedingService.convertDumpToEntities(Panel, defaultPanels)
-    .map((panel) => SeedingService.bindEntityToAccount(panel, account))
-    .map(setIsDefault);
+  const panels = SeedingService.convertDumpToEntities(Panel, defaultPanels).map(
+    (panel) => SeedingService.bindEntityToAccount(panel, account)
+  );
 
   const profiles = SeedingService.convertDumpToEntities(
     Profile,
@@ -133,9 +127,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
       ...profile,
       type: profile.type.toLowerCase(),
     }))
-  )
-    .map((profile) => SeedingService.bindEntityToAccount(profile, account))
-    .map(setIsDefault);
+  ).map((profile) => SeedingService.bindEntityToAccount(profile, account));
 
   const allEquipment = [
     ...defaultMoldings,
@@ -207,9 +199,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
         upcharges: SeedingService.convertDumpToEntities(Upcharge, upcharges),
       };
     })
-  )
-    .map((equipItem) => SeedingService.bindEntityToAccount(equipItem, account))
-    .map(setIsDefault);
+  ).map((equipItem) => SeedingService.bindEntityToAccount(equipItem, account));
 
   const toes = SeedingService.convertDumpToEntities(
     ToePlatform,
@@ -220,9 +210,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
         type: undefined,
         sleepersCount: toe.sleepers,
       }))
-  )
-    .map((toe) => SeedingService.bindEntityToAccount(toe, account))
-    .map(setIsDefault);
+  ).map((toe) => SeedingService.bindEntityToAccount(toe, account));
 
   const materials = SeedingService.convertDumpToEntities(
     Material,
@@ -234,11 +222,12 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
       purpose: material.purpose.toLowerCase().replaceAll(" ", "_"),
       vendor: SeedingService.convertDumpToEntities(Vendor, [
         { name: material.vendor },
-      ]),
+      ])[0],
+      type: SeedingService.convertDumpToEntities(MaterialType, [
+        { name: material.type },
+      ])[0],
     }))
-  )
-    .map((material) => SeedingService.bindEntityToAccount(material, account))
-    .map(setIsDefault);
+  ).map((material) => SeedingService.bindEntityToAccount(material, account));
 
   const finishes = SeedingService.convertDumpToEntities(
     Finish,
@@ -266,16 +255,12 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
 
       return resFinish;
     })
-  )
-    .map((finish) => SeedingService.bindEntityToAccount(finish, account))
-    .map(setIsDefault);
+  ).map((finish) => SeedingService.bindEntityToAccount(finish, account));
 
   const fillers = SeedingService.convertDumpToEntities(
     Filler,
     defaultFillers.map((filler) => omit(filler, "type"))
-  )
-    .map((filler) => SeedingService.bindEntityToAccount(filler, account))
-    .map(setIsDefault);
+  ).map((filler) => SeedingService.bindEntityToAccount(filler, account));
 
   // {
   //   "cabinetBackHeight": "43.75",
@@ -302,7 +287,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
 
   // some fields might be needed but we can define those in the child entity of cabinet
   // most of those parameters are usually defined in the cabinet specifications
-  const baseTypes = Object.values(CABINET_BASE_TYPE);
+  const baseTypes = Object.values(CABINET_BASE_TYPES);
   const placements = Object.values(CABINET_CORNER_PLACEMENT);
 
   const cabinetSeeds = defaultCabinets.map((cabinet) => {
@@ -355,9 +340,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     ({ cabinet, cabinetSpecifications }) => {
       const [convertedCabinet] = SeedingService.convertDumpToEntities(Cabinet, [
         cabinet,
-      ])
-        .map((cabinet) => SeedingService.bindEntityToAccount(cabinet, account))
-        .map(setIsDefault);
+      ]).map((cabinet) => SeedingService.bindEntityToAccount(cabinet, account));
 
       return { cabinet: convertedCabinet, cabinetSpecifications };
     }
@@ -371,22 +354,28 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
     return Object.assign(new Vendor(), data);
   });
 
-  const modelSet = Array.from({ length: 3 }).map(() => randVehicleModel());
-  const materialTypes = ["Wood", "Metal", "Plastic", "Glass", "Other"];
+  const modelNameSet = Array.from({ length: 3 }).map(() => randVehicleModel());
 
   const openingTypes = Object.values(CABINET_OPENING_TYPE);
   const openings = Array.from({ length: 30 })
     .map(() => {
       const override = Math.random() > 0.5;
 
+      const overrideText =
+        "This opening has a custom name, so it is being shown instead of it's model name.";
+
       const data: Partial<CabinetOpening> = {
         name: override ? "Overriden name" : null,
-        description: `This opening has a custom name, so it is being shown instead of it's model name.
-           This is a sample description of a seeded cabinet opening. Feel free to edit it as you wish.`,
+        description: override
+          ? overrideText
+          : "This is a sample description of a seeded cabinet opening. Feel free to edit it as you wish.",
         type: openingTypes[Math.floor(Math.random() * openingTypes.length)],
-        model: modelSet[Math.floor(Math.random() * modelSet.length)],
-        materialType:
-          materialTypes[Math.floor(Math.random() * materialTypes.length)],
+        model: SeedingService.convertDumpToEntities(Model, [
+          {
+            name: modelNameSet[Math.floor(Math.random() * modelNameSet.length)],
+            materialType: "wood",
+          },
+        ])[0],
         price: randNumber({ min: 7, max: 30 }),
       };
 

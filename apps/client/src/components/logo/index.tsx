@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-location";
+import { Link } from "@tanstack/react-router";
 
 import LogoImg from "assets/images/logos/svgs/Icon.svg";
 

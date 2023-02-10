@@ -2,11 +2,11 @@ import { PanelType } from "type-defs";
 import { Column, Entity, ManyToOne } from "typeorm";
 
 import { Account } from "./account.entity";
-import { DefaultableBaseEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
 import { Cabinet } from "./cabinet.entity";
 import { Room } from "./room.entity";
 
-abstract class CabinetExtension extends DefaultableBaseEntity {
+abstract class CabinetExtension extends AppBaseEntity {
   @ManyToOne(() => Cabinet, { nullable: true })
   cabinet?: Cabinet;
 
@@ -44,8 +44,11 @@ export class ToePlatform extends CabinetExtension {
   @Column("real", { default: 0 })
   maxLength: number;
 
-  // @ManyToOne(() => Room, (room) => room.toes, { nullable: true })
-  // room?: Room;
+  @ManyToOne(() => Room, (room) => room.toes, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  room?: Room;
 }
 
 @Entity()
@@ -59,12 +62,18 @@ export class Panel extends CabinetExtension {
   @Column("integer", { nullable: true })
   panelsCount?: number;
 
-  // @ManyToOne(() => Room, (room) => room.panels, { nullable: true })
-  // room?: Room;
+  @ManyToOne(() => Room, (room) => room.panels, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  room?: Room;
 }
 
 @Entity()
 export class Filler extends CabinetExtension {
-  // @ManyToOne(() => Room, (room) => room.fillers, { nullable: true })
-  // room?: Room;
+  @ManyToOne(() => Room, (room) => room.fillers, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  room?: Room;
 }

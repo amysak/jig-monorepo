@@ -1,15 +1,18 @@
-import { LocationGenerics } from "router";
 import { CabinetOpening, WithCountDto } from "type-defs";
 import { client } from "../http";
 
-// export const getById = (cabinetId: string): Promise<Cabinet> => {
-//   return client.get(`/cabinets/${cabinetId}`);
-// };
+export const getById = (openingId: number): Promise<CabinetOpening> => {
+  return client.get(`/openings/${openingId}`);
+};
 
 export const getAll = (
-  query?: LocationGenerics["Search"]
+  query?: Record<string, unknown>
 ): Promise<WithCountDto<CabinetOpening>> => {
   return client.get(`/openings?${client.getQueryString(query)}`);
+};
+
+export const getModels = (): Promise<string[]> => {
+  return client.get("/openings/models");
 };
 
 export const deleteById = (openingId: string | number) => {

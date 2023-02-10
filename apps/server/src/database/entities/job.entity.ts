@@ -8,7 +8,7 @@ import {
   OneToOne,
 } from "typeorm";
 
-import { COMPLETION_STATUS, type CompletionStatus } from "type-defs";
+import { type CompletionStatus } from "type-defs";
 import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
 import { Client } from "./client.entity";
@@ -72,7 +72,7 @@ export class Job extends AppBaseEntity {
   @JoinColumn()
   preferences: JobPreferences;
 
-  @Column("text", { default: COMPLETION_STATUS.ESTIMATE })
+  @Column("text", { default: "estimate" })
   status: CompletionStatus;
 
   @BeforeInsert()

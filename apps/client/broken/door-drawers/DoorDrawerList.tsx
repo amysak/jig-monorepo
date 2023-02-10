@@ -2,7 +2,7 @@ export {};
 // import { Form, message, Row, Select, Table } from "antd";
 // import React, { useEffect, useState } from "react";
 
-// import { Link } from "@tanstack/react-location";
+// import { Link } from "@tanstack/react-router";
 // import {
 //   getDoorsDrawers,
 //   TGetDoorsDrawersData,

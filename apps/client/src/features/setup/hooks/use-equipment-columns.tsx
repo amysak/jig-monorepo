@@ -1,17 +1,17 @@
 import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link, useSearch } from "@tanstack/react-router";
 import { Space, TableProps, Typography } from "antd";
 import { capitalize } from "lodash-es";
-
-import { useEquipmentDeletion } from "hooks/queries";
-import { useSearch } from "hooks/router";
 import { CabinetEquipment, CabinetEquipmentCategory } from "type-defs";
+
+import { useEquipmentDeletion } from "lib/hooks/queries";
+import { equipmentIndexRoute } from "pages/setup";
 
 const { Text } = Typography;
 
 export const useEquipmentColumns = () => {
-  const search = useSearch();
+  const search = useSearch({ from: equipmentIndexRoute.id });
 
   const queryClient = useQueryClient();
 
@@ -24,7 +24,11 @@ export const useEquipmentColumns = () => {
       width: "30%",
       title: "Name",
       render(equipmentName: string, row) {
-        return <Link to={`/setup/profiles/${row.id}`}>{equipmentName}</Link>;
+        return (
+          <Link to="/setup/equipment/$id" params={{ id: row.id }}>
+            {equipmentName}
+          </Link>
+        );
       },
     },
     {

@@ -10,7 +10,7 @@ export {};
 //   Typography,
 // } from "antd";
 // import React, { useContext, useEffect, useState } from "react";
-// import { useParams } from "@tanstack/react-location";
+// import { useParams } from "@tanstack/react-router";
 // import {
 //   getSetupMaterials,
 //   TGetSetupMaterialsData,

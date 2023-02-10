@@ -50,7 +50,8 @@ export class AuthService {
 
   public jwtSign(payload: Payload): TokenPair {
     return {
-      accessToken: this.jwt.sign(payload, { expiresIn: "30m" }),
+      // TODO: Set expiresIn to 30m
+      accessToken: this.jwt.sign(payload, { expiresIn: "15m" }),
       refreshToken: this.getRefreshToken(payload.accountId),
     };
   }

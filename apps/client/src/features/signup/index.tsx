@@ -1,7 +1,7 @@
 export {};
 // Almost identical to Sign In
 
-// import { Link, useNavigate } from "@tanstack/react-location";
+// import { Link, useNavigate } from "@tanstack/react-router";
 // import { useMutation, useQueryClient } from "@tanstack/react-query";
 // import { Button, Form, message, Row } from "antd";
 // import { isEmpty } from "lodash-es";

@@ -15,7 +15,7 @@ export {};
 //   Typography,
 // } from "antd";
 // import React, { useContext, useEffect, useState } from "react";
-// import { Link } from "@tanstack/react-location";
+// import { Link } from "@tanstack/react-router";
 // import {
 //   createOneLinearInchPrice,
 //   getAllLinearInchPrice,

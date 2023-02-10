@@ -1,16 +1,17 @@
 import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useMatches, useSearch } from "@tanstack/react-router";
 import { Divider, Input, Layout, Menu, Segmented } from "antd";
+import { debounce } from "lodash-es";
 import { FC, ReactNode } from "react";
 
-import { useMatches, useSearch } from "hooks/router";
+import { useSetSearch } from "lib/hooks";
 import { SetupViews, toggleActions, useToggles } from "lib/store";
+import { setupRoute } from "pages/setup";
 
 import { useSetupNav } from "./core";
 
 import "./setup.scss";
-import { useSetSearch } from "hooks";
-import { debounce } from "lodash-es";
 
 const { Sider, Content } = Layout;
 const { Search } = Input;
@@ -20,14 +21,12 @@ type SetupLayoutProps = {
 };
 
 export const SetupLayout: FC<SetupLayoutProps> = ({ children }) => {
-  const search = useSearch();
+  const matches = useMatches();
+  const search = useSearch({ from: setupRoute.id });
   const [setSearch] = useSetSearch();
 
+  const { setupNav, openKeys } = useSetupNav();
   const toggles = useToggles();
-
-  const { setupNav, openKeys, onOpenChange } = useSetupNav();
-
-  const matches = useMatches();
 
   const [parent] = useAutoAnimate();
 
@@ -54,7 +53,7 @@ export const SetupLayout: FC<SetupLayoutProps> = ({ children }) => {
         />
         <Divider />
         <div ref={parent}>
-          {matches.length > 1 && (
+          {matches.at(-1)?.id !== "/setup/" && (
             <Search
               className="setup-search"
               size="middle"
@@ -68,16 +67,15 @@ export const SetupLayout: FC<SetupLayoutProps> = ({ children }) => {
                   setSearch({ setup: { search: event.target.value || null } }),
                 300
               )}
-              defaultValue={search.setup?.search}
+              defaultValue={search.search}
             />
           )}
         </div>
         <Menu
           selectedKeys={openKeys.concat(
-            search.setup ? (Object.values(search.setup) as string[]) : []
+            [search.type, search.category].filter(Boolean) as string[]
           )}
           openKeys={openKeys}
-          onOpenChange={onOpenChange}
           mode="inline"
           items={setupNav}
         />

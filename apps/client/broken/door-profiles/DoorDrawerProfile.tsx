@@ -14,7 +14,7 @@ export {};
 // import debounce from "lodash-es";
 // import React, { useEffect, useState } from "react";
 
-// import { useNavigate, useParams } from "@tanstack/react-location";
+// import { useNavigate, useParams } from "@tanstack/react-router";
 // import { sendNotificationRequest } from "../../../actions/notification";
 // import { getDoorProfiles, TGetDoorProfilesData } from "../../../api/doors";
 // import {

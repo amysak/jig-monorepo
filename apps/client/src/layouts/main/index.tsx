@@ -1,4 +1,3 @@
-import { useLocation } from "@tanstack/react-location";
 import { Layout, Menu, theme, type LayoutProps } from "antd";
 import { FC, ReactNode } from "react";
 
@@ -7,6 +6,7 @@ import { Logo } from "components/logo";
 import { useHeaderLinks } from "./links";
 
 import "./style.scss";
+import { useRouter } from "@tanstack/react-router";
 
 const { Header, Content } = Layout;
 
@@ -25,8 +25,8 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
   const headerLinks = useHeaderLinks();
 
   // TODO: probably wrong
-  const location = useLocation();
-  const currentTabName = location.current.pathname.split("/")[1];
+  const router = useRouter();
+  const currentTabName = router.state.currentLocation.pathname.split("/")[1];
 
   return (
     <Layout
@@ -40,11 +40,11 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
         <Logo />
 
         <Menu
-          defaultSelectedKeys={[currentTabName]}
+          selectedKeys={[currentTabName]}
           theme="dark"
           mode="horizontal"
           items={headerLinks}
-          // disabledOverflow={true}
+          disabledOverflow={true}
           style={{ color: colorLink }}
         />
       </Header>

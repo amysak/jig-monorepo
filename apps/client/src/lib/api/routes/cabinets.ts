@@ -1,13 +1,12 @@
-import { LocationGenerics } from "router";
-import { Cabinet, WithCountDto } from "type-defs";
+import { Cabinet, DeepPartial, WithCountDto } from "type-defs";
 import { client } from "../http";
 
-export const getById = (cabinetId: string): Promise<Cabinet> => {
+export const getById = (cabinetId: number): Promise<Cabinet> => {
   return client.get(`/cabinets/${cabinetId}`);
 };
 
 export const getAll = (
-  query?: LocationGenerics["Search"]
+  query?: Record<string, unknown>
 ): Promise<WithCountDto<Cabinet>> => {
   return client.get(`/cabinets?${client.getQueryString(query)}`);
 };
@@ -17,13 +16,13 @@ export const create = (payload: { name: string }): Promise<Cabinet> => {
 };
 
 export const updateById = (
-  id: string | number,
-  payload: Partial<Cabinet>
+  id: number,
+  payload: DeepPartial<Cabinet>
 ): Promise<Cabinet> => {
   return client.update(`/cabinets/${id}`, payload);
 };
 
-export const deleteById = (clientId: string | number): Promise<any> => {
+export const deleteById = (clientId: number): Promise<any> => {
   return client.delete(`/cabinets/${clientId}`);
 };
 

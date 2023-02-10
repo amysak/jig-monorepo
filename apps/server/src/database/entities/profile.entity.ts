@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 import { ProfileType } from "type-defs";
 import { Account } from "./account.entity";
-import { DefaultableBaseEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
 import { Room } from "./room.entity";
 import { Vendor } from "./vendor.entity";
 
@@ -10,7 +10,7 @@ import { Vendor } from "./vendor.entity";
 // @TableInheritance({
 //   column: { type: "varchar", name: "type", enum: PROFILE_TYPE },
 // })
-export class Profile extends DefaultableBaseEntity {
+export class Profile extends AppBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

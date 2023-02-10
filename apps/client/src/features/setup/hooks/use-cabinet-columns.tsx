@@ -4,13 +4,13 @@ import {
   StarOutlined,
   StarTwoTone,
 } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link, useSearch } from "@tanstack/react-router";
 import { Space, TableProps, Tag } from "antd";
 import { capitalize } from "lodash-es";
 
-import { useCabinetDeletion, useCabinetMutation } from "hooks/queries";
-import { useSearch } from "hooks/router";
+import { useCabinetDeletion, useCabinetMutation } from "lib/hooks/queries";
+import { cabinetsIndexRoute } from "pages/routes";
 import {
   Cabinet,
   CabinetBaseType,
@@ -19,7 +19,7 @@ import {
 } from "type-defs";
 
 export const useCabinetColumns = () => {
-  const search = useSearch();
+  const search = useSearch({ from: cabinetsIndexRoute.id });
 
   const queryClient = useQueryClient();
 
@@ -33,7 +33,11 @@ export const useCabinetColumns = () => {
       dataIndex: "name",
       width: "25%",
       render(cabinetName: string, row: { id: number }) {
-        return <Link to={`/setup/cabinets/${row.id}`}>{cabinetName}</Link>;
+        return (
+          <Link to="/setup/cabinets/$id" params={{ id: row.id }}>
+            {cabinetName}
+          </Link>
+        );
       },
     },
     {
@@ -67,7 +71,7 @@ export const useCabinetColumns = () => {
       //   text: capitalize(type),
       //   value: type,
       // })),
-      filteredValue: search.filters?.type,
+      // filteredValue: search.filters?.type,
       render: (type: CabinetType) => <Tag className="type-tag">{type}</Tag>,
     },
     {

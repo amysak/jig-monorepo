@@ -3,7 +3,7 @@ export {};
 // import React, { useEffect, useState } from "react";
 
 // import { api } from "api/Api";
-// import { Link } from "@tanstack/react-location";
+// import { Link } from "@tanstack/react-router";
 // import { getDoorProfiles, TGetDoorProfilesData } from "../../../api/doors";
 // import { updateProfile } from "../../../api/profiles";
 // import { getVendors, TGetVendorsData } from "../../../api/vendors";

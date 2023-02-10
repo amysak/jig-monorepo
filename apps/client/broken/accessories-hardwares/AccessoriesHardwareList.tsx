@@ -1,7 +1,7 @@
 export {};
 // import { Form, Input, message, Row, Select, Table, Typography } from "antd";
 // import React, { useEffect, useState } from "react";
-// import { Link } from "@tanstack/react-location";
+// import { Link } from "@tanstack/react-router";
 
 // import { api } from "api";
 // import {

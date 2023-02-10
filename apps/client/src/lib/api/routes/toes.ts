@@ -1,4 +1,3 @@
-import { LocationGenerics } from "router";
 import { ApiGetResult, ToePlatform } from "type-defs";
 import { client } from "../http";
 
@@ -7,7 +6,7 @@ import { client } from "../http";
 // };
 
 export const getAll = (
-  query?: LocationGenerics["Search"]
+  query?: Record<string, unknown>
 ): Promise<ApiGetResult<ToePlatform>> => {
   return client.get(`/toes?${client.getQueryString(query)}`);
 };

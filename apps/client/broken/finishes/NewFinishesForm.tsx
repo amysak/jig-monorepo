@@ -10,7 +10,7 @@ export {};
 //   Typography,
 // } from "antd";
 // import React, { useState } from "react";
-// import { useNavigate } from "@tanstack/react-location";
+// import { useNavigate } from "@tanstack/react-router";
 // import { createFinish } from "../../../api/finishes";
 // import {
 //   ACTIVE_INACTIVE_STATUSES,

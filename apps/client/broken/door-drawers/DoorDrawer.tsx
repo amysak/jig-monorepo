@@ -14,7 +14,7 @@ export {};
 // import debounce from "lodash-es";
 // import React, { useContext, useEffect, useState } from "react";
 
-// import { useParams } from "@tanstack/react-location";
+// import { useParams } from "@tanstack/react-router";
 // import { uploadDoorImage } from "../../../api/doors";
 // import { getMaterialTypes } from "../../../api/material-types";
 // import UploadButton from "../../../components/atoms/upload-button";

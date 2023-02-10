@@ -1,17 +1,17 @@
 import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link, useSearch } from "@tanstack/react-router";
 import { Space, TableProps, Tag, Typography } from "antd";
 import { capitalize } from "lodash-es";
-
-import { useProfileDeletion } from "hooks/queries";
-import { useSearch } from "hooks/router";
 import { Profile, ProfileType, Vendor } from "type-defs";
+
+import { useProfileDeletion } from "lib/hooks/queries";
+import { profilesIndexRoute } from "pages/routes";
 
 const { Text } = Typography;
 
 export const useProfileColumns = () => {
-  const search = useSearch();
+  const search = useSearch({ from: profilesIndexRoute.id });
 
   const queryClient = useQueryClient();
 
@@ -24,7 +24,11 @@ export const useProfileColumns = () => {
       width: "20%",
       title: "Name",
       render(profileName: string, row) {
-        return <Link to={`/setup/profiles/${row.id}`}>{profileName}</Link>;
+        return (
+          <Link to="/setup/profiles/$id" params={{ id: row.id }}>
+            {profileName}
+          </Link>
+        );
       },
     },
     {

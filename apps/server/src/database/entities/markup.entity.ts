@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, OneToOne } from "typeorm";
 
 import { Account } from "./account.entity";
-import { DefaultableBaseEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
 import { AccountPreferences, JobPreferences } from "./preferences.entity";
 
 class MarkupFees {
@@ -53,7 +53,7 @@ export class TaxOptions {
 }
 
 @Entity()
-export class Markup extends DefaultableBaseEntity {
+export class Markup extends AppBaseEntity {
   @Column("text")
   name: string;
 

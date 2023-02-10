@@ -1,15 +1,12 @@
-import { Link } from "@tanstack/react-location";
+import { Link, useSearch } from "@tanstack/react-router";
 import { Select, Table } from "antd";
 import { DEFAULT_PAGE_SIZE } from "type-defs";
 
-// wtf?
-// import { tableProps } from "../../cabinet-setup/utils";
-
-import { useJobsPaginated } from "hooks/queries";
-import { useSearch } from "hooks/router";
+import { useJobsPaginated } from "lib/hooks/queries";
 import { UILayout } from "layouts/ui";
 import { JOB_STATUSES_OPTIONS } from "lib/constants";
 import { dayjs } from "lib/dayjs";
+import { jobRoute, jobsIndexRoute } from "pages/jobs";
 
 // export const  JobsFilterRow() {
 //   return (
@@ -39,8 +36,16 @@ const columns = [
     key: "name",
     width: 200,
 
-    render(name, job: { id: any }) {
-      return <Link to={`/jobs/${job.id}`}>{name}</Link>;
+    render(name, job: { id: number }) {
+      return (
+        <Link
+          to={jobRoute.id}
+          params={{ jobId: job.id }}
+          search={{ tabName: "info" }}
+        >
+          {name}
+        </Link>
+      );
     },
   },
   {
@@ -104,15 +109,14 @@ const columns = [
   },
 ];
 
+// TODO: do same way as in setup
 export const JobsList = () => {
-  const search = useSearch();
+  const search = useSearch({ from: jobsIndexRoute.id });
 
   const { data, isLoading } = useJobsPaginated(search);
 
   return (
     <UILayout>
-      {/* <JobsFilterRow /> */}
-
       <Table
         // {...tableProps}
         loading={isLoading}

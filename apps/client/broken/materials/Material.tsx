@@ -1,6 +1,6 @@
 export {};
 // import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-// import { Link, useNavigate, useParams } from "@tanstack/react-location";
+// import { Link, useNavigate, useParams } from "@tanstack/react-router";
 
 // import {
 //   Col,

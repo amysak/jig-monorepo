@@ -1,12 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import type { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 import merge from "lodash.merge";
+import { FindManyOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
-import { MaterialSet } from "database/entities";
 import { getRawSearch } from "common/lib";
-
-import { GetFinishesDto } from "./dto";
+import { MaterialSet } from "database/entities";
 
 @Injectable()
 export class MaterialSetService {
@@ -15,13 +13,20 @@ export class MaterialSetService {
     private materialSetRepository: Repository<MaterialSet>
   ) {}
 
-  create(data: any) {
-    return this.materialSetRepository.save(data);
+  // TODO: type data
+  create(accountId: number, data: any) {
+    return this.materialSetRepository.save({ ...data, account: accountId });
   }
 
-  async findByAccountId(accountId: number, opts: any) {
+  async findByAccountId(
+    accountId: number,
+    // TODO: move to separate type for reusability
+    opts: { search?: string; orderBy?: string }
+  ) {
     const defaultWhere: FindOptionsWhere<MaterialSet> = {
       account: { id: accountId },
+      // It just doesn't work :)
+      // room: IsNull()
     };
 
     // This should be a common way to define orWhere
@@ -42,10 +47,27 @@ export class MaterialSetService {
     };
 
     const materialSets = await this.materialSetRepository.find({
+      relations: {
+        account: true,
+        room: true,
+      },
       ...queryOpts,
     });
 
-    return { data: materialSets };
+    const filtered = materialSets.filter((set) => !set.room);
+
+    return { data: filtered };
+  }
+
+  async assign(id: number, { setId }: { setId: number }) {
+    const set = await this.materialSetRepository.findOne({
+      where: { id: setId },
+    });
+
+    return this.materialSetRepository.save({
+      ...set,
+      id,
+    });
   }
 
   findOne(id: number) {

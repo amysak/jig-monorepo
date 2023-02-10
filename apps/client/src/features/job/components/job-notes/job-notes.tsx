@@ -1,29 +1,28 @@
 import { FormInput, PageSkeleton } from "@jigbid/ui";
+import { useParams } from "@tanstack/react-router";
 import { Button, Form, Typography } from "antd";
 import { Job } from "type-defs";
 
-import { useMatch } from "hooks/router";
-import { useMutateJob, useQueryJob } from "hooks/queries";
+import { useMutateJob, useQueryJob } from "lib/hooks/queries";
+import { jobRoute } from "pages/routes";
 
 const { Paragraph } = Typography;
 
 export function JobNoteForm() {
   const [form] = Form.useForm<Job>();
-  const {
-    params: { id },
-  } = useMatch();
+  const { jobId } = useParams({ from: jobRoute.id });
 
   const {
     data: job,
     isLoading,
     isError,
-  } = useQueryJob(id, {
+  } = useQueryJob(jobId, {
     onSuccess: (data) => {
       form.setFieldsValue(data);
     },
   });
 
-  const { mutate: mutateJob } = useMutateJob(id);
+  const { mutate: mutateJob } = useMutateJob(jobId);
 
   if (isLoading) {
     // TODO

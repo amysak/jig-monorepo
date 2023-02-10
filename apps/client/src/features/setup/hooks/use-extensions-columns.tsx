@@ -1,13 +1,13 @@
 import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link, useSearch } from "@tanstack/react-router";
 import { Space, TableProps } from "antd";
-
-import { useSearch } from "hooks/router";
 import { Filler, Panel, ToePlatform } from "type-defs";
 
+import { extensionsIndexRoute } from "pages/setup";
+
 export const useExtensionsColumns = () => {
-  const search = useSearch();
+  const search = useSearch({ from: extensionsIndexRoute.id });
 
   const queryClient = useQueryClient();
 

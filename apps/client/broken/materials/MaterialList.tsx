@@ -12,7 +12,7 @@ export {};
 // import debounce from "lodash-es";
 // import merge from "lodash-es";
 // import React, { useEffect, useState } from "react";
-// import { Link } from "@tanstack/react-location";
+// import { Link } from "@tanstack/react-router";
 
 // import { api } from "api/Api";
 // import { getMaterialTypes } from "../../../api/material-types";

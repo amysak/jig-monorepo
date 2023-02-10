@@ -2,7 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import uniqBy from "lodash.uniqby";
 import { BaseEntity, DataSource, EntityManager } from "typeorm";
 
-import { Account } from "database/entities";
+import { Account, HardwareSet, MaterialSet } from "database/entities";
 import {
   generateAccountPreferences,
   generateClientSeeds,
@@ -34,11 +34,11 @@ export class SeedingService {
   }
 
   async purge(): Promise<void> {
+    await this.entityManager.query("DELETE FROM account");
     const entities = uniqBy(this.dataSource.entityMetadatas, "tableName");
 
     for (const entity of entities) {
-      const repository = this.dataSource.getRepository(entity.name);
-      await repository.query(`DELETE FROM ${entity.tableName};`);
+      await this.entityManager.query(`DELETE FROM ${entity.tableName};`);
     }
   }
 
@@ -159,13 +159,24 @@ export class SeedingService {
       })
     );
 
-    const rooms = generateRoomSeeds({
-      count: Math.floor(Math.random() * 25),
-    }).map((room) => {
-      room.job = jobs[Math.floor(Math.random() * jobs.length)];
+    const rooms = await Promise.all(
+      generateRoomSeeds({
+        count: Math.floor(Math.random() * 25),
+      }).map(async (room) => {
+        room.job = jobs[Math.floor(Math.random() * jobs.length)];
+        room.account = superAccount;
+        room.materialSet = await this.entityManager.save(MaterialSet, {
+          name: `${room.name} Material Set`,
+          account: superAccount,
+        });
+        room.hardwareSet = await this.entityManager.save(HardwareSet, {
+          name: `${room.name} Hardware Set`,
+          account: superAccount,
+        });
 
-      return room;
-    });
+        return room;
+      })
+    );
     await this.entityManager.save(rooms);
 
     this.logger.log("Seeding completed");

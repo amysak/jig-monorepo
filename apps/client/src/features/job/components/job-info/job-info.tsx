@@ -1,12 +1,13 @@
 import { PageSkeleton } from "@jigbid/ui";
+import { useParams } from "@tanstack/react-router";
 import { Form, Space } from "antd";
 import { dayjs, Dayjs } from "lib/dayjs";
 import { debounce } from "lodash-es";
 import { useEffect } from "react";
 import { Job } from "type-defs";
 
-import { useMatch } from "hooks/router";
-import { useMutateJob, useQueryJob } from "hooks/queries";
+import { useMutateJob, useQueryJob } from "lib/hooks/queries";
+import { jobRoute } from "pages/routes";
 
 import { JobFormHeader, JobFormTerms } from "./components";
 import { JobFormPreferences } from "./components/form/preferences";
@@ -15,9 +16,7 @@ type FormJob = Job & { estimateDate: Dayjs; proposalDate: Dayjs };
 
 export function JobInfoForm() {
   const [form] = Form.useForm<FormJob>();
-  const {
-    params: { id },
-  } = useMatch();
+  const { jobId } = useParams({ from: jobRoute.id });
 
   const refillForm = (values: Partial<Job>) => {
     form.setFieldsValue({
@@ -27,9 +26,9 @@ export function JobInfoForm() {
     });
   };
 
-  const { data: job, isLoading, isError } = useQueryJob(id);
+  const { data: job, isLoading, isError } = useQueryJob(jobId);
 
-  const { mutate: mutateJob } = useMutateJob(id, {
+  const { mutate: mutateJob } = useMutateJob(jobId, {
     onSuccess: refillForm,
   });
 

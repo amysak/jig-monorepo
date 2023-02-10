@@ -1,11 +1,10 @@
 import { client } from "../http";
 
-import { LocationGenerics } from "router";
 import { Account, AccountStats } from "type-defs";
 
 // TODO: Can be typed generically
 export const getAccountStats = (
-  query: LocationGenerics["Search"]
+  query: Record<string, unknown>
 ): Promise<AccountStats> => {
   return client.get(`accounts/stats?${client.getQueryString(query)}`);
 };

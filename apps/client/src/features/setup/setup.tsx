@@ -1,8 +1,7 @@
 import { Table, TableProps } from "antd";
 import { FC } from "react";
 
-import { useSetSearch } from "hooks";
-import { useSearch } from "hooks/router";
+import { useSetSearch } from "lib/hooks";
 import { useToggles } from "lib/store";
 
 // Antd is untypeable i swear
@@ -25,8 +24,7 @@ export const SetupTable: FC<SetupDataViewProps> = ({
 }) => {
   const { data, count } = displayData;
 
-  const search = useSearch();
-  const [setSearch] = useSetSearch();
+  const [setSearch, search] = useSetSearch();
 
   const toggles = useToggles();
 

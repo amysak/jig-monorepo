@@ -1,17 +1,36 @@
-import { LocationGenerics } from "router";
-import { ApiGetResult, MaterialSet } from "type-defs";
+import { ApiGetResult, DeepPartial, MaterialSet } from "type-defs";
 import { client } from "../http";
 
-// export const getById = (cabinetId: string): Promise<Cabinet> => {
-//   return client.get(`/cabinets/${cabinetId}`);
-// };
+export const getById = (setId: number): Promise<MaterialSet> => {
+  return client.get(`/material-sets/${setId}`);
+};
+
+export const create = (
+  payload: DeepPartial<MaterialSet>
+): Promise<MaterialSet> => {
+  return client.post("/material-sets", payload);
+};
+
+export const assign = (
+  originalSetId: number,
+  newSetId: number
+): Promise<MaterialSet> => {
+  return client.put(`/material-sets/${originalSetId}`, { id: newSetId });
+};
 
 export const getAll = (
-  query?: LocationGenerics["Search"]
+  query?: Record<string, unknown>
 ): Promise<ApiGetResult<MaterialSet>> => {
   return client.get(`/material-sets?${client.getQueryString(query)}`);
 };
 
-export const deleteById = (toeId: string | number) => {
-  return client.delete(`/material-sets/${toeId}`);
+export const updateById = (
+  id: number,
+  payload: Partial<MaterialSet>
+): Promise<MaterialSet> => {
+  return client.update(`/material-sets/${id}`, payload);
+};
+
+export const deleteById = (setId: string | number) => {
+  return client.delete(`/material-sets/${setId}`);
 };

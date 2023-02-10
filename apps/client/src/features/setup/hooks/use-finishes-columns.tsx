@@ -1,15 +1,15 @@
 import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link, useSearch } from "@tanstack/react-router";
 import { Space, TableProps, Typography } from "antd";
 import { Finish } from "type-defs";
 
-import { useSearch } from "hooks/router";
+import { finishesIndexRoute } from "pages/setup";
 
 const { Text } = Typography;
 
 export const useFinishesColumns = () => {
-  const search = useSearch();
+  const search = useSearch({ from: finishesIndexRoute.id });
 
   const queryClient = useQueryClient();
 

@@ -1,16 +1,15 @@
-import {
-  DatePicker as BaseDatePicker,
-  RangePicker,
-} from "client-v1/src/components/atoms";
-import { Dayjs } from "lib/dayjs";
+import { DatePicker as BaseDatePicker } from "antd";
+import { isNil } from "lodash-es";
 import { useCallback, useState } from "react";
 
-import { formatsByRange, Ranges } from "../utils";
+import { Dayjs } from "lib/dayjs";
 
 import { useLineSettingsType } from "../hooks/useLineSettings";
+import { formatsByRange, Ranges } from "../utils";
 
-import { isNil } from "lodash-es";
 import "./DatePicker.styles.scss";
+
+const { RangePicker } = BaseDatePicker;
 
 interface DatePickerProps
   extends Omit<ReturnType<useLineSettingsType>, "setRange"> {

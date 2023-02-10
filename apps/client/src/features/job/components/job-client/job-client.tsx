@@ -1,14 +1,13 @@
 import { LinkOutlined } from "@ant-design/icons";
-import { useMatch } from "hooks/router";
+import { useParams } from "@tanstack/react-router";
 import { Alert, Button, Col, Divider, Form, message, Row } from "antd";
 import { debounce } from "lodash-es";
 import { Client } from "type-defs";
 
 import { FormInput, PageSkeleton } from "@jigbid/ui";
-import { api } from "lib/api";
-import { useMutateClient, useQueryJob } from "hooks/queries";
+import { useMutateClient, useQueryJob } from "lib/hooks/queries";
+import { jobRoute } from "pages/jobs";
 
-import { ClientsSelect } from "../clientsSelect/ClientsSelect";
 import { AddressForm } from "./components";
 
 const layout = {
@@ -18,9 +17,7 @@ const layout = {
 
 export function JobClientForm() {
   const [form] = Form.useForm<Client>();
-  const {
-    params: { id: jobId },
-  } = useMatch();
+  const { jobId } = useParams({ from: jobRoute.id });
 
   const {
     data: job,
@@ -79,14 +76,7 @@ export function JobClientForm() {
 
           <Col span={3} push={9}>
             <Row>
-              <Form.Item>
-                <ClientsSelect
-                  selectedClient={client}
-                  updateJobsClient={(data) =>
-                    api.clients.updateById(client.id, data)
-                  }
-                />
-              </Form.Item>
+              <Form.Item>{/* TODO: clients select */}</Form.Item>
             </Row>
           </Col>
         </Row>

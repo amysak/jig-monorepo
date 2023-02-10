@@ -1,12 +1,13 @@
 import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
+import { Link } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { Space, TableProps } from "antd";
 import { Markup, Terms, Upcharge } from "type-defs";
 
-import { useSearch } from "hooks/router";
+import { useSearch } from "@tanstack/react-router";
 
 export const usePricesColumns = () => {
+  // const search = useSearch({ from: pricesRoute.id });
   const search = useSearch();
 
   const queryClient = useQueryClient();

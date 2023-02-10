@@ -18,6 +18,7 @@ importers:
 
   apps/client:
     specifiers:
+      '@ant-design/colors': ^7.0.0
       '@ant-design/icons': ^5.0.1
       '@ant-design/pro-layout': ^7.6.1
       '@formkit/auto-animate': 1.0.0-beta.6
@@ -27,10 +28,10 @@ importers:
       '@nivo/line': ^0.80.0
       '@nivo/pie': ^0.80.0
       '@react-pdf/renderer': ^3.0.2
-      '@tanstack/react-location': ^3.7.4
-      '@tanstack/react-location-devtools': ^3.4.4
       '@tanstack/react-query': ^4.22.0
       '@tanstack/react-query-devtools': ^4.22.0
+      '@tanstack/react-router': 0.0.1-beta.76
+      '@tanstack/react-router-devtools': 0.0.1-beta.76
       '@types/d3': ^7.4.0
       '@types/lodash-es': ^4.17.6
       '@types/react': ^18.0.26
@@ -48,7 +49,6 @@ importers:
       '@vitejs/plugin-react': ^3.0.1
       antd: ^5.1.4
       axios: ^1.2.2
-      client-v1: workspace:*
       css-loader: 6.7.3
       d3: ^7.8.2
       dayjs: ^1.11.7
@@ -82,7 +82,9 @@ importers:
       vite-plugin-imp: ^2.3.1
       vite-plugin-svgr: ^2.4.0
       vite-tsconfig-paths: ^4.0.3
+      zod: ^3.20.2
     dependencies:
+      '@ant-design/colors': 7.0.0
       '@ant-design/icons': 5.0.1_biqbaboplfbrettd7655fr4n2y
       '@ant-design/pro-layout': 7.6.1_yupzvqydyot4z6a4ljo5diundu
       '@formkit/auto-animate': 1.0.0-beta.6
@@ -92,10 +94,10 @@ importers:
       '@nivo/line': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
       '@nivo/pie': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
       '@react-pdf/renderer': 3.0.2_react@18.2.0
-      '@tanstack/react-location': 3.7.4_biqbaboplfbrettd7655fr4n2y
-      '@tanstack/react-location-devtools': 3.4.4_cjlhpxbqypkcyqswf5hjvxhobu
       '@tanstack/react-query': 4.22.0_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query-devtools': 4.22.0_gp275tdwez2a4eujt75dnnp754
+      '@tanstack/react-router': 0.0.1-beta.76_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-router-devtools': 0.0.1-beta.76_biqbaboplfbrettd7655fr4n2y
       '@visx/group': 3.0.0_react@18.2.0
       '@visx/mock-data': 3.0.0
       '@visx/responsive': 3.0.0_react@18.2.0
@@ -105,7 +107,6 @@ importers:
       '@visx/tooltip': 3.0.0_biqbaboplfbrettd7655fr4n2y
       antd: 5.1.5_biqbaboplfbrettd7655fr4n2y
       axios: 1.2.2
-      client-v1: link:../client-v1
       d3: 7.8.2
       dayjs: 1.11.7
       dotenv: 16.0.3
@@ -120,6 +121,7 @@ importers:
       type-defs: link:../../packages/type-defs
       valtio: 1.9.0_react@18.2.0
       vite-plugin-svgr: 2.4.0_vite@4.0.4
+      zod: 3.20.2
     devDependencies:
       '@types/d3': 7.4.0
       '@types/lodash-es': 4.17.6
@@ -3638,33 +3640,6 @@ packages:
     resolution: {integrity: sha512-OeLyBKBQoT265f5G9biReijeP8mBxNFwY7ZUu1dKL+YzqpG5q5z7J/N1eT8aWyKuhyDTiUHuKm5l+oIVzbtrjw==}
     dev: false
 
-  /@tanstack/react-location-devtools/3.4.4_cjlhpxbqypkcyqswf5hjvxhobu:
-    resolution: {integrity: sha512-EyPdaPXlIgGoZl8S34RPcQ/OD2WqwZSNg89lpTfFf3yUWOOMJHmK6MUH3jubOjtAONnIs+UreePWbW+NY7gBAQ==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      '@tanstack/react-location': 3.4.4
-      react: '>=16'
-      react-dom: '>=16'
-    dependencies:
-      '@babel/runtime': 7.20.7
-      '@tanstack/react-location': 3.7.4_biqbaboplfbrettd7655fr4n2y
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    dev: false
-
-  /@tanstack/react-location/3.7.4_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-6rH2vNHGr0uyeUz5ZHvWMYjeYKGgIKFzvs5749QtnS9f+FU7t7fQE0hKZAzltBZk82LT7iYbcHBRyUg2lW13VA==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      react: '>=16'
-      react-dom: '>=16'
-    dependencies:
-      '@babel/runtime': 7.20.7
-      history: 5.3.0
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    dev: false
-
   /@tanstack/react-query-devtools/4.22.0_gp275tdwez2a4eujt75dnnp754:
     resolution: {integrity: sha512-YeYFBnfqvb+ZlA0IiJqiHNNSzepNhI1p2o9i8NlhQli9+Zrn230M47OBaBUs8qr3DD1dC2zGB1Dis50Ktz8gAA==}
     peerDependencies:
@@ -3696,6 +3671,62 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/react-router-devtools/0.0.1-beta.76_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-Jsg+PIEcpuhl8yYxXBSsYQQeey1TTGd++zSMwyFEbC4RjZrDSTjrp03+Sam2GZByOgnjs20KWPFXuBHiP2g++w==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@babel/runtime': 7.20.7
+      '@tanstack/react-router': 0.0.1-beta.76_biqbaboplfbrettd7655fr4n2y
+      date-fns: 2.29.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/react-router/0.0.1-beta.76_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-wg5wtt/HZmZVULvxz4GF2NgAwgYt4yHsQZISUfdBSe+IDBFOW+/AleBROogCYY9z/oSWUFrlpOYLp7p+79QGRQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@babel/runtime': 7.20.7
+      '@tanstack/react-store': 0.0.1-beta.62_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/router': 0.0.1-beta.76
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/react-store/0.0.1-beta.62_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-8sv1E1/yo3/7WfEadibQM4lkWKx6CYX6JnW7Lj5gOMgIXACYQax1wjxwYiKyfRM147CJi/yKBW0X9ZoV+0GUyw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/store': 0.0.1-beta.62
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/router/0.0.1-beta.76:
+    resolution: {integrity: sha512-1Cz26qJEAJ9RZPdbIDK3EKbaZwKHX2ZRTWxJ9RKHgZKjYUrDi0gAutnrfMIX+6RzofUBC2Qy7LCN0M8I+yUMPQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@babel/runtime': 7.20.7
+      '@tanstack/store': 0.0.1-beta.62
+      tiny-invariant: 1.3.1
+      tiny-warning: 1.0.3
+    dev: false
+
+  /@tanstack/store/0.0.1-beta.62:
+    resolution: {integrity: sha512-0XNKx+H7Wj/mt4hqWIDQcWtGiVInWqwSQY1JkQwf5vzhG10hpRsnvnufcVQc5MDPXPt/4PDHlJAVUp2gj7OCKA==}
+    engines: {node: '>=12'}
     dev: false
 
   /@tootallnate/once/1.1.2:
@@ -3950,12 +3981,12 @@ packages:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
       '@types/eslint': 8.4.10
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.0
 
   /@types/eslint/8.4.10:
     resolution: {integrity: sha512-Sl/HOqN8NKPmhWo2VBEPm0nvHnu2LL3v9vKo8MEq0EtbJ4eVzGPl41VNPvn5E1i5poMk4/XD8UriLHpJvEP/Nw==}
     dependencies:
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.0
       '@types/json-schema': 7.0.11
 
   /@types/estree/0.0.51:
@@ -7838,12 +7869,6 @@ packages:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
     dev: false
 
-  /history/5.3.0:
-    resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
-    dependencies:
-      '@babel/runtime': 7.20.7
-    dev: false
-
   /hoist-non-react-statics/3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
     dependencies:
@@ -11574,7 +11599,10 @@ packages:
 
   /tiny-invariant/1.3.1:
     resolution: {integrity: sha512-AD5ih2NlSssTCwsMznbvwMZpJ1cbhkGd2uueNxzv2jDlEeZdU04JQfRnggJQ8DrcVBGjAsCKwFBbDlVNtEMlzw==}
-    dev: true
+
+  /tiny-warning/1.0.3:
+    resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
+    dev: false
 
   /tmp/0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
@@ -12746,3 +12774,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod/3.20.2:
+    resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}
+    dev: false

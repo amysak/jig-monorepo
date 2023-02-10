@@ -17,19 +17,24 @@ import {
   CabinetOpeningModule,
   ClientModule,
   FillerModule,
+  FinishModule,
   JobModule,
   MarkupModule,
   MaterialModule,
   PanelModule,
   ProfileModule,
-  RoomModule,
   TermsModule,
   ToeModule,
-  UpchargeModule,
 } from "models";
-import { FinishModule } from "models/finish";
 import { SeedingService } from "services";
-import { AccountModule, HardwareSetModule, MaterialSetModule } from "shared";
+import {
+  AccountModule,
+  HardwareSetModule,
+  MaterialSetModule,
+  RoomModule,
+  UpchargeModule,
+  VendorModule,
+} from "shared";
 
 import { BaseModule } from "./base";
 import { CommonModule } from "./common";
@@ -99,7 +104,7 @@ import { configuration } from "./config";
     // ReportModule,
 
     // Other
-    // VendorModule,
+    VendorModule,
   ],
   providers: [
     // Global Guard, Authentication check on all routers

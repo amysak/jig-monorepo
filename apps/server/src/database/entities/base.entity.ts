@@ -1,6 +1,5 @@
 import {
   BaseEntity,
-  Column,
   CreateDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -15,9 +14,4 @@ export abstract class AppBaseEntity extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
-}
-
-export abstract class DefaultableBaseEntity extends AppBaseEntity {
-  @Column("boolean", { default: false })
-  isDefault: boolean;
 }

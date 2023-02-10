@@ -1,5 +1,5 @@
 import { PageSkeleton, TabPane, Tabs } from "@jigbid/ui";
-import { Link } from "@tanstack/react-location";
+import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Card, Col, Row } from "antd";
 import { Client, Job } from "type-defs";
@@ -36,7 +36,7 @@ const ActivityCard = <T extends Job | Client>({
         <div className="activityCard__activity" key={`${index}`}>
           <div className="activityCard__activity-row">
             <span className="activityCard__activity-row-title">
-              <Link to={urlGenerator(entry)}>{entry.name}</Link>
+              <Link to={urlGenerator(entry) as any}>{entry.name}</Link>
             </span>
 
             <span>{dayjs().to(dayjs(entry.updatedAt))}</span>
@@ -44,16 +44,17 @@ const ActivityCard = <T extends Job | Client>({
 
           <div className="activityCard__activity-row">
             <span className="activityCard__activity-row-meta">
-              {isJob(entry) ? (
-                <Link
-                  to={`/clients/${entry.clientId}`}
-                  style={{ fontSize: "0.75rem" }}
-                >
-                  {entry.client.name}
-                </Link>
-              ) : (
-                `${entry.jobs?.length || 0} jobs`
-              )}
+              {isJob(entry)
+                ? // TODO: client page
+
+                  // <Link
+                  //   to="/clients/$clientId"
+                  //   params={{ clientId: entry.clientId }}
+                  //   style={{ fontSize: "0.75rem" }}
+                  // >
+                  entry.client.name
+                : // </Link>
+                  `${entry.jobs?.length || 0} jobs`}
             </span>
           </div>
         </div>

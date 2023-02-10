@@ -15,7 +15,7 @@ export {};
 // import debounce from "lodash-es";
 // import React, { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
-// import { useNavigate, useParams } from "@tanstack/react-location";
+// import { useNavigate, useParams } from "@tanstack/react-router";
 // import CreatableSelect from "react-select/creatable";
 // import UILayout from "../../../components/templates/uilayout";
 

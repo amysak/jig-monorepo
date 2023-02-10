@@ -30,6 +30,7 @@
       various reasons)
 - [x] Prepare auto-complete search
 - [x] Transfer the same logic for other setup parts
+- [ ] Fix Vite chunking, currently code-splitting does not work
 - [ ] ♻️ Implement rooms, preferences, calculation logic
 - [ ] ♻️ Add tall/upper, corner cabinets pictures and points with edit forms
 - [ ] ♻️ Implement individual editing pages for cabinet parts

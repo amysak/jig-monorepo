@@ -33,6 +33,11 @@ export class CabinetOpeningController {
     return this.cabinetOpeningService.findByAccountId(user.accountId, query);
   }
 
+  @Get("models")
+  getOpeningModels(@ReqUser() user: Payload) {
+    return this.cabinetOpeningService.getModelsForAccount(user.accountId);
+  }
+
   @Get(":id")
   findOne(@Param("id") id: number) {
     return this.cabinetOpeningService.findOne(id);

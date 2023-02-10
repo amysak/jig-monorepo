@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 
 import { type FinishType } from "type-defs";
-import { DefaultableBaseEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
 import { Account } from "./account.entity";
 
 // Hopefully TypeORM fixes this soon: https://github.com/typeorm/typeorm/pull/9034
@@ -43,7 +43,7 @@ class FinishPrice {
 // @TableInheritance({
 //   column: { type: "text", name: "category", enum: FINISH_TYPE },
 // })
-export class Finish extends DefaultableBaseEntity {
+export class Finish extends AppBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -63,7 +63,7 @@ export class Finish extends DefaultableBaseEntity {
   @Column("real", { nullable: true })
   discount?: number;
 
-  @ManyToOne(() => Account)
+  @ManyToOne(() => Account, { onDelete: "CASCADE" })
   account: Account;
 }
 

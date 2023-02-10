@@ -1,10 +1,12 @@
-import { AfterLoad, Column, Entity, ManyToOne } from "typeorm";
+import { AfterLoad, Column, Entity, ManyToMany, ManyToOne } from "typeorm";
 
 import { Account } from "./account.entity";
-import { DefaultableBaseEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
+import { Cabinet } from "./cabinet.entity";
+import { Room } from "./room.entity";
 
 @Entity()
-export class Upcharge extends DefaultableBaseEntity {
+export class Upcharge extends AppBaseEntity {
   // Ex. "Delivery", "Installation", "Shop Labor"
   @Column("text")
   name: string;
@@ -31,8 +33,20 @@ export class Upcharge extends DefaultableBaseEntity {
   @Column("boolean", { default: true })
   report: boolean;
 
+  @ManyToMany(() => Cabinet, (cabinet) => cabinet.upcharges, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  cabinets?: Cabinet[];
+
+  @ManyToMany(() => Room, (room) => room.upcharges, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  rooms?: Room[];
+
   // Could be directly tied to a cabinet or other entity. If so, then we don't return them in findByAccountId.
   // Basically, need to check for the relationships
-  @ManyToOne(() => Account, { eager: true })
+  @ManyToOne(() => Account, { onDelete: "CASCADE", nullable: false })
   account: Account;
 }

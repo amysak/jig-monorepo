@@ -1,17 +1,22 @@
 import { DoubleRightOutlined, HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb } from "antd";
-import { Link } from "@tanstack/react-location";
-import { nanoid } from "nanoid";
 import { PageSkeleton } from "@jigbid/ui";
+import { Link } from "@tanstack/react-router";
+import { Breadcrumb } from "antd";
+import { nanoid } from "nanoid";
+import { ReactNode } from "react";
 
 interface ToolbarProps {
   initial?: { title: string; path: string };
-  label: any;
-  parent?: { label: any; path: string };
+  parent?: { label: string; path: string };
+  label: string;
 }
 
-export default function Toolbar({ initial, label, parent }: ToolbarProps) {
-  const paths: { path: string; label: any }[] = [];
+export const Toolbar = ({
+  initial,
+  label,
+  parent,
+}: ToolbarProps): ReactNode => {
+  const paths: { path: string; label: string }[] = [];
 
   if (!initial) {
     return <PageSkeleton />;
@@ -37,7 +42,7 @@ export default function Toolbar({ initial, label, parent }: ToolbarProps) {
 
       <Breadcrumb.Item key={nanoid()}>
         {parent ? (
-          <Link to={initial.path}>{initial.title}</Link>
+          <Link to={initial.path as any}>{initial.title}</Link>
         ) : (
           initial.title
         )}
@@ -45,11 +50,11 @@ export default function Toolbar({ initial, label, parent }: ToolbarProps) {
 
       {paths.map((path) => (
         <Breadcrumb.Item key={nanoid()}>
-          <Link to={path.path}>{path.label + "dd"}</Link>
+          <Link to={path.path as any}>{path.label}</Link>
         </Breadcrumb.Item>
       ))}
 
       <Breadcrumb.Item>{label}</Breadcrumb.Item>
     </Breadcrumb>
   );
-}
+};

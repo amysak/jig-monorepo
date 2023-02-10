@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   UseGuards,
 } from "@nestjs/common";
@@ -23,18 +24,23 @@ export class MaterialSetController {
   constructor(private readonly materialSetService: MaterialSetService) {}
 
   @Post()
-  create(@Body() data: any) {
-    return this.materialSetService.create(data);
+  create(@ReqUser() user: Payload, @Body() data: any) {
+    return this.materialSetService.create(user.accountId, data);
   }
 
   @Get()
-  getAccountOpenings(@ReqUser() user: Payload, @Query() query: GetFinishesDto) {
+  getAccountSets(@ReqUser() user: Payload, @Query() query: GetFinishesDto) {
     return this.materialSetService.findByAccountId(user.accountId, query);
   }
 
   @Get(":id")
   findOne(@Param("id") id: number) {
     return this.materialSetService.findOne(id);
+  }
+
+  @Put(":id")
+  assign(@Param("id") id: number, @Body() data: { setId: number }) {
+    return this.materialSetService.assign(id, data);
   }
 
   @Patch(":id")

@@ -9,5 +9,6 @@ import { MaterialSetService } from "./material-set.service";
   imports: [TypeOrmModule.forFeature([MaterialSet])],
   controllers: [MaterialSetController],
   providers: [MaterialSetService],
+  exports: [MaterialSetService],
 })
 export class MaterialSetModule {}

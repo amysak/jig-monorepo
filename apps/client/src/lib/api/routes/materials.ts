@@ -1,13 +1,12 @@
-import { LocationGenerics } from "router";
 import { Material, WithCountDto } from "type-defs";
 import { client } from "../http";
 
-export const getById = (materialId: string): Promise<Material> => {
+export const getById = (materialId: number): Promise<Material> => {
   return client.get(`/materials/${materialId}`);
 };
 
 export const getAll = (
-  query?: LocationGenerics["Search"]
+  query?: Record<string, unknown>
 ): Promise<WithCountDto<Material>> => {
   return client.get(`/materials?${client.getQueryString(query)}`);
 };

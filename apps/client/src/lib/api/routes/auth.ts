@@ -1,5 +1,4 @@
 import { Account, GetMeResult, TokenPair } from "type-defs";
-import { refreshTokenStorage } from "lib/token-storage";
 import { client } from "../http";
 
 export async function signIn(payload: {
@@ -20,13 +19,8 @@ export async function getMe(): Promise<GetMeResult> {
 }
 
 // Potentially a good idea to handle errors right here and re-throw
-export async function updateTokenPair(): Promise<TokenPair> {
-  const refreshToken = refreshTokenStorage.get();
-
-  if (!refreshToken) {
-    // Can be error bound to display friendly to a user
-    throw new Error("No refresh token found");
-  }
-
+export async function updateTokenPair(
+  refreshToken: string
+): Promise<TokenPair> {
   return client.post("/auth/refresh", { refreshToken });
 }

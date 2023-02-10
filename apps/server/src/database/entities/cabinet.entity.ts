@@ -5,23 +5,26 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 
 import {
-  CABINET_BASE_TYPE,
   type CabinetBaseType,
   type CabinetCornerPlacement,
   type CabinetType,
 } from "type-defs";
 
 import { Account } from "./account.entity";
-import { DefaultableBaseEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
+import { CabinetEquipment } from "./cabinet-equipment.entity";
+import { Filler, Panel } from "./cabinet-extension.entity";
+import { CabinetOpening } from "./cabinet-opening.entity";
 import { CabinetSpecifications } from "./cabinet-specifications.entity";
+import { MaterialSet } from "./material-set.entity";
 import { Room } from "./room.entity";
 import { Upcharge } from "./upcharge.entity";
-import { CabinetEquipment } from "./cabinet-equipment.entity";
 
 // Cannot use STI (Single Table Inheritance) because TypeORM is a bad library:
 // https://github.com/typeorm/typeorm/issues/9033
@@ -31,7 +34,7 @@ import { CabinetEquipment } from "./cabinet-equipment.entity";
 // @TableInheritance({
 //   column: { type: "text", name: "type" },
 // })
-export class Cabinet extends DefaultableBaseEntity {
+export class Cabinet extends AppBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -44,7 +47,7 @@ export class Cabinet extends DefaultableBaseEntity {
   @Column("text", { nullable: true })
   cornerPlacement: CabinetCornerPlacement;
 
-  @Column("text", { default: CABINET_BASE_TYPE.STANDARD })
+  @Column("text", { default: "standard" })
   baseType: CabinetBaseType;
 
   @Column("boolean")
@@ -65,50 +68,54 @@ export class Cabinet extends DefaultableBaseEntity {
     {
       onDelete: "CASCADE",
       nullable: false,
-      eager: true,
       cascade: true,
     }
   )
   @JoinColumn()
   specifications: CabinetSpecifications;
 
-  @ManyToOne(() => Account, (account) => account.cabinets, { nullable: false })
-  account: Account;
-
-  @ManyToOne(() => Room, (room) => room.cabinets, { nullable: true })
-  room?: Room;
-
-  // If room is present, then usually can have related parts, such as trims, accessory, etc.
-  // Below is example of how to connect them
-  @ManyToOne(() => CabinetEquipment, { nullable: true })
+  @OneToMany(
+    () => CabinetEquipment,
+    (cabinetEquipment) => cabinetEquipment.cabinet,
+    { nullable: true }
+  )
   equipment?: CabinetEquipment;
 
-  @ManyToMany(() => Upcharge, { nullable: true })
+  @OneToMany(() => CabinetOpening, (cabinetOpening) => cabinetOpening.cabinet, {
+    nullable: true,
+  })
+  openings?: CabinetOpening[];
+
+  @OneToMany(() => Panel, (panel) => panel.cabinet, {
+    nullable: true,
+  })
+  panels?: Panel[];
+
+  @OneToMany(() => Filler, (filler) => filler.cabinet, {
+    nullable: true,
+  })
+  fillers?: Filler[];
+
+  @OneToOne(() => MaterialSet, (materialSet) => materialSet.cabinet, {
+    nullable: true,
+  })
+  materialSet?: MaterialSet;
+
+  @ManyToMany(() => Upcharge, (upcharge) => upcharge.cabinets, { eager: true })
   @JoinTable()
-  upcharges?: Upcharge[];
+  upcharges: Upcharge[];
 
-  // Most likely has to be in some other table which holds room and cabinet
-  // Data about parts that this cabinet needs by default is stored inside specifcations
-  // Later we could also add other table that would represent customizations using existing cabinet
-  // parts in system
-  // TODO
+  @ManyToOne(() => Room, (room) => room.cabinets, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  room?: Room;
 
-  // @OneToMany(
-  //   () => CabinetOpening,
-  //   (cabinetOpening) => cabinetOpening.cabinets,
-  //   { nullable: true }
-  // )
-  // cabinetOpenings?: CabinetOpening[];
-
-  // @OneToMany(() => EndPanel, (endPanel) => endPanel.cabinet, {
-  //   nullable: true,
-  // })
-  // endPanel?: EndPanel[];
-
-  // @OneToMany(() => Filler, (filler) => filler.cabinet, {
-  //   nullable: true,
-  // })
-  // fillers?: Filler[];
+  @ManyToOne(() => Account, (account) => account.cabinets, {
+    onDelete: "CASCADE",
+    nullable: false,
+  })
+  account: Account;
 }
 
 // @ChildEntity(CABINET_TYPE.BASE)

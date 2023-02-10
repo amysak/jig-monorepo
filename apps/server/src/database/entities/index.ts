@@ -14,6 +14,7 @@ export * from "./letter.entity";
 export * from "./markup.entity";
 export * from "./material-set.entity";
 export * from "./material.entity";
+export * from "./model.entity";
 export * from "./preferences.entity";
 export * from "./profile.entity";
 export * from "./report.entity";

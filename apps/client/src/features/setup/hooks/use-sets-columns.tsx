@@ -1,27 +1,19 @@
 import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link, useSearch } from "@tanstack/react-router";
 import { Space, TableProps } from "antd";
 import { HardwareSet, MaterialSet } from "type-defs";
 
-import { useSearch } from "hooks/router";
+import { setsIndexRoute } from "pages/routes";
 
 export const useSetsColumns = () => {
-  const search = useSearch();
+  const search = useSearch({ from: setsIndexRoute.id, strict: false });
 
   const queryClient = useQueryClient();
 
   // const { mutateAsync: deleteProfile } = useEquipmentDeletion();
 
   const baseColumns: TableProps<MaterialSet | HardwareSet>["columns"] = [
-    {
-      key: "name",
-      dataIndex: "name",
-      title: "Name",
-      render(equipmentName: string) {
-        return <Link>{equipmentName}</Link>;
-      },
-    },
     {
       key: "depth",
       dataIndex: "depth",
@@ -57,7 +49,24 @@ export const useSetsColumns = () => {
     },
   ];
 
-  const materialSetColumns = [...baseColumns];
+  const materialSetColumns = [
+    {
+      key: "name",
+      dataIndex: "name",
+      title: "Name",
+      render(setName: string, row: MaterialSet) {
+        return (
+          <Link
+            to="/setup/sets/$setType/$id"
+            params={{ setType: "material", id: row.id }}
+          >
+            {setName}
+          </Link>
+        );
+      },
+    },
+    ...baseColumns,
+  ];
   const hardwareSetColumns = [...baseColumns];
 
   return { materialSetColumns, hardwareSetColumns };

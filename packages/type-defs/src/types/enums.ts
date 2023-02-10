@@ -10,15 +10,15 @@ export type RecordStatus = ObjectValues<typeof RECORD_STATUS>;
 export const getActiveStatus = (isActive: boolean) =>
   isActive ? RECORD_STATUS.ACTIVE : RECORD_STATUS.INACTIVE;
 
-export const COMPLETION_STATUS = {
-  ESTIMATE: "estimate",
-  PROPOSAL: "proposal",
-  COMPLETED: "completed",
-  CANCELLED: "cancelled",
-  PRODUCTION: "production",
-} as const;
+export const COMPLETION_STATUS = [
+  "estimate",
+  "proposal",
+  "completed",
+  "cancelled",
+  "production",
+] as const;
 
-export type CompletionStatus = ObjectValues<typeof COMPLETION_STATUS>;
+export type CompletionStatus = (typeof COMPLETION_STATUS)[number];
 
 export const ACCOUNT_ROLE = {
   ADMIN: "admin",
@@ -35,14 +35,14 @@ export const ADDRESS_TYPE = {
 
 export type AddressType = ObjectValues<typeof ACCOUNT_ROLE>;
 
-export const CABINET_OPENING_TYPE = {
-  DOOR: "door",
-  DRAWER_FRONT: "drawer_front",
-  DRAWER_BOX: "drawer_box",
-  TRAY: "tray",
-} as const;
+export const CABINET_OPENING_TYPE = [
+  "door",
+  "drawer_front",
+  "drawer_box",
+  "tray",
+] as const;
 
-export type CabinetOpeningType = ObjectValues<typeof CABINET_OPENING_TYPE>;
+export type CabinetOpeningType = (typeof CABINET_OPENING_TYPE)[number];
 
 export const CABINET_EQUIPMENT_CATEGORY = {
   TRIM: "trim",
@@ -55,32 +55,26 @@ export type CabinetEquipmentCategory = ObjectValues<
   typeof CABINET_EQUIPMENT_CATEGORY
 >;
 
-export const CABINET_EXTENSION_CATEGORY = {
-  PANEL: "panels",
-  FILLER: "fillers",
-  TOE_KICK: "toe-kicks",
-} as const;
+export const CABINET_EXTENSION_CATEGORY = [
+  "panels",
+  "fillers",
+  "toes",
+] as const;
 
-export type CabinetExtensionCategory = ObjectValues<
-  typeof CABINET_EXTENSION_CATEGORY
->;
+export type CabinetExtensionCategory =
+  (typeof CABINET_EXTENSION_CATEGORY)[number];
 
-export const CABINET_TYPE = {
-  BASE: "base",
-  UPPER: "upper",
-  TALL: "tall",
-  VANITY: "vanity",
-} as const;
+export const CABINET_TYPES = ["base", "upper", "tall", "vanity"] as const;
 
-export type CabinetType = ObjectValues<typeof CABINET_TYPE>;
+export type CabinetType = (typeof CABINET_TYPES)[number];
 
-export const CABINET_BASE_TYPE = {
-  STANDARD: "standard",
-  ADJUSTABLE: "adjustable",
-  SEPARATE: "separate",
-} as const;
+export const CABINET_BASE_TYPES = [
+  "standard",
+  "adjustable",
+  "separate",
+] as const;
 
-export type CabinetBaseType = ObjectValues<typeof CABINET_BASE_TYPE>;
+export type CabinetBaseType = (typeof CABINET_BASE_TYPES)[number];
 
 export const CABINET_CORNER_PLACEMENT = {
   BLIND: "blind",
@@ -92,16 +86,16 @@ export type CabinetCornerPlacement = ObjectValues<
   typeof CABINET_CORNER_PLACEMENT
 >;
 
-export const MATERIAL_PURPOSE = {
-  EDGEBANDING: "edgebanding",
-  BACK: "back",
-  DOOR: "door",
-  FACE_FRAME: "face_frame",
-  INTERIOR: "interior",
-  DRAWER_BOX: "drawer_box",
-} as const;
+export const MATERIAL_PURPOSE = [
+  "back",
+  "box",
+  "door",
+  "frame",
+  "interior",
+  "edgebanding",
+] as const;
 
-export type MaterialPurpose = ObjectValues<typeof MATERIAL_PURPOSE>;
+export type MaterialPurpose = (typeof MATERIAL_PURPOSE)[number];
 
 export const PANEL_TYPE = {
   END: "end",
@@ -111,13 +105,9 @@ export const PANEL_TYPE = {
 
 export type PanelType = ObjectValues<typeof PANEL_TYPE>;
 
-export const PROFILE_TYPE = {
-  EDGE: "edge",
-  FRAME: "frame",
-  PANEL: "panel",
-} as const;
+export const PROFILE_TYPES = ["edge", "frame", "panel"] as const;
 
-export type ProfileType = ObjectValues<typeof PROFILE_TYPE>;
+export type ProfileType = (typeof PROFILE_TYPES)[number];
 
 export const ROOM_ELEVATION = {
   NORTH: "north",

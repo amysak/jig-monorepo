@@ -10,7 +10,7 @@ export {};
 //   Typography,
 // } from "antd";
 // import React, { useState } from "react";
-// import { useNavigate } from "@tanstack/react-location";
+// import { useNavigate } from "@tanstack/react-router";
 // import { getMaterialTypes } from "../../../api/material-types";
 // import { createMaterialSetup } from "../../../api/materials";
 // import {

@@ -1,13 +1,11 @@
 import { FormInput, FormPasswordInput } from "@jigbid/ui";
-import { Link } from "@tanstack/react-location";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { Button, Form, message, Row } from "antd";
 import { isEmpty } from "lodash-es";
 
-import { useNavigate } from "hooks/router";
 import { AuthLayout } from "layouts/auth";
-import { api, client } from "lib/api";
-import { refreshTokenStorage, tokenStorage } from "lib/token-storage";
+import { api } from "lib/api";
 
 import "./signin.scss";
 
@@ -15,9 +13,10 @@ const formLayout = {
   wrapperCol: { span: 24 },
 };
 
-function ForgotYourPasswordLink() {
-  return <Link to="/password-reset">Forgot your password?</Link>;
-}
+// TODO:
+// function ForgotYourPasswordLink() {
+//   return <Link to="/password-reset">Forgot your password?</Link>;
+// }
 
 function SigninPage() {
   const [form] = Form.useForm();
@@ -28,18 +27,15 @@ function SigninPage() {
 
   const { mutate: logIn, isLoading } = useMutation(api.auth.signIn, {
     onSettled: () => {
-      // TODO encapsulate invalidate logic & create a CONST for each query key
       queryClient.invalidateQueries(["account", "me"]);
     },
     onSuccess: ({ accessToken, refreshToken }) => {
-      client.setAuthorizationToken(accessToken);
+      // client.setAuthorizationToken(accessToken);
 
-      tokenStorage.set(accessToken);
-      refreshTokenStorage.set(refreshToken);
+      // tokenStorage.set(accessToken);
+      // refreshTokenStorage.set(refreshToken);
 
-      navigate({ to: "dashboard", replace: true });
-      // This needs to be done to somehow reset the cache for a user and make them sign in again to avoid getting to sign in page
-      //  queryClient.invalidateQueries('todos')
+      navigate({ to: "/dashboard", replace: true });
     },
     onError: () => {
       message.error("Incorrect email/password. Try again.");
@@ -103,7 +99,7 @@ function SigninPage() {
           ]}
         />
 
-        <ForgotYourPasswordLink />
+        {/* <ForgotYourPasswordLink /> */}
 
         <br />
         <br />
@@ -121,7 +117,8 @@ function SigninPage() {
 
         <Row justify="end" style={{ marginTop: "30px" }}>
           <span>{"Don't have an account?"}</span>
-          <Link to="/signup">&nbsp; Sign up</Link>
+          {/* TODO */}
+          {/* <Link to="/signup">&nbsp; Sign up</Link> */}
         </Row>
       </Form>
     </AuthLayout>

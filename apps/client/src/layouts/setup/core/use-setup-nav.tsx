@@ -7,14 +7,20 @@ import Icon, {
   SettingOutlined,
   SwapOutlined,
 } from "@ant-design/icons";
+import {
+  Link,
+  useNavigate,
+  useRouter,
+  useSearch,
+} from "@tanstack/react-router";
 import { MenuProps } from "antd";
-import { useState } from "react";
-import { CABINET_OPENING_TYPE, CABINET_TYPE, PROFILE_TYPE } from "type-defs";
+import { ReactNode, useState } from "react";
+import { CABINET_OPENING_TYPE, CABINET_TYPES, PROFILE_TYPES } from "type-defs";
 
 import CabinetIcon from "assets/images/setup/cabinet.svg";
 import DoorIcon from "assets/images/setup/door.svg";
-import { useSetSearch } from "hooks";
-import { useMatches, useNavigate, useRouter, useSearch } from "hooks/router";
+import { useSetSearch } from "lib/hooks";
+import { setupRoute } from "pages/setup";
 
 import { isDivider, isGroup, isStandardMenu, isSubMenu } from "./guards";
 import { prepareAntdCollection } from "./prepare-antd-data";
@@ -22,49 +28,42 @@ import { prepareAntdCollection } from "./prepare-antd-data";
 type UseSetupNav = () => {
   setupNav: NonNullable<MenuProps["items"]>;
   openKeys: NonNullable<MenuProps["openKeys"]>;
-  onOpenChange: NonNullable<MenuProps["onOpenChange"]>;
 };
 
 export const useSetupNav: UseSetupNav = () => {
-  const search = useSearch();
-  const router = useRouter();
-  const navigate = useNavigate();
+  const { latestLocation } = useRouter().state;
 
+  const navigate = useNavigate({ from: setupRoute.id });
+  const search = useSearch({ from: setupRoute.id });
   const [setSearch] = useSetSearch();
 
   const populateSubMenu = (item: NonNullable<MenuProps["items"]>[number]) => {
-    if (!item) {
+    if (!item || isDivider(item) || isGroup(item)) {
       return item;
     }
 
-    if (isDivider(item)) {
-      return item;
-    }
-
-    if (isGroup(item)) {
-      return item;
-    }
-
+    // Standard menu means no sub menu
     if (isStandardMenu(item)) {
       return {
         ...item,
-        onClick: () => {
-          setOpenKeys([item.key as string]);
-          navigate({ to: `/setup/${item.key}` });
-        },
+        label: (
+          <Link from="/setup" to={item.key as any}>
+            {item.label}
+          </Link>
+        ),
+        onClick: () => setOpenKeys([item.key as string]),
       };
     }
 
+    // Submenu
     return {
-      key: item.key,
-      icon: item.icon,
-      label: item.label,
+      ...item,
       onTitleClick: () => {
-        const onRoute = !!router.state.matches.find(
-          (match) => match.route.path === item.key
-        );
+        const onRoute = latestLocation.pathname.includes(item.key);
 
-        return navigate({ to: onRoute ? "/setup" : `/setup/${item.key}` });
+        // TODO:
+        navigate({ to: onRoute ? "/setup" : (item.key as any) });
+        setOpenKeys(onRoute ? [] : [item.key]);
       },
       children: item.children.map((child) => {
         if (!child) return child;
@@ -72,7 +71,20 @@ export const useSetupNav: UseSetupNav = () => {
         if (isStandardMenu(child)) {
           return {
             ...child,
-            onClick: () => navigate({ to: `/setup/${item.key}/${child.key}` }),
+            onClick: () => {
+              const onRoute = latestLocation.pathname.includes(
+                child.key as string
+              );
+
+              navigate({
+                to: onRoute
+                  ? (item.key as any)
+                  : (`${item.key}/${child.key}` as any),
+              });
+              setOpenKeys(
+                onRoute ? [item.key] : ([item.key, child.key] as string[])
+              );
+            },
           };
         }
 
@@ -85,12 +97,10 @@ export const useSetupNav: UseSetupNav = () => {
               ...nestedChild,
               onClick: () =>
                 setSearch({
-                  setup: {
-                    [child.key]:
-                      search.setup?.[child.key] !== nestedChild?.key
-                        ? nestedChild?.key
-                        : null,
-                  },
+                  [child.key]:
+                    search[child.key] !== nestedChild?.key
+                      ? nestedChild?.key
+                      : null,
                 }),
             })),
           };
@@ -101,11 +111,15 @@ export const useSetupNav: UseSetupNav = () => {
     };
   };
 
-  // TODO:
-  type NavSetupItem = NonNullable<MenuProps["items"]>[number] &
-    ({ type: "divider"; key?: undefined } | { type?: undefined; key: string });
+  // Ant Design is unreal to use for type inferring
+  type NavSetupItem = {
+    key: string;
+    label: string;
+    icon?: ReactNode;
+    onTitleClick?: (event: unknown) => void;
+    children?: NavSetupItem[];
+  } & ({ type: "divider"; key?: undefined } | { type?: string; key: string });
 
-  // Has to be strict
   const originalLinks: NavSetupItem[] = [
     {
       key: "cabinets",
@@ -119,7 +133,7 @@ export const useSetupNav: UseSetupNav = () => {
           key: "type",
           label: "Cabinet Type",
           type: "group",
-          children: prepareAntdCollection(Object.values(CABINET_TYPE)),
+          children: prepareAntdCollection(CABINET_TYPES),
         },
       ],
     },
@@ -132,7 +146,7 @@ export const useSetupNav: UseSetupNav = () => {
           key: "category",
           label: "Opening Category",
           type: "group",
-          children: prepareAntdCollection(Object.values(CABINET_OPENING_TYPE)),
+          children: prepareAntdCollection(CABINET_OPENING_TYPE),
         },
       ],
     },
@@ -145,7 +159,7 @@ export const useSetupNav: UseSetupNav = () => {
           key: "type",
           label: "Profile Type",
           type: "group",
-          children: prepareAntdCollection(Object.values(PROFILE_TYPE)),
+          children: prepareAntdCollection(PROFILE_TYPES),
         },
       ],
     },
@@ -160,11 +174,13 @@ export const useSetupNav: UseSetupNav = () => {
           type: "group",
           // TODO: enum
           children: prepareAntdCollection([
-            "trim",
-            "molding",
-            "accessory",
-            "hardware",
-            "misc",
+            "Trim",
+            "Molding",
+            "Accessory",
+            // Done to avoid duplicating key
+            "Hardware",
+            "Misc",
+            // Others are uppercase just for consistency
           ]),
         },
       ],
@@ -173,7 +189,7 @@ export const useSetupNav: UseSetupNav = () => {
       key: "extensions",
       icon: <PlusCircleOutlined />,
       label: "Extensions",
-      children: prepareAntdCollection(["panels", "fillers", "toe-kicks"]),
+      children: prepareAntdCollection(["panels", "fillers", "toes"]),
     },
     {
       key: "materials",
@@ -197,7 +213,7 @@ export const useSetupNav: UseSetupNav = () => {
       icon: <SettingOutlined />,
       label: "Sets",
       // TODO: enum
-      children: prepareAntdCollection(["material-sets", "hardware-sets"]),
+      children: prepareAntdCollection(["material", "hardware"]),
     },
     // { type: "divider" },
     // {
@@ -224,29 +240,22 @@ export const useSetupNav: UseSetupNav = () => {
 
   const populatedNav = originalLinks.map(populateSubMenu);
 
-  const matches = useMatches();
-
   // We put the key of the menu inside of the route path in cabinets page (for example)
-  const routeKeys = originalLinks.map((link) => link?.key);
+  const getKeys = (links: NavSetupItem[]): string[] => {
+    const keys = links.map((link) => {
+      if (!link.children) return link.key;
 
-  const latestMatchRouteName = matches.find((match) =>
-    routeKeys.includes(match.route.path)
-  )?.route.path;
+      return [link.key, ...getKeys(link.children)];
+    });
 
-  const [openKeys, setOpenKeys] = useState(
-    latestMatchRouteName ? [latestMatchRouteName] : []
-  );
-
-  const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
-    const rootSubmenuKeys = populatedNav.map((item) => item?.key);
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-
-    if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      setOpenKeys(keys);
-    } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-    }
+    return keys.flat().filter(Boolean);
   };
 
-  return { setupNav: populatedNav, openKeys, onOpenChange };
+  const routeKeys = getKeys(originalLinks);
+  const latestMatches = latestLocation?.pathname.split("/") || [];
+  const [openKeys, setOpenKeys] = useState(
+    latestMatches.filter((key) => routeKeys.includes(key))
+  );
+
+  return { setupNav: populatedNav, openKeys };
 };

@@ -1,11 +1,9 @@
 import { DoubleRightOutlined, HomeOutlined } from "@ant-design/icons";
-import { Link } from "@tanstack/react-location";
+import { Link, useRouter } from "@tanstack/react-router";
 import { Breadcrumb, Layout, LayoutProps } from "antd";
 import { capitalize } from "lodash-es";
 import { nanoid } from "nanoid";
 import { ReactNode, useCallback } from "react";
-
-import { useRouter } from "hooks/router";
 
 import "./style.scss";
 
@@ -13,20 +11,24 @@ const { Content } = Layout;
 
 interface UILayoutProps {
   title?: string;
+  borderless?: boolean;
   children?: ReactNode;
 }
 
 export const UILayout = ({
   title,
   children,
+  borderless = false,
   ...props
 }: UILayoutProps & LayoutProps) => {
-  const router = useRouter();
+  const namedMatches = useRouter().state.currentMatches.filter(
+    (match) => match.route.path && !match.route.path.startsWith("$")
+  );
 
   // Could break
   const getNonGenericRoutes = useCallback(
     () =>
-      router.state.matches
+      namedMatches
         .map((match) => ({
           title: match.route.path
             ?.replaceAll("/", "")
@@ -34,16 +36,16 @@ export const UILayout = ({
             .split(" ")
             .map(capitalize)
             .join(" "),
-          pathname: match.pathname,
+          pathname: match.id,
         }))
-        .filter(({ title }) => title && !title.startsWith(":")),
-    [router.state.matches]
+        .filter(({ title }) => title && !title.startsWith("$")),
+    [namedMatches]
   );
 
   return (
     <Layout
       {...props}
-      className={props.className}
+      className={`ui-layout ${props.className || ""}`}
       style={{ ...props.style, background: "transparent" }}
     >
       <Breadcrumb
@@ -58,7 +60,7 @@ export const UILayout = ({
 
         {getNonGenericRoutes().map(({ title, pathname }) => (
           <Breadcrumb.Item key={nanoid()}>
-            <Link to={pathname}>{title}</Link>
+            <Link to={pathname as any}>{title}</Link>
           </Breadcrumb.Item>
         ))}
 
@@ -67,7 +69,9 @@ export const UILayout = ({
         </Breadcrumb.Item>
       </Breadcrumb>
 
-      <Content>{children}</Content>
+      <Content className={borderless ? "" : "ui-layout-content"}>
+        {children}
+      </Content>
     </Layout>
   );
 };

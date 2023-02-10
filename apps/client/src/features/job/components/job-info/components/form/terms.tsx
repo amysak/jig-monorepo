@@ -2,7 +2,7 @@ import { Button, Card, Col, Form, Modal, Row, Space, Typography } from "antd";
 import { useState } from "react";
 
 import { FormRadioSet, FormSelect, PageSkeleton } from "@jigbid/ui";
-import { useQueryTerms } from "hooks/queries";
+import { useQueryTerms } from "lib/hooks/queries";
 import { isMultiTerms } from "type-defs";
 
 import { FormJob } from "../../core";

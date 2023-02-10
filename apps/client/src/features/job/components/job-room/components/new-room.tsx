@@ -1,8 +1,9 @@
 import { FormInput, FormNumberInput, FormSelect } from "@jigbid/ui";
+import { useParams } from "@tanstack/react-router";
 import { Button, Form, Row, Typography } from "antd";
 
-import { useMatch } from "hooks/router";
-import { useCreateRoom } from "hooks/queries";
+import { useCreateRoom } from "lib/hooks/queries";
+import { jobRoute } from "pages/routes";
 
 const { Title } = Typography;
 
@@ -20,11 +21,9 @@ const layout = {
 };
 
 export function NewRoom() {
-  const {
-    params: { id },
-  } = useMatch();
+  const { jobId } = useParams({ from: jobRoute.id });
 
-  const { mutate: createRoom } = useCreateRoom(id);
+  const { mutate: createRoom } = useCreateRoom(jobId);
 
   return (
     <Form

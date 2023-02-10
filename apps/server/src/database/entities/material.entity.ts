@@ -1,9 +1,10 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 import { type MaterialPurpose } from "type-defs";
-import { DefaultableBaseEntity } from "./base.entity";
+import { AppBaseEntity } from "./base.entity";
 import { Vendor } from "./vendor.entity";
 import { Account } from "./account.entity";
+import { MaterialType } from "./model.entity";
 
 // Maybe needs to be split by material source (discountedPrice = price * (100 { - or + } discount) / 100)
 // and create a getter for discounted price
@@ -11,7 +12,7 @@ import { Account } from "./account.entity";
 // @TableInheritance({
 //   column: { type: "varchar", name: "purpose", enum: MATERIAL_PURPOSE },
 // })
-export class Material extends DefaultableBaseEntity {
+export class Material extends AppBaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,8 +25,8 @@ export class Material extends DefaultableBaseEntity {
   @Column("text")
   name: string;
 
-  @Column("text")
-  type: string;
+  @ManyToOne(() => MaterialType, { onDelete: "CASCADE", cascade: true })
+  type: MaterialType;
 
   @Column("text")
   description: string;
@@ -42,10 +43,10 @@ export class Material extends DefaultableBaseEntity {
   @Column("boolean", { default: false })
   isFinished: boolean;
 
-  @ManyToOne(() => Vendor)
+  @ManyToOne(() => Vendor, { onDelete: "CASCADE" })
   vendor: Vendor;
 
-  @ManyToOne(() => Account)
+  @ManyToOne(() => Account, { onDelete: "CASCADE" })
   account: Account;
 }
 

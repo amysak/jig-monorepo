@@ -7,6 +7,11 @@ import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 import path from "path";
+import { dependencies } from "./package.json";
+
+const reactDeps = Object.keys(dependencies).filter(
+  (key) => key === "react" || key.startsWith("react-")
+);
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -20,9 +25,24 @@ export default defineConfig(({ mode }) => {
     },
     envPrefix: "VITE_",
     define: {},
+    // optimizeDeps: { include: ["@jigbid/ui"] },
     build: {
+      // commonjsOptions: { include: ["@jigbid/ui", /node_modules/] },
       outDir: "build",
       sourcemap: false,
+      // rollupOptions: {
+      //   output: {
+      //     manualChunks: {
+      //       vendor: reactDeps,
+      //       ...Object.keys(dependencies).reduce((chunks, name) => {
+      //         if (!reactDeps.includes(name)) {
+      //           chunks[name] = [name];
+      //         }
+      //         return chunks;
+      //       }, {}),
+      //     },
+      //   },
+      // },
     },
     resolve: {
       alias: {

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, Repository } from "typeorm";
 
 import { Material } from "database/entities";
 
@@ -18,11 +18,6 @@ export class MaterialService {
   }
 
   async findByAccountId(accountId: number, opts: GetMaterialsDto) {
-    const defaultWhere: FindOptionsWhere<Material> = {
-      account: { id: accountId },
-    };
-    if (opts.type) defaultWhere.type = opts.type;
-
     let query = this.materialRepository
       .createQueryBuilder("material")
       .where("material.account_id = :accountId", { accountId });

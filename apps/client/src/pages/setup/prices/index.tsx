@@ -3,8 +3,8 @@ import { Divider, Space, TableProps } from "antd";
 import { Filler } from "type-defs";
 
 import { SetupTable, usePricesColumns } from "features/setup";
-import { usePricesQuery } from "hooks/queries";
-import { useSearch } from "hooks/router";
+import { usePricesQuery } from "lib/hooks/queries";
+import { useSearch } from "@tanstack/react-router";
 import { useToggles } from "lib/store";
 
 import "./prices.scss";

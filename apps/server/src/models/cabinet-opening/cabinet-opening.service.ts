@@ -68,6 +68,17 @@ export class CabinetOpeningService {
     return { count, data: accountOpenings };
   }
 
+  async getModelsForAccount(accountId: number) {
+    const res = await this.cabinetOpeningRepository
+      .createQueryBuilder("opening")
+      .where("opening.account_id = :accountId", { accountId })
+      .select("opening.model", "model")
+      .distinct(true)
+      .getRawMany();
+
+    return res.map((r) => r.model);
+  }
+
   findOne(id: number) {
     return this.cabinetOpeningRepository.findOne({ where: { id } });
   }

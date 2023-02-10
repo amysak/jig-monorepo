@@ -1,6 +1,6 @@
 export {};
 // import { PlusOutlined } from "@ant-design/icons";
-// import { Link, useNavigate } from "@tanstack/react-location";
+// import { Link, useNavigate } from "@tanstack/react-router";
 // import { Button, Divider, Layout, Menu, Row } from "antd";
 // import { useState } from "react";
 

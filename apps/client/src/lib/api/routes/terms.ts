@@ -1,9 +1,8 @@
-import { LocationGenerics } from "router";
 import { ApiGetResult, Terms } from "type-defs";
 import { client } from "../http";
 
 export const getAll = (
-  query?: LocationGenerics["Search"]
+  query?: Record<string, unknown>
 ): Promise<ApiGetResult<Terms>> => {
   return client.get(`/terms?${client.getQueryString(query)}`);
 };

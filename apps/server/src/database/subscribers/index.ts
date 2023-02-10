@@ -1,1 +1,1 @@
-export * from "./default.subscriber";
+export {};

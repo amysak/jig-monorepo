@@ -3,7 +3,7 @@ export {};
 // import React, { useState } from "react";
 
 // import { api } from "api/Api";
-// import { Link } from "@tanstack/react-location";
+// import { Link } from "@tanstack/react-router";
 // import {
 //   getFinishes,
 //   TGetSetupFinishesData,

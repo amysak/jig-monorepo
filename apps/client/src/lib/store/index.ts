@@ -1,2 +1,2 @@
-export * from "./toggles";
-export * from "./room";
+export * from "./toggle";
+export * from "./token";
