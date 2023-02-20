@@ -1,6 +1,3 @@
-// @BeforeInsert
-// fill preferences with creator accounts preferences
-
 import {
   Column,
   Entity,
@@ -10,20 +7,19 @@ import {
   OneToOne,
 } from "typeorm";
 
-import { Account } from "./account.entity";
-import { MailingAddress, PhysicalAddress } from "./address.entity";
+import { Address } from "./address.entity";
 import { AppBaseEntity } from "./base.entity";
 import { Job } from "./job.entity";
-import { ClientPreferences } from "./preferences.entity";
+import { User } from "./user.entity";
 
 class ClientAddresses {
-  @OneToOne(() => MailingAddress, { nullable: true })
+  @OneToOne(() => Address, { nullable: true })
   @JoinColumn()
-  mailing?: MailingAddress;
+  mailing?: Address;
 
-  @OneToOne(() => PhysicalAddress, { nullable: true })
+  @OneToOne(() => Address, { nullable: true })
   @JoinColumn()
-  physical?: PhysicalAddress;
+  physical?: Address;
 }
 
 @Entity()
@@ -38,14 +34,11 @@ export class Client extends AppBaseEntity {
   addresses: ClientAddresses;
 
   @OneToMany(() => Job, (job) => job.client)
-  jobs?: Job[];
+  jobs: Job[];
 
-  @ManyToOne(() => Account, (account) => account.clients, {
+  @ManyToOne(() => User, (user) => user.clients, {
+    nullable: false,
     onDelete: "CASCADE",
   })
-  account: Account;
-
-  @OneToOne(() => ClientPreferences)
-  @JoinColumn()
-  preferences: ClientPreferences;
+  user: User;
 }

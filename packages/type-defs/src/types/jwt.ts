@@ -4,7 +4,7 @@ export type TokenPair = {
 };
 
 export type Payload = {
-  accountId: number;
+  userId: number;
   email: string;
   role: string;
 };

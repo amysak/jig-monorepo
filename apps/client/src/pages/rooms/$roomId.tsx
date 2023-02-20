@@ -3,7 +3,14 @@ import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { Tabs } from "antd";
 import { ReactNode } from "react";
 
-import { RoomCabinets, RoomSkeleton, RoomSummary } from "features/room";
+import {
+  RoomAccessory,
+  RoomCabinets,
+  RoomPanels,
+  RoomSkeleton,
+  RoomSummary,
+  RoomUpcharges,
+} from "features/room";
 import { UILayout } from "layouts/ui";
 import { api } from "lib/api";
 import { RoomTab } from "lib/validation";
@@ -11,13 +18,19 @@ import { roomRoute } from "./routes";
 
 const panes: { key: RoomTab; label: string; children: ReactNode }[] = [
   {
-    label: "Room Summary",
+    label: "Summary",
     children: <RoomSummary />,
     key: "summary",
   },
-  { label: "Room Setup", children: <RoomCabinets />, key: "cabinets" },
+  { label: "Setup", children: <RoomCabinets />, key: "cabinets" },
+  // Should be able to add all types of panels in here
+  { label: "Panels", children: <RoomPanels />, key: "panels" },
+  // Additional accesssory
+  { label: "Accessory", children: <RoomAccessory />, key: "accessory" },
+  // Editing and adding additional upcharges
+  { label: "Upcharges", children: <RoomUpcharges />, key: "upcharges" },
   // { label: "Separate parts", children: <RoomMisc />, key: "misc" },
-  // { label: "Room Prices", children: <RoomPrices />, key: "prices" },
+  // { label: "Prices", children: <RoomPrices />, key: "prices" },
 ];
 
 export default function RoomPage() {

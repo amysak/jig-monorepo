@@ -24,9 +24,9 @@ import {
   materialRoute,
   materialsIndexRoute,
   materialsRoute,
-  openingRoute,
-  openingsIndexRoute,
-  openingsRoute,
+  modelRoute,
+  modelsIndexRoute,
+  modelsRoute,
   profileRoute,
   profilesIndexRoute,
   profilesRoute,
@@ -65,7 +65,7 @@ export const rootChildren = [
       cabinetsRoute.addChildren([
         cabinetsIndexRoute.addChildren([cabinetRoute]),
       ]),
-      openingsRoute.addChildren([openingsIndexRoute, openingRoute]),
+      modelsRoute.addChildren([modelsIndexRoute, modelRoute]),
       extensionsRoute.addChildren([
         extensionsIndexRoute.addChildren([
           extensionsByCategoryRoute.addChildren([extensionRoute]),

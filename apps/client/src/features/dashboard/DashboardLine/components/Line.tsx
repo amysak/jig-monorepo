@@ -4,7 +4,7 @@ import { isNil, upperFirst } from "lodash-es";
 import { CSSProperties, useMemo } from "react";
 
 import { SkeletonInput, Title } from "@jigbid/ui";
-import { STATS_OPTION, type AccountStats, type StatsOption } from "type-defs";
+import { STATS_OPTION, type UserStats, type StatsOption } from "type-defs";
 
 import { useLineSettingsType } from "../hooks/useLineSettings";
 import { LineColorsByEntities, prepareData } from "../utils";
@@ -17,7 +17,7 @@ const getDefaultData = (color: unknown, entity: StatsOption): Serie[] => [
 ];
 
 interface LineProps extends ReturnType<useLineSettingsType> {
-  data: AccountStats;
+  data: UserStats;
   isLoading: boolean;
   entity: StatsOption;
 }

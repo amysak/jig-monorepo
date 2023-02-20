@@ -30,7 +30,7 @@ export class AuthController {
     }
 
     try {
-      return this.auth.decodeTokenWithAccount(token);
+      return this.auth.decodeTokenWithUser(token);
     } catch (error) {
       throw new BadRequestException(error);
     }
@@ -68,7 +68,9 @@ export class AuthController {
     @Body("refreshToken") token?: string
   ): TokenPair {
     if (!token || !this.auth.validateRefreshToken(user, token)) {
-      throw new UnauthorizedException("InvalidRefreshToken");
+      throw new UnauthorizedException(
+        "Invalid refresh token. Please login again."
+      );
     }
 
     return this.auth.jwtSign(user);

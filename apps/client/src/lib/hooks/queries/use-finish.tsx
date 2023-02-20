@@ -8,36 +8,40 @@ import {
 
 import { api, GrouppedFinishes } from "lib/api";
 
-import { Finish, WithCountDto } from "type-defs";
+import { FinishProcess, WithCountDto } from "type-defs";
 
-export const useFinishQuery = (id: number, options?: UseQueryOptions<Finish>) =>
-  useQuery<Finish>(["finishes", id], () => api.finishes.getById(id), {
+export const useFinishQuery = (
+  id: number,
+  options?: UseQueryOptions<FinishProcess>
+) =>
+  useQuery<FinishProcess>(["finishes", id], () => api.finishes.getById(id), {
     ...options,
   });
 
 export const useFinishesQuery = (
-  search: Record<string, unknown>,
-  options?: UseQueryOptions<WithCountDto<Finish>>
+  search?: Record<string, unknown>,
+  options?: UseQueryOptions<WithCountDto<FinishProcess>>
 ) =>
-  useQuery<WithCountDto<Finish>>(
-    ["finishes", search],
-    () => api.finishes.getAll(search),
-    {
-      ...options,
-    }
-  );
+  useQuery<WithCountDto<FinishProcess>>({
+    queryKey: search ? ["finishes", search] : ["finishes"],
+    queryFn: () => api.finishes.getAll(search),
+    ...options,
+  });
 
 export const useFinishesGrouppedQuery = (
-  search: Record<string, unknown>,
+  search?: Record<string, unknown>,
   options?: UseQueryOptions<GrouppedFinishes>
 ) =>
-  useQuery<GrouppedFinishes>(
-    ["finishes", search],
-    () => api.finishes.getGroupped(search),
-    {
-      ...options,
-    }
-  );
+  useQuery<GrouppedFinishes>({
+    queryKey: search ? ["finishes", search] : ["finishes"],
+    queryFn: async () => {
+      const processes = await api.finishes.getAll(search);
+      const paints = await api.finishes.getPaints(search);
+
+      return { processes: processes.data, paints: paints.data };
+    },
+    ...options,
+  });
 
 // export const useMaterialsPaginated = ( search: Record<string, unknown>,
 //   options?: UseQueryOptions<WithCountDto<Material>>
@@ -69,7 +73,7 @@ export const useFinishesGrouppedQuery = (
 // };
 
 export const useFinishDeletion = (
-  options?: UseMutationOptions<Finish, unknown, string | number>
+  options?: UseMutationOptions<FinishProcess, unknown, string | number>
 ) => {
   const queryClient = useQueryClient();
 

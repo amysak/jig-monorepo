@@ -1,14 +1,7 @@
-import {
-  ChildEntity,
-  Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  TableInheritance,
-} from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
+import { AppBaseEntity } from "./base.entity";
 
-import { ADDRESS_TYPE } from "type-defs";
-import { Account } from "./account.entity";
+import { User } from "./user.entity";
 
 export class PhoneNumber {
   @Column("text", { nullable: true })
@@ -33,28 +26,19 @@ class AddressName {
 }
 
 @Entity()
-@TableInheritance({
-  column: { type: "text", name: "type", enum: ADDRESS_TYPE },
-})
-export class Address {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class Address extends AppBaseEntity {
+  @Column("text")
+  type: string;
 
   @Column(() => AddressName)
   name: AddressName;
 
-  @Column("text")
-  type: string;
+  @Column("text", { nullable: true })
+  addressLine: string;
 
-  @Column("simple-array")
+  @Column("jsonb", { default: [] })
   phoneNumbers?: PhoneNumber[];
 
-  @ManyToOne(() => Account, (account) => account.company?.addresses)
-  account: Account;
+  @ManyToOne(() => User, (user) => user.addresses)
+  user: User;
 }
-
-@ChildEntity(ADDRESS_TYPE.PHYSICAL)
-export class PhysicalAddress extends Address {}
-
-@ChildEntity(ADDRESS_TYPE.MAILING)
-export class MailingAddress extends Address {}

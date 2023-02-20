@@ -1,4 +1,4 @@
-import { STATS_OPTION, type AccountStats, type StatsOption } from "type-defs";
+import { STATS_OPTION, type UserStats, type StatsOption } from "type-defs";
 import { DatePickerProps as DefaultDatePickerProps } from "antd";
 import { dayjs, Dayjs } from "lib/dayjs";
 import { nanoid } from "nanoid";
@@ -52,7 +52,7 @@ const isWeekOrMonth = (range: Ranges) =>
 export const prepareData = (
   from: Dayjs,
   range: Ranges,
-  inputData: AccountStats,
+  inputData: UserStats,
   type: StatsOption
 ) => {
   const daysInWeek = 7;

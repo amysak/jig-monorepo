@@ -1,26 +1,20 @@
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, ManyToOne, OneToOne } from "typeorm";
 
-import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
 import { Room } from "./room.entity";
+import { User } from "./user.entity";
 
 @Entity()
 export class HardwareSet extends AppBaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column("text")
   name: string;
 
-  @OneToOne(() => Room, (room) => room.hardwareSet, { onDelete: "CASCADE" })
+  @OneToOne(() => Room, (room) => room.hardwareSet, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
   room?: Room;
 
-  @ManyToOne(() => Account, { onDelete: "CASCADE" })
-  account: Account;
+  @ManyToOne(() => User, { nullable: false, onDelete: "CASCADE" })
+  user: User;
 }

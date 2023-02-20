@@ -6,11 +6,11 @@ import { isEmpty } from "lodash-es";
 
 import { AuthLayout } from "layouts/auth";
 import { api } from "lib/api";
+import { useAuthorization } from "lib/hooks";
 import { tokenActions } from "lib/store";
 import { dashboardRoute } from "pages/dashboard";
 
 import "./signin.scss";
-import { useAuthorization } from "lib/hooks";
 
 const formLayout = {
   wrapperCol: { span: 24 },
@@ -34,7 +34,7 @@ function SigninPage() {
     api.auth.signIn,
     {
       onSettled: () => {
-        queryClient.invalidateQueries(["account", "me"]);
+        queryClient.invalidateQueries(["users", "me"]);
       },
       onSuccess: ({ accessToken, refreshToken }) => {
         tokenActions.set("access", accessToken);

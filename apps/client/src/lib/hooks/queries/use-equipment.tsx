@@ -7,13 +7,13 @@ import {
 } from "@tanstack/react-query";
 
 import { api } from "lib/api";
-import { CabinetEquipment, WithCountDto } from "type-defs";
+import { Equipment, WithCountDto } from "type-defs";
 
 export const useEquipmentPaginated = (
   query: Record<string, unknown>,
-  options?: UseQueryOptions<WithCountDto<CabinetEquipment>>
+  options?: UseQueryOptions<WithCountDto<Equipment>>
 ) =>
-  useQuery<WithCountDto<CabinetEquipment>>(
+  useQuery<WithCountDto<Equipment>>(
     ["equipment", query],
     () => api.equipment.getAll(query),
     {
@@ -22,7 +22,7 @@ export const useEquipmentPaginated = (
   );
 
 export const useEquipmentDeletion = (
-  options?: UseMutationOptions<CabinetEquipment, unknown, string | number>
+  options?: UseMutationOptions<Equipment, unknown, string | number>
 ) => {
   const queryClient = useQueryClient();
 

@@ -30,16 +30,16 @@ export class ClientController {
   create(@ReqUser() user: Payload, @Body() data: CreateClientDto) {
     return this.clientService.create({
       ...data,
-      accountId: user.accountId,
+      userId: user.userId,
     });
   }
 
   @Get()
-  async getAccountClients(
+  async getUserClients(
     @ReqUser() user: Payload,
     @Query() query: PaginationDto
   ) {
-    return this.clientService.findByAccountId(user.accountId, query);
+    return this.clientService.findByUserId(user.userId, query);
   }
 
   @Get()

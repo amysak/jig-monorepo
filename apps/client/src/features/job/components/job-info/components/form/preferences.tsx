@@ -20,13 +20,13 @@ export const JobFormPreferences = () => {
         <FormLayout layout={layout}>
           <FormNumberInput
             label="Sales Commision %"
-            name={["preferences", "markup", "fees", "salesCommission"]}
+            name={["markup", "fees", "salesCommission"]}
             percent
           />
 
           <FormNumberInput
             label="Design fee %"
-            name={["preferences", "markup", "fees", "design"]}
+            name={["markup", "fees", "design"]}
             percent
           />
 
@@ -36,24 +36,24 @@ export const JobFormPreferences = () => {
               { label: "no", value: false },
             ]}
             label="Show design fee on Estimate?"
-            name={["preferences", "markup", "fees", "showDesignOnEstimate"]}
+            name={["markup", "fees", "showDesignOnEstimate"]}
           />
 
           <FormNumberInput
             label="Overhead Markup %"
-            name={["preferences", "markup", "fees", "overhead"]}
+            name={["markup", "fees", "overhead"]}
             percent
           />
 
           <FormNumberInput
             label="Profit Markup %"
-            name={["preferences", "markup", "fees", "profit"]}
+            name={["markup", "fees", "profit"]}
             percent
           />
 
           <FormNumberInput
             label="Additional Markup %"
-            name={["preferences", "markup", "fees", "additional"]}
+            name={["markup", "fees", "additional"]}
             percent
           />
 
@@ -63,14 +63,14 @@ export const JobFormPreferences = () => {
           </Paragraph>
           <FormNumberInput
             label="Fixed Adjustment Amount"
-            name={["preferences", "markup", "fees", "fixed"]}
+            name={["markup", "fees", "fixed"]}
             help="(Enter a positive or negative amount)"
           />
 
           <FormInput
             textarea={{ rows: 2 }}
             label="Adjustment Reason"
-            name={["preferences", "markup", "fees", "reason"]}
+            name={["markup", "fees", "reason"]}
           />
         </FormLayout>
       </Card>
@@ -82,7 +82,7 @@ export const JobFormPreferences = () => {
           <FormNumberInput
             percent
             label="Sales Tax Rate?"
-            name={["preferences", "markup", "taxes", "salesTax"]}
+            name={["markup", "taxes", "salesTax"]}
           />
 
           <FormRadioSet
@@ -91,7 +91,7 @@ export const JobFormPreferences = () => {
               { label: "no", value: false },
             ]}
             label="Sales Tax on Materials?"
-            name={["preferences", "markup", "taxes", "appliedTo", "materials"]}
+            name={["markup", "taxes", "appliedTo", "materials"]}
           />
 
           <FormRadioSet
@@ -100,7 +100,7 @@ export const JobFormPreferences = () => {
               { label: "no", value: false },
             ]}
             label="Sales Tax on Shop Labor?"
-            name={["preferences", "markup", "taxes", "appliedTo", "shopLabor"]}
+            name={["markup", "taxes", "appliedTo", "shopLabor"]}
           />
 
           <FormRadioSet
@@ -109,13 +109,7 @@ export const JobFormPreferences = () => {
               { label: "no", value: false },
             ]}
             label="Sales Tax on Installation?"
-            name={[
-              "preferences",
-              "markup",
-              "taxes",
-              "appliedTo",
-              "installation",
-            ]}
+            name={["markup", "taxes", "appliedTo", "installation"]}
           />
 
           <FormRadioSet
@@ -124,7 +118,7 @@ export const JobFormPreferences = () => {
               { label: "no", value: false },
             ]}
             label="Sales Tax on Delivery?"
-            name={["preferences", "markup", "taxes", "appliedTo", "delivery"]}
+            name={["markup", "taxes", "appliedTo", "delivery"]}
           />
         </FormLayout>
       </Card>
@@ -139,7 +133,7 @@ export const JobFormPreferences = () => {
               labelCol={{ span: "24" }}
               label="Delivery Text for Reports"
               textarea={{ style: { width: "100%" }, rows: 5 }}
-              name={["preferences", "delivery", "text"]}
+              name={["delivery", "text"]}
             />
           </Col>
 
@@ -147,30 +141,30 @@ export const JobFormPreferences = () => {
             <FormLayout layout={deliveryLayout}>
               <FormNumberInput
                 label="Delivery Trip Quantity"
-                name={["preferences", "delivery", "tripQuantity"]}
+                name={["delivery", "tripQuantity"]}
               />
 
               <FormNumberInput
                 label="Miles to Job Site"
-                name={["preferences", "delivery", "milesToJobSite"]}
+                name={["delivery", "milesToJobSite"]}
               />
 
               <FormNumberInput
                 cost
                 label="Delivery Rate per Trip"
-                name={["preferences", "delivery", "perTrip"]}
+                name={["delivery", "perTrip"]}
               />
 
               <FormNumberInput
                 cost
                 label="Delivery Rate per Mile"
-                name={["preferences", "delivery", "perMile"]}
+                name={["delivery", "perMile"]}
               />
 
               <FormNumberInput
                 cost
                 label="Delivery Rate per Box"
-                name={["preferences", "delivery", "perBox"]}
+                name={["delivery", "perBox"]}
               />
             </FormLayout>
           </Col>

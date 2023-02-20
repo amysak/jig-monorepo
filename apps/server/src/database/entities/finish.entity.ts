@@ -1,34 +1,46 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { PaintType } from "type-defs";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
-import { type FinishType } from "type-defs";
 import { AppBaseEntity } from "./base.entity";
-import { Account } from "./account.entity";
+import { User } from "./user.entity";
 
-// Hopefully TypeORM fixes this soon: https://github.com/typeorm/typeorm/pull/9034
-// And we could use STI. Until then, nullable: true
+@Entity()
+export class Paint extends AppBaseEntity {
+  @Column("text")
+  name: string;
+
+  @Column("text")
+  type: PaintType;
+
+  @Column("text", { nullable: true })
+  description?: string;
+
+  @ManyToOne(() => User, { onDelete: "CASCADE" })
+  user: User;
+}
+
 class PerPartPrice {
   @Column("real", { nullable: true })
-  twoSidesCost: number;
+  twoSidesCost?: number;
 
-  @Column("integer", { default: 100 })
+  @Column("integer", { nullable: true })
+  discount?: number;
+
+  @Column("integer", { default: 67 })
   simplePercent: number;
 }
 
 class PerSquareFeetPrice {
   @Column("real", { nullable: true })
-  twoSidesCost: number;
+  twoSidesCost?: number;
 
-  @Column("integer", { default: 67 })
-  simplePercent: number;
+  // %
+  @Column("integer", { nullable: true })
+  discount?: number;
 
-  @Column("real", { nullable: true })
-  inHouseCost: number;
+  // ?
+  // @Column("real", { nullable: true })
+  // inHouseCost: number;
 }
 
 class FinishPrice {
@@ -40,52 +52,39 @@ class FinishPrice {
 }
 
 @Entity()
-// @TableInheritance({
-//   column: { type: "text", name: "category", enum: FINISH_TYPE },
-// })
-export class Finish extends AppBaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class FinishProcess extends AppBaseEntity {
   @Column("text")
   name: string;
 
   @Column("text")
-  type: FinishType;
+  description: string;
 
-  // Exists only if type is PROCESS
   @Column(() => FinishPrice)
   price?: FinishPrice;
 
-  @Column("text")
-  description: string;
-
-  @Column("real", { nullable: true })
-  discount?: number;
-
-  @ManyToOne(() => Account, { onDelete: "CASCADE" })
-  account: Account;
+  @ManyToOne(() => User, { onDelete: "CASCADE" })
+  user: User;
 }
 
 export class FinishSet {
-  @ManyToOne(() => Finish, { nullable: true })
-  process?: Finish;
+  @ManyToOne(() => FinishProcess, { nullable: true })
+  @JoinColumn({ name: "process_id" })
+  process?: FinishProcess;
 
-  @ManyToOne(() => Finish, { nullable: true })
-  glaze?: Finish;
+  @Column("int", { nullable: true })
+  processId?: number;
 
-  @ManyToOne(() => Finish, { nullable: true })
-  paint?: Finish;
+  @ManyToOne(() => Paint, { nullable: true })
+  @JoinColumn({ name: "glaze_id" })
+  glaze?: Paint;
+
+  @Column("int", { nullable: true })
+  glazeId?: number;
+
+  @ManyToOne(() => Paint, { nullable: true })
+  @JoinColumn({ name: "paint_id" })
+  paint?: Paint;
+
+  @Column("int", { nullable: true })
+  paintId?: number;
 }
-
-// @ChildEntity(FINISH_TYPE.PROCESS)
-// export class FinishProcess extends Finish {
-//   @Column(() => FinishPrice)
-//   price: FinishPrice;
-// }
-
-// @ChildEntity(FINISH_TYPE.GLAZE)
-// export class GlazeColors extends Finish {}
-
-// @ChildEntity(FINISH_TYPE.PAINT)
-// export class PaintColors extends Finish {}

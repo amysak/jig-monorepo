@@ -19,9 +19,9 @@ export class PanelService {
   }
 
   // TODO: type return type here and elsewhere
-  async findByAccountId(accountId: number, opts: GetPanelsDto) {
+  async findByUserId(userId: number, opts: GetPanelsDto) {
     const defaultWhere: FindOptionsWhere<Panel> = {
-      account: { id: accountId },
+      user: { id: userId },
     };
 
     const where = opts.search

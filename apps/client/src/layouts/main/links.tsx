@@ -46,17 +46,22 @@ export const useHeaderLinks = () => {
       ),
       children: [
         {
-          key: "management",
-          label: <Link>Account management</Link>,
+          key: "bid",
+          // TODO:
+          // label: <Link to="/new">Create new bid</Link>,
         },
         {
-          key: "reports",
-          label: <Link>My reports</Link>,
+          key: "me",
+          // label: <Link to="/me">Account management</Link>,
         },
-        {
-          key: "sign-out",
-          label: <Link>Sign out</Link>,
-        },
+        // {
+        //   key: "reports",
+        //   label: <Link>My reports</Link>,
+        // },
+        // {
+        //   key: "sign-out",
+        //   label: <Link>Sign out</Link>,
+        // },
         // { label: "Cabinets", path: "cabinets" },
         // { label: "Security", path: "security" },
         // { label: "Users", path: "users" },

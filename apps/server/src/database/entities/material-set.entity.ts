@@ -1,13 +1,5 @@
-import { Exclude } from "class-transformer";
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
-import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
 import { Cabinet } from "./cabinet.entity";
 import { FinishSet } from "./finish.entity";
@@ -15,137 +7,101 @@ import { Material } from "./material.entity";
 import { Model } from "./model.entity";
 import { ProfileSet } from "./profile.entity";
 import { Room } from "./room.entity";
+import { User } from "./user.entity";
 
-export class AppliedPart {
+export class NoProfilesPart {
   @ManyToOne(() => Model, { nullable: true })
+  @JoinColumn({ name: "model_id" })
   model?: Model;
 
+  @Column("int", { nullable: true })
+  modelId?: number;
+
   @ManyToOne(() => Material, { nullable: true })
+  @JoinColumn({ name: "material_id" })
   material?: Material;
 
-  @Column(() => ProfileSet)
-  profileSet?: ProfileSet;
+  @Column("int", { nullable: true })
+  materialId?: number;
 
   @Column(() => FinishSet)
-  finishSet?: FinishSet;
+  finishes?: FinishSet;
 }
 
-class NonProfiledPart extends AppliedPart {
-  @Exclude()
-  finishSet?: FinishSet;
-
-  @Exclude()
-  material?: Material;
-}
-
-class OnlyMaterialPart extends AppliedPart {
-  @Exclude()
-  model: Model;
-
-  @Exclude()
-  profileSet?: ProfileSet;
-
-  @Exclude()
-  finishSet?: FinishSet;
-}
-
-class MoldingPart extends AppliedPart {
-  @Exclude()
-  profileSet?: ProfileSet;
-
-  @Exclude()
-  material?: Material;
-}
-
-class MaterialSetOpenings {
-  @Column(() => AppliedPart)
-  door?: AppliedPart;
-
-  @Column(() => AppliedPart)
-  drawer?: AppliedPart;
-}
-
-class MaterialSetPanels {
-  @Column(() => AppliedPart)
-  appliance?: AppliedPart;
-
-  @Column(() => AppliedPart)
-  end?: AppliedPart;
-
-  @Column(() => AppliedPart)
-  wainscot?: AppliedPart;
-
-  // Technically a wrong inheritance
-  @Column(() => AppliedPart)
-  slab?: AppliedPart & { profileSet: Pick<ProfileSet, "edge"> };
+export class AppliedPart extends NoProfilesPart {
+  @Column(() => ProfileSet)
+  profiles?: ProfileSet;
 }
 
 class MaterialSetMolding {
-  @Column(() => MoldingPart)
-  crown?: MoldingPart;
+  @Column(() => NoProfilesPart)
+  crown?: NoProfilesPart;
 
-  @Column(() => MoldingPart)
-  lightRail?: MoldingPart;
+  @Column(() => NoProfilesPart)
+  lightRail?: NoProfilesPart;
 }
 
-class CabinetPart {
-  @ManyToOne(() => Material)
+class InteriorMaterials {
+  @ManyToOne(() => Material, { nullable: true })
   interior?: Material;
 
-  @ManyToOne(() => Material)
+  @ManyToOne(() => Material, { nullable: true })
   back?: Material;
 
+  @ManyToOne(() => Material, { nullable: true })
+  shelves?: Material;
+
   @Column(() => FinishSet)
-  finishSet?: FinishSet;
+  finishes?: FinishSet;
 }
 
-class CabinetParts {
-  @Column(() => CabinetPart)
-  unfinished?: CabinetPart;
+class RoomInterior {
+  @Column(() => InteriorMaterials)
+  finished?: InteriorMaterials;
 
-  @Column(() => CabinetPart)
-  finished?: CabinetPart;
+  @Column(() => InteriorMaterials)
+  unfinished?: InteriorMaterials;
+
+  @Column(() => NoProfilesPart)
+  drawerBox?: NoProfilesPart;
+
+  @Column(() => NoProfilesPart)
+  tray?: NoProfilesPart;
+
+  @ManyToOne(() => Material)
+  platform?: Material;
 }
 
-class OpeningPart extends AppliedPart {
-  @Exclude()
-  profileSet?: ProfileSet;
-}
+class RoomExterior {
+  @Column(() => AppliedPart)
+  baseDoor: AppliedPart;
 
-class OpeningParts {
-  @Column(() => OpeningPart)
-  box?: OpeningPart;
+  @Column(() => AppliedPart)
+  upperDoor: AppliedPart;
 
-  @Column(() => OpeningPart)
-  tray?: OpeningPart;
-}
+  @Column(() => AppliedPart)
+  drawerFront: AppliedPart;
 
-class MaterialSetInterior {
-  @Column(() => CabinetParts)
-  cabinets?: CabinetParts;
+  @Column(() => AppliedPart)
+  appliancePanel: AppliedPart;
 
-  @Column(() => OpeningParts)
-  openings?: OpeningParts;
-}
+  @Column(() => AppliedPart)
+  wainscotPanel: AppliedPart;
 
-class MaterialSetExterior {
-  @Column(() => MaterialSetOpenings)
-  openings?: MaterialSetOpenings;
+  @Column(() => AppliedPart)
+  endPanel: AppliedPart;
 
-  @Column(() => MaterialSetPanels)
-  panels?: MaterialSetPanels;
+  @Column(() => AppliedPart)
+  slabEnd: AppliedPart;
 
-  @Column(() => NonProfiledPart)
-  fillers?: NonProfiledPart;
+  @Column(() => AppliedPart)
+  fillers?: AppliedPart;
 
-  @Column(() => NonProfiledPart)
-  toes?: NonProfiledPart;
+  @Column(() => AppliedPart)
+  faceFrame?: AppliedPart;
 
-  @Column(() => NonProfiledPart)
-  faceFrame?: NonProfiledPart;
-
-  @Column(() => OnlyMaterialPart)
-  edgebanding?: OnlyMaterialPart;
+  @ManyToOne(() => Material, { nullable: true })
+  edgebanding?: Material;
 
   @Column(() => MaterialSetMolding)
   molding?: MaterialSetMolding;
@@ -153,23 +109,20 @@ class MaterialSetExterior {
 
 @Entity()
 export class MaterialSet extends AppBaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column("text")
   name: string;
 
-  @Column(() => MaterialSetExterior)
-  exterior?: MaterialSetExterior;
+  @Column(() => RoomExterior)
+  exterior?: RoomExterior;
 
-  @Column(() => MaterialSetInterior)
-  interior?: MaterialSetInterior;
+  @Column(() => RoomInterior)
+  interior?: RoomInterior;
 
-  @OneToOne(() => Cabinet, (cabinet) => cabinet.materialSet, {
+  @OneToOne(() => Cabinet, (cabinet) => cabinet.overridenMaterialSet, {
     nullable: true,
     onDelete: "CASCADE",
   })
-  cabinet?: Cabinet;
+  cabinets?: Cabinet[];
 
   @OneToOne(() => Room, (room) => room.materialSet, {
     nullable: true,
@@ -177,6 +130,12 @@ export class MaterialSet extends AppBaseEntity {
   })
   room?: Room;
 
-  @ManyToOne(() => Account, { nullable: true, onDelete: "CASCADE" })
-  account: Account;
+  @ManyToOne(() => User, { nullable: false, onDelete: "CASCADE" })
+  user: User;
+
+  @OneToOne(() => User, (user) => user.preferences.materialSet, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  defaultForUser?: User;
 }

@@ -90,29 +90,26 @@ axios.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("refresh")
+    ) {
       const existingToken = tokenActions.get("refresh");
       if (!existingToken) {
         return router.navigate({ to: "/signin" });
       }
 
       originalRequest._retry = true;
-      try {
-        const tokens = await api.auth.updateTokenPair(existingToken);
+      const tokens = await api.auth.updateTokenPair(existingToken);
 
-        tokenActions.set("access", tokens.accessToken);
-        tokenActions.set("refresh", tokens.refreshToken);
+      tokenActions.set("access", tokens.accessToken);
+      tokenActions.set("refresh", tokens.refreshToken);
 
-        return axios(originalRequest);
-      } catch (err) {
-        console.log("Error persists or unable to update refresh token:");
-        console.log(err);
-
-        return router.navigate({ to: "/signin" });
-      }
+      return axios(originalRequest);
     }
 
-    return router.navigate({ to: "/signin" });
+    return Promise.reject(error.response?.data || error);
   }
 );
 

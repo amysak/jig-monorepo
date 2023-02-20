@@ -1,13 +1,10 @@
-import { Form, Radio, Tabs } from "antd";
+import { Col, Form, Row } from "antd";
 import { debounce } from "lodash-es";
-import { useState } from "react";
-import { MaterialSet } from "type-defs";
 
 import { useMutateMaterialSet } from "lib/hooks/queries";
-import { MaterialSetSkeleton } from "./components";
-import { useMaterialSetTabs } from "./hooks";
-
-type MaterialSetTabs = "interior" | "exterior";
+import { MaterialSet } from "type-defs";
+import { AppliedPart, MaterialSetSkeleton } from "./components";
+import { useEffect } from "react";
 
 type MaterialSetProps = {
   materialSet: MaterialSet;
@@ -17,12 +14,12 @@ export const MaterialSetView = ({ materialSet }: MaterialSetProps) => {
   const [form] = Form.useForm();
 
   const { mutateAsync: mutateSet } = useMutateMaterialSet(materialSet.id, {
-    onSuccess: (data) => form.setFieldsValue(data),
+    // onSuccess: (data) => form.setFieldsValue(data),
   });
 
-  const [currentTab, setCurrentTab] = useState<MaterialSetTabs>("exterior");
-
-  const tabs = useMaterialSetTabs();
+  useEffect(() => {
+    form.setFieldsValue(materialSet);
+  }, [materialSet, form]);
 
   return materialSet ? (
     <Form
@@ -32,23 +29,56 @@ export const MaterialSetView = ({ materialSet }: MaterialSetProps) => {
       name="set-form"
       layout="vertical"
     >
-      <Radio.Group
-        onChange={(e) => setCurrentTab(e.target.value)}
-        value={currentTab}
-        buttonStyle="solid"
-        size="middle"
-        style={{ marginBottom: 15 }}
-      >
-        <Radio.Button value="exterior">Exterior</Radio.Button>
-        <Radio.Button value="interior">Interior</Radio.Button>
-      </Radio.Group>
-
-      <Tabs
-        defaultActiveKey="0"
-        tabPosition="left"
-        style={{ height: 400 }}
-        items={tabs[currentTab]}
-      />
+      <Row gutter={[16, 8]}>
+        <Col span={12}>
+          <AppliedPart title="Base doors" name={["exterior", "baseDoor"]} />
+        </Col>
+        <Col span={12}>
+          <AppliedPart title="Upper doors" name={["exterior", "upperDoor"]} />
+        </Col>
+        <Col span={12}>
+          <AppliedPart
+            title="Drawer fronts"
+            name={["exterior", "drawerFront"]}
+          />
+        </Col>
+        <Col span={12}>
+          <AppliedPart
+            title="Appliance panels"
+            name={["exterior", "appliancePanel"]}
+          />
+        </Col>
+        <Col span={12}>
+          <AppliedPart
+            title="Wainscot panels"
+            name={["exterior", "appliancePanel"]}
+          />
+        </Col>
+        <Col span={12}>
+          <AppliedPart
+            title="End panels"
+            name={["exterior", "appliancePanel"]}
+          />
+        </Col>
+        <Col span={12}>
+          <AppliedPart
+            title="Slab ends"
+            name={["exterior", "appliancePanel"]}
+          />
+        </Col>
+        <Col span={12}>
+          <AppliedPart title="Fillers" name={["exterior", "fillers"]} />
+        </Col>
+        <Col span={12}>
+          <AppliedPart title="Face frame" name={["exterior", "faceFrame"]} />
+        </Col>
+        <Col span={12}>
+          <AppliedPart title="Edgebanding" name={["exterior", "edgebanding"]} />
+        </Col>
+        <Col span={24}>
+          <AppliedPart title="Molding" name={["exterior", "molding"]} />
+        </Col>
+      </Row>
     </Form>
   ) : (
     <MaterialSetSkeleton />

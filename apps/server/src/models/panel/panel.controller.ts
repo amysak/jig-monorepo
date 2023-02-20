@@ -28,8 +28,8 @@ export class PanelController {
   }
 
   @Get()
-  getAccountOpenings(@ReqUser() user: Payload, @Query() query: GetPanelsDto) {
-    return this.panelService.findByAccountId(user.accountId, query);
+  getUserOpenings(@ReqUser() user: Payload, @Query() query: GetPanelsDto) {
+    return this.panelService.findByUserId(user.userId, query);
   }
 
   @Get(":id")

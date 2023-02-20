@@ -1,9 +1,9 @@
 // import * as mjml2html from 'mjml';
 // import { options } from '../options';
 // import { logo } from '../assets/image-links';
-import { Account } from "database/entities";
+import { User } from "database/entities";
 
-// export const subscriptionSuccessEmailTemplate = (account: Account, subscription: any) => mjml2html(`
+// export const subscriptionSuccessEmailTemplate = (user: User, subscription: any) => mjml2html(`
 //   <mjml>
 //     <mj-body>
 //       <mj-section>
@@ -15,7 +15,7 @@ import { Account } from "database/entities";
 //           </mj-text>
 
 //           <mj-text font-size="14px" color="rgba(0, 0, 0, 0.65)">
-//             Hey ${account.name},
+//             Hey ${user.name},
 //           </mj-text>
 
 //           <mj-text font-size="14px" color="rgba(0, 0, 0, 0.65)">

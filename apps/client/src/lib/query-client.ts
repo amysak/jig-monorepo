@@ -7,7 +7,9 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 0,
-      networkMode: "always",
+      suspense: true,
+      staleTime: 1000 * 20,
+      networkMode: import.meta.env.DEV ? "always" : "online",
       refetchOnWindowFocus: import.meta.env.DEV,
       onError: async (error) => {
         // await queryClient.cancelQueries();

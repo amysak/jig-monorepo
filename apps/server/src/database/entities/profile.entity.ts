@@ -1,9 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-
 import { ProfileType } from "type-defs";
-import { Account } from "./account.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+
 import { AppBaseEntity } from "./base.entity";
 import { Room } from "./room.entity";
+import { Upcharge } from "./upcharge.entity";
+import { User } from "./user.entity";
 import { Vendor } from "./vendor.entity";
 
 @Entity()
@@ -11,29 +12,23 @@ import { Vendor } from "./vendor.entity";
 //   column: { type: "varchar", name: "type", enum: PROFILE_TYPE },
 // })
 export class Profile extends AppBaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column("text")
   name: ProfileType;
 
   @Column("text")
   type: ProfileType;
 
-  @Column("real", { nullable: true })
-  upcharge?: number;
+  @OneToMany(() => Upcharge, (upcharge) => upcharge.profile)
+  upcharges: Upcharge;
 
   @Column("text", { nullable: true })
-  imageUrl?: string;
+  image?: string;
 
   @ManyToOne(() => Vendor, { onDelete: "SET NULL" })
   vendor: Vendor;
 
-  // If tied to an account - it's a default. Else - should be tied to room, then it's
-  // determined by account rooms that it belongs to this account and it means that it
-  // is allowed to edit
-  @ManyToOne(() => Account, { nullable: true, onDelete: "CASCADE" })
-  account?: Account;
+  @ManyToOne(() => User, { nullable: false, onDelete: "CASCADE" })
+  user: User;
 
   @ManyToOne(() => Room, { nullable: true, onDelete: "CASCADE" })
   room?: Room;
@@ -49,12 +44,24 @@ export class Profile extends AppBaseEntity {
 // export class PanelProfile extends Profile {}
 
 export class ProfileSet {
-  @ManyToOne(() => Profile, { nullable: true })
+  @ManyToOne(() => Profile, { nullable: true, eager: true })
+  @JoinColumn({ name: "edge_id" })
   edge?: Profile;
 
-  @ManyToOne(() => Profile, { nullable: true })
+  @Column("int", { nullable: true })
+  edgeId?: number;
+
+  @ManyToOne(() => Profile, { nullable: true, eager: true })
+  @JoinColumn({ name: "frame_id" })
   frame?: Profile;
 
-  @ManyToOne(() => Profile, { nullable: true })
+  @Column("int", { nullable: true })
+  frameId?: number;
+
+  @ManyToOne(() => Profile, { nullable: true, eager: true })
+  @JoinColumn({ name: "panel_id" })
   panel?: Profile;
+
+  @Column("int", { nullable: true })
+  panelId?: number;
 }

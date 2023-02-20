@@ -1,6 +1,6 @@
 import { Outlet, useSearch } from "@tanstack/react-router";
 import { TableProps } from "antd";
-import { Finish } from "type-defs";
+import { FinishProcess } from "type-defs";
 
 import { SetupTable, useFinishesColumns } from "features/setup";
 import { useFinishesGrouppedQuery } from "lib/hooks/queries";
@@ -23,7 +23,7 @@ export const FinishesPage = () => {
     }
   );
 
-  const finishExpanded: TableProps<Finish>["expandable"] = {
+  const finishProcessExpanded: TableProps<FinishProcess>["expandable"] = {
     expandedRowRender: (finish) => finish.description,
     rowExpandable: (finish) => !!finish.description,
   };
@@ -40,8 +40,8 @@ export const FinishesPage = () => {
             scroll={{ y: 200 }}
             rowClassName="finishes-table-row"
             columns={columns}
-            expandableProps={finishExpanded}
-            displayData={finishes ? { data: finishes.colors } : { data: [] }}
+            expandableProps={finishProcessExpanded}
+            displayData={finishes ? { data: finishes.paints } : { data: [] }}
             isLoading={isLoading}
           />
 
@@ -49,7 +49,7 @@ export const FinishesPage = () => {
             scroll={{ y: 200 }}
             rowClassName="finishes-table-row"
             columns={columns}
-            expandableProps={finishExpanded}
+            expandableProps={finishProcessExpanded}
             displayData={finishes ? { data: finishes.processes } : { data: [] }}
             isLoading={isLoading}
           />

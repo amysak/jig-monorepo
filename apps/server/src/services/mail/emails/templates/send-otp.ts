@@ -1,5 +1,5 @@
 // import * as mjml2html from 'mjml';
-import { Account } from "database/entities";
+import { User } from "database/entities";
 // import { options } from '../options';
 // import { logo } from '../assets/image-links';
 

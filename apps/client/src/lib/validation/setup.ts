@@ -1,7 +1,7 @@
 import {
   CABINET_EXTENSION_CATEGORY,
   CABINET_TYPES,
-  PROFILE_TYPES,
+  PROFILE_TYPE,
 } from "type-defs";
 import { z } from "zod";
 import { paginationSchema } from "./pagination";
@@ -26,7 +26,7 @@ export const cabinetSearchSchema = z.object({
 });
 
 export const profilesSearchSchema = z.object({
-  type: z.enum(PROFILE_TYPES).optional(),
+  type: z.enum(PROFILE_TYPE).optional(),
 });
 
 export const extensionsParamsSchema = z.object({

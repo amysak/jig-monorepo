@@ -1,1 +1,1 @@
-export * from "./get-finishes.dto";
+export * from "./get-hardware-set.dto";

@@ -25,12 +25,12 @@ export class MaterialSetController {
 
   @Post()
   create(@ReqUser() user: Payload, @Body() data: any) {
-    return this.materialSetService.create(user.accountId, data);
+    return this.materialSetService.create(user.userId, data);
   }
 
   @Get()
-  getAccountSets(@ReqUser() user: Payload, @Query() query: GetFinishesDto) {
-    return this.materialSetService.findByAccountId(user.accountId, query);
+  getUserSets(@ReqUser() user: Payload, @Query() query: GetFinishesDto) {
+    return this.materialSetService.findByUserId(user.userId, query);
   }
 
   @Get(":id")

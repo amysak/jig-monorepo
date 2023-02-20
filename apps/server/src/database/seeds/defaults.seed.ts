@@ -3,58 +3,44 @@ import {
   randBoolean,
   randFutureDate,
   randNumber,
+  randProductDescription,
   randVehicleManufacturer,
   randVehicleModel,
 } from "@ngneat/falso";
-import omit from "lodash.omit";
-import {
-  CABINET_BASE_TYPES,
-  CABINET_CORNER_PLACEMENT,
-  CABINET_OPENING_TYPE,
-} from "type-defs";
 
 import {
-  Account,
   Cabinet,
-  CabinetEquipment,
-  CabinetIntrinsicDimensions,
-  CabinetOpening,
-  CabinetSpecifications,
-  Filler,
-  Finish,
-  Letter,
+  CabinetInterior,
+  Equipment,
+  FinishProcess,
   Markup,
   Material,
-  MaterialType,
   Model,
-  Panel,
-  Preferences,
+  Paint,
   Profile,
+  ProfileSet,
   Terms,
-  ToePlatform,
   Upcharge,
+  User,
   Vendor,
 } from "database/entities";
 import { SeedingService } from "services";
+import { CABINET_BASE_TYPES } from "type-defs";
 
-import defaultLetters from "database/seeds/data/defaults/letters.json";
 import defaultMarkups from "database/seeds/data/defaults/markups.json";
 import defaultTerms from "database/seeds/data/defaults/terms.json";
 import defaultAccessories from "database/seeds/data/setup/accessories.json";
 import defaultCabinets from "database/seeds/data/setup/cabinets.json";
-import defaultFillers from "database/seeds/data/setup/fillers.json";
 import defaultFinishes from "database/seeds/data/setup/finishes.json";
 import defaultHardware from "database/seeds/data/setup/hardware.json";
 import defaultMaterials from "database/seeds/data/setup/materials.json";
 import defaultMoldings from "database/seeds/data/setup/moldings.json";
-import defaultPanels from "database/seeds/data/setup/panels.json";
 import defaultProfiles from "database/seeds/data/setup/profiles.json";
-import defaultToes from "database/seeds/data/setup/toes.json";
 import defaultTrims from "database/seeds/data/setup/trims.json";
+import { DeepPartial } from "typeorm";
 
 type DefaultSeedsOptions = {
-  bindTo?: Preferences;
-  account: Account;
+  user: User;
 };
 
 function generateValue(type: any) {
@@ -88,47 +74,36 @@ function generateData(obj: any) {
   return data;
 }
 
-function generateIntrinsicDimensions() {
+function generateInteriorDimensions() {
   return Object.assign(
-    new CabinetIntrinsicDimensions(),
-    generateData(new CabinetIntrinsicDimensions())
+    new CabinetInterior(),
+    generateData(new CabinetInterior())
   );
 }
 
-export function getDefaults({ account }: DefaultSeedsOptions) {
+export function getDefaults({ user }: DefaultSeedsOptions) {
   const terms = SeedingService.convertDumpToEntities(Terms, defaultTerms).map(
-    (terms) => SeedingService.bindEntityToAccount(terms, account)
+    (terms) => SeedingService.bindEntityToUser(terms, user)
   );
 
   const markups = SeedingService.convertDumpToEntities(
     Markup,
     defaultMarkups
-  ).map((markup) => SeedingService.bindEntityToAccount(markup, account));
+  ).map((markup) => SeedingService.bindEntityToUser(markup, user));
 
-  const letters = SeedingService.convertDumpToEntities(
-    Letter,
-    defaultLetters.map((letter) => ({
-      ...letter,
-      body: "Modify me",
-    }))
-  ).map((letter) => SeedingService.bindEntityToAccount(letter, account));
-
-  return { terms, markups, letters };
+  return { terms, markups };
 }
 
-export function getRoomDefaults({ account }: DefaultSeedsOptions) {
-  const panels = SeedingService.convertDumpToEntities(Panel, defaultPanels).map(
-    (panel) => SeedingService.bindEntityToAccount(panel, account)
-  );
+function generateModelInfo(profiles: ProfileSet) {
+  return {
+    description: randProductDescription(),
+    price: randNumber({ min: 3, max: 20, precision: 3 }),
+    discount: randNumber({ min: 0, max: 20 }),
+    profiles,
+  };
+}
 
-  const profiles = SeedingService.convertDumpToEntities(
-    Profile,
-    defaultProfiles.map((profile) => ({
-      ...profile,
-      type: profile.type.toLowerCase(),
-    }))
-  ).map((profile) => SeedingService.bindEntityToAccount(profile, account));
-
+export function getRoomDefaults({ user }: DefaultSeedsOptions) {
   const allEquipment = [
     ...defaultMoldings,
     ...defaultTrims,
@@ -139,7 +114,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
   >[];
 
   const equipment = SeedingService.convertDumpToEntities(
-    CabinetEquipment,
+    Equipment,
     allEquipment.map((equipmentItem) => {
       const upcharges: Partial<Upcharge>[] = [];
       if (equipmentItem.shopLaborCost) {
@@ -148,7 +123,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
           description:
             "This is a shop labor upcharge for cabinet equipment item",
           amount: equipmentItem.shopLaborCost,
-          account,
+          user,
         });
       }
 
@@ -158,7 +133,7 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
           description:
             "This is an installation upcharge for cabinet equipment item",
           amount: equipmentItem.installationLaborCost,
-          account,
+          user,
         });
       }
 
@@ -199,18 +174,33 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
         upcharges: SeedingService.convertDumpToEntities(Upcharge, upcharges),
       };
     })
-  ).map((equipItem) => SeedingService.bindEntityToAccount(equipItem, account));
+  ).map((equipItem) => SeedingService.bindEntityToUser(equipItem, user));
 
-  const toes = SeedingService.convertDumpToEntities(
-    ToePlatform,
-    defaultToes
-      .filter((toe) => toe.type === "Toe Platform")
-      .map((toe) => ({
-        ...toe,
-        type: undefined,
-        sleepersCount: toe.sleepers,
-      }))
-  ).map((toe) => SeedingService.bindEntityToAccount(toe, account));
+  const finishes = defaultFinishes
+    .map((finish) => {
+      const resFinish: FinishProcess | Paint = { ...finish } as any;
+
+      if (finish.category.toLowerCase().includes("process")) {
+        (resFinish as FinishProcess).price = {
+          perPart: {
+            twoSidesCost: Math.random() * 10,
+            simplePercent: 67,
+            discount: randNumber({ min: 0, max: 30 }),
+          },
+          perSquareFeet: {
+            twoSidesCost: Math.random() * 10,
+            discount: randNumber({ min: 0, max: 15 }),
+          },
+        };
+        return Object.assign(new FinishProcess(), resFinish);
+      } else {
+        (resFinish as Paint).type = finish.category
+          .toLowerCase()
+          .split(" ")[0] as Paint["type"];
+        return Object.assign(new Paint(), resFinish);
+      }
+    })
+    .map((finish) => SeedingService.bindEntityToUser(finish, user));
 
   const materials = SeedingService.convertDumpToEntities(
     Material,
@@ -221,178 +211,151 @@ export function getRoomDefaults({ account }: DefaultSeedsOptions) {
       laborCost: material.laborCost || 0,
       purpose: material.purpose.toLowerCase().replaceAll(" ", "_"),
       vendor: SeedingService.convertDumpToEntities(Vendor, [
-        { name: material.vendor },
+        { name: material.vendor, user },
       ])[0],
-      type: SeedingService.convertDumpToEntities(MaterialType, [
-        { name: material.type },
-      ])[0],
+      type: material.type,
     }))
-  ).map((material) => SeedingService.bindEntityToAccount(material, account));
-
-  const finishes = SeedingService.convertDumpToEntities(
-    Finish,
-    defaultFinishes.map((finish) => {
-      const resFinish: Partial<Finish> = { ...finish } as any;
-
-      if (finish.category.toLowerCase().includes("process")) {
-        resFinish.type = "process";
-        resFinish.price = {
-          perPart: {
-            twoSidesCost: Math.random() * 10,
-            simplePercent: 67,
-          },
-          perSquareFeet: {
-            twoSidesCost: Math.random() * 10,
-            simplePercent: 100,
-            inHouseCost: Math.random() * 5,
-          },
-        };
-      } else {
-        resFinish.type = finish.category
-          .toLowerCase()
-          .split(" ")[0] as Finish["type"];
-      }
-
-      return resFinish;
-    })
-  ).map((finish) => SeedingService.bindEntityToAccount(finish, account));
-
-  const fillers = SeedingService.convertDumpToEntities(
-    Filler,
-    defaultFillers.map((filler) => omit(filler, "type"))
-  ).map((filler) => SeedingService.bindEntityToAccount(filler, account));
-
-  // {
-  //   "cabinetBackHeight": "43.75",
-  //   "cabinetDepth": "15",
-  //   "name": "Closet-Open 1 Shelf (long hanging)",
-  //   "cabinetSideHeight": "90.75", => height - toeKickHeight
-  //   "category": "Tall",
-  //   "style": "Full Access",
-  //   "quantityParts": "8",
-  //   "stackedHeight": "77.5",
-  //   "cabinetHeight": "48",
-  //   "floorTopTopOfCabinet": "95",
-  //   "floorToBottomOfUpper": "47",
-  //   "interior": "Finished",
-  //   "baseDoors": "0",
-  //   "upperDoors": "0",
-  //   "df": "0",
-  //   "drawers": "0",
-  //   "trays": "0",
-  //   "sides": "2",
-  //   "toeKickHeight": "4.25",
-  //   "type": "tall"
-  // },
-
-  // some fields might be needed but we can define those in the child entity of cabinet
-  // most of those parameters are usually defined in the cabinet specifications
-  const baseTypes = Object.values(CABINET_BASE_TYPES);
-  const placements = Object.values(CABINET_CORNER_PLACEMENT);
-
-  const cabinetSeeds = defaultCabinets.map((cabinet) => {
-    const resCabinet: Record<string, unknown> &
-      Partial<typeof cabinet> &
-      Partial<Cabinet> = {
-      name: cabinet.name.replace(/.*-.{2}-/, ""),
-      type: cabinet.type as any,
-      isInteriorFinished: cabinet.interior === "Finished",
-      isFramed: cabinet.style === "Face Frame" ? true : false,
-      baseType: baseTypes[randNumber({ max: baseTypes.length })],
-      cornerPlacement: placements[randNumber({ max: placements.length })],
-    };
-
-    const cabinetSpecifications = new CabinetSpecifications();
-
-    cabinetSpecifications.intrinsic = generateIntrinsicDimensions();
-    cabinetSpecifications.dimensions = {
-      height:
-        Number(cabinet.cabinetHeight) ||
-        Number(cabinet.floorToTopOfCabinet) -
-          Number(cabinet.floorToBottomOfUpper) ||
-        34.5,
-      depth: +cabinet.cabinetDepth,
-      elevation: cabinet.floorToBottomOfUpper
-        ? +cabinet.floorToBottomOfUpper
-        : 0,
-      toeKickHeight: cabinet.type !== "upper" ? +cabinet.toeKickHeight : 0,
-    };
-    cabinetSpecifications.partCounts = {
-      doors: +cabinet.baseDoors + +cabinet.upperDoors,
-      drawers: +cabinet.drawers,
-      drawerFronts: +cabinet.df,
-      trays: +cabinet.trays,
-      sides: +cabinet.sides,
-    };
-
-    return { cabinet: resCabinet, cabinetSpecifications };
-
-    // ?? TODO
-    // "quantityParts": "10",
-    // "stackedHeight": "168",
-    // cabinetSpecifications.backHeight =  +cabinet.cabinetBackHeight;
-    // cabinetSpecifications.sideHeight =  +cabinet.cabinetSideHeight;
-    // cabinetSpecifications.partsQuantity = +cabinet.quantityParts
-    // cabinetSpecifications.stackedHeight = +cabinet.stackedHeight
-  });
-
-  const cabinetsAndSpecs = cabinetSeeds.map(
-    ({ cabinet, cabinetSpecifications }) => {
-      const [convertedCabinet] = SeedingService.convertDumpToEntities(Cabinet, [
-        cabinet,
-      ]).map((cabinet) => SeedingService.bindEntityToAccount(cabinet, account));
-
-      return { cabinet: convertedCabinet, cabinetSpecifications };
-    }
-  );
+  ).map((material) => SeedingService.bindEntityToUser(material, user));
 
   const vendors = Array.from({ length: 10 }).map(() => {
     const data: Partial<Vendor> = {
       name: randVehicleManufacturer(),
+      user,
     };
 
     return Object.assign(new Vendor(), data);
   });
 
-  const modelNameSet = Array.from({ length: 3 }).map(() => randVehicleModel());
+  const profiles = SeedingService.convertDumpToEntities(
+    Profile,
+    defaultProfiles.map((profile) => ({
+      ...profile,
+      type: profile.type.toLowerCase(),
+      vendor: vendors[Math.floor(Math.random() * vendors.length)],
+    }))
+  ).map((profile) => SeedingService.bindEntityToUser(profile, user));
 
-  const openingTypes = Object.values(CABINET_OPENING_TYPE);
-  const openings = Array.from({ length: 30 })
-    .map(() => {
-      const override = Math.random() > 0.5;
+  const models = SeedingService.convertDumpToEntities(
+    Model,
+    Array.from({ length: 10 }).map(() => {
+      const edgeProfiles = profiles.filter(
+        (profile) => profile.type === "edge"
+      );
+      const frameProfiles = profiles.filter(
+        (profile) => profile.type === "frame"
+      );
+      const panelProfiles = profiles.filter(
+        (profile) => profile.type === "panel"
+      );
 
-      const overrideText =
-        "This opening has a custom name, so it is being shown instead of it's model name.";
+      const modelProfiles = Object.assign(new ProfileSet(), {
+        edge: edgeProfiles[randNumber({ max: edgeProfiles.length - 1 })],
+        frame: frameProfiles[randNumber({ max: frameProfiles.length - 1 })],
+        panel: panelProfiles[randNumber({ max: panelProfiles.length - 1 })],
+      });
 
-      const data: Partial<CabinetOpening> = {
-        name: override ? "Overriden name" : null,
-        description: override
-          ? overrideText
-          : "This is a sample description of a seeded cabinet opening. Feel free to edit it as you wish.",
-        type: openingTypes[Math.floor(Math.random() * openingTypes.length)],
-        model: SeedingService.convertDumpToEntities(Model, [
-          {
-            name: modelNameSet[Math.floor(Math.random() * modelNameSet.length)],
-            materialType: "wood",
-          },
-        ])[0],
-        price: randNumber({ min: 7, max: 30 }),
+      const upcharges = [
+        Object.assign(new Upcharge(), {
+          name: "Model complexity upcharge",
+          description:
+            "This model is really hard to implement so the price is higher.",
+          amount: randNumber({ precision: 2 }),
+        }),
+      ];
+
+      return {
+        name: randVehicleModel(),
+        description: `
+          This is a simple description for your model. 
+          This entity contains models, prices and upcharges for each part that can be assigned a model 
+          in a room. You can edit the prices and images by your desire.
+        `,
+        // Random img
+        image:
+          "https://cdn.shopify.com/s/files/1/2444/1465/products/2116352507969_600x.jpg?v=1606944179",
+        vendor: vendors[randNumber({ max: vendors.length - 1 })],
+        materialType: materials[randNumber({ max: materials.length - 1 })].type,
+        baseDoor: generateModelInfo(modelProfiles),
+        upperDoor: generateModelInfo(modelProfiles),
+        drawerFront: generateModelInfo(modelProfiles),
+        appliancePanel: generateModelInfo(modelProfiles),
+        wainscotPanel: generateModelInfo(modelProfiles),
+        endPanel: generateModelInfo(modelProfiles),
+        slabEnd: generateModelInfo(modelProfiles),
+        upcharges,
+      };
+    })
+  ).map((model) => SeedingService.bindEntityToUser(model, user));
+
+  const baseTypes = Object.values(CABINET_BASE_TYPES);
+  // const placements = Object.values(CABINET_CORNER_PLACEMENT);
+
+  const cabinets = SeedingService.convertDumpToEntities(
+    Cabinet,
+    defaultCabinets.map((cabinet) => {
+      const resCabinet: DeepPartial<Cabinet> = {};
+
+      resCabinet.name = cabinet.name.replace(/.*-.{2}-/, "");
+      resCabinet.type = cabinet.type as any;
+      // isInteriorFinished: cabinet.interior === "Finished",
+      resCabinet.dimensions = {
+        floorToTop: Number(cabinet.floorToTopOfCabinet),
+        floorToBottom: cabinet.floorToBottomOfUpper
+          ? +cabinet.floorToBottomOfUpper
+          : 0,
+        depth: +cabinet.cabinetDepth,
       };
 
-      return Object.assign(new CabinetOpening(), data);
+      resCabinet.interior = generateInteriorDimensions();
+
+      resCabinet.baseType =
+        baseTypes[randNumber({ max: baseTypes.length - 1 })];
+      resCabinet.exterior = {
+        faceFrame: {
+          stileWidth: 1.5,
+          fullHeight: true,
+          // This basically represents a face frame with 1 column (meaning 2 stiles)
+          // and 3 rails, each 1.5in in height. This means, when calculating dimensions
+          // of cabinet parts in a room and such face frame is attached:
+          // Don't include allowance & subtract total face frame sq ft before applying materials
+          // P.S. new idea is to let user choose between full height and rows height and calc
+          // ff height automatically
+          // columns: [[1.5, 1.5, 1.5]],
+        },
+      };
+      if (
+        resCabinet.baseType === "standard" ||
+        resCabinet.baseType === "adjustable"
+      )
+        resCabinet.overridenToeHeight = 4.25;
+      // switch (baseType) {
+      //   case "adjustable":
+      //     // resCabinet.equipment.push()
+      //     // TODO: front end should warn
+      //     break;
+      //   case "separate":
+      //     // resCabinet.exterior.toePlatform =
+      //     // TODO: front end should warn
+      //     break;
+      //   case "standard":
+
+      //   default:
+      //     break;
+      // }
+      // cornerPlacement: placements[randNumber({ max: placements.length })],
+
+      return resCabinet;
     })
-    .map((opening) => SeedingService.bindEntityToAccount(opening, account));
+    // These are now usually set in rooms
+  ).map((cabinet) => SeedingService.bindEntityToUser(cabinet, user));
 
   return {
     equipment,
-    panels,
     profiles,
-    toes,
     materials,
+    models,
     finishes,
-    fillers,
-    cabinetsAndSpecs,
-    openings,
+    cabinets,
     vendors,
   };
 }

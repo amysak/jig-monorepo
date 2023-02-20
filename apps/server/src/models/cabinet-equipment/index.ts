@@ -1,1 +1,1 @@
-export * from "./cabinet-equipment.module";
+export * from "./equipment.module";

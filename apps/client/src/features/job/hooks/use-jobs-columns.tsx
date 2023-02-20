@@ -105,15 +105,16 @@ export const useJobsColumns = () => {
     {
       key: "materialSet",
       dataIndex: "materialSet",
-      title: "Used material set",
+      title: "Used material",
       render: (materialSet: MaterialSet) =>
         materialSet ? materialSet.name : "N/A",
     },
     {
       key: "totalPrice",
       dataIndex: "totalPrice",
-      title: "Room total price",
-      render: (totalPrice: number) => totalPrice.toFixed(2),
+      title: "Room total",
+      // TODO:
+      // render: (totalPrice: number) => totalPrice.toFixed(2),
     },
     {
       key: "status",

@@ -15,7 +15,7 @@ export const assign = (
   originalSetId: number,
   newSetId: number
 ): Promise<MaterialSet> => {
-  return client.put(`/material-sets/${originalSetId}`, { id: newSetId });
+  return client.put(`/material-sets/${originalSetId}`, { setId: newSetId });
 };
 
 export const getAll = (

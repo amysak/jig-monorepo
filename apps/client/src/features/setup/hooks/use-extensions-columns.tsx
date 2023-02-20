@@ -2,9 +2,9 @@ import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link, useSearch } from "@tanstack/react-router";
 import { Space, TableProps } from "antd";
-import { Filler, Panel, ToePlatform } from "type-defs";
 
 import { extensionsIndexRoute } from "pages/setup";
+import { Panel, ToePlatform } from "type-defs";
 
 export const useExtensionsColumns = () => {
   const search = useSearch({ from: extensionsIndexRoute.id });
@@ -13,7 +13,7 @@ export const useExtensionsColumns = () => {
 
   // const { mutateAsync: deleteProfile } = useEquipmentDeletion();
 
-  const baseColumns: TableProps<Filler | Panel | ToePlatform>["columns"] = [
+  const baseColumns: TableProps<Panel | ToePlatform>["columns"] = [
     {
       key: "name",
       dataIndex: "name",
@@ -57,9 +57,8 @@ export const useExtensionsColumns = () => {
     },
   ];
 
-  const fillerColumns = [...baseColumns];
   const panelColumns = [...baseColumns];
   const toeColumns = [...baseColumns];
 
-  return { fillerColumns, panelColumns, toeColumns };
+  return { panelColumns, toeColumns };
 };

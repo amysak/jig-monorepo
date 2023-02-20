@@ -1,37 +1,49 @@
+import { type CompletionStatus } from "type-defs";
 import {
   BeforeInsert,
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
 } from "typeorm";
 
-import { type CompletionStatus, type RoomElevation } from "type-defs";
-import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
-import { CabinetEquipment } from "./cabinet-equipment.entity";
+import { Equipment } from "./equipment.entity";
+import { Cabinet } from "./cabinet.entity";
 import { HardwareSet } from "./hardware-set.entity";
 import { Job } from "./job.entity";
 import { MaterialSet } from "./material-set.entity";
-import { Cabinet } from "./cabinet.entity";
+import { Panel, ToePlatform } from "./room-extension.entity";
 import { Upcharge } from "./upcharge.entity";
-import { Filler, Panel, ToePlatform } from "./cabinet-extension.entity";
+import { User } from "./user.entity";
 
-// relations in this model are OneToMany because it is planned to create a separate related entity for each room
+export class RoomDimensions {
+  @Column("real", { nullable: true })
+  toeKick?: number;
+
+  @Column("real", { nullable: true })
+  cabinetWidth?: number;
+
+  // @Column("real", { nullable: true })
+  // baseHeight?: number;
+}
+
 @Entity()
 export class Room extends AppBaseEntity {
-  @Column("real", { default: 0 })
-  totalPrice: number;
+  // TODO: Can do AfterLoad calc.
+  // @Expose()
+  // totalPrice: number;
 
   @Column("text")
   name: string;
 
-  @Column("text", { nullable: true })
-  elevation?: RoomElevation;
+  @Column("text", { default: "estimate" })
+  status: CompletionStatus;
+
+  @Column(() => RoomDimensions)
+  dimensions: RoomDimensions;
 
   @OneToMany(() => Cabinet, (cabinet) => cabinet.room, {
     nullable: true,
@@ -40,18 +52,12 @@ export class Room extends AppBaseEntity {
   })
   cabinets?: Cabinet[];
 
-  @OneToMany(() => CabinetEquipment, (equipment) => equipment.room, {
+  @OneToMany(() => Equipment, (equipment) => equipment.room, {
     nullable: true,
     cascade: true,
     eager: true,
   })
-  equipment?: CabinetEquipment[];
-
-  // @OneToMany(() => Hardware, (hardware) => hardware.room)
-  // hardware?: Hardware[];
-
-  // @OneToMany(() => TrimMolding, (molding) => molding.room)
-  // moldings?: TrimMolding[];
+  equipment?: Equipment[];
 
   @OneToMany(() => Panel, (panel) => panel.room, {
     nullable: true,
@@ -60,12 +66,8 @@ export class Room extends AppBaseEntity {
   })
   panels?: Panel[];
 
-  @OneToMany(() => Filler, (filler) => filler.room, {
-    nullable: true,
-    cascade: true,
-    eager: true,
-  })
-  fillers?: Filler[];
+  @Column("jsonb", { default: [] })
+  additionalFillers?: { width: number; height: number }[];
 
   @OneToMany(() => ToePlatform, (toe) => toe.room, {
     nullable: true,
@@ -74,8 +76,7 @@ export class Room extends AppBaseEntity {
   })
   toes?: ToePlatform[];
 
-  @ManyToMany(() => Upcharge, (upcharge) => upcharge.rooms, { eager: true })
-  @JoinTable()
+  @OneToMany(() => Upcharge, (upcharge) => upcharge.room, { eager: true })
   upcharges?: Upcharge[];
 
   @OneToOne(() => MaterialSet, (materialSet) => materialSet.room, {
@@ -94,20 +95,17 @@ export class Room extends AppBaseEntity {
   @JoinColumn()
   hardwareSet: HardwareSet;
 
-  @Column("text", { default: "estimate" })
-  status: CompletionStatus;
-
   @ManyToOne(() => Job, "rooms", {
     nullable: false,
     onDelete: "CASCADE",
   })
   job: Job;
 
-  @ManyToOne(() => Account, "rooms", {
+  @ManyToOne(() => User, {
     nullable: false,
     onDelete: "CASCADE",
   })
-  account: Account;
+  user: User;
 
   // https://github.com/typeorm/typeorm/issues/5493
   // Behold the great TypeORM library

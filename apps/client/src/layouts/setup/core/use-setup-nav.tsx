@@ -1,5 +1,6 @@
 import Icon, {
   AppstoreAddOutlined,
+  BookOutlined,
   BuildOutlined,
   DollarOutlined,
   FormatPainterOutlined,
@@ -15,10 +16,9 @@ import {
 } from "@tanstack/react-router";
 import { MenuProps } from "antd";
 import { ReactNode, useState } from "react";
-import { CABINET_OPENING_TYPE, CABINET_TYPES, PROFILE_TYPES } from "type-defs";
+import { CABINET_TYPES, PROFILE_TYPE } from "type-defs";
 
 import CabinetIcon from "assets/images/setup/cabinet.svg";
-import DoorIcon from "assets/images/setup/door.svg";
 import { useSetSearch } from "lib/hooks";
 import { setupRoute } from "pages/setup";
 
@@ -138,32 +138,6 @@ export const useSetupNav: UseSetupNav = () => {
       ],
     },
     {
-      key: "openings",
-      icon: <Icon component={DoorIcon} />,
-      label: "Cabinet Openings",
-      children: [
-        {
-          key: "category",
-          label: "Opening Category",
-          type: "group",
-          children: prepareAntdCollection(CABINET_OPENING_TYPE),
-        },
-      ],
-    },
-    {
-      key: "profiles",
-      icon: <SwapOutlined />,
-      label: "Profiles",
-      children: [
-        {
-          key: "type",
-          label: "Profile Type",
-          type: "group",
-          children: prepareAntdCollection(PROFILE_TYPES),
-        },
-      ],
-    },
-    {
       key: "equipment",
       icon: <AppstoreAddOutlined />,
       label: "Equipment",
@@ -186,10 +160,23 @@ export const useSetupNav: UseSetupNav = () => {
       ],
     },
     {
+      key: "profiles",
+      icon: <SwapOutlined />,
+      label: "Profiles",
+      children: [
+        {
+          key: "type",
+          label: "Profile Type",
+          type: "group",
+          children: prepareAntdCollection(PROFILE_TYPE),
+        },
+      ],
+    },
+    {
       key: "extensions",
       icon: <PlusCircleOutlined />,
       label: "Extensions",
-      children: prepareAntdCollection(["panels", "fillers", "toes"]),
+      children: prepareAntdCollection(["panels", "toes"]),
     },
     {
       key: "materials",
@@ -200,6 +187,11 @@ export const useSetupNav: UseSetupNav = () => {
       key: "finishes",
       icon: <FormatPainterOutlined />,
       label: "Finishes",
+    },
+    {
+      key: "models",
+      icon: <BookOutlined />,
+      label: "Models",
     },
     {
       key: "prices",

@@ -1,10 +1,9 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import merge from "lodash.merge";
 import mergeWith from "lodash.mergewith";
 import { DeepPartial, EntityManager, Repository } from "typeorm";
 
-import { Job } from "database/entities";
+import { Job, Terms } from "database/entities";
 import { PaginationDto, WithCountDto } from "type-defs";
 
 import type { UpdateJobDto } from "./dto/update-job.dto";
@@ -21,19 +20,19 @@ export class JobService {
     return this.jobRepository.save(data);
   }
 
-  async findByAccountId(
-    accountId: number,
+  async findByUserId(
+    userId: number,
     opts?: PaginationDto
   ): Promise<WithCountDto<Job>> {
-    const accountJobs = await this.jobRepository.find({
-      where: { account: { id: accountId } },
+    const userJobs = await this.jobRepository.find({
+      where: { user: { id: userId } },
       skip: (opts.page - 1) * opts.limit || void 0,
       take: opts.limit,
       order: { updatedAt: "DESC" },
-      relations: ["client", "preferences", "rooms"],
+      relations: ["client", "rooms"],
     });
 
-    return { count: accountJobs.length, data: accountJobs };
+    return { count: userJobs.length, data: userJobs };
   }
 
   findAll() {
@@ -43,7 +42,7 @@ export class JobService {
   async findOne(id: number) {
     const job = await this.jobRepository.findOne({
       where: { id },
-      relations: ["client", "preferences"],
+      relations: ["client"],
     });
 
     return job;
@@ -72,9 +71,8 @@ export class JobService {
       throw new HttpException("Job not found", 404);
     }
 
-    const preferences = job.preferences;
-    const mergedPreferences = merge(preferences, { terms: { id: termsId } });
-    return this.entityManager.save(mergedPreferences);
+    job.terms = Object.assign(new Terms(), { id: termsId });
+    return job.save();
   }
 
   remove(id: number) {

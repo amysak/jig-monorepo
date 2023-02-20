@@ -19,7 +19,7 @@ export const JobFormTerms = () => {
 
   const { data: accountTerms, isLoading: isAllLoading } = useQueryTerms();
 
-  const formTerms = formValues?.preferences?.terms;
+  const formTerms = formValues?.terms;
 
   if (!formTerms) {
     return <PageSkeleton />;
@@ -66,7 +66,7 @@ export const JobFormTerms = () => {
             <FormSelect
               options={termsOptions}
               label="Terms Preset"
-              name={["preferences", "terms", "id"]}
+              name={["terms", "id"]}
             />
 
             {!isMultiTerms(formTerms) && formTerms.adjustTotal && (
@@ -76,7 +76,7 @@ export const JobFormTerms = () => {
                   { label: "no", value: false },
                 ]}
                 label="Adjust Total to compensate for discount amount?"
-                name={["preferences", "terms", "adjustTotal"]}
+                name={["terms", "adjustTotal"]}
               />
             )}
 
@@ -95,13 +95,13 @@ export const JobFormTerms = () => {
             <br />
             <Conditions
               title="Estimate Conditions"
-              name={["preferences", "terms", "conditions", "estimate"]}
+              name={["terms", "conditions", "estimate"]}
             />
 
             <br />
             <Conditions
               title="Proposal Conditions"
-              name={["preferences", "terms", "conditions", "proposal"]}
+              name={["terms", "conditions", "proposal"]}
             />
           </Col>
         </Row>

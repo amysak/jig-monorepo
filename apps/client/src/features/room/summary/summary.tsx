@@ -17,9 +17,18 @@ export const RoomSummary = () => {
 
   const [form] = Form.useForm<Room>();
 
-  const { data: room } = useQuery({
+  const { data: room } = useQuery<Room>({
     queryKey: ["rooms", params.roomId],
     queryFn: () => api.rooms.getById(params.roomId),
+    // Binding query result to form. This query is being fetched from $roomId route before-hand and can be
+    // accessed here much faster.
+    // onSuccess: form.setFieldsValue,
+    onSuccess: form.setFieldsValue,
+  });
+
+  const { data: totalCost } = useQuery({
+    queryKey: ["rooms:totalCost", params.roomId],
+    queryFn: () => api.rooms.getRoomTotal(params.roomId),
     // Binding query result to form. This query is being fetched from $roomId route before-hand and can be
     // accessed here much faster.
     // onSuccess: form.setFieldsValue,
@@ -34,11 +43,11 @@ export const RoomSummary = () => {
   }
 
   return (
-    <Row justify="space-between">
-      <Col span={16}>
+    <Row>
+      <Col span={18}>
         <RoomMaterials />
       </Col>
-      <Col span={6}>
+      <Col offset={1} span={5}>
         <Form
           form={form}
           initialValues={room}
@@ -49,7 +58,7 @@ export const RoomSummary = () => {
           <Card bordered={false}>
             <Statistic
               title="Room total price"
-              value={room.totalPrice}
+              value={totalCost}
               precision={2}
               prefix="$"
               valueStyle={{ color: blue[4] }}

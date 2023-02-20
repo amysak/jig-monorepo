@@ -1,9 +1,9 @@
 import { IsOptional, IsString } from "class-validator";
 
-import { CabinetEquipmentCategory } from "../enums";
+import { EquipmentCategory } from "../enums";
 
 export class EquipmentFiltersDto {
   @IsOptional()
   @IsString()
-  category?: CabinetEquipmentCategory;
+  category?: EquipmentCategory;
 }

@@ -33,7 +33,7 @@ export const TermsPayment = ({ terms }: PaymentProps) => {
             key={orderNames[i]}
             percent
             label={`Enter the percentage of the ${orderNames[i]} payment`}
-            name={["preferences", "terms", "payments", i, "percentage"]}
+            name={["terms", "payments", i, "percentage"]}
           />
         ))}
       </>
@@ -42,7 +42,7 @@ export const TermsPayment = ({ terms }: PaymentProps) => {
     if (!terms.discountPercent) {
       content = (
         <FormInput
-          name={["preferences", "terms", "paymentDue"]}
+          name={["terms", "paymentDue"]}
           label="Number of days when the balance is due"
         />
       );
@@ -53,7 +53,7 @@ export const TermsPayment = ({ terms }: PaymentProps) => {
 
           <FormNumberInput
             label="Number of days that discount is available"
-            name={["preferences", "terms", "discountDue"]}
+            name={["terms", "discountDue"]}
           />
 
           <FormNumberInput
@@ -67,7 +67,7 @@ export const TermsPayment = ({ terms }: PaymentProps) => {
               { label: "no", value: false },
             ]}
             label="Adjust Total to compensate for discount amount?"
-            name={["preferences", "terms", "adjustTotal"]}
+            name={["terms", "adjustTotal"]}
           />
         </>
       );

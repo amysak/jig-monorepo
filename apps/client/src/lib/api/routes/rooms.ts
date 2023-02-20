@@ -2,9 +2,7 @@ import { DeepPartial, Room } from "type-defs";
 
 import { client } from "../http";
 
-export type TGetRoomsData = { count: number; rooms: Room[] };
-
-export const getAll = (query = ""): Promise<TGetRoomsData> => {
+export const getAll = (query = ""): Promise<Room[]> => {
   return client.get(`/rooms?${query}`);
 };
 
@@ -27,11 +25,12 @@ export const updateById = (
   return client.update(`/rooms/${id}`, payload);
 };
 
-export const addCabinets = (
-  roomId: number,
-  cabinetIds: number[]
-): Promise<TGetRoomsData> => {
+export const addCabinets = (roomId: number, cabinetIds: number[]) => {
   return client.update(`/rooms/${roomId}/cabinets`, { ids: cabinetIds });
+};
+
+export const getRoomTotal = (roomId: number): Promise<number> => {
+  return client.get(`/rooms/total/${roomId}`);
 };
 
 export const deleteById = (id: number | string): Promise<unknown> => {

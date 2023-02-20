@@ -3,35 +3,35 @@ import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import bcrypt from "bcrypt";
 
-import { Account } from "database/entities";
-import { AccountService } from "shared";
+import { User } from "database/entities";
+import { UserService } from "shared";
 import type { GetMeResult, Payload, TokenPair } from "type-defs";
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwt: JwtService,
-    private account: AccountService,
+    private user: UserService,
     private config: ConfigService
   ) {}
 
-  public async validateAccount(
+  public async validateUser(
     email: string,
     password: string
-  ): Promise<Account | null> {
-    const account = await this.account.findByEmail(email);
+  ): Promise<User | null> {
+    const user = await this.user.findByEmail(email);
 
-    if (!account || !account.password) {
+    if (!user || !user.password) {
       return null;
     }
 
-    const isPasswordValid = await bcrypt.compare(password, account.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
       return null;
     }
 
-    return account;
+    return user;
   }
 
   public validateRefreshToken(data: Payload, refreshToken: string): boolean {
@@ -45,18 +45,18 @@ export class AuthService {
 
     const payload = <{ sub: string }>this.jwt.decode(refreshToken);
 
-    return +payload.sub === data.accountId;
+    return +payload.sub === data.userId;
   }
 
   public jwtSign(payload: Payload): TokenPair {
     return {
       // TODO: Set expiresIn to 30m
       accessToken: this.jwt.sign(payload, { expiresIn: "15m" }),
-      refreshToken: this.getRefreshToken(payload.accountId),
+      refreshToken: this.getRefreshToken(payload.userId),
     };
   }
 
-  public async decodeTokenWithAccount(token: string): Promise<GetMeResult> {
+  public async decodeTokenWithUser(token: string): Promise<GetMeResult> {
     try {
       this.jwt.verify(token);
     } catch (error) {
@@ -65,16 +65,16 @@ export class AuthService {
 
     const jwtUser = this.jwt.decode(token) as Payload;
 
-    const account = await this.account.findByEmail(jwtUser.email);
+    const user = await this.user.findByEmail(jwtUser.email);
 
-    if (!account) {
+    if (!user) {
       // Should never happen
-      throw new Error("Account not found");
+      throw new Error("User not found");
     }
 
     return {
       ...jwtUser,
-      account,
+      user,
     };
   }
 
@@ -88,9 +88,9 @@ export class AuthService {
     return true;
   }
 
-  private getRefreshToken(accountId: number): string {
+  private getRefreshToken(userId: number): string {
     return this.jwt.sign(
-      { sub: accountId },
+      { sub: userId },
       {
         secret: this.config.get("jwtRefreshSecret"),
         expiresIn: "7d", // Set greater than the expiresIn of the access_token

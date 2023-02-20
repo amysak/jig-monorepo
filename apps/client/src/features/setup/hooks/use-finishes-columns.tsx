@@ -2,9 +2,9 @@ import { CopyOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link, useSearch } from "@tanstack/react-router";
 import { Space, TableProps, Typography } from "antd";
-import { Finish } from "type-defs";
 
 import { finishesIndexRoute } from "pages/setup";
+import { FinishProcess } from "type-defs";
 
 const { Text } = Typography;
 
@@ -15,7 +15,7 @@ export const useFinishesColumns = () => {
 
   // const { mutateAsync: deleteProfile } = useEquipmentDeletion();
 
-  const finishesColumns: TableProps<Finish>["columns"] = [
+  const finishesColumns: TableProps<FinishProcess>["columns"] = [
     {
       key: "name",
       dataIndex: "name",

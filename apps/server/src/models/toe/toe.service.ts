@@ -18,9 +18,9 @@ export class ToeService {
     return this.toeRepository.save(data);
   }
 
-  async findByAccountId(accountId: number, opts: GetToesDto) {
+  async findByUserId(userId: number, opts: GetToesDto) {
     const defaultWhere: FindOptionsWhere<ToePlatform> = {
-      account: { id: accountId },
+      user: { id: userId },
     };
 
     const where = opts.search

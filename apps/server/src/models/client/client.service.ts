@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import type { Repository } from "typeorm";
 
-import { Account, Client } from "database/entities";
+import { User, Client } from "database/entities";
 import {
   CreateClientDto,
   PaginationDto,
@@ -17,29 +17,29 @@ export class ClientService {
     private clientRepository: Repository<Client>
   ) {}
 
-  async create(data: CreateClientDto & { accountId: number }) {
-    const { accountId, ...dto } = data;
+  async create(data: CreateClientDto & { userId: number }) {
+    const { userId, ...dto } = data;
 
     const client = this.clientRepository.create(dto);
 
-    client.account = { id: accountId } as Account;
+    client.user = { id: userId } as User;
 
     return client.save();
   }
 
-  async findByAccountId(
-    accountId: number,
+  async findByUserId(
+    userId: number,
     opts?: PaginationDto
   ): Promise<WithCountDto<Client>> {
-    const accountClients = await this.clientRepository.find({
-      where: { account: { id: accountId } },
+    const userClients = await this.clientRepository.find({
+      where: { user: { id: userId } },
       skip: (opts.page - 1) * opts.limit || void 0,
       take: opts.limit,
       order: { updatedAt: "DESC" },
       relations: ["jobs"],
     });
 
-    return { count: accountClients.length, data: accountClients };
+    return { count: userClients.length, data: userClients };
   }
 
   async findAll() {

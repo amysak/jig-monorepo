@@ -1,12 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import type { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 import merge from "lodash.merge";
+import type { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { HardwareSet } from "database/entities";
 import { getRawSearch } from "common/lib";
-
-import { GetFinishesDto } from "./dto";
+import { HardwareSet } from "database/entities";
 
 @Injectable()
 export class HardwareSetService {
@@ -19,9 +17,9 @@ export class HardwareSetService {
     return this.hardwareSetRepository.save(data);
   }
 
-  async findByAccountId(accountId: number, opts: any) {
+  async findByUserId(userId: number, opts: any) {
     const defaultWhere: FindOptionsWhere<HardwareSet> = {
-      account: { id: accountId },
+      user: { id: userId },
     };
 
     // This should be a common way to define orWhere

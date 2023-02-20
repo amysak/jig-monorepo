@@ -29,9 +29,8 @@ export class ProfileController {
   }
 
   @Get()
-  getAccountProfiles(@ReqUser() user: Payload, @Query() query: GetProfilesDto) {
-    console.log("query => ", query);
-    return this.profileService.findByAccountId(user.accountId, query);
+  getUserProfiles(@ReqUser() user: Payload, @Query() query: GetProfilesDto) {
+    return this.profileService.findByUserId(user.userId, query);
   }
 
   @Get(":id")

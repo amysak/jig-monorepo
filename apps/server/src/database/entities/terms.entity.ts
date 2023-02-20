@@ -1,11 +1,11 @@
 import { Expose } from "class-transformer";
 import dayjs from "dayjs";
+import { type TermsType } from "type-defs";
 import { AfterLoad, Column, Entity, ManyToOne, OneToOne } from "typeorm";
 
-import { type TermsType } from "type-defs";
-import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
-import { AccountPreferences, JobPreferences } from "./preferences.entity";
+import { Job } from "./job.entity";
+import { User } from "./user.entity";
 
 class PaymentPart {
   @Column("integer")
@@ -23,14 +23,11 @@ class Conditions {
   estimate?: string;
 }
 
+// https://github.com/typeorm/typeorm/issues/9033
+// https://stackoverflow.com/questions/74138654/how-to-specify-discriminator-value-for-the-parent-table-using-single-table-inher
+// =)))))))))))))))) TYPEORM IS DOGSHIT
 @Entity()
-// @TableInheritance({
-//   column: { type: "text", name: "type", enum: TERMS_TYPE },
-// })
 export class Terms extends AppBaseEntity {
-  // https://github.com/typeorm/typeorm/issues/9033
-  // https://stackoverflow.com/questions/74138654/how-to-specify-discriminator-value-for-the-parent-table-using-single-table-inher
-  // =)))))))))))))))) TYPEORM IS DOGSHIT
   @Column("text")
   type: TermsType;
 
@@ -48,18 +45,6 @@ export class Terms extends AppBaseEntity {
 
   @Column(() => Conditions)
   conditions: Conditions;
-
-  @ManyToOne(() => Account, { onDelete: "CASCADE" })
-  account: Account;
-
-  @OneToOne(() => JobPreferences, (jobPreferences) => jobPreferences.terms)
-  jobPreferences?: JobPreferences;
-
-  @OneToOne(
-    () => AccountPreferences,
-    (accountPreferences) => accountPreferences.terms
-  )
-  accountPreferences?: AccountPreferences;
 
   // multi-payment terms
   @Column("jsonb", { nullable: true })
@@ -86,6 +71,21 @@ export class Terms extends AppBaseEntity {
 
   @Column("text", { nullable: true })
   text?: string;
+
+  @ManyToOne(() => User, { nullable: false, onDelete: "CASCADE" })
+  user: User;
+
+  @OneToOne(() => Job, (job) => job.terms, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  job?: Job;
+
+  @OneToOne(() => User, (user) => user.preferences.materialSet, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  defaultForUser?: User;
 
   @AfterLoad()
   generateText() {
@@ -122,62 +122,3 @@ export class Terms extends AppBaseEntity {
     this.text = text;
   }
 }
-
-// @ChildEntity(TERMS_TYPE.MULTI_PAYMENT)
-// export class MultiPaymentTerms extends Terms {
-//   @Column("jsonb")
-//   payments: PaymentPart[];
-
-//   override populate() {
-//     this.text = this.payments
-//       .map((payment) => `${payment.percentage}% ${payment.explanationText}`)
-//       .join(", ");
-//   }
-// }
-
-// @ChildEntity(TERMS_TYPE.NET)
-// export class NetTerms extends Terms {
-//   @Column("integer")
-//   paymentDue?: number;
-
-//   @Column("integer")
-//   discountDue?: number;
-
-//   @Column("integer")
-//   discountPercent?: number;
-
-//   @Column("boolean")
-//   adjustTotal: boolean;
-
-//   @Expose()
-//   paymentDueDate?: Date;
-
-//   @Expose()
-//   discountDueDate?: Date;
-
-//   override populate() {
-//     let text = "";
-
-//     if (this.discountDue) {
-//       this.discountDueDate = dayjs(this.createdAt)
-//         .add(this.discountDue, "day")
-//         .toDate();
-
-//       text += `${this.discountPercent}% discount if paid by ${dayjs(
-//         this.discountDueDate
-//       ).format("MMM D")} `;
-//     }
-
-//     if (this.paymentDue) {
-//       this.paymentDueDate = dayjs(this.createdAt)
-//         .add(this.paymentDue, "day")
-//         .toDate();
-
-//       text += `${text ? ", n" : "N"}et due by ${dayjs(
-//         this.paymentDueDate
-//       ).format("MMM D")}`;
-//     }
-
-//     this.text = text;
-//   }
-// }

@@ -21,6 +21,7 @@ importers:
       '@ant-design/colors': ^7.0.0
       '@ant-design/icons': ^5.0.1
       '@ant-design/pro-layout': ^7.6.1
+      '@dnd-kit/core': ^6.0.7
       '@formkit/auto-animate': 1.0.0-beta.6
       '@jigbid/ui': workspace:*
       '@nivo/bar': ^0.80.0
@@ -87,6 +88,7 @@ importers:
       '@ant-design/colors': 7.0.0
       '@ant-design/icons': 5.0.1_biqbaboplfbrettd7655fr4n2y
       '@ant-design/pro-layout': 7.6.1_yupzvqydyot4z6a4ljo5diundu
+      '@dnd-kit/core': 6.0.7_biqbaboplfbrettd7655fr4n2y
       '@formkit/auto-animate': 1.0.0-beta.6
       '@jigbid/ui': link:../../packages/ui
       '@nivo/bar': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
@@ -2098,6 +2100,37 @@ packages:
   /@ctrl/tinycolor/3.5.0:
     resolution: {integrity: sha512-tlJpwF40DEQcfR/QF+wNMVyGMaO9FQp6Z1Wahj4Gk3CJQYHwA2xVG7iKDFdW6zuxZY9XWOpGcfNCTsX4McOsOg==}
     engines: {node: '>=10'}
+    dev: false
+
+  /@dnd-kit/accessibility/3.0.1_react@18.2.0:
+    resolution: {integrity: sha512-HXRrwS9YUYQO9lFRc/49uO/VICbM+O+ZRpFDe9Pd1rwVv2PCNkRiTZRdxrDgng/UkvdC3Re9r2vwPpXXrWeFzg==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      tslib: 2.4.1
+    dev: false
+
+  /@dnd-kit/core/6.0.7_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-qcLBTVTjmLuLqC0RHQ+dFKN5neWmAI56H9xZ+he9WEJEkAvR76YAcz7DSWDJfjErepfG2H3Fkb9lYiX7cPR62g==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@dnd-kit/accessibility': 3.0.1_react@18.2.0
+      '@dnd-kit/utilities': 3.2.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.4.1
+    dev: false
+
+  /@dnd-kit/utilities/3.2.1_react@18.2.0:
+    resolution: {integrity: sha512-OOXqISfvBw/1REtkSK2N3Fi2EQiLMlWUlqnOK/UpOISqBZPWpE6TqL+jcPtMOkE8TqYGiURvRdPSI9hltNUjEA==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      tslib: 2.4.1
     dev: false
 
   /@emotion/babel-plugin/11.10.5_@babel+core@7.20.12:

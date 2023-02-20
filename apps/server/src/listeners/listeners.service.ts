@@ -7,8 +7,8 @@ import { Injectable, Inject } from "@nestjs/common";
 // user.verified
 // setupService.onUserVerify(user)
 
-// account.created
-// setupService.onAccountCreate(account)
+// user.created
+// setupService.onUserCreate(user)
 
 // client.created
 // setupService.onClientCreate(client)
@@ -37,20 +37,20 @@ import { Injectable, Inject } from "@nestjs/common";
 
 // Below is what was setup.service.ts. This logic can be implemented here to get rid of setup
 
-// Preffil an account with boilerplate ready-to-use examples
-// onAccountCreate:
+// Preffil an user with boilerplate ready-to-use examples
+// onUserCreate:
 // -> setupDefaultTerms
 // -> setupDefaultMarkups
 // -> setupDefaultMaterialSets
 // -> setupDefaultHardwareSets
 
 // onClientCreate:
-// -> set terms for client to a default terms for an account
-// -> set markups for client to a default markups for an account
+// -> set terms for client to a default terms for an user
+// -> set markups for client to a default markups for an user
 
 // onJobCreate:
-// -> set terms for job to a default terms for a selected client, if no client to an account's
-// -> set markups for job to a default markups for a selected client, if no client to an account's
+// -> set terms for job to a default terms for a selected client, if no client to an user's
+// -> set markups for job to a default markups for a selected client, if no client to an user's
 // -> set default cabinetspecifications
 
 // onRoomCreate:

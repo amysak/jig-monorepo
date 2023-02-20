@@ -24,15 +24,12 @@ export class JobController {
 
   @Post()
   async create(@ReqUser() user: Payload, @Body() data: CreateJobDto) {
-    return this.jobService.create({ ...data, account: { id: user.accountId } });
+    return this.jobService.create({ ...data, user: { id: user.userId } });
   }
 
   @Get()
-  async getAccountJobs(
-    @ReqUser() user: Payload,
-    @Query() query: PaginationDto
-  ) {
-    return this.jobService.findByAccountId(user.accountId, query);
+  async getUserJobs(@ReqUser() user: Payload, @Query() query: PaginationDto) {
+    return this.jobService.findByUserId(user.userId, query);
   }
 
   @Get(":id")

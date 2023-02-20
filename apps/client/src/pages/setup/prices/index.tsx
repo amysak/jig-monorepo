@@ -1,18 +1,15 @@
 import { PageSkeleton } from "@jigbid/ui";
-import { Divider, Space, TableProps } from "antd";
-import { Filler } from "type-defs";
+import { useSearch } from "@tanstack/react-router";
+import { Space, TableProps } from "antd";
 
 import { SetupTable, usePricesColumns } from "features/setup";
 import { usePricesQuery } from "lib/hooks/queries";
-import { useSearch } from "@tanstack/react-router";
-import { useToggles } from "lib/store";
+import { Upcharge } from "type-defs";
 
 import "./prices.scss";
 
 export const PricesPage = () => {
   const search = useSearch();
-
-  const toggles = useToggles();
 
   const { markups, terms, upcharges, isLoading } = usePricesQuery(
     {
@@ -29,14 +26,14 @@ export const PricesPage = () => {
     return <PageSkeleton />;
   }
 
-  const fillerExpanded: TableProps<Filler>["expandable"] = {};
+  const upchargeExpanded: TableProps<Upcharge>["expandable"] = {};
 
   const markupTable = (
     <SetupTable
       scroll={{ y: 200 }}
       rowClassName="extensions-table-row"
       columns={markupColumns}
-      expandableProps={fillerExpanded}
+      expandableProps={upchargeExpanded}
       displayData={markups || { data: [] }}
       isLoading={isLoading}
     />
@@ -46,7 +43,7 @@ export const PricesPage = () => {
       scroll={{ y: 200 }}
       rowClassName="extensions-table-row"
       columns={termsColumns}
-      expandableProps={fillerExpanded}
+      expandableProps={upchargeExpanded}
       displayData={terms || { data: [] }}
       isLoading={isLoading}
     />
@@ -55,7 +52,7 @@ export const PricesPage = () => {
     <SetupTable
       rowClassName="extensions-table-row"
       columns={upchargeColumns}
-      expandableProps={fillerExpanded}
+      expandableProps={upchargeExpanded}
       displayData={upcharges || { data: [] }}
       isLoading={isLoading}
     />

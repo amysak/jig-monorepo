@@ -1,3 +1,4 @@
+import { blue } from "@ant-design/colors";
 import { DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons";
 import { PageSkeleton } from "@jigbid/ui";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -19,7 +20,7 @@ import { useState } from "react";
 
 import baseCabinetImage from "assets/images/cabinets/Base_Vanity.png";
 import tallCabinetImage from "assets/images/cabinets/Upper_Tall.png";
-import { CabinetEdit } from "features/setup";
+import { CabinetEdit } from "features/edit";
 import { api } from "lib/api";
 import { useCabinetDeletion, useCabinetMutation } from "lib/hooks/queries";
 import { queryClient } from "lib/query-client";
@@ -85,7 +86,11 @@ export const RoomCabinets = () => {
   }
 
   const onLoadData: TreeSelectProps["loadData"] = async ({ id }) => {
-    const response = await api.cabinets.getAll({ type: id });
+    const query = { type: id };
+    const response = await queryClient.fetchQuery({
+      queryKey: ["cabinets", query],
+      queryFn: () => api.cabinets.getAll(query),
+    });
 
     setTreeData(
       treeData.concat(
@@ -158,6 +163,7 @@ export const RoomCabinets = () => {
         <Button type="primary" size="large" block>
           Add cabinets
         </Button>
+        {/* TODO: add option to add cabinets with default width to fill required space */}
       </Popconfirm>
 
       <List
@@ -173,10 +179,11 @@ export const RoomCabinets = () => {
                 to="/setup/cabinets/$id"
                 params={{ id: cabinet.id }}
                 onClick={() => {
-                  updateCabinet({
-                    id: cabinet.id,
-                    values: { account: { id: cabinet.id } },
-                  });
+                  // Add endpoint for assigning cabinet to user
+                  // updateCabinet({
+                  //   id: cabinet.id,
+                  //   values: { user: { id: user.id } },
+                  // });
                 }}
               >
                 <Button size="middle" type="default" icon={<SaveOutlined />}>
@@ -236,32 +243,25 @@ export const RoomCabinets = () => {
                 <Descriptions bordered column={2}>
                   <Descriptions.Item label="Implementation model">
                     <Text strong>
-                      {(cabinet.materialSet || cabinet.room?.materialSet)
-                        ?.exterior?.openings?.door?.model?.name ||
-                        cabinet.openings?.[0].model.name ||
-                        "N/A"}
+                      {(cabinet.overridenMaterialSet || room.materialSet)
+                        ?.exterior?.baseDoor?.model?.name || "N/A"}
                     </Text>
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Parts applied">
-                    {!isEmpty(cabinet.openings) ? (
-                      cabinet.openings!.map((opening) => (
-                        <Link
-                          to="/setup/openings/$id"
-                          params={{ id: opening.id }}
-                          key={opening.model.name}
-                          color="blue"
-                        >
-                          {opening.name}
-                        </Link>
-                      ))
-                    ) : (
-                      <Tag color="blue">No openings applied</Tag>
-                    )}
                   </Descriptions.Item>
                   <Descriptions.Item label="Cabinet Type">
                     {capitalize(cabinet.type)}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Upcharges">
+                  <Descriptions.Item label="Parts applied" span={2}>
+                    {!isEmpty(cabinet.equipment) ? (
+                      cabinet.equipment!.map((equipmentItem, idx) => (
+                        <Tag color={blue[4]} key={`end-${idx}`}>
+                          {equipmentItem.name}
+                        </Tag>
+                      ))
+                    ) : (
+                      <Tag color="blue">No equipment applied</Tag>
+                    )}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Upcharges" span={2}>
                     {!isEmpty(cabinet.upcharges) ? (
                       cabinet.upcharges.map((upcharge) => (
                         <Tag key={upcharge.id} color="blue">
@@ -271,17 +271,6 @@ export const RoomCabinets = () => {
                     ) : (
                       <Tag color="blue">No upcharges</Tag>
                     )}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Specification Counts">
-                    Doors: {cabinet.specifications.partCounts.doors}
-                    <br />
-                    Drawers: {cabinet.specifications.partCounts.drawers}
-                    <br />
-                    Drawer fronts:
-                    {cabinet.specifications.partCounts.drawerFronts}
-                    <br />
-                    Trays: {cabinet.specifications.partCounts.trays}
-                    <br />
                   </Descriptions.Item>
                 </Descriptions>
               }

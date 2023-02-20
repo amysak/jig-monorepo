@@ -23,7 +23,7 @@ export const Jobs: FC<JobsProps> = () => {
   } = useLineSettings(Ranges.month);
 
   const { data, isLoading } = useQuery(["stats", "jobs"], () =>
-    api.accounts.getAccountStats({
+    api.users.getUserStats({
       stats: { type: "jobs", date: responseDates[0].unix(), range },
     })
   );

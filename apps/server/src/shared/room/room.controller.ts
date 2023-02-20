@@ -13,7 +13,7 @@ import { JwtAuthGuard } from "auth/guards";
 import { ReqUser } from "common/decorators";
 import type { Payload } from "type-defs";
 
-import { CreateRoomDto, GetRoomsByAccountDto, UpdateRoomDto } from "./dto";
+import { CreateRoomDto, GetRoomsByUserDto, UpdateRoomDto } from "./dto";
 import { RoomService } from "./room.service";
 
 @UseGuards(JwtAuthGuard)
@@ -25,15 +25,13 @@ export class RoomController {
   create(@ReqUser() user: Payload, @Body() data: CreateRoomDto) {
     return this.roomService.create({
       ...data,
-      account: { id: user.accountId },
+      user: { id: user.userId },
     });
   }
 
   @Get()
-  async getAccountRooms(
-    @ReqUser() user: Payload
-  ): Promise<GetRoomsByAccountDto> {
-    return this.roomService.findByAccountId(user.accountId);
+  async getUserRooms(@ReqUser() user: Payload): Promise<GetRoomsByUserDto> {
+    return this.roomService.findByUserId(user.userId);
   }
 
   @Get("job/:jobId")
@@ -49,6 +47,11 @@ export class RoomController {
   @Get(":id")
   findOne(@Param("id") id: number) {
     return this.roomService.findOne(id);
+  }
+
+  @Get("total/:id")
+  getRoomTotal(@Param("id") id: number) {
+    return this.roomService.getTotal(id);
   }
 
   @Patch(":id")

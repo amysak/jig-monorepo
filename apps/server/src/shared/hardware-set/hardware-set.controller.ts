@@ -13,7 +13,7 @@ import { JwtAuthGuard } from "auth/guards";
 import { ReqUser } from "common/decorators";
 import { Payload } from "type-defs";
 
-import { GetFinishesDto } from "./dto";
+import { GetHardwareSetDto } from "./dto";
 import { HardwareSetService } from "./hardware-set.service";
 
 // TODO: DTO
@@ -28,8 +28,8 @@ export class HardwareSetController {
   }
 
   @Get()
-  getAccountOpenings(@ReqUser() user: Payload, @Query() query: GetFinishesDto) {
-    return this.hardwareSetService.findByAccountId(user.accountId, query);
+  getUserOpenings(@ReqUser() user: Payload, @Query() query: GetHardwareSetDto) {
+    return this.hardwareSetService.findByUserId(user.userId, query);
   }
 
   @Get(":id")

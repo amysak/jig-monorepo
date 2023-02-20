@@ -3,12 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Outlet, useSearch } from "@tanstack/react-router";
 import { Table, TableProps } from "antd";
 import { isEmpty } from "lodash-es";
-import { Cabinet } from "type-defs";
 
 import { SetupTable, useCabinetColumns } from "features/setup";
 import { api } from "lib/api";
 import { useToggles } from "lib/store";
-
+import { Cabinet } from "type-defs";
 import { cabinetsIndexRoute } from "./routes";
 
 import "./cabinets.scss";
@@ -21,14 +20,11 @@ export default function CabinetsPage() {
   const { data: cabinets, isLoading } = useQuery({
     queryKey: ["cabinets", search],
     queryFn: () =>
-      api.cabinets.getAll(
-        search
-        // pagination: { ...search.pagination, limit: toggles.setup.recordLimit },
-      ),
+      api.cabinets.getAll({ ...search, limit: toggles.setup.recordLimit }),
     keepPreviousData: true,
   });
 
-  const [columns, specificationsColumns] = useCabinetColumns();
+  const [columns] = useCabinetColumns();
 
   if (isLoading) {
     return <PageSkeleton />;
@@ -41,19 +37,15 @@ export default function CabinetsPage() {
   const cabinetExpanded: TableProps<Cabinet>["expandable"] = {
     expandedRowRender: (cabinet) => (
       <Table
-        columns={specificationsColumns}
+        columns={[]}
         style={{ marginBlock: 0, marginInline: 0 }}
-        className="specifications-table"
-        dataSource={[
-          // We can be sure that the cabinet exists because it is fetched for the parent table
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          cabinets.data.find((cab) => cab.id === cabinet.id)!.specifications,
-        ]}
+        className="details-table"
+        dataSource={[cabinet]}
         rowKey={(record) => record.id}
         pagination={false}
       />
     ),
-    rowExpandable: (cabinet) => !isEmpty(cabinet.specifications),
+    rowExpandable: (cabinet) => !isEmpty(cabinet.exterior),
   };
 
   return (

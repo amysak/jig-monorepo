@@ -7,16 +7,11 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { Link, useSearch } from "@tanstack/react-router";
 import { Space, TableProps, Tag } from "antd";
-import { capitalize } from "lodash-es";
+import { capitalize, isEmpty } from "lodash-es";
 
 import { useCabinetDeletion, useCabinetMutation } from "lib/hooks/queries";
 import { cabinetsIndexRoute } from "pages/routes";
-import {
-  Cabinet,
-  CabinetBaseType,
-  CabinetSpecifications,
-  CabinetType,
-} from "type-defs";
+import { Cabinet, CabinetType } from "type-defs";
 
 export const useCabinetColumns = () => {
   const search = useSearch({ from: cabinetsIndexRoute.id });
@@ -41,22 +36,22 @@ export const useCabinetColumns = () => {
       },
     },
     {
-      key: "favourite",
-      dataIndex: "favourite",
+      key: "isFavourite",
+      dataIndex: "isFavourite",
       title: <StarTwoTone />,
       width: "5%",
-      render(favourite: boolean, row) {
+      render(isFavourite: boolean, row) {
         const handleClick = async () => {
           await mutateCabinetAsync({
             id: row.id,
             values: {
-              favourite: !favourite,
+              isFavourite: !isFavourite,
             },
           });
           await queryClient.invalidateQueries(["cabinets", search]);
         };
 
-        if (favourite) {
+        if (isFavourite) {
           return <StarTwoTone twoToneColor="#00a6fb" onClick={handleClick} />;
         }
 
@@ -76,23 +71,17 @@ export const useCabinetColumns = () => {
     },
     {
       key: "style",
-      dataIndex: "isFramed",
+      dataIndex: "exterior",
       title: "Style",
-      render: (isFramed: boolean) => (isFramed ? "Face Frame" : "Full Access"),
+      render: (exterior: Cabinet["exterior"]) =>
+        !isEmpty(exterior.faceFrame) ? "Face Frame" : "Full Access",
     },
     {
       key: "baseType",
       dataIndex: "baseType",
       title: "Base Type",
-      render: (baseType: CabinetBaseType) => capitalize(baseType),
+      render: (baseType: Cabinet["baseType"]) => capitalize(baseType),
     },
-    // TODO: corner should be a type ?
-    // {
-    //   key: "cornered",
-    //   dataIndex: "cornered",
-    //   title: "Corner?",
-    //   render: (cornered: boolean) => (cornered ? "Yes" : "No"),
-    // },
     {
       title: "Actions",
       key: "actions",
@@ -118,81 +107,5 @@ export const useCabinetColumns = () => {
     },
   ];
 
-  const specificationsColumns: TableProps<CabinetSpecifications>["columns"] = [
-    {
-      key: "dimensions",
-      title: "Cabinet Dimensions",
-      children: [
-        {
-          dataIndex: "dimensions",
-          title: "Height",
-          render: (dimensions: CabinetSpecifications["dimensions"]) =>
-            dimensions.height,
-        },
-        {
-          key: "depth",
-          dataIndex: "dimensions",
-          title: "Depth",
-          render: (dimensions: CabinetSpecifications["dimensions"]) =>
-            dimensions.depth,
-        },
-        {
-          key: "elevation",
-          dataIndex: "dimensions",
-          title: "Elevation",
-          render: (dimensions: CabinetSpecifications["dimensions"]) =>
-            dimensions.elevation,
-        },
-        {
-          key: "toeKickHeight",
-          dataIndex: "dimensions",
-          title: "Toe Kick Height",
-          render: (dimensions: CabinetSpecifications["dimensions"]) =>
-            dimensions.toeKickHeight,
-        },
-      ],
-    },
-    {
-      title: "Required Parts",
-      children: [
-        {
-          key: "doorCount",
-          dataIndex: "partCounts",
-          title: "Door Count",
-          render: (partCounts: CabinetSpecifications["partCounts"]) =>
-            partCounts.doors,
-        },
-        {
-          key: "drawerCount",
-          dataIndex: "partCounts",
-          title: "Drawers",
-          render: (partCounts: CabinetSpecifications["partCounts"]) =>
-            partCounts.drawers,
-        },
-        {
-          key: "drawerFrontCount",
-          dataIndex: "partCounts",
-          title: "Drawer Fronts",
-          render: (partCounts: CabinetSpecifications["partCounts"]) =>
-            partCounts.drawerFronts,
-        },
-        {
-          key: "trayCount",
-          dataIndex: "partCounts",
-          title: "Tray Count",
-          render: (partCounts: CabinetSpecifications["partCounts"]) =>
-            partCounts.trays,
-        },
-      ],
-    },
-    {
-      key: "sideCount",
-      dataIndex: "partCounts",
-      title: "Side Count",
-      render: (partCounts: CabinetSpecifications["partCounts"]) =>
-        partCounts.sides,
-    },
-  ];
-
-  return [columns, specificationsColumns] as const;
+  return [columns] as const;
 };

@@ -12,28 +12,23 @@ import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { AuthModule } from "auth";
 import { HttpExceptionFilter } from "common/filters";
 import {
-  CabinetEquipmentModule,
-  CabinetModule,
-  CabinetOpeningModule,
   ClientModule,
-  FillerModule,
+  EquipmentModule,
   FinishModule,
   JobModule,
-  MarkupModule,
   MaterialModule,
   PanelModule,
+  PricesModule,
   ProfileModule,
-  TermsModule,
   ToeModule,
 } from "models";
 import { SeedingService } from "services";
 import {
-  AccountModule,
+  CabinetModule,
   HardwareSetModule,
   MaterialSetModule,
   RoomModule,
-  UpchargeModule,
-  VendorModule,
+  UserModule,
 } from "shared";
 
 import { BaseModule } from "./base";
@@ -64,7 +59,7 @@ import { configuration } from "./config";
     BaseModule, // Base
 
     // Main models
-    AccountModule,
+    UserModule,
     ClientModule,
     JobModule,
     RoomModule,
@@ -72,18 +67,18 @@ import { configuration } from "./config";
     // Cabinet model
     CabinetModule,
 
-    // Doors, Drawer boxes, Drawer fronts, Trays
-    CabinetOpeningModule,
-
     // Trims, Moldings, Accessories, Hardware
-    CabinetEquipmentModule,
+    // Should be merged into cabinet module
+    EquipmentModule,
+
+    // Prices logic
+    PricesModule,
 
     // Profiles (applied to cabinet, panels at least)
     ProfileModule,
 
-    // Cabinet Extensions
+    // Room Extensions
     PanelModule,
-    FillerModule,
     ToeModule,
 
     // Core models
@@ -94,17 +89,8 @@ import { configuration } from "./config";
     MaterialSetModule,
     HardwareSetModule,
 
-    // Preferences logic
-    TermsModule,
-    MarkupModule,
-    UpchargeModule,
-    // LetterModule,
-
     // Reports
     // ReportModule,
-
-    // Other
-    VendorModule,
   ],
   providers: [
     // Global Guard, Authentication check on all routers

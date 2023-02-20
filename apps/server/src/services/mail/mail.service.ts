@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 // import configuration from 'src/config/configuration';
 // import { EmailOptions } from '@nextnm/nestjs-mailgun';
-// import { Account } from '../account/account.entity';
+// import { User } from '../user/user.entity';
 // import { sendOTPEmailTemplate } from './emails/templates/send-otp';
 // import { User } from '../../../models/user/user.entity';
-// import { newAccountEmailTemplate } from './emails/templates/new-account';
+// import { newUserEmailTemplate } from './emails/templates/new-user';
 // import { passwordResetSuccessEmailTemplate } from './emails/templates/password-reset-success';
 // import { subscriptionSuccessEmailTemplate } from './emails/templates/subscription-success';
 
@@ -81,24 +81,24 @@ import { Injectable } from "@nestjs/common";
 //     this.send(mail);
 //   }
 
-//   newAccount(account: Account) {
+//   newUser(user: User) {
 //     const mail = {
-//       to: account.owner.email,
+//       to: user.owner.email,
 //       subject: 'Welcome! Your first step is...',
 //       text: '',
-//       html: newAccountEmailTemplate(account).html,
+//       html: newUserEmailTemplate(user).html,
 //     };
 
 //     this.send(mail);
 //   }
 
-//   async subscriptionSuccess(account: Account, subscription: any) {
+//   async subscriptionSuccess(user: User, subscription: any) {
 //     const mail = {
-//       to: account.email,
+//       to: user.email,
 //       subject: 'Here is your invoice',
 //       text: '',
 //       // attachment: await request(subscription.invoice_pdf),
-//       html: subscriptionSuccessEmailTemplate(account, subscription).html,
+//       html: subscriptionSuccessEmailTemplate(user, subscription).html,
 //     };
 
 //     this.send(mail);

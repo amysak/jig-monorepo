@@ -1,70 +1,111 @@
 import { FormSelect } from "@jigbid/ui";
-import { Form } from "antd";
-import { MaterialSet } from "type-defs";
+import { Card, Form, Space, Typography } from "antd";
 
-import { useModelsQuery } from "lib/hooks/queries";
+import {
+  useFinishesGrouppedQuery,
+  useMaterialsQuery,
+  useModelsQuery,
+  useProfilesQuery,
+} from "lib/hooks/queries";
+import { MaterialSet, PROFILE_TYPE } from "type-defs";
 import { MaterialSetSkeleton } from "./skeleton";
 
 type AppliedPartProps = {
-  // data: AppliedPartType;
-  name: string[];
+  title: string;
+  name: string | string[];
 };
 
-export const AppliedPart = ({ name }: AppliedPartProps) => {
+const { Text } = Typography;
+
+export const AppliedPart = ({ title, name }: AppliedPartProps) => {
   const form = Form.useFormInstance<MaterialSet>();
-  // @Column("text", { nullable: true })
-  // model?: string;
-
-  // @ManyToOne(() => Material, { nullable: true })
-  // material?: Material;
-
-  // @Column(() => ProfileSet)
-  // profileSet?: ProfileSet;
-
-  // @Column(() => FinishSet)
-  // finishSet?: FinishSet;
-  // const { model, material, profileSet, finishSet } = data;
-
   const models = useModelsQuery();
-
-  // const { data: materials } = useMaterialsQuery({
-  //   type: form.getFieldValue([...name, "model"]),
-  //   // purpose: "",
-  // });
+  const { data: profiles } = useProfilesQuery();
+  const { data: materials } = useMaterialsQuery();
+  const { data: finishes } = useFinishesGrouppedQuery();
 
   if (!models.data) {
     return <MaterialSetSkeleton />;
   }
 
   return (
-    <>
-      <FormSelect
-        name={[...name, "model"]}
-        select={{
-          placeholder: "Select a model",
-          onChange: () => {
-            form.setFieldValue([...name, "material"], null);
-          },
-        }}
-        options={models.data.map((model) => ({ label: model, value: model }))}
-      />
+    <Card title={title}>
+      <Space>
+        <FormSelect
+          name={[...name, "modelId"]}
+          select={{
+            placeholder: "Select a model",
+            onChange: () => {
+              form.setFieldValue([...name, "material"], null);
+            },
+          }}
+          options={models.data.map((model) => ({
+            label: model.name,
+            value: model.id,
+          }))}
+        />
 
-      <FormSelect
-        select={{
-          disabled: !form.getFieldValue([...name, "model"]),
-          placeholder: !form.getFieldValue([...name, "model"])
-            ? "Select model first!"
-            : "Select material type",
-        }}
-        name={[...name, "material"]}
-        options={
-          // materials?.data.map((material) => ({
-          //   label: material.name,
-          //   value: material.id,
-          // })) || []
-          []
-        }
-      />
-    </>
+        <FormSelect
+          select={{
+            disabled: !form.getFieldValue([...name, "modelId"]),
+            placeholder: !form.getFieldValue([...name, "modelId"])
+              ? "Select model first!"
+              : "Select material type",
+            style: { minWidth: 150 },
+          }}
+          name={[...name, "materialId"]}
+          options={
+            materials?.data
+              .filter(
+                (item) =>
+                  item.type ===
+                  models.data.find(
+                    (model) =>
+                      model.id === form.getFieldValue([...name, "modelId"])
+                  )?.materialType
+              )
+              .map((material) => ({
+                label: material.name,
+                value: material.id,
+              })) || []
+          }
+        />
+      </Space>
+      <Space size="small">
+        {PROFILE_TYPE.map((type) => (
+          <FormSelect
+            key={`${name}-profile-${type}`}
+            name={[...name, "profiles", type + "Id"]}
+            style={{ width: 100 }}
+            options={
+              profiles?.data
+                .filter((item) => item.type === type)
+                .map((profile) => ({
+                  label: profile.name,
+                  value: profile.id,
+                })) || []
+            }
+          />
+        ))}
+      </Space>
+      <Space size="small">
+        {["process", "glaze", "paint"].map((finishType) => (
+          <FormSelect
+            key={`${name}-finish-${finishType}`}
+            name={[...name, "finishes", finishType + "Id"]}
+            style={{ width: 100 }}
+            options={
+              (finishType === "process"
+                ? finishes?.processes
+                : finishes?.paints.filter((item) => item.type === finishType)
+              )?.map((finish) => ({
+                label: finish.name,
+                value: finish.id,
+              })) || []
+            }
+          />
+        ))}
+      </Space>
+    </Card>
   );
 };

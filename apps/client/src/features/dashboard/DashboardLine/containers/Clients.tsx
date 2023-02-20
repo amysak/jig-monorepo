@@ -23,7 +23,7 @@ export const Clients: FC<ClientsProps> = () => {
   } = useLineSettings(Ranges.month);
 
   const { data, isLoading } = useQuery(["stats", "clients"], () =>
-    api.accounts.getAccountStats({
+    api.users.getUserStats({
       stats: { type: "clients", date: responseDates[0].unix(), range },
     })
   );

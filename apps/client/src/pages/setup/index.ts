@@ -3,7 +3,7 @@ export * from "./equipment";
 export * from "./extensions";
 export * from "./finishes";
 export * from "./materials";
-export * from "./openings";
+export * from "./models";
 export * from "./profiles";
 export * from "./sets";
 export * from "./setup";

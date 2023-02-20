@@ -1,4 +1,4 @@
-import { Account, GetMeResult, TokenPair } from "type-defs";
+import { User, GetMeResult, TokenPair } from "type-defs";
 import { client } from "../http";
 
 export async function signIn(payload: {
@@ -10,7 +10,7 @@ export async function signIn(payload: {
   return client.post("/auth/login", payload);
 }
 
-export async function signUp(payload: Partial<Account>): Promise<TokenPair> {
+export async function signUp(payload: Partial<User>): Promise<TokenPair> {
   return client.post("/auth/signup", payload);
 }
 

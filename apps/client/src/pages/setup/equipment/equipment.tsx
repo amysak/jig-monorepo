@@ -2,7 +2,7 @@ import { PageSkeleton } from "@jigbid/ui";
 import { useQuery } from "@tanstack/react-query";
 import { Outlet, useSearch } from "@tanstack/react-router";
 import { TableProps, Typography } from "antd";
-import { CabinetEquipment } from "type-defs";
+import { Equipment } from "type-defs";
 
 import { SetupTable, useEquipmentColumns } from "features/setup";
 import { api } from "lib/api";
@@ -34,7 +34,7 @@ function EquipmentPage() {
     return null;
   }
 
-  const equipmentExpanded: TableProps<CabinetEquipment>["expandable"] = {
+  const equipmentExpanded: TableProps<Equipment>["expandable"] = {
     expandedRowRender: (equipment) => (
       <Paragraph>{equipment.description}</Paragraph>
     ),

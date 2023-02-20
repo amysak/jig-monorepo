@@ -21,9 +21,9 @@ export class ProfileService {
     return profile.save();
   }
 
-  async findByAccountId(accountId: number, opts: GetProfilesDto) {
+  async findByUserId(userId: number, opts: GetProfilesDto) {
     const defaultWhere: FindOptionsWhere<Profile> = {
-      account: { id: accountId },
+      user: { id: userId },
     };
     if (opts.type) defaultWhere.type = opts.type;
 
@@ -49,7 +49,7 @@ export class ProfileService {
       where,
     };
 
-    const accountOpenings = await this.profileRepository.find({
+    const userOpenings = await this.profileRepository.find({
       relations: ["vendor"],
       ...queryOpts,
     });
@@ -58,7 +58,7 @@ export class ProfileService {
       where: queryOpts.where,
     });
 
-    return { count, data: accountOpenings };
+    return { count, data: userOpenings };
   }
 
   findOne(id: number) {

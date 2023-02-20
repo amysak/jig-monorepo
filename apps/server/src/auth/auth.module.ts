@@ -2,14 +2,14 @@ import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 
-import { AccountModule } from "shared";
+import { UserModule } from "shared";
 import { AuthSerializer } from "./auth.serializer";
 import { AuthService } from "./auth.service";
 import { LocalStrategy, JwtStrategy, JwtVerifyStrategy } from "./strategies";
 
 @Module({
   imports: [
-    AccountModule,
+    UserModule,
     JwtModule.registerAsync({
       useFactory: (config: ConfigService) => ({
         secret: config.get("jwtSecret"),

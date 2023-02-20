@@ -28,8 +28,8 @@ export class ToeController {
   }
 
   @Get()
-  getAccountOpenings(@ReqUser() user: Payload, @Query() query: GetToesDto) {
-    return this.toeService.findByAccountId(user.accountId, query);
+  getUserOpenings(@ReqUser() user: Payload, @Query() query: GetToesDto) {
+    return this.toeService.findByUserId(user.userId, query);
   }
 
   @Get(":id")

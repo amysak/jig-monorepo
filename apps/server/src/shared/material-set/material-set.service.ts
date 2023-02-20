@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import merge from "lodash.merge";
-import { FindManyOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
+import { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { getRawSearch } from "common/lib";
 import { MaterialSet } from "database/entities";
@@ -14,17 +14,17 @@ export class MaterialSetService {
   ) {}
 
   // TODO: type data
-  create(accountId: number, data: any) {
-    return this.materialSetRepository.save({ ...data, account: accountId });
+  create(userId: number, data: any) {
+    return this.materialSetRepository.save({ ...data, user: userId });
   }
 
-  async findByAccountId(
-    accountId: number,
+  async findByUserId(
+    userId: number,
     // TODO: move to separate type for reusability
     opts: { search?: string; orderBy?: string }
   ) {
     const defaultWhere: FindOptionsWhere<MaterialSet> = {
-      account: { id: accountId },
+      user: { id: userId },
       // It just doesn't work :)
       // room: IsNull()
     };
@@ -48,7 +48,7 @@ export class MaterialSetService {
 
     const materialSets = await this.materialSetRepository.find({
       relations: {
-        account: true,
+        user: true,
         room: true,
       },
       ...queryOpts,
@@ -64,10 +64,16 @@ export class MaterialSetService {
       where: { id: setId },
     });
 
-    return this.materialSetRepository.save({
-      ...set,
+    console.log("set => ", set);
+
+    const res = await this.materialSetRepository.save({
+      exterior: set.exterior,
+      interior: set.interior,
       id,
     });
+
+    console.log("res => ", res);
+    return res;
   }
 
   findOne(id: number) {

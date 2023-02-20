@@ -1,21 +1,26 @@
-import { Finish, WithCountDto } from "type-defs";
+import { FinishProcess, Paint, WithCountDto } from "type-defs";
 import { client } from "../http";
 
-export const getById = (finishId: number): Promise<Finish> => {
+export const getById = (finishId: number): Promise<FinishProcess> => {
   return client.get(`/finishes/${finishId}`);
 };
 
 export const getAll = (
   query?: Record<string, unknown>
-): Promise<WithCountDto<Finish>> => {
+): Promise<WithCountDto<FinishProcess>> => {
   return client.get(`/finishes?${client.getQueryString(query)}`);
+};
+
+export const getPaints = (
+  query?: Record<string, unknown>
+): Promise<WithCountDto<Paint>> => {
+  return client.get(`/paints?${client.getQueryString(query)}`);
 };
 
 // re-exported in barrel at api/
 export type GrouppedFinishes = {
-  count: number;
-  colors: Omit<Finish, "price" | "discount">[];
-  processes: Finish[];
+  processes: FinishProcess[];
+  paints: Paint[];
 };
 
 export const getGroupped = (
@@ -32,8 +37,8 @@ export const getGroupped = (
 
 export const updateById = (
   id: string | number,
-  payload: Partial<Finish>
-): Promise<Finish> => {
+  payload: Partial<FinishProcess>
+): Promise<FinishProcess> => {
   return client.update(`/finishes/${id}`, payload);
 };
 

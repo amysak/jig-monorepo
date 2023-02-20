@@ -1,13 +1,21 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 
-import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
+import { Material } from "./material.entity";
+import { Model } from "./model.entity";
+import { User } from "./user.entity";
 
-@Entity({ name: "vendor" })
+@Entity()
 export class Vendor extends AppBaseEntity {
   @Column("text")
   name: string;
 
-  @ManyToOne(() => Account)
-  account: Account;
+  @OneToMany(() => Material, (material) => material.vendor)
+  materials: Material[];
+
+  @OneToMany(() => Model, (model) => model.vendor)
+  models: Model[];
+
+  @ManyToOne(() => User, { nullable: false, onDelete: "CASCADE" })
+  user: User;
 }

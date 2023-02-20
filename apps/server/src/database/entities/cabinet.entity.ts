@@ -2,108 +2,276 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn,
 } from "typeorm";
 
 import {
   type CabinetBaseType,
-  type CabinetCornerPlacement,
+  type CabinetCornerType,
   type CabinetType,
+  type MeasuredCabinetExterior,
 } from "type-defs";
-
-import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
-import { CabinetEquipment } from "./cabinet-equipment.entity";
-import { Filler, Panel } from "./cabinet-extension.entity";
-import { CabinetOpening } from "./cabinet-opening.entity";
-import { CabinetSpecifications } from "./cabinet-specifications.entity";
+import { Equipment } from "./equipment.entity";
+import { HardwareSet } from "./hardware-set.entity";
 import { MaterialSet } from "./material-set.entity";
+import { ToePlatform } from "./room-extension.entity";
 import { Room } from "./room.entity";
 import { Upcharge } from "./upcharge.entity";
+import { User } from "./user.entity";
+
+export class FaceFrame {
+  // @Column("int", { default: 1.5 })
+  // stilesCount: number;
+
+  // stiles count = columns.length + 1
+  // rail length = cabinetWidth / columns.length
+  @Column("int", { default: 1.5 })
+  stileWidth: number;
+
+  @Column("bool", { default: true })
+  fullHeight: boolean;
+
+  // TODO: Should be entirely based on equipmentRows
+  // @Column("jsonb", { default: [] })
+  // columns: number[][];
+
+  @Column("int", { default: 2 })
+  railFinishedSides: 0 | 1 | 2;
+
+  @Column("int", { default: 1 })
+  stileFinishedSides: 0 | 1 | 2;
+}
+
+export class FinishedSides {
+  @Column("int")
+  finishedSidesCount: 0 | 1 | 2;
+}
+
+export class SelfMeasuredPart extends FinishedSides {
+  @Column("real")
+  length: number;
+}
+
+export class HorizontalPart extends FinishedSides {
+  @Column("real")
+  difference: number;
+}
+
+export class CabinetBack extends FinishedSides {}
+
+export class CabinetSide extends FinishedSides {}
+
+export class CabinetTop extends HorizontalPart {}
+
+export class CabinetShelf extends HorizontalPart {}
+
+export class CabinetDeck extends HorizontalPart {}
+
+export class CabinetStretcher extends SelfMeasuredPart {
+  @Column("boolean", { default: true })
+  requireEdgebanding: boolean;
+}
+
+export class CabinetNailer extends SelfMeasuredPart {
+  @Column("boolean", { default: true })
+  subtract: boolean;
+}
+
+export class CabinetShelves {
+  @Column("jsonb", { default: [] })
+  adjustable: CabinetShelf[];
+
+  @Column("jsonb", { default: [] })
+  fixed: CabinetShelf[];
+}
+
+// When adding end panel to a cabinet, these are getting set to the dimensions of a cabinet they're applied to
+export class CabinetApplied extends SelfMeasuredPart {
+  @Column("real")
+  width: number;
+}
+
+export class CabinetExterior {
+  // rows are for example: [['drawerFront', 'drawerFront'], ['baseDoor', 'baseDoor']]
+  // ---   ---
+  // |||   |||
+  // |||   |||
+  // or: [['drawerFront'], ['baseDoor', 'baseDoor']]
+  // drawer front, two doors below
+  // ---------
+  // |||   |||
+  // |||   |||
+  // or even: [[['drawer', 'drawer', 'drawer']], ['baseDoor'], ['baseDoor']]
+  // 3 drawers, door, door as a single row (whole layout as single row lol)
+  // ---   |||   |||
+  // ---   |||   |||
+  // ---   |||   |||
+  @Column("jsonb", { default: [] })
+  equipmentRows: {
+    items: (MeasuredCabinetExterior | MeasuredCabinetExterior[])[];
+    height: number;
+  }[];
+
+  @Column("bool", { default: true })
+  lastRowAuto: boolean;
+
+  @Column("real", { default: 0 })
+  openingsReveal: number;
+
+  // Usually configured in a room
+  // Use "included" for defining if the cabinet uses face frame on front-end
+  @Column("jsonb", { nullable: true })
+  faceFrame?: FaceFrame;
+
+  // Usually used in a room
+  @Column("jsonb", { default: [] })
+  appliedEnds: CabinetApplied[];
+
+  // Usually used in a room but can be predefined
+  @Column("jsonb", { default: [] })
+  fillers: CabinetApplied[];
+}
+
+export class CabinetInterior {
+  @Column("jsonb", { nullable: true })
+  top?: CabinetTop;
+
+  @Column("jsonb", { nullable: true })
+  back?: CabinetBack;
+
+  @Column("jsonb", { nullable: true })
+  deck?: CabinetDeck;
+
+  @Column(() => CabinetShelves)
+  shelves: CabinetShelves;
+
+  @Column("jsonb", { default: [] })
+  sides: CabinetSide[];
+
+  @Column("jsonb", { default: [] })
+  nailers: CabinetNailer[];
+
+  @Column("jsonb", { default: [] })
+  stretchers: CabinetStretcher[];
+}
+
+export class CabinetOpenings {
+  @Column("integer", { default: 0 })
+  drawers: number;
+
+  @Column("integer", { default: 0 })
+  trays: number;
+}
+
+export class CabinetDimensions {
+  @Column("real", { nullable: true })
+  floorToTop: number;
+
+  @Column("real", { nullable: true })
+  floorToBottom: number; // floor to bottom, applicable to upper cabinets
+
+  // Used in a room
+  @Column("real", { nullable: true })
+  width: number;
+
+  @Column("real", { nullable: true })
+  depth: number;
+}
 
 // Cannot use STI (Single Table Inheritance) because TypeORM is a bad library:
 // https://github.com/typeorm/typeorm/issues/9033
 // https://github.com/typeorm/typeorm/issues/7558
 // https://github.com/typeorm/typeorm/pull/9034
-@Entity()
+
 // @TableInheritance({
 //   column: { type: "text", name: "type" },
 // })
+@Entity()
 export class Cabinet extends AppBaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Column("text")
+  name: string;
+
+  @Column("boolean", { default: false })
+  isFavourite: boolean;
 
   @Column({ type: "text" })
   type: CabinetType;
 
-  @Column("text")
-  name: string;
+  @Column("boolean", { default: false })
+  corner: boolean;
 
   @Column("text", { nullable: true })
-  cornerPlacement: CabinetCornerPlacement;
+  cornerType?: CabinetCornerType;
 
+  // mb remove?
+  // @Column("boolean", { default: true })
+  // isFinished: boolean;
+
+  @Column(() => CabinetDimensions)
+  dimensions: CabinetDimensions;
+
+  @Column(() => CabinetExterior)
+  exterior: CabinetExterior;
+
+  @Column(() => CabinetInterior)
+  interior: CabinetInterior;
+
+  @Column(() => CabinetOpenings)
+  openings: CabinetOpenings;
+
+  // If standard - the sides do not subtract toe kick height
+  // If adjustable - most likely needs including legs (default accessories) and the sides subtract toe kick height
+  // If separate - then warning in the room when no toe board / platform assigned
+  // Toe board is a separate entity and the sides subtract its height when assigned
   @Column("text", { default: "standard" })
   baseType: CabinetBaseType;
 
-  @Column("boolean")
-  isInteriorFinished: boolean;
+  // TODO: should be able to reset in a room and use room's toe height
+  @Column("real", { nullable: true })
+  overridenToeHeight?: number;
 
-  @Column("boolean")
-  isFramed: boolean;
+  // TODO: a lot of work should be done about how we send and receive data from front-end
+  // (DTOs and validators). Typegen is a temporary solution to finish the MVP faster.
+  // Generally speaking, toe height of a cabinet should be a single prop in a returned object.
+  // Assigning a toe platform if needed should be done via separate endpoint logic.
 
-  @Column("boolean", { default: false })
-  favourite: boolean;
-
-  @Column("boolean", { default: false })
-  cornered: boolean;
-
-  @OneToOne(
-    () => CabinetSpecifications,
-    (specifications) => specifications.cabinet,
-    {
-      onDelete: "CASCADE",
-      nullable: false,
-      cascade: true,
-    }
-  )
-  @JoinColumn()
-  specifications: CabinetSpecifications;
-
-  @OneToMany(
-    () => CabinetEquipment,
-    (cabinetEquipment) => cabinetEquipment.cabinet,
-    { nullable: true }
-  )
-  equipment?: CabinetEquipment;
-
-  @OneToMany(() => CabinetOpening, (cabinetOpening) => cabinetOpening.cabinet, {
+  // Used in a room
+  @ManyToOne(() => ToePlatform, (toePlatform) => toePlatform.cabinets, {
     nullable: true,
+    cascade: true,
   })
-  openings?: CabinetOpening[];
+  toePlatform: ToePlatform;
 
-  @OneToMany(() => Panel, (panel) => panel.cabinet, {
+  // Used in a room but can be predefined
+  @OneToMany(() => Equipment, (equipment) => equipment.cabinet, {
     nullable: true,
+    cascade: true,
+    eager: true,
   })
-  panels?: Panel[];
+  equipment?: Equipment[];
 
-  @OneToMany(() => Filler, (filler) => filler.cabinet, {
-    nullable: true,
+  @OneToMany(() => Upcharge, (upcharge) => upcharge.cabinet, {
+    cascade: true,
+    eager: true,
   })
-  fillers?: Filler[];
-
-  @OneToOne(() => MaterialSet, (materialSet) => materialSet.cabinet, {
-    nullable: true,
-  })
-  materialSet?: MaterialSet;
-
-  @ManyToMany(() => Upcharge, (upcharge) => upcharge.cabinets, { eager: true })
-  @JoinTable()
   upcharges: Upcharge[];
+
+  @OneToOne(() => MaterialSet, (materialSet) => materialSet.cabinets, {
+    nullable: true,
+    onDelete: "SET NULL",
+  })
+  @JoinColumn()
+  overridenMaterialSet?: MaterialSet;
+
+  @OneToOne(() => MaterialSet, (materialSet) => materialSet.cabinets, {
+    nullable: true,
+    onDelete: "SET NULL",
+  })
+  @JoinColumn()
+  overridenHardwareSet?: HardwareSet;
 
   @ManyToOne(() => Room, (room) => room.cabinets, {
     nullable: true,
@@ -111,21 +279,15 @@ export class Cabinet extends AppBaseEntity {
   })
   room?: Room;
 
-  @ManyToOne(() => Account, (account) => account.cabinets, {
-    onDelete: "CASCADE",
+  @ManyToOne(() => User, (user) => user.cabinets, {
     nullable: false,
+    onDelete: "CASCADE",
   })
-  account: Account;
+  user: User;
+
+  @ManyToOne(() => User, (user) => user.preferences.defaultCabinets, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  defaultForUser?: User;
 }
-
-// @ChildEntity(CABINET_TYPE.BASE)
-// export class BaseCabinet extends Cabinet {}
-
-// @ChildEntity(CABINET_TYPE.UPPER)
-// export class UpperCabinet extends Cabinet {}
-
-// @ChildEntity(CABINET_TYPE.TALL)
-// export class TallCabinet extends Cabinet {}
-
-// @ChildEntity(CABINET_TYPE.VANITY)
-// export class VanityCabinet extends Cabinet {}

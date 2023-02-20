@@ -27,6 +27,7 @@
     "@ant-design/colors": "^7.0.0",
     "@ant-design/icons": "^5.0.1",
     "@ant-design/pro-layout": "^7.6.1",
+    "@dnd-kit/core": "^6.0.7",
     "@formkit/auto-animate": "1.0.0-beta.6",
     "@jigbid/ui": "workspace:*",
     "@nivo/bar": "^0.80.0",

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearch } from "@tanstack/react-router";
-import { Divider, Space, TableProps } from "antd";
-import { ApiGetResult, Filler, Panel, ToePlatform } from "type-defs";
+import { Divider, TableProps } from "antd";
+import { ApiGetResult, Panel, ToePlatform } from "type-defs";
 
 import { SetupTable, useExtensionsColumns } from "features/setup";
 import { api } from "lib/api";
@@ -19,12 +19,6 @@ export default function ExtensionsPage() {
     enabled: false,
     keepPreviousData: true,
   });
-  const fillersQuery = useQuery<ApiGetResult<Filler>>({
-    queryKey: ["fillers", search],
-    queryFn: () => api.fillers.getAll(search),
-    enabled: false,
-    keepPreviousData: true,
-  });
   const toesQuery = useQuery<ApiGetResult<ToePlatform>>({
     queryKey: ["toes", search],
     queryFn: () => api.toes.getAll(search),
@@ -32,33 +26,24 @@ export default function ExtensionsPage() {
     keepPreviousData: true,
   });
 
-  const { fillerColumns, panelColumns, toeColumns } = useExtensionsColumns();
+  const { panelColumns, toeColumns } = useExtensionsColumns();
 
-  const fillerExpanded: TableProps<Filler>["expandable"] = {};
+  const panelExpanded: TableProps<Panel>["expandable"] = {};
 
   const panelsTable = (
     <SetupTable
       rowClassName="extensions-table-row"
       columns={panelColumns}
-      expandableProps={fillerExpanded}
+      expandableProps={panelExpanded}
       displayData={panelsQuery.data || { data: [] }}
       isLoading={panelsQuery.isLoading}
-    />
-  );
-  const fillersTable = (
-    <SetupTable
-      rowClassName="extensions-table-row"
-      columns={fillerColumns}
-      expandableProps={fillerExpanded}
-      displayData={fillersQuery.data || { data: [] }}
-      isLoading={fillersQuery.isLoading}
     />
   );
   const toeTable = (
     <SetupTable
       rowClassName="extensions-table-row"
       columns={toeColumns}
-      expandableProps={fillerExpanded}
+      expandableProps={panelExpanded}
       displayData={toesQuery.data || { data: [] }}
       isLoading={toesQuery.isLoading}
     />
@@ -66,19 +51,15 @@ export default function ExtensionsPage() {
 
   if (params.extensionCategory === "panels") {
     return panelsTable;
-  } else if (params.extensionCategory === "fillers") {
-    return fillersTable;
   } else if (params.extensionCategory === "toes") {
     return toeTable;
   }
 
   return (
     <>
-      <Space>
-        {panelsTable}
-        {fillersTable}
-      </Space>
-      <Divider />
+      <Divider orientation="left">Panels</Divider>
+      {panelsTable}
+      <Divider orientation="left">Toe platforms</Divider>
       {toeTable}
     </>
   );

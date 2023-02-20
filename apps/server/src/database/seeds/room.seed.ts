@@ -1,4 +1,4 @@
-import { randBaseballTeam, randNumber } from "@ngneat/falso";
+import { randBaseballTeam } from "@ngneat/falso";
 
 import { Job, Room } from "database/entities";
 
@@ -14,8 +14,6 @@ export function generateRoomSeeds({ count, job }: RoomSeedsOptions): Room[] {
     const room = new Room();
 
     room.name = randBaseballTeam();
-    room.elevation = Math.random() > 0.5 ? "east" : "west";
-    room.totalPrice = randNumber({ min: 1000, max: 10000 });
     if (job) room.job = job;
 
     seeds.push(room);

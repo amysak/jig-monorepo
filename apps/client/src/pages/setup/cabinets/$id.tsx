@@ -1,5 +1,5 @@
 import { useParams } from "@tanstack/react-router";
-import { CabinetEdit, EditModal } from "features/setup";
+import { CabinetEdit, EditModal } from "features/edit";
 
 import { cabinetRoute } from "./routes";
 

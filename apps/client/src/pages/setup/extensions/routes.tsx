@@ -20,10 +20,6 @@ export const extensionsIndexRoute = new Route({
       queryFn: () => api.panels.getAll(search),
     });
     queryClient.ensureQueryData({
-      queryKey: ["fillers", search],
-      queryFn: () => api.fillers.getAll(search),
-    });
-    queryClient.ensureQueryData({
       queryKey: ["toes", search],
       queryFn: () => api.toes.getAll(search),
     });

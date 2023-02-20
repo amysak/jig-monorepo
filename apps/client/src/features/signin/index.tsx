@@ -27,14 +27,9 @@ function SigninPage() {
 
   const { mutate: logIn, isLoading } = useMutation(api.auth.signIn, {
     onSettled: () => {
-      queryClient.invalidateQueries(["account", "me"]);
+      queryClient.invalidateQueries(["users", "me"]);
     },
     onSuccess: ({ accessToken, refreshToken }) => {
-      // client.setAuthorizationToken(accessToken);
-
-      // tokenStorage.set(accessToken);
-      // refreshTokenStorage.set(refreshToken);
-
       navigate({ to: "/dashboard", replace: true });
     },
     onError: () => {

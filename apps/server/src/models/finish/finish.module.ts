@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Finish } from "database/entities";
 
-import { FinishController } from "./finish.controller";
-import { FinishService } from "./finish.service";
+import { FinishProcess, Paint } from "database/entities";
+import * as controllers from "./controllers";
+import * as providers from "./services";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Finish])],
-  controllers: [FinishController],
-  providers: [FinishService],
+  imports: [TypeOrmModule.forFeature([FinishProcess, Paint])],
+  controllers: Object.values(controllers),
+  providers: Object.values(providers),
 })
 export class FinishModule {}

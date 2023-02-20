@@ -1,4 +1,3 @@
-export * from "./account";
 export * from "./auth";
 export * from "./cabinet";
 export * from "./client";
@@ -8,3 +7,4 @@ export * from "./finish";
 export * from "./material";
 export * from "./opening";
 export * from "./profile";
+export * from "./user";

@@ -1,7 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsIn, IsInt, IsOptional, IsString } from "class-validator";
-
-import { RoomElevation, ROOM_ELEVATION } from "type-defs";
+import { IsInt, IsString } from "class-validator";
 
 export class CreateRoomDto {
   @IsInt()
@@ -11,9 +9,4 @@ export class CreateRoomDto {
   @IsString()
   @ApiProperty()
   name: string;
-
-  @IsIn(Object.values(ROOM_ELEVATION))
-  @IsOptional()
-  @ApiProperty()
-  elevation?: RoomElevation;
 }

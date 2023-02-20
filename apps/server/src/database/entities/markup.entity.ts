@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToOne, OneToOne } from "typeorm";
 
-import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
-import { AccountPreferences, JobPreferences } from "./preferences.entity";
+import { Job } from "./job.entity";
+import { User } from "./user.entity";
 
 class MarkupFees {
   @Column("real")
@@ -66,15 +66,18 @@ export class Markup extends AppBaseEntity {
   @Column(() => TaxOptions)
   taxes: TaxOptions;
 
-  @ManyToOne(() => Account, { onDelete: "CASCADE", nullable: true })
-  account?: Account;
+  @ManyToOne(() => User, { nullable: false, onDelete: "CASCADE" })
+  user: User;
 
-  @Column("integer", { nullable: true })
-  accountId?: number;
+  @OneToOne(() => Job, (job) => job.markup, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  job?: Job;
 
-  @OneToOne(() => AccountPreferences)
-  accountPreferences?: AccountPreferences;
-
-  @OneToOne(() => JobPreferences, { onDelete: "CASCADE" })
-  jobPreferences?: JobPreferences;
+  @OneToOne(() => User, (user) => user.preferences.materialSet, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  defaultForUser?: User;
 }

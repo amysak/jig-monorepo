@@ -20,20 +20,9 @@ export const COMPLETION_STATUS = [
 
 export type CompletionStatus = (typeof COMPLETION_STATUS)[number];
 
-export const ACCOUNT_ROLE = {
-  ADMIN: "admin",
-  SALES: "sales",
-} as const;
+export const USER_ROLE = ["company", "sales", "admin"] as const;
 
-export type AccountRole = ObjectValues<typeof ACCOUNT_ROLE>;
-
-export const ADDRESS_TYPE = {
-  PHYSICAL: "physical",
-  MAILING: "mailing",
-  BUSINESS: "business",
-} as const;
-
-export type AddressType = ObjectValues<typeof ACCOUNT_ROLE>;
+export type UserRole = (typeof USER_ROLE)[number];
 
 export const CABINET_OPENING_TYPE = [
   "door",
@@ -44,16 +33,14 @@ export const CABINET_OPENING_TYPE = [
 
 export type CabinetOpeningType = (typeof CABINET_OPENING_TYPE)[number];
 
-export const CABINET_EQUIPMENT_CATEGORY = {
-  TRIM: "trim",
-  MOLDING: "molding",
-  ACCESSORY: "accessory",
-  HARDWARE: "hardware",
-} as const;
+export const EQUIPMENT_CATEGORY = [
+  "trim",
+  "molding",
+  "accessory",
+  "hardware",
+] as const;
 
-export type CabinetEquipmentCategory = ObjectValues<
-  typeof CABINET_EQUIPMENT_CATEGORY
->;
+export type EquipmentCategory = (typeof EQUIPMENT_CATEGORY)[number];
 
 export const CABINET_EXTENSION_CATEGORY = [
   "panels",
@@ -76,15 +63,9 @@ export const CABINET_BASE_TYPES = [
 
 export type CabinetBaseType = (typeof CABINET_BASE_TYPES)[number];
 
-export const CABINET_CORNER_PLACEMENT = {
-  BLIND: "blind",
-  DEGREE_90: "90deg",
-  DIAGONAL: "diagonal",
-} as const;
+export const CABINET_CORNER_TYPE = ["blind", "90deg", "diagonal"] as const;
 
-export type CabinetCornerPlacement = ObjectValues<
-  typeof CABINET_CORNER_PLACEMENT
->;
+export type CabinetCornerType = (typeof CABINET_CORNER_TYPE)[number];
 
 export const MATERIAL_PURPOSE = [
   "back",
@@ -97,27 +78,13 @@ export const MATERIAL_PURPOSE = [
 
 export type MaterialPurpose = (typeof MATERIAL_PURPOSE)[number];
 
-export const PANEL_TYPE = {
-  END: "end",
-  APPLIANCE: "appliance",
-  WAINSCOT: "wainscot",
-} as const;
+export const PANEL_TYPE = ["appliance", "wainscot"] as const;
 
-export type PanelType = ObjectValues<typeof PANEL_TYPE>;
+export type PanelType = (typeof PANEL_TYPE)[number];
 
-export const PROFILE_TYPES = ["edge", "frame", "panel"] as const;
+export const PROFILE_TYPE = ["edge", "frame", "panel"] as const;
 
-export type ProfileType = (typeof PROFILE_TYPES)[number];
-
-export const ROOM_ELEVATION = {
-  NORTH: "north",
-  SOUTH: "south",
-  EAST: "east",
-  WEST: "west",
-  ISLAND: "island",
-} as const;
-
-export type RoomElevation = ObjectValues<typeof ROOM_ELEVATION>;
+export type ProfileType = (typeof PROFILE_TYPE)[number];
 
 export const TERMS_TYPE = {
   NET: "net",
@@ -134,13 +101,9 @@ export const TOE_TYPE = {
 
 export type ToeType = ObjectValues<typeof TOE_TYPE>;
 
-export const FINISH_TYPE = {
-  PROCESS: "process",
-  GLAZE: "glaze",
-  PAINT: "paint",
-} as const;
+export const PAINT_TYPE = ["glaze", "paint"] as const;
 
-export type FinishType = ObjectValues<typeof FINISH_TYPE>;
+export type PaintType = (typeof PAINT_TYPE)[number];
 
 export const STATS_OPTION = {
   CLIENTS: "clients",
@@ -174,3 +137,5 @@ export const FINISH_COMPLEXITY = {
 } as const;
 
 export type FinishComplexity = ObjectValues<typeof FINISH_COMPLEXITY>;
+
+export type MeasuredCabinetExterior = "drawer" | "baseDoor" | "upperDoor";

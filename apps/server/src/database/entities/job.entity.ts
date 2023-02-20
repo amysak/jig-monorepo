@@ -1,5 +1,5 @@
+import { type CompletionStatus } from "type-defs";
 import {
-  BeforeInsert,
   Column,
   Entity,
   JoinColumn,
@@ -8,18 +8,29 @@ import {
   OneToOne,
 } from "typeorm";
 
-import { type CompletionStatus } from "type-defs";
-import { Account } from "./account.entity";
 import { AppBaseEntity } from "./base.entity";
 import { Client } from "./client.entity";
-import { JobPreferences } from "./preferences.entity";
+import { Markup } from "./markup.entity";
 import { Room } from "./room.entity";
+import { Terms } from "./terms.entity";
+import { User } from "./user.entity";
+
+class JobDelivery {
+  @Column("text", { default: null })
+  text?: string;
+
+  @Column("integer", { default: 1 })
+  tripQuantity?: number;
+
+  @Column("integer", { default: 0 })
+  miles?: number;
+}
 
 export class JobNotes {
-  @Column("text", { nullable: true })
+  @Column("text", { default: null })
   internal?: string;
 
-  @Column("text", { nullable: true })
+  @Column("text", { default: null })
   external?: string;
 }
 
@@ -28,10 +39,10 @@ export class Job extends AppBaseEntity {
   @Column("text")
   name: string;
 
-  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP" })
+  @Column("timestamp", { nullable: true })
   estimateDate?: Date;
 
-  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP" })
+  @Column("timestamp", { nullable: true })
   proposalDate?: Date;
 
   @Column("text", { nullable: true })
@@ -43,42 +54,44 @@ export class Job extends AppBaseEntity {
   @Column("int", { nullable: true })
   lotNumber?: number;
 
+  @Column("text", { default: "estimate" })
+  status: CompletionStatus;
+
   @Column(() => JobNotes)
-  notes?: JobNotes;
+  notes: JobNotes;
+
+  @Column(() => JobDelivery)
+  delivery: JobDelivery;
+
+  @OneToOne(() => Terms, {
+    nullable: true,
+    onDelete: "SET NULL",
+    eager: true,
+    cascade: true,
+  })
+  @JoinColumn()
+  terms?: Terms;
+
+  @OneToOne(() => Markup, {
+    nullable: true,
+    onDelete: "SET NULL",
+    eager: true,
+    cascade: true,
+  })
+  @JoinColumn()
+  markup?: Markup;
+
+  @ManyToOne(() => User, {
+    nullable: false,
+    onDelete: "CASCADE",
+  })
+  user: User;
+
+  @OneToMany(() => Room, (room) => room.job, { eager: true, cascade: true })
+  rooms: Room[];
 
   @ManyToOne(() => Client, (client) => client.jobs, {
     onDelete: "CASCADE",
   })
   client: Client;
-
-  @Column("integer")
-  clientId: number;
-
-  @ManyToOne(() => Account, { onDelete: "CASCADE" })
-  account: Account;
-
-  @Column("integer")
-  accountId: number;
-
-  @OneToMany("Room", "job", { nullable: true })
-  rooms?: Room[];
-
-  // TODO: onDelete: set do default
-  @OneToOne(() => JobPreferences, (preferences) => preferences.job, {
-    onDelete: "CASCADE",
-    eager: true,
-    cascade: true,
-  })
-  @JoinColumn()
-  preferences: JobPreferences;
-
-  @Column("text", { default: "estimate" })
-  status: CompletionStatus;
-
-  @BeforeInsert()
-  assignAccount() {
-    this.account = this.client.account;
-
-    if (this.preferences) this.preferences = new JobPreferences();
-  }
 }

@@ -1,15 +1,15 @@
 import { randEmail, randFullName } from "@ngneat/falso";
 
-import { Account, Client } from "database/entities";
+import { User, Client } from "database/entities";
 
 type ClientSeedsOptions = {
   count: number;
-  account: Account;
+  user: User;
 };
 
 export function generateClientSeeds({
   count,
-  account,
+  user,
 }: ClientSeedsOptions): Client[] {
   const seeds: Client[] = [];
 
@@ -18,7 +18,7 @@ export function generateClientSeeds({
 
     client.name = randFullName();
     client.email = randEmail();
-    client.account = account;
+    client.user = user;
 
     seeds.push(client);
   }

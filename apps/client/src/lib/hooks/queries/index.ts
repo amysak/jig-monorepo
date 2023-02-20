@@ -5,7 +5,7 @@ export * from "./use-extension";
 export * from "./use-finish";
 export * from "./use-job";
 export * from "./use-material";
-export * from "./use-opening";
+export * from "./use-model";
 export * from "./use-price";
 export * from "./use-profile";
 export * from "./use-query-cache";

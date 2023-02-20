@@ -26,16 +26,15 @@ const TanStackRouterDevtools = import.meta.env.DEV
 
 export const rootRoute = new RootRoute({
   component: () => (
-    <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools position="top-right" />
-        <TanStackRouterDevtools position="bottom-right" />
-        <ConfigProvider theme={theme} componentSize="small">
-          <Outlet />
-        </ConfigProvider>
-      </QueryClientProvider>
-    </ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools position="top-right" />
+      <TanStackRouterDevtools position="bottom-right" />
+      <ConfigProvider theme={theme} componentSize="small">
+        <Outlet />
+      </ConfigProvider>
+    </QueryClientProvider>
   ),
+  errorComponent: ErrorBoundary,
 });
 
 export const router = new ReactRouter({

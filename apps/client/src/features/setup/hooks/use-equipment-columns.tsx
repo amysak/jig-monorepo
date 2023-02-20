@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Link, useSearch } from "@tanstack/react-router";
 import { Space, TableProps, Typography } from "antd";
 import { capitalize } from "lodash-es";
-import { CabinetEquipment, CabinetEquipmentCategory } from "type-defs";
+import { Equipment, EquipmentCategory } from "type-defs";
 
 import { useEquipmentDeletion } from "lib/hooks/queries";
 import { equipmentIndexRoute } from "pages/setup";
@@ -17,7 +17,7 @@ export const useEquipmentColumns = () => {
 
   const { mutateAsync: deleteProfile } = useEquipmentDeletion();
 
-  const columns: TableProps<CabinetEquipment>["columns"] = [
+  const columns: TableProps<Equipment>["columns"] = [
     {
       key: "name",
       dataIndex: "name",
@@ -36,7 +36,7 @@ export const useEquipmentColumns = () => {
       dataIndex: "category",
       width: "15%",
       title: "Category",
-      render: (category: CabinetEquipmentCategory) => (
+      render: (category: EquipmentCategory) => (
         <Text strong>{capitalize(category)}</Text>
       ),
     },

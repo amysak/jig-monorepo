@@ -15,11 +15,11 @@
 - [x] Finish authorization logic
 - [x] Set up deployment (Render.com)
 - [x] Restructure project yet again and reduce module complexity
-- [x] Add logic for getting all account's jobs
+- [x] Add logic for getting all user's jobs
 - [x] Move [seeds](src/database/seeds/data) to JSON and finish seeding logic
 - [x] Finish basic services logic and controllers
 - [x] [Seed](src/services/seeding.service.ts) other parts
-- [x] Bind main models logic to front-end (**jobs**, account, clients)
+- [x] Bind main models logic to front-end (**jobs**, user, clients)
 - [x] Implement error catching
 - [x] Fix DTO validation
 - [x] Bind cabinets to front-end
@@ -36,7 +36,7 @@
 - [ ] Re-implement mailing module and bind authorization
 - [ ] Add
       [custom serialization](https://blog.logrocket.com/serialization-in-nestjs-a-different-approach/),
-      fixes [this](src/shared/account/account.service.ts#L54)
+      fixes [this](src/shared/user/user.service.ts#L54)
 - [ ] Finish all basic logic and tie front-end
 - [ ] Beta release
 

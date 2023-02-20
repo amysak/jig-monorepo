@@ -1,11 +1,4 @@
-import { AccountPreferences } from "../entities";
-import { Preferences, Terms } from "./models";
-
-export function isAccountPreferences(
-  preferences: Preferences
-): preferences is AccountPreferences {
-  return !!(preferences as AccountPreferences).account;
-}
+import { Terms } from "./models";
 
 export function isMultiTerms(
   terms: Terms

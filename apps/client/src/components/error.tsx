@@ -1,28 +1,34 @@
-import { useEffect, useState } from "react";
+import { red } from "@ant-design/colors";
+import { Typography } from "antd";
 
-import { rootNode } from "main";
+type ErrorComponentProps = {
+  error: { message: string; stack?: string };
+};
 
-export function ErrorBoundary({ children }) {
-  const [hasError, setHasError] = useState(false);
+const { Text, Paragraph } = Typography;
 
-  const onError = (errorEvent: ErrorEvent) => {
-    setHasError(true);
-    console.error("React Error Boundary: ", errorEvent);
-  };
+export function ErrorBoundary({ error }: ErrorComponentProps) {
+  const isDev = import.meta.env.DEV;
 
-  useEffect(() => {
-    if (!rootNode) {
-      return;
-    }
-
-    rootNode.addEventListener("error", onError);
-
-    return () => rootNode!.removeEventListener("error", onError);
-  }, []);
-
-  if (hasError) {
-    return <h1>Something went wrong.</h1>;
-  }
-
-  return children;
+  return isDev ? (
+    <div
+      style={{
+        minHeight: "100vh",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Paragraph>
+        Encountered error: <Text color={red[6]}>{error.message}</Text>
+      </Paragraph>
+      <Paragraph>
+        Error stack:
+        <br />
+        <code style={{ whiteSpace: "pre-line" }}>{error.stack}</code>
+      </Paragraph>
+    </div>
+  ) : null; // TODO: production error page
 }
