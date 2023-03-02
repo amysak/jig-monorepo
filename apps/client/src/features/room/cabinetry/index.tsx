@@ -26,6 +26,8 @@ export function RoomCabinetry() {
     queryFn: () => api.rooms.getById(params.roomId),
   });
 
+  const Component = cabinetryMap.get(tab);
+
   return (
     <>
       <Radio.Group
@@ -37,7 +39,8 @@ export function RoomCabinetry() {
         <Radio.Button value="accessory">Accessory & Hardware</Radio.Button>
         <Radio.Button value="moldings">Trims & Moldings</Radio.Button>
       </Radio.Group>
-      {cabinetryMap.get(tab)}
+
+      {Component && <Component />}
     </>
   );
 }
