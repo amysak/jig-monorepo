@@ -43,13 +43,25 @@ class MaterialSetMolding {
 
 class InteriorMaterials {
   @ManyToOne(() => Material, { nullable: true })
+  @JoinColumn({ name: "interior_id" })
   interior?: Material;
 
-  @ManyToOne(() => Material, { nullable: true })
-  back?: Material;
+  @Column("int", { nullable: true })
+  interiorId?: number;
 
   @ManyToOne(() => Material, { nullable: true })
+  @JoinColumn({ name: "back_id" })
+  back?: Material;
+
+  @Column("int", { nullable: true })
+  backId?: number;
+
+  @ManyToOne(() => Material, { nullable: true })
+  @JoinColumn({ name: "shelves_id" })
   shelves?: Material;
+
+  @Column("int", { nullable: true })
+  shelvesId?: number;
 
   @Column(() => FinishSet)
   finishes?: FinishSet;
@@ -94,11 +106,14 @@ class RoomExterior {
   @Column(() => AppliedPart)
   slabEnd: AppliedPart;
 
-  @Column(() => AppliedPart)
-  fillers?: AppliedPart;
+  @Column(() => NoProfilesPart)
+  toe?: NoProfilesPart;
 
-  @Column(() => AppliedPart)
-  faceFrame?: AppliedPart;
+  @Column(() => NoProfilesPart)
+  fillers?: NoProfilesPart;
+
+  @Column(() => NoProfilesPart)
+  faceFrame?: NoProfilesPart;
 
   @ManyToOne(() => Material, { nullable: true })
   edgebanding?: Material;
@@ -122,7 +137,7 @@ export class MaterialSet extends AppBaseEntity {
     nullable: true,
     onDelete: "CASCADE",
   })
-  cabinets?: Cabinet[];
+  cabinet?: Cabinet;
 
   @OneToOne(() => Room, (room) => room.materialSet, {
     nullable: true,

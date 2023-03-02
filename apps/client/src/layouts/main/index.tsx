@@ -7,6 +7,7 @@ import { useHeaderLinks } from "./links";
 
 import "./style.scss";
 import { useRouter } from "@tanstack/react-router";
+import { useAuthorization } from "lib/hooks";
 
 const { Header, Content } = Layout;
 
@@ -18,15 +19,16 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
   children,
   ...props
 }) => {
-  const {
-    token: { colorLink },
-  } = theme.useToken();
-
   const headerLinks = useHeaderLinks();
 
   // TODO: probably wrong
   const router = useRouter();
   const currentTabName = router.state.currentLocation.pathname.split("/")[1];
+
+  // we're in suspend mode
+  const { user } = useAuthorization();
+  // TODO: 401 page
+  if (!user) return null;
 
   return (
     <Layout
@@ -45,7 +47,6 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
           mode="horizontal"
           items={headerLinks}
           disabledOverflow={true}
-          style={{ color: colorLink }}
         />
       </Header>
       <Content

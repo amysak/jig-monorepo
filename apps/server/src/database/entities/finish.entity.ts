@@ -1,3 +1,4 @@
+import { Exclude, Expose } from "class-transformer";
 import { PaintType } from "type-defs";
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
@@ -20,23 +21,23 @@ export class Paint extends AppBaseEntity {
 }
 
 class PerPartPrice {
-  @Column("real", { nullable: true })
-  twoSidesCost?: number;
+  @Column("real", { default: 0 })
+  twoSidesCost: number;
 
-  @Column("integer", { nullable: true })
-  discount?: number;
+  @Column("int", { default: 0 })
+  discount: number;
 
-  @Column("integer", { default: 67 })
+  @Column("int", { default: 67 })
   simplePercent: number;
 }
 
 class PerSquareFeetPrice {
-  @Column("real", { nullable: true })
-  twoSidesCost?: number;
+  @Column("real", { default: 0 })
+  price: number;
 
   // %
-  @Column("integer", { nullable: true })
-  discount?: number;
+  @Column("int", { default: 0 })
+  discount: number;
 
   // ?
   // @Column("real", { nullable: true })
@@ -60,7 +61,15 @@ export class FinishProcess extends AppBaseEntity {
   description: string;
 
   @Column(() => FinishPrice)
-  price?: FinishPrice;
+  price: FinishPrice;
+
+  @Expose()
+  get discountedPricePerSqFt(): number {
+    return (
+      this.price.perSquareFeet.price *
+      (1 - this.price.perSquareFeet.discount / 100)
+    );
+  }
 
   @ManyToOne(() => User, { onDelete: "CASCADE" })
   user: User;

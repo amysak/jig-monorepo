@@ -47,9 +47,8 @@ type EditModalProps = {
 export const EditModal: FC<EditModalProps> = ({ content }) => {
   const parent = useMatch().parentMatch;
   const splitParent = parent?.id.split("/");
-  const entityName = splitParent
-    ? (splitParent.at(-1) || splitParent.at(-2))?.replace(/s$/, "")
-    : "item";
+  const entityName =
+    splitParent?.filter(Boolean).at(-1)?.replace(/s$/, "") || "item";
 
   const navigate = useNavigate();
   const onCancel = () =>

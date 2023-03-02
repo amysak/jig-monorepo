@@ -4,6 +4,7 @@ import { type MaterialPurpose } from "type-defs";
 import { AppBaseEntity } from "./base.entity";
 import { User } from "./user.entity";
 import { Vendor } from "./vendor.entity";
+import { Expose, plainToClass, plainToInstance } from "class-transformer";
 
 @Entity()
 // @TableInheritance({
@@ -31,6 +32,11 @@ export class Material extends AppBaseEntity {
   @Column("real", { default: 0 })
   discount: number;
 
+  @Expose()
+  get discountedPrice(): number {
+    return this.price * (1 - this.discount / 100);
+  }
+
   @Column("real", { default: 0 })
   wasteFactor: number;
 
@@ -39,4 +45,9 @@ export class Material extends AppBaseEntity {
 
   @ManyToOne(() => User, { onDelete: "CASCADE" })
   user: User;
+
+  // TODO: Serializer?
+  toJSON() {
+    plainToInstance(Material, this);
+  }
 }

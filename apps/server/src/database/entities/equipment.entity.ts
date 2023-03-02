@@ -17,6 +17,7 @@ import { AppBaseEntity } from "./base.entity";
 import { Cabinet } from "./cabinet.entity";
 import { Room } from "./room.entity";
 import { Upcharge } from "./upcharge.entity";
+import { Expose } from "class-transformer";
 
 @Entity()
 export class Equipment extends AppBaseEntity {
@@ -45,11 +46,10 @@ export class Equipment extends AppBaseEntity {
   @AfterLoad()
   discountPrice() {
     const discountedPrice = this.discount
-      ? this.price * ((100 - this.discount) / 100)
+      ? this.price * (1 - this.discount / 100)
       : this.price;
 
-    // TODO: requires number type but toFixed outputs string
-    this.price = discountedPrice.toFixed(2) as unknown as number;
+    this.price = Number(discountedPrice.toFixed(2));
   }
 
   // TODO: enum

@@ -154,19 +154,71 @@ export class SeedingService {
 
         const layoutOptions: Cabinet["exterior"]["equipmentRows"][] = [
           [
-            { items: ["drawer"], height: randNumber({ min: 7, max: 10 }) },
-            { items: ["baseDoor", "baseDoor"], height: 0 },
+            {
+              items: [
+                {
+                  type: "drawer",
+                  dimensions: {
+                    back: randNumber({ min: 3, max: 5 }),
+                    depth: randNumber({ min: 7, max: 15 }),
+                  },
+                },
+              ],
+              height: randNumber({ min: 7, max: 10 }),
+            },
+            { items: [{ type: "baseDoor" }, { type: "baseDoor" }], height: 0 },
           ],
           [
             {
-              items: ["drawer", "drawer"],
+              items: [
+                {
+                  type: "drawer",
+                  dimensions: {
+                    back: randNumber({ min: 3, max: 5 }),
+                    depth: randNumber({ min: 7, max: 15 }),
+                  },
+                },
+                {
+                  type: "drawer",
+                  dimensions: {
+                    back: randNumber({ min: 3, max: 5 }),
+                    depth: randNumber({ min: 7, max: 15 }),
+                  },
+                },
+              ],
               height: randNumber({ min: 7, max: 10 }),
             },
-            { items: ["baseDoor"], height: 0 },
+            { items: [{ type: "baseDoor" }], height: 0 },
           ],
           [
-            { items: ["drawer"], height: randNumber({ min: 7, max: 10 }) },
-            { items: ["drawer"], height: randNumber({ min: 7, max: 10 }) },
+            {
+              items: [
+                {
+                  type: "drawer",
+                  dimensions: {
+                    front: randNumber({ min: 3, max: 5 }),
+                    back: randNumber({ min: 3, max: 5 }),
+                    side: randNumber({ min: 3, max: 7 }),
+                    depth: randNumber({ min: 8, max: 15 }),
+                  },
+                },
+              ],
+              height: randNumber({ min: 7, max: 10 }),
+            },
+            {
+              items: [
+                {
+                  type: "drawer",
+                  dimensions: {
+                    front: randNumber({ min: 3, max: 5 }),
+                    back: randNumber({ min: 3, max: 5 }),
+                    side: randNumber({ min: 3, max: 7 }),
+                    depth: randNumber({ min: 8, max: 15 }),
+                  },
+                },
+              ],
+              height: randNumber({ min: 7, max: 10 }),
+            },
             { items: [], height: 0 },
           ],
         ];
@@ -245,6 +297,37 @@ export class SeedingService {
       })
     );
     await this.entityManager.save(rooms);
+
+    const generateMaterialSetRow = () => ({
+      modelId: randNumber({ min: 1, max: 3 }),
+      profiles: {
+        edgeId: randNumber({ min: 1, max: 3 }),
+        panelId: randNumber({ min: 1, max: 3 }),
+        frameId: randNumber({ min: 1, max: 3 }),
+      },
+    });
+    const defaultUserMaterialSet = new MaterialSet();
+    defaultUserMaterialSet.name = "Default Material Set";
+    defaultUserMaterialSet.exterior = {
+      appliancePanel: generateMaterialSetRow(),
+      wainscotPanel: generateMaterialSetRow(),
+      baseDoor: generateMaterialSetRow(),
+      upperDoor: generateMaterialSetRow(),
+      drawerFront: generateMaterialSetRow(),
+      endPanel: generateMaterialSetRow(),
+      slabEnd: generateMaterialSetRow(),
+      faceFrame: generateMaterialSetRow(),
+      toe: generateMaterialSetRow(),
+      fillers: generateMaterialSetRow(),
+    };
+    // TODO:
+    // defaultUserMaterialSet.exterior.molding = generateMaterialSetRow();
+    // defaultUserMaterialSet.exterior.edgebanding = generateMaterialSetRow();
+    // defaultUserMaterialSet.exterior. =
+    //   defaultUserMaterialSet.exterior.appliancePanel;
+    defaultUserMaterialSet.user = superUser;
+    defaultUserMaterialSet.defaultForUser = superUser;
+    defaultUserMaterialSet.name = "Default Exterior Material Set";
 
     this.logger.log("Seeding completed");
   }

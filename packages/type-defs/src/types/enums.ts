@@ -139,3 +139,16 @@ export const FINISH_COMPLEXITY = {
 export type FinishComplexity = ObjectValues<typeof FINISH_COMPLEXITY>;
 
 export type MeasuredCabinetExterior = "drawer" | "baseDoor" | "upperDoor";
+
+export type EquipmentRowItem = {
+  type: MeasuredCabinetExterior;
+  // Used if drawer or tray is selected
+  dimensions?: {
+    back?: number;
+    front?: number;
+    side?: number;
+    depth?: number;
+  };
+};
+
+export type EquipmentRowItems = (EquipmentRowItem | EquipmentRowItem[])[];

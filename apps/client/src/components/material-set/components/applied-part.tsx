@@ -70,41 +70,45 @@ export const AppliedPart = ({ title, name }: AppliedPartProps) => {
               })) || []
           }
         />
-      </Space>
-      <Space size="small">
-        {PROFILE_TYPE.map((type) => (
-          <FormSelect
-            key={`${name}-profile-${type}`}
-            name={[...name, "profiles", type + "Id"]}
-            style={{ width: 100 }}
-            options={
-              profiles?.data
-                .filter((item) => item.type === type)
-                .map((profile) => ({
-                  label: profile.name,
-                  value: profile.id,
-                })) || []
-            }
-          />
-        ))}
-      </Space>
-      <Space size="small">
-        {["process", "glaze", "paint"].map((finishType) => (
-          <FormSelect
-            key={`${name}-finish-${finishType}`}
-            name={[...name, "finishes", finishType + "Id"]}
-            style={{ width: 100 }}
-            options={
-              (finishType === "process"
-                ? finishes?.processes
-                : finishes?.paints.filter((item) => item.type === finishType)
-              )?.map((finish) => ({
-                label: finish.name,
-                value: finish.id,
-              })) || []
-            }
-          />
-        ))}
+        <Space direction="vertical">
+          <Space size="small">
+            {PROFILE_TYPE.map((type) => (
+              <FormSelect
+                key={`${name}-profile-${type}`}
+                name={[...name, "profiles", type + "Id"]}
+                style={{ width: 100 }}
+                options={
+                  profiles?.data
+                    .filter((item) => item.type === type)
+                    .map((profile) => ({
+                      label: profile.name,
+                      value: profile.id,
+                    })) || []
+                }
+              />
+            ))}
+          </Space>
+          <Space size="small">
+            {["process", "glaze", "paint"].map((finishType) => (
+              <FormSelect
+                key={`${name}-finish-${finishType}`}
+                name={[...name, "finishes", finishType + "Id"]}
+                style={{ width: 100 }}
+                options={
+                  (finishType === "process"
+                    ? finishes?.processes
+                    : finishes?.paints.filter(
+                        (item) => item.type === finishType
+                      )
+                  )?.map((finish) => ({
+                    label: finish.name,
+                    value: finish.id,
+                  })) || []
+                }
+              />
+            ))}
+          </Space>
+        </Space>
       </Space>
     </Card>
   );

@@ -55,29 +55,32 @@ export class Room extends AppBaseEntity {
   @OneToMany(() => Equipment, (equipment) => equipment.room, {
     nullable: true,
     cascade: true,
+    // TODO: think about eagers
     eager: true,
   })
   equipment?: Equipment[];
 
   @OneToMany(() => Panel, (panel) => panel.room, {
-    nullable: true,
     cascade: true,
     eager: true,
   })
-  panels?: Panel[];
+  panels: Panel[];
 
+  // TODO: do we need this?
   @Column("jsonb", { default: [] })
   additionalFillers?: { width: number; height: number }[];
 
   @OneToMany(() => ToePlatform, (toe) => toe.room, {
-    nullable: true,
     cascade: true,
     eager: true,
   })
-  toes?: ToePlatform[];
+  toes: ToePlatform[];
 
-  @OneToMany(() => Upcharge, (upcharge) => upcharge.room, { eager: true })
-  upcharges?: Upcharge[];
+  @OneToMany(() => Upcharge, (upcharge) => upcharge.room, {
+    cascade: true,
+    eager: true,
+  })
+  upcharges: Upcharge[];
 
   @OneToOne(() => MaterialSet, (materialSet) => materialSet.room, {
     nullable: false,

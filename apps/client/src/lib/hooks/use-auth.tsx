@@ -5,12 +5,13 @@ const getMeQueryKey = ["users", "me"];
 const getMeQueryFn = api.auth.getMe;
 
 export const useAuthorization = () => {
-  const { status } = useQuery({
+  const { data: meResult, status } = useQuery({
     queryKey: getMeQueryKey,
     queryFn: getMeQueryFn,
   });
 
   return {
     isAuthenticated: status === "success",
+    user: meResult,
   };
 };

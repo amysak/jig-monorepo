@@ -183,12 +183,12 @@ export function getRoomDefaults({ user }: DefaultSeedsOptions) {
       if (finish.category.toLowerCase().includes("process")) {
         (resFinish as FinishProcess).price = {
           perPart: {
-            twoSidesCost: Math.random() * 10,
+            twoSidesCost: randNumber({ min: 0, max: 10 }),
             simplePercent: 67,
             discount: randNumber({ min: 0, max: 30 }),
           },
           perSquareFeet: {
-            twoSidesCost: Math.random() * 10,
+            price: randNumber({ min: 0, max: 10 }),
             discount: randNumber({ min: 0, max: 15 }),
           },
         };
@@ -310,24 +310,25 @@ export function getRoomDefaults({ user }: DefaultSeedsOptions) {
 
       resCabinet.baseType =
         baseTypes[randNumber({ max: baseTypes.length - 1 })];
-      resCabinet.exterior = {
-        faceFrame: {
-          stileWidth: 1.5,
-          fullHeight: true,
-          // This basically represents a face frame with 1 column (meaning 2 stiles)
-          // and 3 rails, each 1.5in in height. This means, when calculating dimensions
-          // of cabinet parts in a room and such face frame is attached:
-          // Don't include allowance & subtract total face frame sq ft before applying materials
-          // P.S. new idea is to let user choose between full height and rows height and calc
-          // ff height automatically
-          // columns: [[1.5, 1.5, 1.5]],
-        },
-      };
+
+      if (cabinet.style.toLowerCase().includes("frame")) {
+        // faceFrame: {
+        // reference
+        // This basically represents a face frame with 1 column (meaning 2 stiles)
+        // and 3 rails, each 1.5in in height. This means, when calculating dimensions
+        // of cabinet parts in a room and such face frame is attached:
+        // Don't include allowance & subtract total face frame sq ft before applying materials
+        // P.S. new idea is to let user choose between full height and rows height and calc
+        // ff height automatically
+        // columns: [[1.5, 1.5, 1.5]],
+        // },
+      }
+
       if (
         resCabinet.baseType === "standard" ||
         resCabinet.baseType === "adjustable"
       )
-        resCabinet.overridenToeHeight = 4.25;
+        resCabinet.dimensions.overridenToeHeight = 4.25;
       // switch (baseType) {
       //   case "adjustable":
       //     // resCabinet.equipment.push()

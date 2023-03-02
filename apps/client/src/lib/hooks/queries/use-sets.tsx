@@ -28,10 +28,6 @@ export const useSetsQuery = (search: Record<string, unknown>) => {
 };
 
 // TODO: add zod validation for all hooks
-// TODO: add zod validation for all hooks
-// TODO: add zod validation for all hooks
-// TODO: add zod validation for all hooks
-// TODO: add zod validation for all hooks
 export const useCreateMaterialSet = (
   options?: UseMutationOptions<MaterialSet, unknown, DeepPartial<MaterialSet>>
 ) =>

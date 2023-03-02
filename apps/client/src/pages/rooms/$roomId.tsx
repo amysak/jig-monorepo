@@ -4,12 +4,10 @@ import { Tabs } from "antd";
 import { ReactNode } from "react";
 
 import {
-  RoomAccessory,
-  RoomCabinets,
-  RoomPanels,
+  RoomCabinetry,
   RoomSkeleton,
   RoomSummary,
-  RoomUpcharges,
+  RoomTotal,
 } from "features/room";
 import { UILayout } from "layouts/ui";
 import { api } from "lib/api";
@@ -22,15 +20,9 @@ const panes: { key: RoomTab; label: string; children: ReactNode }[] = [
     children: <RoomSummary />,
     key: "summary",
   },
-  { label: "Setup", children: <RoomCabinets />, key: "cabinets" },
-  // Should be able to add all types of panels in here
-  { label: "Panels", children: <RoomPanels />, key: "panels" },
-  // Additional accesssory
-  { label: "Accessory", children: <RoomAccessory />, key: "accessory" },
-  // Editing and adding additional upcharges
-  { label: "Upcharges", children: <RoomUpcharges />, key: "upcharges" },
-  // { label: "Separate parts", children: <RoomMisc />, key: "misc" },
-  // { label: "Prices", children: <RoomPrices />, key: "prices" },
+  { label: "Cabinetry", children: <RoomCabinetry />, key: "cabinetry" },
+  // View totals and edit upcharges
+  { label: "Total", children: <RoomTotal />, key: "total" },
 ];
 
 export default function RoomPage() {

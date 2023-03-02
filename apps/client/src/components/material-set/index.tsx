@@ -1,4 +1,4 @@
-import { Col, Form, Row } from "antd";
+import { Col, Form, Row, Space } from "antd";
 import { debounce } from "lodash-es";
 
 import { useMutateMaterialSet } from "lib/hooks/queries";
@@ -29,56 +29,25 @@ export const MaterialSetView = ({ materialSet }: MaterialSetProps) => {
       name="set-form"
       layout="vertical"
     >
-      <Row gutter={[16, 8]}>
-        <Col span={12}>
-          <AppliedPart title="Base doors" name={["exterior", "baseDoor"]} />
-        </Col>
-        <Col span={12}>
-          <AppliedPart title="Upper doors" name={["exterior", "upperDoor"]} />
-        </Col>
-        <Col span={12}>
-          <AppliedPart
-            title="Drawer fronts"
-            name={["exterior", "drawerFront"]}
-          />
-        </Col>
-        <Col span={12}>
-          <AppliedPart
-            title="Appliance panels"
-            name={["exterior", "appliancePanel"]}
-          />
-        </Col>
-        <Col span={12}>
-          <AppliedPart
-            title="Wainscot panels"
-            name={["exterior", "appliancePanel"]}
-          />
-        </Col>
-        <Col span={12}>
-          <AppliedPart
-            title="End panels"
-            name={["exterior", "appliancePanel"]}
-          />
-        </Col>
-        <Col span={12}>
-          <AppliedPart
-            title="Slab ends"
-            name={["exterior", "appliancePanel"]}
-          />
-        </Col>
-        <Col span={12}>
-          <AppliedPart title="Fillers" name={["exterior", "fillers"]} />
-        </Col>
-        <Col span={12}>
-          <AppliedPart title="Face frame" name={["exterior", "faceFrame"]} />
-        </Col>
-        <Col span={12}>
-          <AppliedPart title="Edgebanding" name={["exterior", "edgebanding"]} />
-        </Col>
-        <Col span={24}>
-          <AppliedPart title="Molding" name={["exterior", "molding"]} />
-        </Col>
-      </Row>
+      <Space direction="vertical" style={{ width: "100%" }}>
+        <AppliedPart title="Base doors" name={["exterior", "baseDoor"]} />
+        <AppliedPart title="Upper doors" name={["exterior", "upperDoor"]} />
+        <AppliedPart title="Drawer fronts" name={["exterior", "drawerFront"]} />
+        <AppliedPart
+          title="Appliance panels"
+          name={["exterior", "appliancePanel"]}
+        />
+        <AppliedPart
+          title="Wainscot panels"
+          name={["exterior", "appliancePanel"]}
+        />
+        <AppliedPart title="End panels" name={["exterior", "appliancePanel"]} />
+        <AppliedPart title="Slab ends" name={["exterior", "appliancePanel"]} />
+        <AppliedPart title="Fillers" name={["exterior", "fillers"]} />
+        <AppliedPart title="Face frame" name={["exterior", "faceFrame"]} />
+        <AppliedPart title="Edgebanding" name={["exterior", "edgebanding"]} />
+        <AppliedPart title="Molding" name={["exterior", "molding"]} />
+      </Space>
     </Form>
   ) : (
     <MaterialSetSkeleton />

@@ -1,4 +1,5 @@
 import {
+  ClassSerializerInterceptor,
   HttpException,
   HttpStatus,
   Module,
@@ -6,7 +7,7 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { APP_FILTER, APP_PIPE } from "@nestjs/core";
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
 import { TypeOrmModule, TypeOrmModuleOptions } from "@nestjs/typeorm";
 
 import { AuthModule } from "auth";
@@ -16,18 +17,18 @@ import {
   EquipmentModule,
   FinishModule,
   JobModule,
-  MaterialModule,
   PanelModule,
   PricesModule,
   ProfileModule,
+  RoomModule,
   ToeModule,
 } from "models";
 import { SeedingService } from "services";
 import {
   CabinetModule,
   HardwareSetModule,
+  MaterialModule,
   MaterialSetModule,
-  RoomModule,
   UserModule,
 } from "shared";
 
@@ -126,6 +127,10 @@ import { configuration } from "./config";
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
     },
   ],
 })

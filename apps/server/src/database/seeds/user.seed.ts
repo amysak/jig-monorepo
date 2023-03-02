@@ -14,6 +14,10 @@ export function generateSuperUserSeed(): User {
     superUser.salt
   );
   superUser.role = "admin";
+  superUser.preferences = {
+    ratePerMinute: 0.43,
+    reportText: "This is a test report. Please ignore.",
+  };
 
   return superUser;
 }

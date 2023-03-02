@@ -2,19 +2,20 @@ import {
   FormCheckbox,
   FormInput,
   FormNumberInput,
-  FormRadioSet,
   FormSelect,
 } from "@jigbid/ui";
-import { Card, Col, Form, Row, Space } from "antd";
+import { Card, Col, Form, Row } from "antd";
 import { capitalize } from "lodash-es";
 import {
+  Cabinet,
   CABINET_BASE_TYPES,
   CABINET_CORNER_TYPE,
   CABINET_TYPES,
 } from "type-defs";
 
 export const CabinetMain = () => {
-  const form = Form.useFormInstance();
+  const form = Form.useFormInstance<Cabinet>();
+  const { corner } = form.getFieldsValue();
 
   return (
     <Card>
@@ -22,10 +23,10 @@ export const CabinetMain = () => {
 
       <Row justify="space-between">
         <Col span={11}>
-          <FormCheckbox name="cornered" label="Corner cabinet" />
+          <FormCheckbox name="corner" label="Corner cabinet" />
         </Col>
         <Col span={11}>
-          {form.getFieldValue("cornered") ? (
+          {corner ? (
             <FormSelect
               label="Corner Style"
               name="cornerPlacement"
@@ -58,7 +59,7 @@ export const CabinetMain = () => {
         <Col span={11}>
           <FormSelect
             label="Base Type"
-            name={["exterior", "baseType"]}
+            name={["baseType"]}
             options={CABINET_BASE_TYPES.map((baseType) => ({
               label: capitalize(baseType),
               value: baseType,
@@ -69,13 +70,13 @@ export const CabinetMain = () => {
 
       <Row>
         <Col span={11}>
-          <FormCheckbox name="favourite" label="Favourite" />
+          <FormCheckbox name="isFavourite" label="Favourite" />
         </Col>
 
         <Col span={11}>
           {form.getFieldValue(["exterior", "baseType"]) === "standard" ? (
             <FormNumberInput
-              name={["exterior", "overridenToeHeight"]}
+              name={["dimensions", "overridenToeHeight"]}
               label="Override toe height"
             />
           ) : null}

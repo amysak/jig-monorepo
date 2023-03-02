@@ -1,31 +1,26 @@
-import { Alert, Col, Divider, Form, Row, Space } from "antd";
+import { Alert, Col, Divider, Row, Space } from "antd";
 import { isEmpty } from "lodash-es";
 
-import { Cabinet } from "type-defs";
 import {
   CabinetDimensions,
   CabinetFaceFrame,
   CabinetLayout,
-  CabinetParts,
+  CabinetCharacteristics,
   CabinetPreview,
 } from "../components";
+import { useCabinetState } from "../hooks";
 
 export const CabinetLayoutTab = () => {
-  const form = Form.useFormInstance();
-  const dimensions = form.getFieldValue([
-    "dimensions",
-  ]) as Cabinet["dimensions"];
+  // TODO: Could be moved to hook
+  const {
+    snapshot: {
+      cabinet: {
+        exterior: { equipmentRows },
+      },
+    },
+  } = useCabinetState();
 
-  const content = !dimensions.floorToTop ? (
-    <Alert
-      message={`
-        If you do not specify default height for this cabinet, you won't be able to 
-        set default layout, because then scaling of parts for different cabinet heights
-        will be impossible.
-      `}
-      type="error"
-    />
-  ) : (
+  return (
     <Row>
       <Col span={12}>
         <Space direction="vertical" style={{ width: "100%" }}>
@@ -39,15 +34,15 @@ export const CabinetLayoutTab = () => {
 
             <Col span={12}>
               <Divider orientation="left" orientationMargin={0}>
-                Cabinet parts
+                Cabinet characteristics
               </Divider>
-              <CabinetParts filter="exterior" />
+              <CabinetCharacteristics filter="exterior" />
             </Col>
           </Row>
 
           <CabinetLayout />
 
-          {!isEmpty(form.getFieldValue("equipmentRows")) ? (
+          {!isEmpty(equipmentRows) ? (
             <CabinetFaceFrame />
           ) : (
             <Alert
@@ -71,6 +66,4 @@ export const CabinetLayoutTab = () => {
       <br />
     </Row>
   );
-
-  return content;
 };

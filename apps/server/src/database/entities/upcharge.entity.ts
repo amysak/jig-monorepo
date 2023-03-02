@@ -15,6 +15,9 @@ export class Upcharge extends AppBaseEntity {
   @Column("real")
   amount: number;
 
+  // @Column("text", {default: "none"})
+  // type: UpchargeType;
+
   @Column("text", { nullable: true })
   description?: string;
 
@@ -26,6 +29,12 @@ export class Upcharge extends AppBaseEntity {
     onDelete: "CASCADE",
   })
   model?: Model;
+
+  @ManyToOne(() => Profile, (profile) => profile.upcharges, {
+    nullable: true,
+    onDelete: "CASCADE",
+  })
+  profile?: Profile;
 
   @ManyToOne(() => Cabinet, (cabinet) => cabinet.upcharges, {
     nullable: true,
@@ -41,18 +50,4 @@ export class Upcharge extends AppBaseEntity {
 
   @ManyToOne(() => User, { nullable: true, onDelete: "CASCADE" })
   user?: User;
-
-  @ManyToOne(() => Profile, (profile) => profile.upcharges, {
-    nullable: true,
-    onDelete: "CASCADE",
-  })
-  profile?: Profile;
-
-  // TODO: Should be handled elsewhere
-  // @AfterLoad()
-  // calculateAmount() {
-  //   this.amount = this.time
-  //     ? this.user.preferences.ratePerMinute * this.time
-  //     : this.amount;
-  // }
 }

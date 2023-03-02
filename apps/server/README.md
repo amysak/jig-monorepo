@@ -1,42 +1,13 @@
 ## Implementation checklist:
 
-- [x] Build a basic data model that is possible to work with
-- [x] Move references logic, complete folder restructuring
-- [x] Remove leftover boilerplate
-- [x] Polish package.json scripts & update README
-- [x] Set up logger middleware
-- [x] Implement data models ️
-- [x] Add re-exports for entities and on module core level
-- [x] Re-implement database configuration, seeding.
-- [x] Implement migrations mechanism
-- [x] Wire local development to Docker database instance
-- [x] Finish basic seeding
-- [x] Set up pseudo-functional boilerplate code for controllers
-- [x] Finish authorization logic
-- [x] Set up deployment (Render.com)
-- [x] Restructure project yet again and reduce module complexity
-- [x] Add logic for getting all user's jobs
-- [x] Move [seeds](src/database/seeds/data) to JSON and finish seeding logic
-- [x] Finish basic services logic and controllers
-- [x] [Seed](src/services/seeding.service.ts) other parts
-- [x] Bind main models logic to front-end (**jobs**, user, clients)
-- [x] Implement error catching
-- [x] Fix DTO validation
-- [x] Bind cabinets to front-end
-- [x] Implement basic search capabilities for cabinets
-- [x] Connect all the entities to front-end, send paginated data
 - [ ] ♻️ Design new material set logic (sets in general)
-- [ ] ♻️ Rethink isDefault behaviour in db
-- [ ] ♻️ Bind rooms to front-end
+- [ ] ♻️ Implement new room calc and cabinet logic
 - [ ] ♻️ Bind preferences to their models and implement preferences inheritance
       logic
 
 ---
 
 - [ ] Re-implement mailing module and bind authorization
-- [ ] Add
-      [custom serialization](https://blog.logrocket.com/serialization-in-nestjs-a-different-approach/),
-      fixes [this](src/shared/user/user.service.ts#L54)
 - [ ] Finish all basic logic and tie front-end
 - [ ] Beta release
 

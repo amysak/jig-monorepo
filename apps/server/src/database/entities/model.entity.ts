@@ -1,3 +1,4 @@
+import { Expose } from "class-transformer";
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 
 import { AppBaseEntity } from "./base.entity";
@@ -8,7 +9,7 @@ import { Vendor } from "./vendor.entity";
 
 class ModelInfo {
   @Column("text", { nullable: true })
-  description: string;
+  description?: string;
 
   @Column("text", { nullable: true })
   image?: string;
@@ -18,6 +19,11 @@ class ModelInfo {
 
   @Column("int", { default: 0 })
   discount: number;
+
+  @Expose()
+  get discountedPrice(): number {
+    return this.price * (1 - this.discount / 100);
+  }
 
   @Column(() => ProfileSet)
   profiles: ProfileSet;

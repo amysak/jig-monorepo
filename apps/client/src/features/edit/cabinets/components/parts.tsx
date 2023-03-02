@@ -1,38 +1,56 @@
-import { Card, Form, Typography } from "antd";
+import { Card, Typography } from "antd";
+import { countBy, flatMapDeep } from "lodash-es";
+import { cabinetRoute } from "pages/setup";
 import { ReactNode } from "react";
-import { Cabinet } from "type-defs";
+
+import { useCabinetState } from "../hooks";
 
 const { Text, Paragraph } = Typography;
 
-export const CabinetParts = ({
+export const CabinetCharacteristics = ({
   filter,
 }: {
   filter?: "interior" | "exterior";
 }) => {
+  const {
+    snapshot: {
+      cabinet: {
+        realHeight,
+        exterior: { equipmentRows },
+        openings: { drawers, trays },
+      },
+    },
+  } = useCabinetState();
+
+  const counts = countBy(
+    flatMapDeep(equipmentRows, (part) => part.items),
+    (part) => part.type
+  );
+
   const exteriorParts = (
     <>
-      {/* <Paragraph>
-        Base door count: <Text strong>{partCounts.baseDoors}</Text>
+      <Paragraph>
+        Cabinet height: <Text strong>{realHeight || 0}</Text>
       </Paragraph>
       <Paragraph>
-        Upper door count: <Text strong>{partCounts.upperDoors}</Text>
+        Base door count: <Text strong>{counts.baseDoor || 0}</Text>
       </Paragraph>
       <Paragraph>
-        Drawer fronts count: <Text strong>{partCounts.drawerFronts}</Text>
-      </Paragraph> */}
+        Upper door count: <Text strong>{counts.upperDoor || 0}</Text>
+      </Paragraph>
+      <Paragraph>
+        Drawer fronts count: <Text strong>{counts.drawer || 0}</Text>
+      </Paragraph>
+      <Paragraph>
+        Drawer boxes count: <Text strong>{drawers.length || 0}</Text>
+      </Paragraph>
+      <Paragraph>
+        Trays count: <Text strong>{trays.length || 0}</Text>
+      </Paragraph>
     </>
   );
 
-  const interiorParts = (
-    <>
-      {/* <Paragraph>
-        Drawer boxes count: <Text strong>{partCounts.drawers}</Text>
-      </Paragraph>
-      <Paragraph>
-        Trays count: <Text strong>{partCounts.trays}</Text>
-      </Paragraph> */}
-    </>
-  );
+  const interiorParts = <></>;
 
   let content: ReactNode;
   if (filter === "exterior") {

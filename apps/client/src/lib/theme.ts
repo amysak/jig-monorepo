@@ -1,7 +1,7 @@
 import { ThemeConfig } from "antd/es/config-provider/context";
 
 const appTheme: ThemeConfig = {
-  hashed: false,
+  // hashed: false,
   token: {
     colorPrimary: "#6f64e7",
     colorLink: "#6194FF",

@@ -8,10 +8,10 @@ import {
 } from "typeorm";
 
 import {
+  EquipmentRowItems,
   type CabinetBaseType,
   type CabinetCornerType,
   type CabinetType,
-  type MeasuredCabinetExterior,
 } from "type-defs";
 import { AppBaseEntity } from "./base.entity";
 import { Equipment } from "./equipment.entity";
@@ -21,22 +21,24 @@ import { ToePlatform } from "./room-extension.entity";
 import { Room } from "./room.entity";
 import { Upcharge } from "./upcharge.entity";
 import { User } from "./user.entity";
+import { Expose } from "class-transformer";
 
+// TODO: probably needs a lot of refactoring related to types
 export class FaceFrame {
-  // @Column("int", { default: 1.5 })
-  // stilesCount: number;
+  @Column("boolean", { default: false })
+  included: boolean;
 
-  // stiles count = columns.length + 1
-  // rail length = cabinetWidth / columns.length
-  @Column("int", { default: 1.5 })
-  stileWidth: number;
+  // What to subtract from the cabinet exterior
+  @Column("bool", { default: "none" })
+  mode: "stiles" | "both" | "none";
 
-  @Column("bool", { default: true })
-  fullHeight: boolean;
+  // Based on equipmentRows but 1 level deeper
+  @Column("jsonb", { default: [] })
+  rails: { height: number; items?: number[] }[];
 
-  // TODO: Should be entirely based on equipmentRows
-  // @Column("jsonb", { default: [] })
-  // columns: number[][];
+  // Stile widths per each row
+  @Column("jsonb", { default: [] })
+  stiles: number[][];
 
   @Column("int", { default: 2 })
   railFinishedSides: 0 | 1 | 2;
@@ -94,6 +96,20 @@ export class CabinetApplied extends SelfMeasuredPart {
   width: number;
 }
 
+export class CabinetOpening {
+  @Column("real", { nullable: false })
+  backHeight: number;
+
+  @Column("real", { nullable: false })
+  bottomDepth: number;
+
+  @Column("real", { nullable: true })
+  frontHeight?: number;
+
+  @Column("real", { nullable: true })
+  sideHeight?: number;
+}
+
 export class CabinetExterior {
   // rows are for example: [['drawerFront', 'drawerFront'], ['baseDoor', 'baseDoor']]
   // ---   ---
@@ -111,20 +127,14 @@ export class CabinetExterior {
   // ---   |||   |||
   @Column("jsonb", { default: [] })
   equipmentRows: {
-    items: (MeasuredCabinetExterior | MeasuredCabinetExterior[])[];
+    items: EquipmentRowItems;
     height: number;
   }[];
-
-  @Column("bool", { default: true })
-  lastRowAuto: boolean;
-
-  @Column("real", { default: 0 })
-  openingsReveal: number;
 
   // Usually configured in a room
   // Use "included" for defining if the cabinet uses face frame on front-end
   @Column("jsonb", { nullable: true })
-  faceFrame?: FaceFrame;
+  faceFrame: FaceFrame;
 
   // Usually used in a room
   @Column("jsonb", { default: [] })
@@ -159,11 +169,14 @@ export class CabinetInterior {
 }
 
 export class CabinetOpenings {
-  @Column("integer", { default: 0 })
-  drawers: number;
+  @Column("real", { default: 0 })
+  reveal: number;
 
-  @Column("integer", { default: 0 })
-  trays: number;
+  @Column("jsonb", { default: [] })
+  drawers: CabinetOpening[];
+
+  @Column("jsonb", { default: [] })
+  trays: CabinetOpening[];
 }
 
 export class CabinetDimensions {
@@ -179,6 +192,13 @@ export class CabinetDimensions {
 
   @Column("real", { nullable: true })
   depth: number;
+
+  // TODO: should be able to reset in a room and use room's toe height
+  // This is set for adjustable legs and standard cabinets
+  // Separate platform cabinets have their own toe platform which defines their toe height
+  // which is not subtracted from the cabinet when defining layout in preview.tsx
+  @Column("real", { nullable: true })
+  overridenToeHeight?: number;
 }
 
 // Cannot use STI (Single Table Inheritance) because TypeORM is a bad library:
@@ -229,10 +249,6 @@ export class Cabinet extends AppBaseEntity {
   @Column("text", { default: "standard" })
   baseType: CabinetBaseType;
 
-  // TODO: should be able to reset in a room and use room's toe height
-  @Column("real", { nullable: true })
-  overridenToeHeight?: number;
-
   // TODO: a lot of work should be done about how we send and receive data from front-end
   // (DTOs and validators). Typegen is a temporary solution to finish the MVP faster.
   // Generally speaking, toe height of a cabinet should be a single prop in a returned object.
@@ -242,16 +258,16 @@ export class Cabinet extends AppBaseEntity {
   @ManyToOne(() => ToePlatform, (toePlatform) => toePlatform.cabinets, {
     nullable: true,
     cascade: true,
+    eager: true,
   })
-  toePlatform: ToePlatform;
+  toePlatform?: ToePlatform;
 
   // Used in a room but can be predefined
   @OneToMany(() => Equipment, (equipment) => equipment.cabinet, {
-    nullable: true,
     cascade: true,
     eager: true,
   })
-  equipment?: Equipment[];
+  equipment: Equipment[];
 
   @OneToMany(() => Upcharge, (upcharge) => upcharge.cabinet, {
     cascade: true,
@@ -259,16 +275,18 @@ export class Cabinet extends AppBaseEntity {
   })
   upcharges: Upcharge[];
 
-  @OneToOne(() => MaterialSet, (materialSet) => materialSet.cabinets, {
+  @OneToOne(() => MaterialSet, (materialSet) => materialSet.cabinet, {
     nullable: true,
     onDelete: "SET NULL",
+    eager: true,
   })
   @JoinColumn()
   overridenMaterialSet?: MaterialSet;
 
-  @OneToOne(() => MaterialSet, (materialSet) => materialSet.cabinets, {
+  @OneToOne(() => HardwareSet, (hardwareSet) => hardwareSet.cabinet, {
     nullable: true,
     onDelete: "SET NULL",
+    eager: true,
   })
   @JoinColumn()
   overridenHardwareSet?: HardwareSet;
@@ -290,4 +308,29 @@ export class Cabinet extends AppBaseEntity {
     onDelete: "CASCADE",
   })
   defaultForUser?: User;
+
+  @Expose()
+  get toeHeight(): number {
+    console.log("this => ", this);
+    return this.dimensions.overridenToeHeight || this.toePlatform?.height || 0;
+  }
+
+  @Expose()
+  get realHeight(): number {
+    return (
+      this.dimensions.floorToTop -
+      this.dimensions.floorToBottom -
+      this.toeHeight
+    );
+  }
+
+  @Expose()
+  get materialSet(): MaterialSet | undefined {
+    return this.overridenMaterialSet || this.room?.materialSet;
+  }
+
+  @Expose()
+  get hardwareSet(): HardwareSet | undefined {
+    return this.overridenHardwareSet || this.room?.hardwareSet;
+  }
 }

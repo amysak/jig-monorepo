@@ -1,12 +1,6 @@
 import { z } from "zod";
 
-const roomTabs = [
-  "summary",
-  "cabinets",
-  "panels",
-  "accessory",
-  "upcharges",
-] as const;
+const roomTabs = ["summary", "cabinetry", "total"] as const;
 
 export type RoomTab = (typeof roomTabs)[number];
 

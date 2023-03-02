@@ -65,7 +65,7 @@ export const FormNumberInput: FC<FormItemProps & FormNumberInputProps> = ({
 
   return (
     <Form.Item {...itemProps} label={label} name={name}>
-      <InputNumber {...inputProps} />
+      <InputNumber {...inputProps} min={0} step={0.5} />
     </Form.Item>
   );
 };

@@ -1,3 +1,4 @@
+import { Expose } from "class-transformer";
 import { PanelType } from "type-defs";
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 
@@ -37,7 +38,7 @@ export class ToePlatform extends RoomExtension {
   @Column("integer", { default: 2 })
   endsCount: number;
 
-  @Column("integer", { nullable: true })
+  @Column("integer", { default: 0 })
   sleepersCount: number;
 
   @ManyToOne(() => Room, (room) => room.toes, {

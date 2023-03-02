@@ -2,6 +2,7 @@ import { Navigate, Outlet, Route } from "@tanstack/react-router";
 
 import { rootRoute } from "app";
 import MainLayout from "layouts/main";
+import { bidRoute } from "pages/bid";
 import { roomsIndexRoute } from "pages/rooms";
 import {
   cabinetRoute,
@@ -40,6 +41,7 @@ import {
   setupRoute,
   signInRoute,
 } from "pages/routes";
+import { meRoute } from "pages/user";
 
 export const mainLayoutRoute = new Route({
   getParentRoute: () => rootRoute,
@@ -83,6 +85,8 @@ export const rootChildren = [
     jobsRoute.addChildren([jobsIndexRoute, jobRoute]),
     roomsRoute.addChildren([roomsIndexRoute, roomRoute]),
     dashboardRoute,
+    meRoute,
+    bidRoute,
   ]),
   signInRoute,
 ];

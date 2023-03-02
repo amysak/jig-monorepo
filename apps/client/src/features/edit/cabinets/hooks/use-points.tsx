@@ -11,7 +11,7 @@ import {
   EditSides,
   EditStretchers,
   EditTop,
-} from "../interior";
+} from "../components/points-interior-forms";
 
 type Point = {
   x: number;

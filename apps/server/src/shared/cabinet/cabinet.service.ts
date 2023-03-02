@@ -2,11 +2,11 @@ import { HttpException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import merge from "lodash.merge";
 import mergeWith from "lodash.mergewith";
+import sumBy from "lodash.sumby";
 import { FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { getRawSearch } from "common/lib";
 import { Cabinet } from "database/entities";
-
 import { CreateCabinetDto, GetCabinetsDto } from "./dto";
 
 @Injectable()
@@ -96,33 +96,14 @@ export class CabinetService {
     return this.cabinetRepository.delete(id);
   }
 
+  // TODO: unoptimized
   calculateCabinetInteriorSqFt(cabinet: Cabinet, finished = false) {
-    const height =
-      cabinet.dimensions.floorToTop - cabinet.dimensions.floorToBottom;
     const { width, depth } = cabinet.dimensions;
 
-    // Dependents of baseType
-    let cabinetToe: number;
-    let sideHeight = height;
-    switch (cabinet.baseType) {
-      case "standard":
-        cabinetToe = cabinet.overridenToeHeight;
-        sideHeight -= cabinet.overridenToeHeight;
-      case "adjustable":
-        cabinetToe = cabinet.overridenToeHeight;
-      case "separate":
-        cabinetToe = cabinet.toePlatform?.height || 0;
-        sideHeight -= cabinet.toePlatform?.height || 0;
-      // TODO: if no toe platform, do something
-      default:
-        break;
-    }
-
-    const noToeHeight = height - cabinetToe;
     const sqFt = {
       back: cabinet.interior.back
         ? width *
-          (noToeHeight -
+          (cabinet.realHeight -
             cabinet.interior.nailers
               .filter((nailer) => nailer.subtract)
               .reduce((accum, nailer) => accum + nailer.length, 0)) *
@@ -146,7 +127,7 @@ export class CabinetService {
             stretcher.length * (finished ? stretcher.finishedSidesCount : 1),
           0
         ),
-      adejustableShelves: cabinet.interior.shelves.adjustable.reduce(
+      adjustableShelves: cabinet.interior.shelves.adjustable.reduce(
         (accum, shelf) =>
           accum +
           width *
@@ -162,9 +143,16 @@ export class CabinetService {
             (finished ? shelf.finishedSidesCount : 1),
         0
       ),
+      nailers: cabinet.interior.nailers.reduce(
+        (accum, nailer) =>
+          accum +
+          width * nailer.length * (finished ? nailer.finishedSidesCount : 1),
+        0
+      ),
       sides: cabinet.interior.sides.reduce(
         (accum, side) =>
-          accum + depth * sideHeight * (finished ? side.finishedSidesCount : 1),
+          accum +
+          depth * cabinet.realHeight * (finished ? side.finishedSidesCount : 1),
         0
       ),
     };
@@ -176,24 +164,119 @@ export class CabinetService {
     return sqFt;
   }
 
+  // TODO: unoptimized
   calculateCabinetExteriorSqFt(cabinet: Cabinet, finished = false) {
+    // Setting last row height to be the remaining height
+    cabinet.exterior.equipmentRows.at(-1).height =
+      cabinet.realHeight -
+      cabinet.exterior.equipmentRows
+        .slice(0, -1)
+        .reduce((accum, row) => accum + row.height, 0);
+
+    const { faceFrame } = cabinet.exterior;
+
+    const exteriorSqInch = cabinet.exterior.equipmentRows.map((row) => {
+      return row.items.reduce((accum, item, itemIndex) => {
+        // TODO: currently not supporting groups
+        let partHeight = row.height;
+        // if (Array.isArray(item)) partHeight /= item.length;
+
+        let partWidth = cabinet.dimensions.width / row.items.length;
+
+        if (cabinet.openings.reveal) {
+          partHeight -= cabinet.openings.reveal;
+          partWidth -= cabinet.openings.reveal;
+        }
+
+        if (faceFrame?.mode === "both") {
+          // let toSubtract = faceFrame.rails[itemIndex]?.height;
+          // if (Array.isArray(item)) {
+          //   toSubtract *= row.items.length;
+          // }
+          // partHeight -= toSubtract;
+        }
+
+        if (faceFrame?.mode === "stiles" || faceFrame?.mode === "both") {
+          const toSubtract =
+            faceFrame.stiles[itemIndex]?.reduce(
+              (accum, value) => accum + value,
+              0
+            ) / row.items.length;
+
+          partWidth -= toSubtract;
+        }
+
+        // if (Array.isArray(item)) {
+        //   // This is what is inside one column
+        //   item.forEach((subItem) => {
+        //     const subItemSqFt = partWidth * (partHeight / row.items.length);
+        //     accum = {
+        //       ...accum,
+        //       [subItem.type]: (accum[subItem.type] || 0) + subItemSqFt,
+        //     };
+        //   });
+        // }
+
+        const { type, dimensions } = Array.isArray(item) ? item[0] : item;
+
+        if (type === "drawer" && Object.keys(dimensions).length > 0) {
+          const sqFtDrawerBox =
+            dimensions.depth * partWidth +
+            dimensions.side * dimensions.depth * 2 +
+            dimensions.back * partWidth +
+            dimensions.front * partWidth;
+
+          accum = { ...accum, box: (accum["box"] || 0) + sqFtDrawerBox };
+        }
+
+        return {
+          ...accum,
+          [type]: (accum[type] || 0) + partWidth * partHeight,
+        };
+      }, {});
+    });
+
+    // TODO: Painful. But can we do anything about it?
+    const stilesSqInch = faceFrame?.stiles.reduce((accum, stileWidths, idx) => {
+      return (
+        accum +
+        stileWidths.reduce((accum, stileWidth) => accum + stileWidth, 0) *
+          cabinet.exterior.equipmentRows[idx]?.height *
+          (finished ? faceFrame.stileFinishedSides : 1)
+      );
+    }, 0);
+
+    const railsSqInch = faceFrame?.rails.reduce((accum, rail) => {
+      let railSqFt = rail.height * cabinet.dimensions.width;
+
+      if (rail.items) {
+        railSqFt += rail.items.reduce((accum, item) => accum + item, 0);
+      }
+      if (finished) {
+        railSqFt *= faceFrame.railFinishedSides;
+      }
+
+      return accum + railSqFt;
+    }, 0);
+
     const sqFt = {
-      appliedEnds: cabinet.exterior.appliedEnds.map(
-        (end) =>
-          end.length * end.width * (finished ? end.finishedSidesCount : 1)
+      appliedEnds: cabinet.exterior.appliedEnds.reduce(
+        (accum, end) => accum + end.length * end.width,
+        0
+      ),
+      fillers: cabinet.exterior.fillers.reduce(
+        (accum, filler) => accum + filler.length * filler.width,
+        0
       ),
       // TODO:
-      fillers: cabinet.exterior.fillers.map(
-        (filler) =>
-          filler.length *
-          filler.width *
-          (finished ? filler.finishedSidesCount : 1)
-      ),
-      // baseDoors:
       // upperDoors:
-      // drawerFronts:
-      // faceFrame: cabinet.exterior.faceFrame
+      baseDoors: sumBy(exteriorSqInch, "baseDoor"),
+      drawerFronts: sumBy(exteriorSqInch, "drawer"),
+      drawers: sumBy(exteriorSqInch, "box"),
+      faceFrame: stilesSqInch + railsSqInch,
     };
+
+    console.log("equipmentRows => ", cabinet.exterior.equipmentRows);
 
     Object.keys(sqFt).forEach((key) => {
       sqFt[key] /= 144;

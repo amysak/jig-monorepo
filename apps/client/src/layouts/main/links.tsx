@@ -47,12 +47,15 @@ export const useHeaderLinks = () => {
       children: [
         {
           key: "bid",
-          // TODO:
-          // label: <Link to="/new">Create new bid</Link>,
+          label: <Link to="/new">Bid client</Link>,
         },
         {
           key: "me",
-          // label: <Link to="/me">Account management</Link>,
+          label: (
+            <Link to="/me" search={{ tabName: "preferences" }}>
+              Account management
+            </Link>
+          ),
         },
         // {
         //   key: "reports",
@@ -67,7 +70,7 @@ export const useHeaderLinks = () => {
         // { label: "Users", path: "users" },
         // { label: "Billing", path: "billing" },
         // { label: "Sign out", path: "signout" },
-      ].map((item) => ({ ...item, style: { color: colorLink } })),
+      ],
       // TODO: :hover
     },
   ];
