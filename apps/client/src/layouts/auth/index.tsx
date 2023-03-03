@@ -1,6 +1,9 @@
+import { Navigate } from "@tanstack/react-router";
 import { Col, Layout, Typography } from "antd";
-import { Logo } from "components/logo";
 import { ReactNode } from "react";
+
+import { Logo } from "components/logo";
+import { useAuthorization } from "lib/hooks";
 
 import "./authlayout.scss";
 
@@ -12,6 +15,12 @@ export const AuthLayout = (props: {
   useTitle: boolean;
   children?: ReactNode;
 }) => {
+  const { isAuthenticated } = useAuthorization();
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
+
   return (
     <Layout
       className="authlayoutwrapper"

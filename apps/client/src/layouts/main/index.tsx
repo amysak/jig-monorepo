@@ -1,13 +1,13 @@
-import { Layout, Menu, theme, type LayoutProps } from "antd";
+import { Layout, Menu, type LayoutProps } from "antd";
 import { FC, ReactNode } from "react";
 
 import backgroundImage from "assets/images/banner/banner-bg.png";
 import { Logo } from "components/logo";
 import { useHeaderLinks } from "./links";
 
-import "./style.scss";
-import { useRouter } from "@tanstack/react-router";
+import { Navigate, useRouter } from "@tanstack/react-router";
 import { useAuthorization } from "lib/hooks";
+import "./style.scss";
 
 const { Header, Content } = Layout;
 
@@ -26,9 +26,11 @@ export const MainLayout: FC<MainLayoutProps & LayoutProps> = ({
   const currentTabName = router.state.currentLocation.pathname.split("/")[1];
 
   // we're in suspend mode
-  const { user } = useAuthorization();
+  const { isAuthenticated } = useAuthorization();
   // TODO: 401 page
-  if (!user) return null;
+  if (!isAuthenticated) {
+    return <Navigate to="/signin" />;
+  }
 
   return (
     <Layout

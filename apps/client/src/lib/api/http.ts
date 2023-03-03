@@ -1,11 +1,11 @@
 import Axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { isEmpty } from "lodash-es";
 
+import { router } from "app";
+import { api } from "lib/api";
 import { API_BASE_URL } from "lib/envs";
 import { flattenObject } from "lib/functions";
 import { tokenActions } from "lib/store";
-import { api } from "lib/api";
-import { router } from "app";
 
 export type QueryResult<T extends (...args: unknown[]) => unknown> = Awaited<
   ReturnType<T>
@@ -90,14 +90,17 @@ axios.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
+
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
       !originalRequest.url.includes("refresh")
     ) {
       const existingToken = tokenActions.get("refresh");
+
       if (!existingToken) {
-        return router.navigate({ to: "/signin" });
+        router.navigate({ to: "/signin" });
+        return { data: null };
       }
 
       originalRequest._retry = true;

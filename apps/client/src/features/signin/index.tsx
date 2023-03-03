@@ -29,7 +29,7 @@ function SigninPage() {
     onSettled: () => {
       queryClient.invalidateQueries(["users", "me"]);
     },
-    onSuccess: ({ accessToken, refreshToken }) => {
+    onSuccess: () => {
       navigate({ to: "/dashboard", replace: true });
     },
     onError: () => {

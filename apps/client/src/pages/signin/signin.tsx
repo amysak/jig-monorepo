@@ -1,12 +1,11 @@
 import { FormInput, FormPasswordInput } from "@jigbid/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Navigate, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { Button, Form, message, Row } from "antd";
 import { isEmpty } from "lodash-es";
 
 import { AuthLayout } from "layouts/auth";
 import { api } from "lib/api";
-import { useAuthorization } from "lib/hooks";
 import { tokenActions } from "lib/store";
 import { dashboardRoute } from "pages/dashboard";
 
@@ -28,8 +27,6 @@ function SigninPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { isAuthenticated } = useAuthorization();
-
   const { mutate: logIn, isLoading: isLoggingIn } = useMutation(
     api.auth.signIn,
     {
@@ -46,10 +43,6 @@ function SigninPage() {
       },
     }
   );
-
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" />;
-  }
 
   return (
     <AuthLayout>
